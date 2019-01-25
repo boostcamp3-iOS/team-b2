@@ -38,8 +38,8 @@ extension MyHolidaysViewCell: UICollectionViewDelegate {
     private func setUpUI() {
         collectionView.delegate = self; collectionView.dataSource = self
         
-        collectionView.register(HolidayViewCell.self)
-        collectionView.register(HolidayInputViewCell.self)
+        let cells = [HolidayViewCell.self, HolidayInputViewCell.self]
+        collectionView.register(cells)
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  FriendsHistoriesViewCell.swift
+//  UpcomingEventViewCell.swift
 //  Bodabi
 //
 //  Created by 이혜진 on 2019. 1. 25..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FriendsHistoriesViewCell: UITableViewCell {
+class UpcomingEventViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var holidayLabel: UILabel!
@@ -20,10 +20,10 @@ class FriendsHistoriesViewCell: UITableViewCell {
         
         setUpUI()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
     }
     
     @IBAction func touchUpAddFavoriteButton(_ sender: UIButton) {

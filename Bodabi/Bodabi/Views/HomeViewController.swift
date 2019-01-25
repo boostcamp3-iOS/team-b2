@@ -63,9 +63,8 @@ extension HomeViewController: UITableViewDelegate {
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
         
-        tableView.register(HomeTitleViewCell.self)
-        tableView.register(MyHolidaysViewCell.self)
-        tableView.register(FriendsHistoriesViewCell.self)
+        let cells = [HomeTitleViewCell.self, MyHolidaysViewCell.self, UpcomingEventViewCell.self]
+        tableView.register(cells)
     }
 }
 
@@ -96,7 +95,7 @@ extension HomeViewController: UITableViewDataSource {
             let cell = tableView.dequeue(MyHolidaysViewCell.self, for: indexPath)
             return cell
         case .histories:
-            let cell = tableView.dequeue(FriendsHistoriesViewCell.self, for: indexPath)
+            let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
             return cell
         }
     }
