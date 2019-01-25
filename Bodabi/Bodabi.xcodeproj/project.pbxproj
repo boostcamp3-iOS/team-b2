@@ -226,7 +226,8 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = Friends;
+			name = Friends;
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		DBF4CF0621FB0B31001536A8 /* Home */ = {
