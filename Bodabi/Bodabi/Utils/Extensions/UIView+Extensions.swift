@@ -1,5 +1,5 @@
 //
-//  UIView+Bodabi.swift
+//  UIView+Extensions.swift
 //  Bodabi
 //
 //  Created by 이혜진 on 2019. 1. 25..
