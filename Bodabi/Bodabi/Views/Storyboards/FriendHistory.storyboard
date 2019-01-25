@@ -13,7 +13,7 @@
         <!--김철수-->
         <scene sceneID="Spx-rt-d0M">
             <objects>
-                <viewController id="VZi-B7-pNK" customClass="FriendHistoryViewController" customModule="Bodabi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FriendHistoryViewController" id="VZi-B7-pNK" customClass="FriendHistoryViewController" customModule="Bodabi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ny0-6d-gb2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -33,6 +33,8 @@
 		49C0850721FAF2810060B02C /* UpcomingEventViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0850521FAF2810060B02C /* UpcomingEventViewCell.swift */; };
 		49C0850821FAF2810060B02C /* UpcomingEventViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C0850621FAF2810060B02C /* UpcomingEventViewCell.xib */; };
 		49C0850A21FAF6AA0060B02C /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0850921FAF6AA0060B02C /* UIView+Animation.swift */; };
+		49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0850B21FB092E0060B02C /* UIStoryboard+Extensions.swift */; };
+		49C0850E21FB10020060B02C /* UIViewController+Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0850D21FB10020060B02C /* UIViewController+Storyboard.swift */; };
 		DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */; };
 		DBF4CEFE21FAE59B001536A8 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */; };
 		F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */; };
@@ -74,6 +76,8 @@
 		49C0850521FAF2810060B02C /* UpcomingEventViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingEventViewCell.swift; sourceTree = "<group>"; };
 		49C0850621FAF2810060B02C /* UpcomingEventViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpcomingEventViewCell.xib; sourceTree = "<group>"; };
 		49C0850921FAF6AA0060B02C /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
+		49C0850B21FB092E0060B02C /* UIStoryboard+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extensions.swift"; sourceTree = "<group>"; };
+		49C0850D21FB10020060B02C /* UIViewController+Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Storyboard.swift"; sourceTree = "<group>"; };
 		DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+ActionSheet.swift"; sourceTree = "<group>"; };
 		DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
@@ -198,6 +202,8 @@
 				49C084E921FACE260060B02C /* UITableView+Extensions.swift */,
 				49C0850321FAE1600060B02C /* UICollectionView+Extensions.swift */,
 				49C0850921FAF6AA0060B02C /* UIView+Animation.swift */,
+				49C0850B21FB092E0060B02C /* UIStoryboard+Extensions.swift */,
+				49C0850D21FB10020060B02C /* UIViewController+Storyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -220,7 +226,8 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = Friends;
+			name = Friends;
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		DBF4CF0621FB0B31001536A8 /* Home */ = {
@@ -347,12 +354,14 @@
 				496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */,
 				4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */,
 				49C084EA21FACE260060B02C /* UITableView+Extensions.swift in Sources */,
+				49C0850E21FB10020060B02C /* UIViewController+Storyboard.swift in Sources */,
 				49C084FD21FADDBB0060B02C /* HolidayViewCell.swift in Sources */,
 				496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */,
 				49C0850721FAF2810060B02C /* UpcomingEventViewCell.swift in Sources */,
 				4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */,
 				49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */,
 				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,
+				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
 				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,
 				49C0850A21FAF6AA0060B02C /* UIView+Animation.swift in Sources */,
 				49C0850121FADE640060B02C /* HolidayInputViewCell.swift in Sources */,
