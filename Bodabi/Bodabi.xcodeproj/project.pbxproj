@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */; };
+		496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B821FAB294003FBA5B /* UIColor+Extensions.swift */; };
+		496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */; };
 		4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4998126D21F9D7B4000DB7B2 /* AppDelegate.swift */; };
 		4998127321F9D7B4000DB7B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998127121F9D7B4000DB7B2 /* Main.storyboard */; };
 		4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4998127421F9D7B4000DB7B2 /* Bodabi.xcdatamodeld */; };
@@ -16,10 +19,12 @@
 		4998128C21F9D98A000DB7B2 /* Friends.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998128B21F9D98A000DB7B2 /* Friends.storyboard */; };
 		4998128E21F9D994000DB7B2 /* Notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998128D21F9D994000DB7B2 /* Notification.storyboard */; };
 		4998129021F9D99C000DB7B2 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998128F21F9D99C000DB7B2 /* Setting.storyboard */; };
-		4998129221F9E2DF000DB7B2 /* UIColor+Bodabi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4998129121F9E2DF000DB7B2 /* UIColor+Bodabi.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Clear.swift"; sourceTree = "<group>"; };
+		496683B821FAB294003FBA5B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		4998126A21F9D7B4000DB7B2 /* Bodabi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bodabi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4998126D21F9D7B4000DB7B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4998127221F9D7B4000DB7B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -31,7 +36,6 @@
 		4998128B21F9D98A000DB7B2 /* Friends.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Friends.storyboard; sourceTree = "<group>"; };
 		4998128D21F9D994000DB7B2 /* Notification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notification.storyboard; sourceTree = "<group>"; };
 		4998128F21F9D99C000DB7B2 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
-		4998129121F9E2DF000DB7B2 /* UIColor+Bodabi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Bodabi.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +134,9 @@
 		4998128821F9D8F6000DB7B2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4998129121F9E2DF000DB7B2 /* UIColor+Bodabi.swift */,
+				496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */,
+				496683B821FAB294003FBA5B /* UIColor+Extensions.swift */,
+				496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -210,9 +216,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */,
 				4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */,
-				4998129221F9E2DF000DB7B2 /* UIColor+Bodabi.swift in Sources */,
+				496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */,
 				4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */,
+				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

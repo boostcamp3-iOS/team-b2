@@ -1,8 +1,8 @@
 //
-//  UIColor+Bodabi.swift
+//  UIColor+Extensions.swift
 //  Bodabi
 //
-//  Created by 이혜진 on 2019. 1. 24..
+//  Created by 이혜진 on 2019. 1. 25..
 //  Copyright © 2019년 LeeHyeJin. All rights reserved.
 //
 
