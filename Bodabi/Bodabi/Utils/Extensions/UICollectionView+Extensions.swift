@@ -25,6 +25,12 @@ extension UICollectionView {
         register(nib, forCellWithReuseIdentifier: reusableCell.identifier)
     }
     
+    func register<Cell: UICollectionViewCell>(_ reuseableCells: [Cell.Type]) {
+        reuseableCells.forEach { (cell) in
+            register(cell)
+        }
+    }
+    
     func dequeue<Cell: UICollectionViewCell>(_ reusableCell: Cell.Type,
                                         for indexPath: IndexPath) -> Cell {
         guard let cell = dequeueReusableCell(withReuseIdentifier: reusableCell.identifier,

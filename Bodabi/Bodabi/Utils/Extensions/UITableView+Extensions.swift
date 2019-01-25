@@ -25,6 +25,12 @@ extension UITableView {
         register(nib, forCellReuseIdentifier: reusableCell.identifier)
     }
     
+    func register<Cell: UITableViewCell>(_ reuseableCells: [Cell.Type]) {
+        reuseableCells.forEach { (cell) in
+            register(cell)
+        }
+    }
+    
     func dequeue<Cell: UITableViewCell>(_ reusableCell: Cell.Type,
                        for indexPath: IndexPath) -> Cell {
         guard let cell = dequeueReusableCell(withIdentifier: reusableCell.identifier,
