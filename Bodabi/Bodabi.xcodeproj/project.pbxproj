@@ -19,6 +19,11 @@
 		4998128C21F9D98A000DB7B2 /* Friends.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998128B21F9D98A000DB7B2 /* Friends.storyboard */; };
 		4998128E21F9D994000DB7B2 /* Notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998128D21F9D994000DB7B2 /* Notification.storyboard */; };
 		4998129021F9D99C000DB7B2 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998128F21F9D99C000DB7B2 /* Setting.storyboard */; };
+		F8367C9421FAA85700EBA91E /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9321FAA85700EBA91E /* History.swift */; };
+		F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */; };
+		F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8485CF621FA11BB003C935C /* FriendHistory.storyboard */; };
+		F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */; };
+		F8485CFD21FA2CB4003C935C /* FriendHistoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CFC21FA2CB4003C935C /* FriendHistoryViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +41,11 @@
 		4998128B21F9D98A000DB7B2 /* Friends.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Friends.storyboard; sourceTree = "<group>"; };
 		4998128D21F9D994000DB7B2 /* Notification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notification.storyboard; sourceTree = "<group>"; };
 		4998128F21F9D99C000DB7B2 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
+		F8367C9321FAA85700EBA91E /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
+		F8485CF621FA11BB003C935C /* FriendHistory.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FriendHistory.storyboard; sourceTree = "<group>"; };
+		F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistoryViewController.swift; sourceTree = "<group>"; };
+		F8485CFC21FA2CB4003C935C /* FriendHistoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistoryViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				4998127421F9D7B4000DB7B2 /* Bodabi.xcdatamodeld */,
+				F8367C9321FAA85700EBA91E /* History.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -107,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				4998128721F9D8CD000DB7B2 /* Storyboards */,
+				F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */,
+				F8485CFC21FA2CB4003C935C /* FriendHistoryViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -127,6 +140,7 @@
 				4998128B21F9D98A000DB7B2 /* Friends.storyboard */,
 				4998128D21F9D994000DB7B2 /* Notification.storyboard */,
 				4998128F21F9D99C000DB7B2 /* Setting.storyboard */,
+				F8485CF621FA11BB003C935C /* FriendHistory.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -137,6 +151,7 @@
 				496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */,
 				496683B821FAB294003FBA5B /* UIColor+Extensions.swift */,
 				496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */,
+				F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -200,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4998127B21F9D7B6000DB7B2 /* LaunchScreen.storyboard in Resources */,
+				F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */,
 				4998128C21F9D98A000DB7B2 /* Friends.storyboard in Resources */,
 				4998129021F9D99C000DB7B2 /* Setting.storyboard in Resources */,
 				4998127821F9D7B6000DB7B2 /* Assets.xcassets in Resources */,
@@ -219,8 +235,12 @@
 				496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */,
 				4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */,
 				496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */,
+				F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */,
 				4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
+				F8367C9421FAA85700EBA91E /* History.swift in Sources */,
+				F8485CFD21FA2CB4003C935C /* FriendHistoryViewCell.swift in Sources */,
+				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
