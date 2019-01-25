@@ -68,9 +68,15 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = storyboard(.friendHistory)
-            .instantiateViewController(ofType: FriendHistoryViewController.self)
-        navigationController?.pushViewController(viewController, animated: true)
+        guard let section = Section(rawValue: indexPath.section) else { return }
+        switch section {
+        case .histories:
+            let viewController = storyboard(.friendHistory)
+                .instantiateViewController(ofType: FriendHistoryViewController.self)
+            navigationController?.pushViewController(viewController, animated: true)
+        default:
+            break
+        }
     }
 }
 
