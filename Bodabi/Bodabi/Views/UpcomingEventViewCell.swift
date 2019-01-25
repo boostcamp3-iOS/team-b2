@@ -15,6 +15,11 @@ class UpcomingEventViewCell: UITableViewCell {
     @IBOutlet weak var lastHistoryLabel: UILabel!
     @IBOutlet weak var dDayLabel: UILabel!
     
+    struct Const {
+        static let buttonAnimationScale: CGFloat = 1.18
+        static let buttonAnimationDuration: TimeInterval = 0.18
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -28,6 +33,8 @@ class UpcomingEventViewCell: UITableViewCell {
     
     @IBAction func touchUpAddFavoriteButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
+        sender.setScaleAnimation(scale: Const.buttonAnimationScale,
+                                 duration: Const.buttonAnimationDuration)
     }
     
     private func setUpUI() {
