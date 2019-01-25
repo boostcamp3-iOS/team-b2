@@ -160,22 +160,11 @@
 			isa = PBXGroup;
 			children = (
 				4998128721F9D8CD000DB7B2 /* Storyboards */,
-				49C084E721FAC9B80060B02C /* HomeViewController.swift */,
-				496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */,
-				496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */,
-				49C084EF21FAD36D0060B02C /* MyHolidaysViewCell.swift */,
-				49C084F021FAD36D0060B02C /* MyHolidaysViewCell.xib */,
-				49C0850521FAF2810060B02C /* UpcomingEventViewCell.swift */,
-				49C0850621FAF2810060B02C /* UpcomingEventViewCell.xib */,
-				49C084FB21FADDBB0060B02C /* HolidayViewCell.swift */,
-				49C084FC21FADDBB0060B02C /* HolidayViewCell.xib */,
-				49C084FF21FADE640060B02C /* HolidayInputViewCell.swift */,
-				49C0850021FADE640060B02C /* HolidayInputViewCell.xib */,
-				F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */,
-				F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */,
-				F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */,
-				F8367C9921FACC2800EBA91E /* FriendHistoryReceiveView.xib */,
-				F8367C9B21FAD0EF00EBA91E /* FriendHistorySendView.xib */,
+				DBF4CF0621FB0B31001536A8 /* Home */,
+				DBF4CF0721FB0C44001536A8 /* FriendHistory */,
+				DBF4CF0521FB0B30001536A8 /* Friends */,
+				DBF4CF0421FB0B2F001536A8 /* Notification */,
+				DBF4CF0321FB0B2D001536A8 /* Setting */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -217,6 +206,57 @@
 				49C0850D21FB10020060B02C /* UIViewController+Storyboard.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DBF4CF0321FB0B2D001536A8 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		DBF4CF0421FB0B2F001536A8 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		DBF4CF0521FB0B30001536A8 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		DBF4CF0621FB0B31001536A8 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				49C084E721FAC9B80060B02C /* HomeViewController.swift */,
+				496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */,
+				496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */,
+				49C084F021FAD36D0060B02C /* MyHolidaysViewCell.xib */,
+				49C084EF21FAD36D0060B02C /* MyHolidaysViewCell.swift */,
+				49C0850621FAF2810060B02C /* UpcomingEventViewCell.xib */,
+				49C0850521FAF2810060B02C /* UpcomingEventViewCell.swift */,
+				49C084FC21FADDBB0060B02C /* HolidayViewCell.xib */,
+				49C084FB21FADDBB0060B02C /* HolidayViewCell.swift */,
+				49C0850021FADE640060B02C /* HolidayInputViewCell.xib */,
+				49C084FF21FADE640060B02C /* HolidayInputViewCell.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		DBF4CF0721FB0C44001536A8 /* FriendHistory */ = {
+			isa = PBXGroup;
+			children = (
+				F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */,
+				F8367C9921FACC2800EBA91E /* FriendHistoryReceiveView.xib */,
+				F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */,
+				F8367C9B21FAD0EF00EBA91E /* FriendHistorySendView.xib */,
+				F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */,
+			);
+			path = FriendHistory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
