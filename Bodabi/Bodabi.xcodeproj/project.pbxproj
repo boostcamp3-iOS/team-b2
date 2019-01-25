@@ -10,6 +10,8 @@
 		496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */; };
 		496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B821FAB294003FBA5B /* UIColor+Extensions.swift */; };
 		496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */; };
+		496683C021FAC662003FBA5B /* HomeTitleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */; };
+		496683C121FAC662003FBA5B /* HomeTitleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */; };
 		4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4998126D21F9D7B4000DB7B2 /* AppDelegate.swift */; };
 		4998127321F9D7B4000DB7B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998127121F9D7B4000DB7B2 /* Main.storyboard */; };
 		4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4998127421F9D7B4000DB7B2 /* Bodabi.xcdatamodeld */; };
@@ -24,12 +26,25 @@
 		DBF4CEFF21FAE59B001536A8 /* UICollectionViewController+RegisterCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CEFB21FAE59B001536A8 /* UICollectionViewController+RegisterCells.swift */; };
 		DBF4CF0021FAE59C001536A8 /* UITableViewController+RegisterCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CEFC21FAE59B001536A8 /* UITableViewController+RegisterCells.swift */; };
 		F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */; };
+		49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C084E721FAC9B80060B02C /* HomeViewController.swift */; };
+		49C084EA21FACE260060B02C /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C084E921FACE260060B02C /* UITableView+Extensions.swift */; };
+		49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C084EF21FAD36D0060B02C /* MyHolidaysViewCell.swift */; };
+		49C084F221FAD36D0060B02C /* MyHolidaysViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C084F021FAD36D0060B02C /* MyHolidaysViewCell.xib */; };
+		49C084F921FAD83E0060B02C /* FriendsHistoriesViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C084F721FAD83E0060B02C /* FriendsHistoriesViewCell.swift */; };
+		49C084FA21FAD83E0060B02C /* FriendsHistoriesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C084F821FAD83E0060B02C /* FriendsHistoriesViewCell.xib */; };
+		49C084FD21FADDBB0060B02C /* HolidayViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C084FB21FADDBB0060B02C /* HolidayViewCell.swift */; };
+		49C084FE21FADDBB0060B02C /* HolidayViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C084FC21FADDBB0060B02C /* HolidayViewCell.xib */; };
+		49C0850121FADE640060B02C /* HolidayInputViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C084FF21FADE640060B02C /* HolidayInputViewCell.swift */; };
+		49C0850221FADE640060B02C /* HolidayInputViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C0850021FADE640060B02C /* HolidayInputViewCell.xib */; };
+		49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0850321FAE1600060B02C /* UICollectionView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Clear.swift"; sourceTree = "<group>"; };
 		496683B821FAB294003FBA5B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTitleViewCell.swift; sourceTree = "<group>"; };
+		496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTitleViewCell.xib; sourceTree = "<group>"; };
 		4998126A21F9D7B4000DB7B2 /* Bodabi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bodabi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4998126D21F9D7B4000DB7B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4998127221F9D7B4000DB7B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -46,6 +61,17 @@
 		DBF4CEFB21FAE59B001536A8 /* UICollectionViewController+RegisterCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+RegisterCells.swift"; sourceTree = "<group>"; };
 		DBF4CEFC21FAE59B001536A8 /* UITableViewController+RegisterCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewController+RegisterCells.swift"; sourceTree = "<group>"; };
 		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
+		49C084E721FAC9B80060B02C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		49C084E921FACE260060B02C /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
+		49C084EF21FAD36D0060B02C /* MyHolidaysViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyHolidaysViewCell.swift; sourceTree = "<group>"; };
+		49C084F021FAD36D0060B02C /* MyHolidaysViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyHolidaysViewCell.xib; sourceTree = "<group>"; };
+		49C084F721FAD83E0060B02C /* FriendsHistoriesViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsHistoriesViewCell.swift; sourceTree = "<group>"; };
+		49C084F821FAD83E0060B02C /* FriendsHistoriesViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendsHistoriesViewCell.xib; sourceTree = "<group>"; };
+		49C084FB21FADDBB0060B02C /* HolidayViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayViewCell.swift; sourceTree = "<group>"; };
+		49C084FC21FADDBB0060B02C /* HolidayViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HolidayViewCell.xib; sourceTree = "<group>"; };
+		49C084FF21FADE640060B02C /* HolidayInputViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayInputViewCell.swift; sourceTree = "<group>"; };
+		49C0850021FADE640060B02C /* HolidayInputViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HolidayInputViewCell.xib; sourceTree = "<group>"; };
+		49C0850321FAE1600060B02C /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +143,17 @@
 			isa = PBXGroup;
 			children = (
 				4998128721F9D8CD000DB7B2 /* Storyboards */,
+				49C084E721FAC9B80060B02C /* HomeViewController.swift */,
+				496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */,
+				496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */,
+				49C084EF21FAD36D0060B02C /* MyHolidaysViewCell.swift */,
+				49C084F021FAD36D0060B02C /* MyHolidaysViewCell.xib */,
+				49C084F721FAD83E0060B02C /* FriendsHistoriesViewCell.swift */,
+				49C084F821FAD83E0060B02C /* FriendsHistoriesViewCell.xib */,
+				49C084FB21FADDBB0060B02C /* HolidayViewCell.swift */,
+				49C084FC21FADDBB0060B02C /* HolidayViewCell.xib */,
+				49C084FF21FADE640060B02C /* HolidayInputViewCell.swift */,
+				49C0850021FADE640060B02C /* HolidayInputViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -152,6 +189,8 @@
 				DBF4CEFC21FAE59B001536A8 /* UITableViewController+RegisterCells.swift */,
 				DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */,
 				DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */,
+				49C084E921FACE260060B02C /* UITableView+Extensions.swift */,
+				49C0850321FAE1600060B02C /* UICollectionView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -216,11 +255,16 @@
 			files = (
 				4998127B21F9D7B6000DB7B2 /* LaunchScreen.storyboard in Resources */,
 				4998128C21F9D98A000DB7B2 /* Friends.storyboard in Resources */,
+				49C0850221FADE640060B02C /* HolidayInputViewCell.xib in Resources */,
+				49C084FE21FADDBB0060B02C /* HolidayViewCell.xib in Resources */,
 				4998129021F9D99C000DB7B2 /* Setting.storyboard in Resources */,
 				4998127821F9D7B6000DB7B2 /* Assets.xcassets in Resources */,
+				496683C121FAC662003FBA5B /* HomeTitleViewCell.xib in Resources */,
 				4998127321F9D7B4000DB7B2 /* Main.storyboard in Resources */,
 				4998128A21F9D97E000DB7B2 /* Home.storyboard in Resources */,
 				4998128E21F9D994000DB7B2 /* Notification.storyboard in Resources */,
+				49C084F221FAD36D0060B02C /* MyHolidaysViewCell.xib in Resources */,
+				49C084FA21FAD83E0060B02C /* FriendsHistoriesViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,7 +283,18 @@
 				DBF4CF0021FAE59C001536A8 /* UITableViewController+RegisterCells.swift in Sources */,
 				F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */,
 				DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */,
+				496683C021FAC662003FBA5B /* HomeTitleViewCell.swift in Sources */,
+				496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */,
+				4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */,
+				49C084EA21FACE260060B02C /* UITableView+Extensions.swift in Sources */,
+				49C084FD21FADDBB0060B02C /* HolidayViewCell.swift in Sources */,
+				496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */,
+				49C084F921FAD83E0060B02C /* FriendsHistoriesViewCell.swift in Sources */,
 				4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */,
+				49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */,
+				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,
+				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,
+				49C0850121FADE640060B02C /* HolidayInputViewCell.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
