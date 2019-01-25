@@ -66,6 +66,12 @@ extension HomeViewController: UITableViewDelegate {
         let cells = [HomeTitleViewCell.self, MyHolidaysViewCell.self, UpcomingEventViewCell.self]
         tableView.register(cells)
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewController = storyboard(.friendHistory)
+            .instantiateViewController(ofType: FriendHistoryViewController.self)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 extension HomeViewController: UITableViewDataSource {

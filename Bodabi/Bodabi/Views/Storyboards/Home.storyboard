@@ -32,7 +32,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dfM-EE-0d2"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Ggg-Xi-BxC"/>
+                    <navigationItem key="navigationItem" id="Ggg-Xi-BxC">
+                        <barButtonItem key="backBarButtonItem" title=" " id="lQS-1t-gPI"/>
+                    </navigationItem>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="bNg-Er-2U2" id="GBj-zE-BW0"/>
@@ -52,6 +54,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ph1-l2-y9N">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
