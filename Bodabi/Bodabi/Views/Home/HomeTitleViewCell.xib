@@ -48,6 +48,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="addHolidayButton" destination="egE-lw-Oc6" id="0mm-rn-Vbr"/>
                 <outlet property="sortingButton" destination="AWd-Nu-3QW" id="qyq-aI-xuP"/>
                 <outlet property="titleLabel" destination="wSl-vC-a21" id="TD4-Nn-5Xe"/>
             </connections>

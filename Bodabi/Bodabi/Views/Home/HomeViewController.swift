@@ -15,14 +15,14 @@ class HomeViewController: UIViewController {
     enum Section: Int, CaseIterable {
         case myHoliday
         case holidays
-        case friendsHistory
-        case histories
+        case upcomingEvent
+        case friendEvents
         
         public var title: String {
             switch self {
             case .myHoliday:
                 return "나의 경조사"
-            case .friendsHistory:
+            case .upcomingEvent:
                 return "다가오는 이벤트"
             default:
                 return .init()
@@ -32,8 +32,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setUpUI()
+        initNavigationBar()
         initTableView()
     }
     
@@ -45,8 +44,12 @@ class HomeViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         getBackUI()
+    }
+    
+    private func initNavigationBar() {
+        navigationController?.navigationBar.clear()
     }
     
     private func setUpUI() {
@@ -56,7 +59,14 @@ class HomeViewController: UIViewController {
     private func getBackUI() {
         navigationController?.navigationBar.isHidden = false
     }
-
+    
+    @objc func touchUpAddHolidaybutton(_ sender: UIButton) {
+        let viewController = storyboard(.input)
+            .instantiateViewController(ofType: InputViewController.self)
+        let navController = UINavigationController(rootViewController: viewController)
+        
+        self.present(navController, animated: true, completion: nil)
+    }
 }
 
 extension HomeViewController: UITableViewDelegate {
@@ -70,7 +80,7 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section) else { return }
         switch section {
-        case .histories:
+        case .friendEvents:
             let viewController = storyboard(.friendHistory)
                 .instantiateViewController(ofType: FriendHistoryViewController.self)
             navigationController?.pushViewController(viewController, animated: true)
@@ -86,7 +96,7 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = Section(rawValue: section), section == .histories else {
+        guard let section = Section(rawValue: section), section == .friendEvents else {
             return 1
         }
         
@@ -97,16 +107,19 @@ extension HomeViewController: UITableViewDataSource {
         guard let section = Section(rawValue: indexPath.section) else { return UITableViewCell() }
         
         switch section {
-        case .myHoliday,
-             .friendsHistory:
+        case .myHoliday:
+            let cell = tableView.dequeue(HomeTitleViewCell.self, for: indexPath)
+            cell.addHolidayButton.addTarget(self, action: #selector(touchUpAddHolidaybutton(_:)), for: .touchUpInside)
+            cell.type = section
+            return cell
+        case .upcomingEvent:
             let cell = tableView.dequeue(HomeTitleViewCell.self, for: indexPath)
             cell.type = section
             return cell
-            
         case .holidays:
             let cell = tableView.dequeue(MyHolidaysViewCell.self, for: indexPath)
             return cell
-        case .histories:
+        case .friendEvents:
             let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
             return cell
         }

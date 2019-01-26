@@ -37,10 +37,13 @@
 		49C0850E21FB10020060B02C /* UIViewController+Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0850D21FB10020060B02C /* UIViewController+Storyboard.swift */; };
 		DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */; };
 		DBF4CEFE21FAE59B001536A8 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */; };
+		DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF0821FB8452001536A8 /* UIView+InitFromXib.swift */; };
+		DBF4CF1921FBE843001536A8 /* Input.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBF4CF1821FBE843001536A8 /* Input.storyboard */; };
+		DBF4CF1C21FBE976001536A8 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF1B21FBE976001536A8 /* InputViewController.swift */; };
 		F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */; };
 		F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */; };
-		F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9921FACC2800EBA91E /* FriendHistoryReceiveView.xib */; };
-		F8367C9C21FAD0EF00EBA91E /* FriendHistorySendView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9B21FAD0EF00EBA91E /* FriendHistorySendView.xib */; };
+		F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */; };
+		F8367C9C21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */; };
 		F8367C9F21FAECF200EBA91E /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9E21FAECF200EBA91E /* History.swift */; };
 		F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8485CF621FA11BB003C935C /* FriendHistory.storyboard */; };
 		F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */; };
@@ -80,10 +83,13 @@
 		49C0850D21FB10020060B02C /* UIViewController+Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Storyboard.swift"; sourceTree = "<group>"; };
 		DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+ActionSheet.swift"; sourceTree = "<group>"; };
 		DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
+		DBF4CF0821FB8452001536A8 /* UIView+InitFromXib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+InitFromXib.swift"; sourceTree = "<group>"; };
+		DBF4CF1821FBE843001536A8 /* Input.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Input.storyboard; sourceTree = "<group>"; };
+		DBF4CF1B21FBE976001536A8 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
 		F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistorySendViewCell.swift; sourceTree = "<group>"; };
-		F8367C9921FACC2800EBA91E /* FriendHistoryReceiveView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendHistoryReceiveView.xib; sourceTree = "<group>"; };
-		F8367C9B21FAD0EF00EBA91E /* FriendHistorySendView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendHistorySendView.xib; sourceTree = "<group>"; };
+		F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendHistoryReceiveViewCell.xib; sourceTree = "<group>"; };
+		F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendHistorySendViewCell.xib; sourceTree = "<group>"; };
 		F8367C9E21FAECF200EBA91E /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		F8485CF621FA11BB003C935C /* FriendHistory.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FriendHistory.storyboard; sourceTree = "<group>"; };
 		F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistoryViewController.swift; sourceTree = "<group>"; };
@@ -160,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				4998128721F9D8CD000DB7B2 /* Storyboards */,
+				DBF4CF1A21FBE8C3001536A8 /* Input */,
 				DBF4CF0621FB0B31001536A8 /* Home */,
 				DBF4CF0721FB0C44001536A8 /* FriendHistory */,
 				DBF4CF0521FB0B30001536A8 /* Friends */,
@@ -186,6 +193,7 @@
 				4998128D21F9D994000DB7B2 /* Notification.storyboard */,
 				4998128F21F9D99C000DB7B2 /* Setting.storyboard */,
 				F8485CF621FA11BB003C935C /* FriendHistory.storyboard */,
+				DBF4CF1821FBE843001536A8 /* Input.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -193,17 +201,18 @@
 		4998128821F9D8F6000DB7B2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */,
-				DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */,
-				496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */,
 				496683B821FAB294003FBA5B /* UIColor+Extensions.swift */,
-				496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */,
 				F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */,
+				49C0850B21FB092E0060B02C /* UIStoryboard+Extensions.swift */,
+				496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */,
+				DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */,
+				DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */,
+				49C0850D21FB10020060B02C /* UIViewController+Storyboard.swift */,
+				496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */,
+				49C0850921FAF6AA0060B02C /* UIView+Animation.swift */,
+				DBF4CF0821FB8452001536A8 /* UIView+InitFromXib.swift */,
 				49C084E921FACE260060B02C /* UITableView+Extensions.swift */,
 				49C0850321FAE1600060B02C /* UICollectionView+Extensions.swift */,
-				49C0850921FAF6AA0060B02C /* UIView+Animation.swift */,
-				49C0850B21FB092E0060B02C /* UIStoryboard+Extensions.swift */,
-				49C0850D21FB10020060B02C /* UIViewController+Storyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -252,12 +261,20 @@
 			isa = PBXGroup;
 			children = (
 				F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */,
-				F8367C9921FACC2800EBA91E /* FriendHistoryReceiveView.xib */,
+				F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */,
 				F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */,
-				F8367C9B21FAD0EF00EBA91E /* FriendHistorySendView.xib */,
+				F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */,
 				F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */,
 			);
 			path = FriendHistory;
+			sourceTree = "<group>";
+		};
+		DBF4CF1A21FBE8C3001536A8 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				DBF4CF1B21FBE976001536A8 /* InputViewController.swift */,
+			);
+			path = Input;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,13 +335,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveView.xib in Resources */,
+				F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib in Resources */,
 				4998127B21F9D7B6000DB7B2 /* LaunchScreen.storyboard in Resources */,
 				F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */,
-				F8367C9C21FAD0EF00EBA91E /* FriendHistorySendView.xib in Resources */,
+				F8367C9C21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib in Resources */,
 				4998128C21F9D98A000DB7B2 /* Friends.storyboard in Resources */,
 				49C0850221FADE640060B02C /* HolidayInputViewCell.xib in Resources */,
 				49C084FE21FADDBB0060B02C /* HolidayViewCell.xib in Resources */,
+				DBF4CF1921FBE843001536A8 /* Input.storyboard in Resources */,
 				4998129021F9D99C000DB7B2 /* Setting.storyboard in Resources */,
 				49C0850821FAF2810060B02C /* UpcomingEventViewCell.xib in Resources */,
 				4998127821F9D7B6000DB7B2 /* Assets.xcassets in Resources */,
@@ -346,6 +364,7 @@
 				DBF4CEFE21FAE59B001536A8 /* UIViewController+Alert.swift in Sources */,
 				496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */,
 				F8367C9F21FAECF200EBA91E /* History.swift in Sources */,
+				DBF4CF1C21FBE976001536A8 /* InputViewController.swift in Sources */,
 				4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */,
 				496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */,
 				F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */,
@@ -361,6 +380,7 @@
 				4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */,
 				49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */,
 				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,
+				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
 				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,
 				49C0850A21FAF6AA0060B02C /* UIView+Animation.swift in Sources */,

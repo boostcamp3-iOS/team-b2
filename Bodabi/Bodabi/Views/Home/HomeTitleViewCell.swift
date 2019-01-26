@@ -12,20 +12,20 @@ class HomeTitleViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var sortingButton: UIButton!
+    @IBOutlet weak var addHolidayButton: UIButton!
     
     public var type: HomeViewController.Section = .myHoliday {
         didSet {
             setUpUI(type)
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
     
     private func setUpUI(_ type: HomeViewController.Section) {
@@ -34,7 +34,7 @@ class HomeTitleViewCell: UITableViewCell {
         switch type {
         case .myHoliday:
             sortingButton.isHidden = true
-        case .friendsHistory:
+        case .upcomingEvent:
             sortingButton.isHidden = false
         default:
             break
