@@ -12,6 +12,12 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    var addedHoliday: String? {
+        didSet {
+            print(addedHoliday ?? "")
+        }
+    }
+    
     enum Section: Int, CaseIterable {
         case myHoliday
         case holidays
