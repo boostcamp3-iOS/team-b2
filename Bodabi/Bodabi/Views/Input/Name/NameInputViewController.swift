@@ -39,7 +39,7 @@ class NameInputViewController: UIViewController {
             guideLabel.text = "새로운 경조사의\n이름을 입력해주세요"
         case .addUpcomingEventAtHome,
              .addFriendAtHoliday:
-            guideLabel.text = "친구의 이름이\n무엇입니까?"
+            guideLabel.text = "친구의 이름이\n무엇인가요?"
         default:
             break
         }
