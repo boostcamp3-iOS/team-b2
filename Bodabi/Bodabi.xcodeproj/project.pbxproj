@@ -39,7 +39,12 @@
 		DBF4CEFE21FAE59B001536A8 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */; };
 		DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF0821FB8452001536A8 /* UIView+InitFromXib.swift */; };
 		DBF4CF1921FBE843001536A8 /* Input.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBF4CF1821FBE843001536A8 /* Input.storyboard */; };
-		DBF4CF1C21FBE976001536A8 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF1B21FBE976001536A8 /* InputViewController.swift */; };
+		DBF4CF2921FC42D7001536A8 /* EntryRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF2821FC42D7001536A8 /* EntryRoute.swift */; };
+		DBF4CF3421FC5405001536A8 /* HolidayInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF3321FC5405001536A8 /* HolidayInputViewController.swift */; };
+		DBF4CF3621FC5418001536A8 /* NameInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF3521FC5418001536A8 /* NameInputViewController.swift */; };
+		DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF3721FC5429001536A8 /* ItemInputViewController.swift */; };
+		DBF4CF3A21FC5436001536A8 /* DateInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF3921FC5436001536A8 /* DateInputViewController.swift */; };
+		DBF4CF3C21FC546B001536A8 /* HolidayInputViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF3B21FC546B001536A8 /* HolidayInputViewCell.swift */; };
 		F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */; };
 		F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */; };
 		F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */; };
@@ -85,7 +90,12 @@
 		DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		DBF4CF0821FB8452001536A8 /* UIView+InitFromXib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+InitFromXib.swift"; sourceTree = "<group>"; };
 		DBF4CF1821FBE843001536A8 /* Input.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Input.storyboard; sourceTree = "<group>"; };
-		DBF4CF1B21FBE976001536A8 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
+		DBF4CF2821FC42D7001536A8 /* EntryRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRoute.swift; sourceTree = "<group>"; };
+		DBF4CF3321FC5405001536A8 /* HolidayInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayInputViewController.swift; sourceTree = "<group>"; };
+		DBF4CF3521FC5418001536A8 /* NameInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameInputViewController.swift; sourceTree = "<group>"; };
+		DBF4CF3721FC5429001536A8 /* ItemInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInputViewController.swift; sourceTree = "<group>"; };
+		DBF4CF3921FC5436001536A8 /* DateInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInputViewController.swift; sourceTree = "<group>"; };
+		DBF4CF3B21FC546B001536A8 /* HolidayInputViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayInputViewCell.swift; sourceTree = "<group>"; };
 		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
 		F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistorySendViewCell.swift; sourceTree = "<group>"; };
 		F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendHistoryReceiveViewCell.xib; sourceTree = "<group>"; };
@@ -272,9 +282,46 @@
 		DBF4CF1A21FBE8C3001536A8 /* Input */ = {
 			isa = PBXGroup;
 			children = (
-				DBF4CF1B21FBE976001536A8 /* InputViewController.swift */,
+				DBF4CF2821FC42D7001536A8 /* EntryRoute.swift */,
+				DBF4CF3221FC5269001536A8 /* Holiday */,
+				DBF4CF3121FC5268001536A8 /* Name */,
+				DBF4CF3021FC5267001536A8 /* Item */,
+				DBF4CF2F21FC5265001536A8 /* Date */,
 			);
 			path = Input;
+			sourceTree = "<group>";
+		};
+		DBF4CF2F21FC5265001536A8 /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				DBF4CF3921FC5436001536A8 /* DateInputViewController.swift */,
+			);
+			path = Date;
+			sourceTree = "<group>";
+		};
+		DBF4CF3021FC5267001536A8 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				DBF4CF3721FC5429001536A8 /* ItemInputViewController.swift */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		DBF4CF3121FC5268001536A8 /* Name */ = {
+			isa = PBXGroup;
+			children = (
+				DBF4CF3521FC5418001536A8 /* NameInputViewController.swift */,
+			);
+			path = Name;
+			sourceTree = "<group>";
+		};
+		DBF4CF3221FC5269001536A8 /* Holiday */ = {
+			isa = PBXGroup;
+			children = (
+				DBF4CF3321FC5405001536A8 /* HolidayInputViewController.swift */,
+				DBF4CF3B21FC546B001536A8 /* HolidayInputViewCell.swift */,
+			);
+			path = Holiday;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,12 +411,13 @@
 				DBF4CEFE21FAE59B001536A8 /* UIViewController+Alert.swift in Sources */,
 				496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */,
 				F8367C9F21FAECF200EBA91E /* History.swift in Sources */,
-				DBF4CF1C21FBE976001536A8 /* InputViewController.swift in Sources */,
 				4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */,
 				496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */,
+				DBF4CF3A21FC5436001536A8 /* DateInputViewController.swift in Sources */,
 				F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */,
 				DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */,
 				496683C021FAC662003FBA5B /* HomeTitleViewCell.swift in Sources */,
+				DBF4CF3621FC5418001536A8 /* NameInputViewController.swift in Sources */,
 				496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */,
 				4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */,
 				49C084EA21FACE260060B02C /* UITableView+Extensions.swift in Sources */,
@@ -381,13 +429,17 @@
 				49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */,
 				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,
 				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
+				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
 				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,
 				49C0850A21FAF6AA0060B02C /* UIView+Animation.swift in Sources */,
+				DBF4CF2921FC42D7001536A8 /* EntryRoute.swift in Sources */,
 				49C0850121FADE640060B02C /* HolidayInputViewCell.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
+				DBF4CF3421FC5405001536A8 /* HolidayInputViewController.swift in Sources */,
+				DBF4CF3C21FC546B001536A8 /* HolidayInputViewCell.swift in Sources */,
 				F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

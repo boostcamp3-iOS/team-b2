@@ -62,9 +62,11 @@ class HomeViewController: UIViewController {
     
     @objc func touchUpAddHolidaybutton(_ sender: UIButton) {
         let viewController = storyboard(.input)
-            .instantiateViewController(ofType: InputViewController.self)
+            .instantiateViewController(ofType: HolidayInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
         
+        viewController.delegate = self
+        viewController.entryRoute = .addHolidayAtHome
         self.present(navController, animated: true, completion: nil)
     }
 }

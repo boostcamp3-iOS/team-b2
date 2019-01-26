@@ -6,43 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes>
-        <!--Input-->
-        <scene sceneID="4G6-gT-jsj">
-            <objects>
-                <viewController storyboardIdentifier="InputViewController" id="mZk-zd-7Bk" customClass="InputViewController" customModule="Bodabi" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="92U-83-aRq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="오늘중으로 업데이트 예정입니다. ^^" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zoq-Wy-SHE">
-                                <rect key="frame" x="68" y="323" width="239" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="9dQ-wd-9jH"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Input" id="ADV-zE-IbE">
-                        <barButtonItem key="rightBarButtonItem" image="addButton" id="Gon-rh-wNR">
-                            <connections>
-                                <action selector="dismissInputView:" destination="mZk-zd-7Bk" id="RBI-zi-mg6"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tir-mg-atI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2124" y="108.39580209895054"/>
-        </scene>
-    </scenes>
-    <resources>
-        <image name="addButton" width="20" height="19"/>
-    </resources>
+    <scenes/>
 </document>
