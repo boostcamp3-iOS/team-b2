@@ -38,7 +38,7 @@ extension MyHolidaysViewCell: UICollectionViewDelegate {
     private func setUpUI() {
         collectionView.delegate = self; collectionView.dataSource = self
         
-        let cells = [HolidayViewCell.self, HolidayInputViewCell.self]
+        let cells = [HolidayViewCell.self, MyHolidayInputViewCell.self]
         collectionView.register(cells)
     }
 }
@@ -59,7 +59,7 @@ extension MyHolidaysViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let section = Section(rawValue: indexPath.section),
             section == .holidays else {
-                let cell = collectionView.dequeue(HolidayInputViewCell.self, for: indexPath)
+                let cell = collectionView.dequeue(MyHolidayInputViewCell.self, for: indexPath)
                 return cell
         }
         

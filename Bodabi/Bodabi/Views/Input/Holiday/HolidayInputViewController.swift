@@ -49,14 +49,13 @@ extension HolidayInputViewController: UITableViewDataSource {
         return myHolidaies.count
     }
     
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: "holidayCellId", for: indexPath) as? HolidayInputViewCell else { return UITableViewCell() }
-//        
-//        cell.holidayTitle.text = myHolidaies[indexPath.row]
-//        
-//        return cell
-//    }
-    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "holidayCellId", for: indexPath) as? HolidayInputViewCell else { return UITableViewCell() }
+        
+        cell.holidayTitle.text = myHolidaies[indexPath.row]
+        
+        return cell
+    }
 }
 
 extension HolidayInputViewController: UITableViewDelegate {

@@ -69,6 +69,16 @@ class HomeViewController: UIViewController {
         viewController.entryRoute = .addHolidayAtHome
         self.present(navController, animated: true, completion: nil)
     }
+    
+    @objc func touchUpAddUpcomingDatebutton(_ sender: UIButton) {
+        let viewController = storyboard(.input)
+            .instantiateViewController(ofType: NameInputViewController.self)
+        let navController = UINavigationController(rootViewController: viewController)
+        
+        viewController.delegate = self
+        viewController.entryRoute = .addUpcomingEventAtHome
+        self.present(navController, animated: true, completion: nil)
+    }
 }
 
 extension HomeViewController: UITableViewDelegate {
@@ -116,6 +126,7 @@ extension HomeViewController: UITableViewDataSource {
             return cell
         case .upcomingEvent:
             let cell = tableView.dequeue(HomeTitleViewCell.self, for: indexPath)
+            cell.addHolidayButton.addTarget(self, action: #selector(touchUpAddUpcomingDatebutton(_:)), for: .touchUpInside)
             cell.type = section
             return cell
         case .holidays:
