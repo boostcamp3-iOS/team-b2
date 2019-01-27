@@ -29,6 +29,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="25" minY="0.0" maxX="25" maxY="0.0"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f75-ar-m1V">
+                                <rect key="frame" x="155.5" y="473" width="64" height="65"/>
+                                <state key="normal" image="ic_floatingButton"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -38,7 +42,9 @@
                             <constraint firstItem="8n0-DD-S3D" firstAttribute="leading" secondItem="CYP-7a-ICk" secondAttribute="leading" id="ivD-9J-wO2"/>
                             <constraint firstItem="zdh-xO-tiw" firstAttribute="leading" secondItem="CYP-7a-ICk" secondAttribute="leading" id="nW0-dV-21g"/>
                             <constraint firstItem="zdh-xO-tiw" firstAttribute="trailing" secondItem="CYP-7a-ICk" secondAttribute="trailing" id="pzt-0v-puL"/>
+                            <constraint firstItem="f75-ar-m1V" firstAttribute="centerX" secondItem="CYP-7a-ICk" secondAttribute="centerX" id="sbk-d3-2mw"/>
                             <constraint firstItem="zdh-xO-tiw" firstAttribute="top" secondItem="CYP-7a-ICk" secondAttribute="top" id="zEL-u8-DP2"/>
+                            <constraint firstItem="CYP-7a-ICk" firstAttribute="bottom" secondItem="f75-ar-m1V" secondAttribute="bottom" constant="16" id="zuh-Fd-cbN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CYP-7a-ICk"/>
                     </view>
@@ -89,5 +95,6 @@
     </scenes>
     <resources>
         <image name="icSort" width="25" height="25"/>
+        <image name="ic_floatingButton" width="64" height="65"/>
     </resources>
 </document>

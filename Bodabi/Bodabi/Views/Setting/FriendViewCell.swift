@@ -34,4 +34,8 @@ class FriendViewCell: UITableViewCell {
         sender.setScaleAnimation(scale: Const.buttonAnimationScale,
                                  duration: Const.buttonAnimationDuration)
     }
+    
+    public func configure(line hidden: Bool) {
+        bottomView.isHidden = hidden
+    }
 }

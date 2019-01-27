@@ -18,7 +18,7 @@ class FriendsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     struct Const {
-        static let bottomInset: CGFloat = 80.0
+        static let bottomInset: CGFloat = 90.0
     }
     
     var friends = 0...15
@@ -92,6 +92,7 @@ extension FriendsViewController: UITableViewDataSource {
              .friends:
             let cell = tableView.dequeue(FriendViewCell.self, for: indexPath)
             cell.nameLabel.text = "김민수"
+            cell.configure(line: indexPath.row == (friends.count - 1))
             return cell
         }
     }
