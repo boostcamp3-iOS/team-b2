@@ -19,16 +19,16 @@ class HomeViewController: UIViewController {
     }
     
     enum Section: Int, CaseIterable {
-        case myHoliday
+        case holidaysHeader
         case holidays
-        case upcomingEvent
+        case friendEventsHeader
         case friendEvents
         
         public var title: String {
             switch self {
-            case .myHoliday:
+            case .holidaysHeader:
                 return "나의 경조사"
-            case .upcomingEvent:
+            case .friendEventsHeader:
                 return "다가오는 이벤트"
             default:
                 return .init()
@@ -38,7 +38,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initNavigationBar()
+        
+        setUpUI()
         initTableView()
     }
     
@@ -54,11 +55,8 @@ class HomeViewController: UIViewController {
         getBackUI()
     }
     
-    private func initNavigationBar() {
-        navigationController?.navigationBar.clear()
-    }
-    
     private func setUpUI() {
+        navigationController?.navigationBar.clear()
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -125,12 +123,12 @@ extension HomeViewController: UITableViewDataSource {
         guard let section = Section(rawValue: indexPath.section) else { return UITableViewCell() }
         
         switch section {
-        case .myHoliday:
+        case .holidaysHeader:
             let cell = tableView.dequeue(HomeTitleViewCell.self, for: indexPath)
             cell.addHolidayButton.addTarget(self, action: #selector(touchUpAddHolidaybutton(_:)), for: .touchUpInside)
             cell.type = section
             return cell
-        case .upcomingEvent:
+        case .friendEventsHeader:
             let cell = tableView.dequeue(HomeTitleViewCell.self, for: indexPath)
             cell.addHolidayButton.addTarget(self, action: #selector(touchUpAddUpcomingDatebutton(_:)), for: .touchUpInside)
             cell.type = section

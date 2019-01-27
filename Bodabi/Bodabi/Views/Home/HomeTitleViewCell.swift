@@ -14,7 +14,7 @@ class HomeTitleViewCell: UITableViewCell {
     @IBOutlet weak var sortingButton: UIButton!
     @IBOutlet weak var addHolidayButton: UIButton!
     
-    public var type: HomeViewController.Section = .myHoliday {
+    public var type: HomeViewController.Section = .holidaysHeader {
         didSet {
             setUpUI(type)
         }
@@ -32,9 +32,9 @@ class HomeTitleViewCell: UITableViewCell {
         titleLabel.text = type.title
         
         switch type {
-        case .myHoliday:
+        case .holidaysHeader:
             sortingButton.isHidden = true
-        case .upcomingEvent:
+        case .friendEventsHeader:
             sortingButton.isHidden = false
         default:
             break
