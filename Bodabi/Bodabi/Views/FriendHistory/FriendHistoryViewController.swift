@@ -32,16 +32,13 @@ class FriendHistoryViewController: UIViewController {
     // MARK: - Initialization Methods
     
     private func initNavigationBar() {
-        if let currentNavigationController = navigationController {
-            let navigationBar = currentNavigationController.navigationBar
-            navigationBar.clear()
-            currentNavigationController.view.backgroundColor = .clear
-        }
+        navigationController?.view.backgroundColor = .clear
     }
     
     private func initTableView() {
-        tableView.register(UINib(nibName: "FriendHistoryReceiveView", bundle: nil), forCellReuseIdentifier: FriendHistoryReceiveViewCell.reuseIdentifier)
-        tableView.register(UINib(nibName: "FriendHistorySendView", bundle: nil), forCellReuseIdentifier: FriendHistorySendViewCell.reuseIdentifier)
+        let cells = [FriendHistoryReceiveViewCell.self, FriendHistorySendViewCell.self]
+        tableView.register(cells)
+    
     }
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HolidayInputViewCell: UICollectionViewCell {
+class MyHolidayInputViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

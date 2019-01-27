@@ -6,7 +6,6 @@
 //  Copyright © 2019년 LeeHyeJin. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 extension UIViewController {
@@ -17,6 +16,7 @@ extension UIViewController {
         case noti = "Notification"
         case setting = "Setting"
         case friendHistory = "FriendHistory"
+        case input = "Input"
     }
     
     func storyboard(_ type: StoryboardType) -> UIStoryboard {
