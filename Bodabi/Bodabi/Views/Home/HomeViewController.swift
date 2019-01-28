@@ -68,8 +68,7 @@ class HomeViewController: UIViewController {
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: HolidayInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
-        
-//        viewController.delegate = self
+    
         viewController.entryRoute = .addHolidayAtHome
         self.present(navController, animated: true, completion: nil)
     }
@@ -79,7 +78,6 @@ class HomeViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
         
-//        viewController.delegate = self
         viewController.entryRoute = .addUpcomingEventAtHome
         self.present(navController, animated: true, completion: nil)
     }
@@ -135,6 +133,7 @@ extension HomeViewController: UITableViewDataSource {
             return cell
         case .holidays:
             let cell = tableView.dequeue(MyHolidaysViewCell.self, for: indexPath)
+            cell.collectionView.delegate = self
             return cell
         case .friendEvents:
             let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
@@ -142,3 +141,14 @@ extension HomeViewController: UITableViewDataSource {
         }
     }
 }
+
+extension HomeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let viewController = storyboard(.holiday)
+            .instantiateViewController(ofType: HolidayViewController.self)
+        
+        viewController.entryRoute = .addHistoryAtFriendHistory
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+

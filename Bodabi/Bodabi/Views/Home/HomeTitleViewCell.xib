@@ -32,6 +32,7 @@
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWd-Nu-3QW">
                         <rect key="frame" x="276" y="27.5" width="33" height="42"/>
+                        <color key="tintColor" red="0.92638254170000001" green="0.42560976740000001" blue="0.30080345269999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="5" maxY="10"/>
                         <state key="normal" image="ic_sort"/>
                     </button>

@@ -85,31 +85,6 @@ class HolidayInputViewController: UIViewController {
         }
     }
     
-//    @IBAction func touchUpNextButton(_ sender: UIButton) {
-//        if selectedHoliday == "+" {
-//            let viewController = storyboard(.input)
-//                .instantiateViewController(ofType: NameInputViewController.self)
-//        
-//            viewController.entryRoute = entryRoute
-//            navigationController?.pushViewController(viewController, animated: true)
-//        } else {
-//            guard let entryRoute = entryRoute else { return }
-//            
-//            switch entryRoute {
-//            case .addHolidayAtHome:
-//                self.dismiss(animated: true, completion: nil)
-//            case .addUpcomingEventAtHome:
-//                let viewController = storyboard(.input)
-//                    .instantiateViewController(ofType: DateInputViewController.self)
-//            
-//                viewController.entryRoute = entryRoute
-//                navigationController?.pushViewController(viewController, animated: true)
-//            default:
-//                break
-//            }
-//        }
-//    }
-    
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
     }

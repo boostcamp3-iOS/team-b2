@@ -11,30 +11,40 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="90" id="tcX-cy-aul">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ThanksFriendViewCell" rowHeight="45" id="tcX-cy-aul" customClass="ThanksFriendViewCell" customModule="Bodabi" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tcX-cy-aul" id="Hik-ob-yMR">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="이름" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMO-Zg-7ni">
-                        <rect key="frame" x="16" y="34" width="74" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMO-Zg-7ni">
+                        <rect key="frame" x="16" y="11" width="29.5" height="23"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="item" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5zQ-po-eC0">
-                        <rect key="frame" x="243" y="34" width="116" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="item" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5zQ-po-eC0">
+                        <rect key="frame" x="325.5" y="11" width="33.5" height="23"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="XMO-Zg-7ni" firstAttribute="top" secondItem="Hik-ob-yMR" secondAttribute="topMargin" id="JTv-vF-xgh"/>
+                    <constraint firstItem="5zQ-po-eC0" firstAttribute="top" secondItem="Hik-ob-yMR" secondAttribute="topMargin" id="Tnq-Er-AGL"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="XMO-Zg-7ni" secondAttribute="bottom" id="fzh-Bv-oQ5"/>
+                    <constraint firstItem="XMO-Zg-7ni" firstAttribute="leading" secondItem="Hik-ob-yMR" secondAttribute="leadingMargin" id="nvl-m9-3BI"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="5zQ-po-eC0" secondAttribute="bottom" id="vOx-hO-Eqx"/>
+                    <constraint firstItem="5zQ-po-eC0" firstAttribute="trailing" secondItem="Hik-ob-yMR" secondAttribute="trailingMargin" id="vha-M9-PVC"/>
+                </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="237.59999999999999" y="23.388305847076463"/>
+            <connections>
+                <outlet property="itemLabel" destination="5zQ-po-eC0" id="QS3-sv-tPk"/>
+                <outlet property="nameLabel" destination="XMO-Zg-7ni" id="l1x-Xl-rNQ"/>
+            </connections>
+            <point key="canvasLocation" x="237.59999999999999" y="3.1484257871064472"/>
         </tableViewCell>
     </objects>
 </document>
