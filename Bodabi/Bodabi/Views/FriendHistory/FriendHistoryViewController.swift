@@ -24,9 +24,14 @@ class FriendHistoryViewController: UIViewController {
         super.viewDidLoad()
     
         histories = History.dummyHistories
-        tableView.dataSource = self
         initNavigationBar()
         initTableView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.popToRootViewController(animated: false)
     }
     
     // MARK: - Initialization Methods
@@ -36,6 +41,7 @@ class FriendHistoryViewController: UIViewController {
     }
     
     private func initTableView() {
+        tableView.dataSource = self
         let cells = [FriendHistoryReceiveViewCell.self, FriendHistorySendViewCell.self]
         tableView.register(cells)
     
@@ -51,20 +57,17 @@ extension FriendHistoryViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendHistoryReceiveViewCell.reuseIdentifier, for: indexPath) as? FriendHistoryReceiveViewCell else {
-//            return UITableViewCell()
-//        }
-//        return cell
-        let item = histories[indexPath.row]
-        switch item.isTaken {
+
+        let history = histories[indexPath.row]
+        switch history.isTaken {
         case true:
             if let cell = tableView.dequeueReusableCell(withIdentifier: FriendHistoryReceiveViewCell.reuseIdentifier, for: indexPath) as? FriendHistoryReceiveViewCell {
-                cell.history = item
+                cell.history = history
                 return cell
             }
         case false:
             if let cell = tableView.dequeueReusableCell(withIdentifier: FriendHistorySendViewCell.reuseIdentifier, for: indexPath) as? FriendHistorySendViewCell {
-                cell.history = item
+                cell.history = history
                 return cell
             }
         }

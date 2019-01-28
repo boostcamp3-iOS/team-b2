@@ -31,11 +31,11 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Holiday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GG7-Nv-0Ot">
-                        <rect key="frame" x="108" y="16" width="55" height="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Holiday" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GG7-Nv-0Ot">
+                        <rect key="frame" x="108" y="16" width="100" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="JRZ-Pa-YlP"/>
-                            <constraint firstAttribute="width" constant="55" id="MDT-SU-zIt"/>
+                            <constraint firstAttribute="width" constant="100" id="MDT-SU-zIt"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
