@@ -11,15 +11,15 @@ import UIKit
 
 extension UIView {
     func setScaleAnimation(scale: CGFloat,
-                           duration: TimeInterval) {
-        let time = duration / 2
-        
-        UIView.animate(withDuration: time, animations: { [weak self] in
-            self?.transform = CGAffineTransform(scaleX: scale, y: scale)
-            }, completion:{ _ in
-                UIView.animate(withDuration: time, animations: { [weak self] in
-                    self?.transform = CGAffineTransform.identity
-                })
-        })
+                           duration: TimeInterval,
+                           repeat: Float = 1.0) {
+        let pulse = CASpringAnimation(keyPath: "transform.scale")
+        pulse.duration = duration
+        pulse.fromValue = 1.0
+        pulse.toValue = scale
+        pulse.autoreverses = true
+        pulse.repeatCount = 1
+
+        layer.add(pulse, forKey: nil)
     }
 }

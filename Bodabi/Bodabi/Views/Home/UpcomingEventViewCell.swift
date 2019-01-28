@@ -16,8 +16,8 @@ class UpcomingEventViewCell: UITableViewCell {
     @IBOutlet weak var dDayLabel: UILabel!
     
     struct Const {
-        static let buttonAnimationScale: CGFloat = 1.18
-        static let buttonAnimationDuration: TimeInterval = 0.18
+        static let buttonAnimationScale: CGFloat = 1.35
+        static let buttonAnimationDuration: TimeInterval = 0.12
     }
     
     override func awakeFromNib() {

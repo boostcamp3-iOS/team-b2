@@ -59,7 +59,7 @@
                                 <rect key="frame" x="278" y="0.0" width="45" height="45"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                 <state key="normal" image="ic_emptyStar"/>
-                                <state key="selected" image="ic_fullStar"/>
+                                <state key="selected" image="ic_fullLineStar"/>
                                 <connections>
                                     <action selector="touchUpAddFavoriteButton:" destination="TKY-8z-Vqb" eventType="touchUpInside" id="sv1-Im-2rP"/>
                                 </connections>
@@ -109,7 +109,7 @@
     </objects>
     <resources>
         <image name="ic_emptyStar" width="25" height="25"/>
-        <image name="ic_fullStar" width="27" height="27"/>
+        <image name="ic_fullLineStar" width="27" height="27"/>
         <image name="ic_leftArrow" width="25" height="19"/>
         <image name="oval" width="196" height="203"/>
     </resources>
