@@ -46,7 +46,6 @@
                                 </state>
                                 <connections>
                                     <action selector="touchUpNextButton:" destination="7Ym-fw-2xK" eventType="touchUpInside" id="d0H-qJ-gKN"/>
-                                    <action selector="touchUpNextButton:" destination="ywc-Xz-R2s" eventType="touchUpInside" id="hIk-kE-HaE"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -75,6 +74,7 @@
                         <outlet property="guideLabel" destination="2MN-mU-Z2j" id="xeB-6M-Pe0"/>
                         <outlet property="nameTextField" destination="A6P-2a-pwi" id="i0j-ZX-Huv"/>
                         <outlet property="nextButton" destination="N0p-Ij-zXx" id="gdN-te-AUY"/>
+                        <outlet property="textField" destination="A6P-2a-pwi" id="Gs9-uq-zyW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pq0-Bp-Os0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -90,7 +90,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0wR-4H-8V8">
-                                <rect key="frame" x="16" y="162" width="343" height="546"/>
+                                <rect key="frame" x="16" y="162" width="343" height="616"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="A5c-iT-0Hh">
                                     <rect key="frame" x="0.0" y="133" width="343" height="44"/>
@@ -98,7 +98,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="holidayCellId" rowHeight="105" id="D66-ib-WLs" customClass="HolidayInputViewCell" customModule="InsertScreenTest" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="holidayCellId" rowHeight="105" id="D66-ib-WLs" customClass="HolidayInputViewCell" customModule="Bodabi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="343" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="D66-ib-WLs" id="apA-rj-2Rm">
@@ -113,7 +113,6 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="touchUpHoildayButton:" destination="ywc-Xz-R2s" eventType="touchUpInside" id="8d4-SX-m6h"/>
                                                         <action selector="touchUpHoildayButton:" destination="D66-ib-WLs" eventType="touchUpInside" id="JSE-iF-QPz"/>
                                                     </connections>
                                                 </button>
@@ -126,9 +125,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="guideLabel" destination="4b3-uh-ebq" id="irC-RJ-IsP"/>
                                             <outlet property="holidaybutton" destination="REl-35-fwO" id="Cca-hk-4Ly"/>
-                                            <outlet property="nextButton" destination="mpd-rm-UHk" id="HGl-iZ-y6Z"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -142,32 +139,15 @@
                                 <color key="textColor" red="0.93349742889999998" green="0.50486880540000001" blue="0.39262455699999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mpd-rm-UHk">
-                                <rect key="frame" x="16" y="708" width="343" height="70"/>
-                                <color key="backgroundColor" red="0.92638254170000001" green="0.42560976740000001" blue="0.30080345269999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="Ssb-4W-r6E"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                <state key="normal" title="다음">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchUpNextButton:" destination="ywc-Xz-R2s" eventType="touchUpInside" id="6oH-nF-hvD"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="S9o-YN-AFy" firstAttribute="bottom" secondItem="mpd-rm-UHk" secondAttribute="bottom" id="4IT-8R-Bgd"/>
                             <constraint firstItem="4b3-uh-ebq" firstAttribute="leading" secondItem="S9o-YN-AFy" secondAttribute="leading" constant="16" id="4jt-wr-wcA"/>
-                            <constraint firstItem="mpd-rm-UHk" firstAttribute="top" secondItem="0wR-4H-8V8" secondAttribute="bottom" id="SmL-Bi-zdz"/>
+                            <constraint firstItem="0wR-4H-8V8" firstAttribute="bottom" secondItem="S9o-YN-AFy" secondAttribute="bottom" id="4xW-6A-dJD"/>
                             <constraint firstItem="0wR-4H-8V8" firstAttribute="top" secondItem="4b3-uh-ebq" secondAttribute="bottom" constant="24" id="ZrJ-Rx-ADE"/>
                             <constraint firstItem="0wR-4H-8V8" firstAttribute="leading" secondItem="S9o-YN-AFy" secondAttribute="leading" constant="16" id="hCz-1I-8Dy"/>
                             <constraint firstItem="4b3-uh-ebq" firstAttribute="top" secondItem="S9o-YN-AFy" secondAttribute="top" constant="20" id="plO-Dc-wAy"/>
-                            <constraint firstItem="mpd-rm-UHk" firstAttribute="leading" secondItem="S9o-YN-AFy" secondAttribute="leading" constant="16" id="u4u-4k-UIX"/>
                             <constraint firstItem="S9o-YN-AFy" firstAttribute="trailing" secondItem="0wR-4H-8V8" secondAttribute="trailing" constant="16" id="vyc-5d-fLU"/>
-                            <constraint firstItem="S9o-YN-AFy" firstAttribute="trailing" secondItem="mpd-rm-UHk" secondAttribute="trailing" constant="16" id="yQs-2N-pN9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="S9o-YN-AFy"/>
                     </view>
@@ -180,6 +160,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="guideLabel" destination="4b3-uh-ebq" id="8AR-cU-II9"/>
+                        <outlet property="tableView" destination="0wR-4H-8V8" id="IcA-sE-Jgz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JY3-tf-t5d" sceneMemberID="firstResponder"/>
@@ -202,7 +183,7 @@
                                 </segments>
                                 <color key="tintColor" red="0.92638254170000001" green="0.42560976740000001" blue="0.30080345269999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <action selector="switchViews:" destination="wKl-B5-SVB" eventType="valueChanged" id="9SD-zU-b64"/>
+                                    <action selector="switchItem:" destination="wKl-B5-SVB" eventType="valueChanged" id="K4b-7L-iz7"/>
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="금액" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TOP-0y-9Bl">
@@ -212,7 +193,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eni-N5-hpT">
-                                <rect key="frame" x="16" y="268.66666666666674" width="343" height="489.33333333333326"/>
+                                <rect key="frame" x="16" y="268.66666666666674" width="343" height="439.33333333333326"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4YE-35-fhN">
                                     <size key="itemSize" width="50" height="50"/>
@@ -235,17 +216,39 @@
                                 <rect key="frame" x="16" y="184.66666666666666" width="343" height="75.999999999999972"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <connections>
+                                    <action selector="textFieldDidChanging:" destination="wKl-B5-SVB" eventType="editingChanged" id="kkS-qx-kuY"/>
+                                    <outlet property="delegate" destination="wKl-B5-SVB" id="OxZ-RB-scB"/>
+                                </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esE-17-svj">
+                                <rect key="frame" x="16" y="708" width="343" height="70"/>
+                                <color key="backgroundColor" red="0.92638254170000001" green="0.42560976740000001" blue="0.30080345269999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="9hb-cT-2td"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <state key="normal" title="완료">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchUpNextButton:" destination="wKl-B5-SVB" eventType="touchUpInside" id="hzf-Xg-9N4"/>
+                                    <action selector="touchUpNextButton:" destination="7Ym-fw-2xK" eventType="touchUpInside" id="jGx-LU-9a4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="WtJ-9h-21M" firstAttribute="bottom" secondItem="eni-N5-hpT" secondAttribute="bottom" constant="20" id="3i3-by-s0e"/>
+                            <constraint firstItem="WtJ-9h-21M" firstAttribute="trailing" secondItem="esE-17-svj" secondAttribute="trailing" constant="16" id="8gz-Ur-HcS"/>
                             <constraint firstItem="hBR-Bf-Y2c" firstAttribute="top" secondItem="TOP-0y-9Bl" secondAttribute="bottom" constant="8" id="DNb-eu-GlA"/>
                             <constraint firstItem="TOP-0y-9Bl" firstAttribute="leading" secondItem="WtJ-9h-21M" secondAttribute="leading" constant="16" id="GEK-LD-ssu"/>
                             <constraint firstItem="WtJ-9h-21M" firstAttribute="trailing" secondItem="eni-N5-hpT" secondAttribute="trailing" constant="16" id="NE9-Bb-YKS"/>
                             <constraint firstItem="TOP-0y-9Bl" firstAttribute="top" secondItem="BOj-yW-bWf" secondAttribute="bottom" constant="8" id="Rpg-Ni-dPv"/>
                             <constraint firstItem="eni-N5-hpT" firstAttribute="top" secondItem="hBR-Bf-Y2c" secondAttribute="bottom" constant="8" id="co3-uk-7jP"/>
+                            <constraint firstItem="esE-17-svj" firstAttribute="bottom" secondItem="WtJ-9h-21M" secondAttribute="bottom" id="eIh-4U-ery"/>
+                            <constraint firstItem="esE-17-svj" firstAttribute="leading" secondItem="WtJ-9h-21M" secondAttribute="leading" constant="16" id="f12-UD-7dt"/>
+                            <constraint firstItem="esE-17-svj" firstAttribute="top" secondItem="eni-N5-hpT" secondAttribute="bottom" id="n4A-cN-D2b"/>
                             <constraint firstItem="BOj-yW-bWf" firstAttribute="top" secondItem="WtJ-9h-21M" secondAttribute="top" constant="20" id="oaN-yg-plz"/>
                             <constraint firstItem="eni-N5-hpT" firstAttribute="leading" secondItem="WtJ-9h-21M" secondAttribute="leading" constant="16" id="xLV-oq-Bli"/>
                             <constraint firstItem="BOj-yW-bWf" firstAttribute="centerX" secondItem="NNe-j0-NbO" secondAttribute="centerX" id="yBg-gD-lFm"/>
@@ -257,20 +260,20 @@
                     <navigationItem key="navigationItem" id="qUE-es-Zw6">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="addButton" id="V9G-Jd-OF6">
                             <connections>
-                                <action selector="dismissInputView:" destination="wKl-B5-SVB" id="DNC-pJ-dto"/>
+                                <action selector="dismissInputView:" destination="wKl-B5-SVB" id="eF1-Sd-2NQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="itemInputTextField" destination="hBR-Bf-Y2c" id="l5f-jo-mC8"/>
-                        <outlet property="itemTypeLabel" destination="TOP-0y-9Bl" id="ujH-pC-MP9"/>
-                        <outlet property="segmentedControl" destination="BOj-yW-bWf" id="ezq-XG-tG1"/>
-                        <outlet property="usedItemCollectionView" destination="eni-N5-hpT" id="T6S-42-5kF"/>
+                        <outlet property="itemInputTextField" destination="hBR-Bf-Y2c" id="mGF-pP-Ihu"/>
+                        <outlet property="itemTypeLabel" destination="TOP-0y-9Bl" id="eOa-26-vs2"/>
+                        <outlet property="nextButton" destination="esE-17-svj" id="ys9-MN-y3d"/>
+                        <outlet property="usedItemCollectionView" destination="eni-N5-hpT" id="xaK-kv-WXL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qvJ-zx-jv1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3207" y="1162"/>
+            <point key="canvasLocation" x="3205.5999999999999" y="1161.576354679803"/>
         </scene>
         <!--Date Input View Controller-->
         <scene sceneID="Dkc-dO-KWD">
@@ -285,6 +288,9 @@
                                 <date key="date" timeIntervalSinceReferenceDate="570206927.21307003">
                                     <!--2019-01-26 14:48:47 +0000-->
                                 </date>
+                                <connections>
+                                    <action selector="didDatePickerValueChaged:" destination="R9B-4A-5Wf" eventType="valueChanged" id="8Qf-48-57p"/>
+                                </connections>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="날짜를 선택해주세요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xmr-gX-lhI">
                                 <rect key="frame" x="15" y="143" width="200" height="30"/>
@@ -293,11 +299,38 @@
                                 <color key="textColor" red="0.93349742889999998" green="0.50486880540000001" blue="0.39262455699999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogR-1A-ayY">
+                                <rect key="frame" x="16" y="708" width="343" height="70"/>
+                                <color key="backgroundColor" red="0.92638254170000001" green="0.42560976740000001" blue="0.30080345269999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="2D5-BZ-OTt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <state key="normal" title="완료">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchUpNextButton:" destination="7Ym-fw-2xK" eventType="touchUpInside" id="SrZ-E6-i1A"/>
+                                    <action selector="touchUpNextButton:" destination="R9B-4A-5Wf" eventType="touchUpInside" id="fh8-it-4Vz"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNO-08-lb4">
+                                <rect key="frame" x="187.66666666666663" y="266" width="171.33333333333337" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="sla-P7-fya" firstAttribute="trailing" secondItem="ogR-1A-ayY" secondAttribute="trailing" constant="16" id="8vD-OT-mCC"/>
+                            <constraint firstItem="ogR-1A-ayY" firstAttribute="bottom" secondItem="sla-P7-fya" secondAttribute="bottom" id="Enp-T2-yFu"/>
                             <constraint firstItem="sla-P7-fya" firstAttribute="trailing" secondItem="AvS-3B-WhE" secondAttribute="trailing" constant="16" id="Fba-sz-WMd"/>
+                            <constraint firstItem="sla-P7-fya" firstAttribute="trailing" secondItem="YNO-08-lb4" secondAttribute="trailing" constant="16" id="Rah-dm-Sb7"/>
+                            <constraint firstItem="YNO-08-lb4" firstAttribute="leading" relation="lessThanOrEqual" secondItem="AvS-3B-WhE" secondAttribute="centerX" id="S3U-mY-jde"/>
                             <constraint firstItem="AvS-3B-WhE" firstAttribute="leading" secondItem="sla-P7-fya" secondAttribute="leading" constant="16" id="SVr-D1-h4a"/>
+                            <constraint firstItem="ogR-1A-ayY" firstAttribute="leading" secondItem="sla-P7-fya" secondAttribute="leading" constant="16" id="VPN-Mf-Qpt"/>
+                            <constraint firstItem="AvS-3B-WhE" firstAttribute="top" secondItem="YNO-08-lb4" secondAttribute="bottom" constant="8" id="XIu-CU-oRC"/>
                             <constraint firstItem="AvS-3B-WhE" firstAttribute="centerY" secondItem="ih9-Et-SMK" secondAttribute="centerY" id="fK9-Xv-LDn"/>
                             <constraint firstItem="AvS-3B-WhE" firstAttribute="centerX" secondItem="ih9-Et-SMK" secondAttribute="centerX" id="yIK-ea-LW1"/>
                         </constraints>
@@ -306,17 +339,19 @@
                     <navigationItem key="navigationItem" id="0XM-iW-8le">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="addButton" id="3Go-IC-n2z">
                             <connections>
-                                <action selector="dismissInputView:" destination="R9B-4A-5Wf" id="hg8-jN-mb2"/>
+                                <action selector="dismissInputView:" destination="R9B-4A-5Wf" id="2CT-Me-svs"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="datePicker" destination="AvS-3B-WhE" id="nKm-5j-p2k"/>
+                        <outlet property="dateLabel" destination="YNO-08-lb4" id="PDW-Gx-E3G"/>
+                        <outlet property="datePicker" destination="AvS-3B-WhE" id="ywe-3Z-OOV"/>
+                        <outlet property="nextButton" destination="ogR-1A-ayY" id="7cU-7a-v4m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h2N-Cg-5Cg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3207" y="1977"/>
+            <point key="canvasLocation" x="3205.5999999999999" y="1976.600985221675"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nG5-b0-d8x">

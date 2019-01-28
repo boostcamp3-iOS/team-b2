@@ -13,8 +13,11 @@ class NameInputViewController: UIViewController {
     @IBOutlet weak var guideLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var textField: UITextField!
     
-    weak var delegate: HomeViewController?
+    weak var addHolidayDelegate: HolidayInputViewController?
+    weak var homeDelegate: HolidayViewController?
+    
     var entryRoute: EntryRoute!
     var newHolidayName: String? {
         didSet {
@@ -27,6 +30,7 @@ class NameInputViewController: UIViewController {
         super.viewDidLoad()
         initGuideLabelText()
         initNavigationBar()
+        initTextField()
         initNextButton()
         initTapGesture()
     }
@@ -47,6 +51,31 @@ class NameInputViewController: UIViewController {
     
     private func initNavigationBar() {
         self.navigationController?.navigationBar.clear()
+        
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
+            
+            self.navigationItem.leftBarButtonItem = backButton
+        default:
+            break
+        }
+    }
+    
+    private func initTextField() {
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            textField.placeholder = "졸업식"
+        case .addUpcomingEventAtHome,
+             .addFriendAtHoliday:
+            textField.placeholder = "김철수"
+        default:
+            break
+        }
     }
     
     private func initNextButton() {
@@ -87,8 +116,6 @@ class NameInputViewController: UIViewController {
             default:
                 break
             }
-            
-            
         }
     }
     
@@ -106,8 +133,33 @@ class NameInputViewController: UIViewController {
     }
     
     @IBAction func touchUpNextButton(_ sender: UIButton) {
-        delegate?.addedHoliday = newHolidayName
-        self.dismiss(animated: true, completion: nil)
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            // 데이터 저장 후 dismiss
+            guard let newHoliday = newHolidayName else { return }
+            addHolidayDelegate?.myHolidaies.insert(newHoliday, at: 1)
+            self.dismiss(animated: true, completion: nil)
+        case .addUpcomingEventAtHome:
+            let viewController = storyboard(.input)
+                .instantiateViewController(ofType: HolidayInputViewController.self)
+            
+            viewController.entryRoute = entryRoute
+            self.navigationController?.pushViewController(viewController, animated: true)
+        case .addFriendAtHoliday:
+            let viewController = storyboard(.input)
+                .instantiateViewController(ofType: ItemInputViewController.self)
+            
+            viewController.entryRoute = entryRoute
+            self.navigationController?.pushViewController(viewController, animated: true)
+        default:
+            break
+        }
+    }
+    
+    @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
@@ -116,7 +168,6 @@ class NameInputViewController: UIViewController {
 }
 
 extension NameInputViewController: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         newHolidayName = textField.text
         self.view.endEditing(true)

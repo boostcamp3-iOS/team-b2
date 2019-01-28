@@ -17,6 +17,7 @@ extension UIViewController {
         case setting = "Setting"
         case friendHistory = "FriendHistory"
         case input = "Input"
+        case holiday = "Holiday"
     }
     
     func storyboard(_ type: StoryboardType) -> UIStoryboard {

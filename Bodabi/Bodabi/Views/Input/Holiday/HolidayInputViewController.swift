@@ -11,20 +11,25 @@ import UIKit
 class HolidayInputViewController: UIViewController {
     
     @IBOutlet weak var guideLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     weak var delegate: HomeViewController?
     var entryRoute: EntryRoute!
     var selectedHoliday: String?
     
-    let myHolidaies = ["+", "결혼", "생일", "돌잔치", "장례", "출산"]
+    var myHolidaies = ["+", "결혼", "생일", "돌잔치", "장례", "출산"] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initGuideLabelText()
+        initGuideLabel()
         initNavigationBar()
     }
     
-    private func initGuideLabelText() {
+    private func initGuideLabel() {
         guard let entryRoute = entryRoute else { return }
         switch entryRoute {
         case .addHolidayAtHome:
@@ -38,31 +43,62 @@ class HolidayInputViewController: UIViewController {
     }
     
     private func initNavigationBar() {
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addUpcomingEventAtHome:
+            let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
+            
+            self.navigationItem.leftBarButtonItem = backButton
+        default:
+            break
+        }
+        
         self.navigationController?.navigationBar.clear()
     }
     
-    @IBAction func touchUpHoildayButton(_ sender: UIButton) {
+    @objc func touchUpHoildayButton(_ sender: UIButton) {
         selectedHoliday = sender.titleLabel?.text
-    }
-    
-    @IBAction func touchUpNextButton(_ sender: UIButton) {
+
+        guard let entryRoute = entryRoute else { return }
+        
         if selectedHoliday == "+" {
             let viewController = storyboard(.input)
                 .instantiateViewController(ofType: NameInputViewController.self)
-            viewController.entryRoute = entryRoute
-            viewController.delegate = delegate
-            navigationController?.pushViewController(viewController, animated: true)
+            
+            viewController.addHolidayDelegate = self
+            viewController.entryRoute = .addHolidayAtHome
+            self.present(viewController, animated: true, completion: nil)
         } else {
-            delegate?.addedHoliday = selectedHoliday
-            self.dismiss(animated: true, completion: nil)
+            switch entryRoute {
+            case .addHolidayAtHome:
+                self.dismiss(animated: true, completion: nil)
+            case .addUpcomingEventAtHome:
+                let viewController = storyboard(.input)
+                    .instantiateViewController(ofType: DateInputViewController.self)
+                
+                viewController.entryRoute = entryRoute
+                navigationController?.pushViewController(viewController, animated: true)
+            case .addHistoryAtFriendHistory:
+                let viewController = storyboard(.input)
+                    .instantiateViewController(ofType: ItemInputViewController.self)
+                
+                viewController.entryRoute = entryRoute
+                navigationController?.pushViewController(viewController, animated: true)
+            default:
+                break
+            }
         }
+    }
+    
+    @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
 }
-
 
 extension HolidayInputViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,6 +109,7 @@ extension HolidayInputViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "holidayCellId", for: indexPath) as? HolidayInputViewCell else { return UITableViewCell() }
         
         cell.holidaybutton.setTitle(myHolidaies[indexPath.row], for: .normal)
+        cell.holidaybutton.addTarget(self, action: #selector(touchUpHoildayButton(_:)), for: .touchUpInside)
         if indexPath.row == 0 {
             cell.holidaybutton.backgroundColor = UIColor.offColor
         }
