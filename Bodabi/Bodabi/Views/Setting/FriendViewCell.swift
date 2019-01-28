@@ -16,7 +16,7 @@ class FriendViewCell: UITableViewCell {
     @IBOutlet weak var bottomView: UIView!
     
     struct Const {
-        static let buttonAnimationScale: CGFloat = 1.18
+        static let buttonAnimationScale: CGFloat = 1.3
         static let buttonAnimationDuration: TimeInterval = 0.18
     }
     
