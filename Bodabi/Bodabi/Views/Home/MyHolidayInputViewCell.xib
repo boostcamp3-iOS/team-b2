@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="vC0-fd-HS9" customClass="MyHolidayInputViewCell" customModule="Bodabi" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pyG-hj-4KQ">
+                        <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                        <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="icAddHolidayButton" translatesAutoresizingMaskIntoConstraints="NO" id="9ET-6o-DDV">
+                        <rect key="frame" x="34" y="34" width="22" height="22"/>
+                    </imageView>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="9ET-6o-DDV" firstAttribute="centerY" secondItem="pyG-hj-4KQ" secondAttribute="centerY" id="1cE-Pj-tJb"/>
+                <constraint firstItem="pyG-hj-4KQ" firstAttribute="top" secondItem="vC0-fd-HS9" secondAttribute="top" id="2ug-l1-bKL"/>
+                <constraint firstItem="9ET-6o-DDV" firstAttribute="centerX" secondItem="pyG-hj-4KQ" secondAttribute="centerX" id="JRa-K3-yfR"/>
+                <constraint firstAttribute="bottom" secondItem="pyG-hj-4KQ" secondAttribute="bottom" id="KbM-Ih-yen"/>
+                <constraint firstItem="pyG-hj-4KQ" firstAttribute="leading" secondItem="vC0-fd-HS9" secondAttribute="leading" id="LGb-fS-qsI"/>
+                <constraint firstAttribute="trailing" secondItem="pyG-hj-4KQ" secondAttribute="trailing" id="f2p-JU-ivg"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="CXj-kr-osP"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="18"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="137.59999999999999" y="153.82308845577214"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="icAddHolidayButton" width="22" height="22"/>
+    </resources>
+</document>
