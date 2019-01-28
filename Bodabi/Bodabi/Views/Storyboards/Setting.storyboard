@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uLS-uK-Oll">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -10,17 +10,33 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--설정-->
         <scene sceneID="k3v-d7-el1">
             <objects>
-                <viewController id="vW9-BA-3NA" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingViewController" id="vW9-BA-3NA" customClass="SettingViewController" customModule="Bodabi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iOZ-g1-Ydu">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8fw-es-D3F">
+                                <rect key="frame" x="16" y="120" width="343" height="609"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <sections/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="8fw-es-D3F" firstAttribute="leading" secondItem="D2f-O3-GI2" secondAttribute="leading" constant="16" id="Re8-cF-p1Z"/>
+                            <constraint firstItem="D2f-O3-GI2" firstAttribute="trailing" secondItem="8fw-es-D3F" secondAttribute="trailing" constant="16" id="VQU-70-bbW"/>
+                            <constraint firstItem="8fw-es-D3F" firstAttribute="top" secondItem="D2f-O3-GI2" secondAttribute="top" constant="32" id="aBN-8h-i4P"/>
+                            <constraint firstItem="D2f-O3-GI2" firstAttribute="bottom" secondItem="8fw-es-D3F" secondAttribute="bottom" id="bNj-BM-4ni"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="D2f-O3-GI2"/>
                     </view>
-                    <navigationItem key="navigationItem" id="6is-t6-CeN"/>
+                    <navigationItem key="navigationItem" title="설정" id="6is-t6-CeN"/>
+                    <connections>
+                        <outlet property="tableView" destination="8fw-es-D3F" id="6Ft-zz-2sw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XrO-4R-MSN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -33,9 +49,10 @@
                     <tabBarItem key="tabBarItem" title="Setting" id="I7J-ec-O1Z"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="H7G-ea-cAl">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="H7G-ea-cAl">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.8980392157" green="0.25882352939999997" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

@@ -52,6 +52,15 @@
 		DBF4CF3C21FC546B001536A8 /* HolidayInputViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF3B21FC546B001536A8 /* HolidayInputViewCell.swift */; };
 		DBF4CF4421FCE4F7001536A8 /* UIButton+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF4321FCE4F7001536A8 /* UIButton+Animation.swift */; };
 		DBF4CF4621FCE511001536A8 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF4521FCE511001536A8 /* NSMutableAttributedString+Extension.swift */; };
+		F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529321FCC909004A2CF0 /* SettingViewController.swift */; };
+		F814529721FCCF6B004A2CF0 /* SettingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529521FCCF6B004A2CF0 /* SettingViewCell.swift */; };
+		F814529821FCCF6B004A2CF0 /* SettingViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F814529621FCCF6B004A2CF0 /* SettingViewCell.xib */; };
+		F814529A21FCD4BC004A2CF0 /* SettingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529921FCD4BC004A2CF0 /* SettingOptions.swift */; };
+		F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529B21FCDD76004A2CF0 /* NotificationViewController.swift */; };
+		F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529D21FCDDE0004A2CF0 /* NotificationViewCell.swift */; };
+		F81452A021FCDDE0004A2CF0 /* NotificationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F814529E21FCDDE0004A2CF0 /* NotificationViewCell.xib */; };
+		F81452A221FD884E004A2CF0 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81452A121FD884E004A2CF0 /* Notification.swift */; };
+		F81452A421FD8C1B004A2CF0 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81452A321FD8C1B004A2CF0 /* String+Extensions.swift */; };
 		F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */; };
 		F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */; };
 		F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */; };
@@ -66,8 +75,8 @@
 		496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Clear.swift"; sourceTree = "<group>"; };
 		496683B821FAB294003FBA5B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
-		496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTitleViewCell.swift; sourceTree = "<group>"; };
-		496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTitleViewCell.xib; sourceTree = "<group>"; };
+		496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeTitleViewCell.swift; path = Bodabi/Views/Home/HomeTitleViewCell.swift; sourceTree = SOURCE_ROOT; };
+		496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeTitleViewCell.xib; path = Bodabi/Views/Home/HomeTitleViewCell.xib; sourceTree = SOURCE_ROOT; };
 		4998126A21F9D7B4000DB7B2 /* Bodabi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bodabi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4998126D21F9D7B4000DB7B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4998127221F9D7B4000DB7B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -79,7 +88,7 @@
 		4998128B21F9D98A000DB7B2 /* Friends.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Friends.storyboard; sourceTree = "<group>"; };
 		4998128D21F9D994000DB7B2 /* Notification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notification.storyboard; sourceTree = "<group>"; };
 		4998128F21F9D99C000DB7B2 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
-		49C084E721FAC9B80060B02C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		49C084E721FAC9B80060B02C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Bodabi/Views/Home/HomeViewController.swift; sourceTree = SOURCE_ROOT; };
 		49C084E921FACE260060B02C /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		49C084EF21FAD36D0060B02C /* MyHolidaysViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyHolidaysViewCell.swift; sourceTree = "<group>"; };
 		49C084F021FAD36D0060B02C /* MyHolidaysViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyHolidaysViewCell.xib; sourceTree = "<group>"; };
@@ -112,12 +121,23 @@
 		DBF4CF4521FCE511001536A8 /* NSMutableAttributedString+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extension.swift"; sourceTree = "<group>"; };
 		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
 		F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistorySendViewCell.swift; sourceTree = "<group>"; };
+		F814529321FCC909004A2CF0 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		F814529521FCCF6B004A2CF0 /* SettingViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewCell.swift; sourceTree = "<group>"; };
+		F814529621FCCF6B004A2CF0 /* SettingViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingViewCell.xib; sourceTree = "<group>"; };
+		F814529921FCD4BC004A2CF0 /* SettingOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptions.swift; sourceTree = "<group>"; };
+		F814529B21FCDD76004A2CF0 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		F814529D21FCDDE0004A2CF0 /* NotificationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewCell.swift; sourceTree = "<group>"; };
+		F814529E21FCDDE0004A2CF0 /* NotificationViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationViewCell.xib; sourceTree = "<group>"; };
+		F81452A121FD884E004A2CF0 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		F81452A321FD8C1B004A2CF0 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
+		F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistorySendViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistorySendViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendHistoryReceiveViewCell.xib; sourceTree = "<group>"; };
 		F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendHistorySendViewCell.xib; sourceTree = "<group>"; };
 		F8367C9E21FAECF200EBA91E /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		F8485CF621FA11BB003C935C /* FriendHistory.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FriendHistory.storyboard; sourceTree = "<group>"; };
-		F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistoryViewController.swift; sourceTree = "<group>"; };
-		F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistoryReceiveViewCell.swift; sourceTree = "<group>"; };
+		F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryViewController.swift; path = Bodabi/Views/FriendHistory/FriendHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
+		F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryReceiveViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistoryReceiveViewCell.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +202,8 @@
 			children = (
 				F8367C9E21FAECF200EBA91E /* History.swift */,
 				4998127421F9D7B4000DB7B2 /* Bodabi.xcdatamodeld */,
+				F814529921FCD4BC004A2CF0 /* SettingOptions.swift */,
+				F81452A121FD884E004A2CF0 /* Notification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -239,6 +261,7 @@
 				49C0850321FAE1600060B02C /* UICollectionView+Extensions.swift */,
 				DBF4CF4321FCE4F7001536A8 /* UIButton+Animation.swift */,
 				DBF4CF4521FCE511001536A8 /* NSMutableAttributedString+Extension.swift */,
+				F81452A321FD8C1B004A2CF0 /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -246,6 +269,9 @@
 		DBF4CF0321FB0B2D001536A8 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				F814529321FCC909004A2CF0 /* SettingViewController.swift */,
+				F814529521FCCF6B004A2CF0 /* SettingViewCell.swift */,
+				F814529621FCCF6B004A2CF0 /* SettingViewCell.xib */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -253,6 +279,9 @@
 		DBF4CF0421FB0B2F001536A8 /* Notification */ = {
 			isa = PBXGroup;
 			children = (
+				F814529B21FCDD76004A2CF0 /* NotificationViewController.swift */,
+				F814529D21FCDDE0004A2CF0 /* NotificationViewCell.swift */,
+				F814529E21FCDDE0004A2CF0 /* NotificationViewCell.xib */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -266,24 +295,25 @@
 				49C0851221FD979A0060B02C /* FriendViewCell.xib */,
 				49C0851121FD979A0060B02C /* FriendViewCell.swift */,
 			);
-			name = Friends;
-			path = Setting;
+			path = Friends;
 			sourceTree = "<group>";
 		};
 		DBF4CF0621FB0B31001536A8 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				49C084E721FAC9B80060B02C /* HomeViewController.swift */,
-				496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */,
 				496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */,
-				49C084F021FAD36D0060B02C /* MyHolidaysViewCell.xib */,
+				496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */,
 				49C084EF21FAD36D0060B02C /* MyHolidaysViewCell.swift */,
-				49C0850621FAF2810060B02C /* UpcomingEventViewCell.xib */,
+				49C084F021FAD36D0060B02C /* MyHolidaysViewCell.xib */,
 				49C0850521FAF2810060B02C /* UpcomingEventViewCell.swift */,
-				49C084FC21FADDBB0060B02C /* HolidayViewCell.xib */,
+				49C0850621FAF2810060B02C /* UpcomingEventViewCell.xib */,
 				49C084FB21FADDBB0060B02C /* HolidayViewCell.swift */,
 				49C0850021FADE640060B02C /* MyHolidayInputViewCell.xib */,
 				49C084FF21FADE640060B02C /* MyHolidayInputViewCell.swift */,
+				49C084FC21FADDBB0060B02C /* HolidayViewCell.xib */,
+				49C084FF21FADE640060B02C /* HolidayInputViewCell.swift */,
+				49C0850021FADE640060B02C /* HolidayInputViewCell.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -295,7 +325,10 @@
 				F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */,
 				F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */,
 				F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */,
+				F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */,
 				F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */,
+				F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */,
+				F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */,
 			);
 			path = FriendHistory;
 			sourceTree = "<group>";
@@ -419,6 +452,8 @@
 				496683C121FAC662003FBA5B /* HomeTitleViewCell.xib in Resources */,
 				4998127321F9D7B4000DB7B2 /* Main.storyboard in Resources */,
 				4998128A21F9D97E000DB7B2 /* Home.storyboard in Resources */,
+				F81452A021FCDDE0004A2CF0 /* NotificationViewCell.xib in Resources */,
+				F814529821FCCF6B004A2CF0 /* SettingViewCell.xib in Resources */,
 				4998128E21F9D994000DB7B2 /* Notification.storyboard in Resources */,
 				49C084F221FAD36D0060B02C /* MyHolidaysViewCell.xib in Resources */,
 			);
@@ -432,6 +467,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBF4CEFE21FAE59B001536A8 /* UIViewController+Alert.swift in Sources */,
+				F81452A421FD8C1B004A2CF0 /* String+Extensions.swift in Sources */,
 				496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */,
 				F8367C9F21FAECF200EBA91E /* History.swift in Sources */,
 				4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */,
@@ -452,16 +488,21 @@
 				49C0850721FAF2810060B02C /* UpcomingEventViewCell.swift in Sources */,
 				4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */,
 				49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */,
+				F814529721FCCF6B004A2CF0 /* SettingViewCell.swift in Sources */,
 				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,
 				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
 				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
+				F81452A221FD884E004A2CF0 /* Notification.swift in Sources */,
+				F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */,
 				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,
 				49C0850A21FAF6AA0060B02C /* UIView+Animation.swift in Sources */,
 				DBF4CF2921FC42D7001536A8 /* EntryRoute.swift in Sources */,
 				49C0850121FADE640060B02C /* MyHolidayInputViewCell.swift in Sources */,
 				49C0851021FD8A7F0060B02C /* FriendsViewController.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
+				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
+				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
 				DBF4CF3421FC5405001536A8 /* HolidayInputViewController.swift in Sources */,
@@ -469,6 +510,7 @@
 				DBF4CF3C21FC546B001536A8 /* HolidayInputViewCell.swift in Sources */,
 				F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */,
 				49C0851721FDA8A60060B02C /* FriendsHeaderViewCell.swift in Sources */,
+				F814529A21FCD4BC004A2CF0 /* SettingOptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
