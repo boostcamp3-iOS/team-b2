@@ -29,7 +29,7 @@ class FriendHistorySendViewCell: UITableViewCell {
             
             holidayLabel.text = history.holiday
             dateLabel.text = history.date
-            sentenceLabel.text = "\(history.friendName)님에게 \(history.holiday)으로 \(history.item)을 전달했습니다"
+            sentenceLabel.text = history.giveSentence
         }
     }
     

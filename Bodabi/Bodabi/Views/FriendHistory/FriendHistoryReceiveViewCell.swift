@@ -18,7 +18,7 @@ class FriendHistoryReceiveViewCell: UITableViewCell {
     
     // MARK: - Properties
     
-    internal var history: History? {
+    var history: History? {
         didSet {
             guard let history = history else {
                 holidayLabel.text = ""
@@ -29,7 +29,8 @@ class FriendHistoryReceiveViewCell: UITableViewCell {
 
             holidayLabel.text = history.holiday
             dateLabel.text = history.date
-            sentenceLabel.text = "\(history.friendName)님이 \(history.holiday)으로 \(history.item)을 전달해주셨습니다"
+            sentenceLabel.text = history.takeSentence
+            
         }
     }
     
