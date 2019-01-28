@@ -64,16 +64,17 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.isHidden = false
     }
     
-    @objc func touchUpAddHolidaybutton(_ sender: UIButton) {
+    @objc func touchUpAddHolidayButton(_ sender: UIButton) {
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: HolidayInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
     
+        viewController.delegate = self
         viewController.entryRoute = .addHolidayAtHome
         self.present(navController, animated: true, completion: nil)
     }
     
-    @objc func touchUpAddUpcomingDatebutton(_ sender: UIButton) {
+    @objc func touchUpAddUpcomingEventButton(_ sender: UIButton) {
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
@@ -123,12 +124,12 @@ extension HomeViewController: UITableViewDataSource {
         switch section {
         case .holidaysHeader:
             let cell = tableView.dequeue(HomeTitleViewCell.self, for: indexPath)
-            cell.addHolidayButton.addTarget(self, action: #selector(touchUpAddHolidaybutton(_:)), for: .touchUpInside)
+            cell.addHolidayButton.addTarget(self, action: #selector(touchUpAddHolidayButton(_:)), for: .touchUpInside)
             cell.type = section
             return cell
         case .friendEventsHeader:
             let cell = tableView.dequeue(HomeTitleViewCell.self, for: indexPath)
-            cell.addHolidayButton.addTarget(self, action: #selector(touchUpAddUpcomingDatebutton(_:)), for: .touchUpInside)
+            cell.addHolidayButton.addTarget(self, action: #selector(touchUpAddUpcomingEventButton(_:)), for: .touchUpInside)
             cell.type = section
             return cell
         case .holidays:

@@ -15,7 +15,9 @@ class NameInputViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var textField: UITextField!
     
-    weak var delegate: HomeViewController?
+    weak var addHolidayDelegate: HolidayInputViewController?
+    weak var homeDelegate: HolidayViewController?
+    
     var entryRoute: EntryRoute!
     var newHolidayName: String? {
         didSet {
@@ -136,6 +138,8 @@ class NameInputViewController: UIViewController {
         switch entryRoute {
         case .addHolidayAtHome:
             // 데이터 저장 후 dismiss
+            guard let newHoliday = newHolidayName else { return }
+            addHolidayDelegate?.myHolidaies.insert(newHoliday, at: 1)
             self.dismiss(animated: true, completion: nil)
         case .addUpcomingEventAtHome:
             let viewController = storyboard(.input)

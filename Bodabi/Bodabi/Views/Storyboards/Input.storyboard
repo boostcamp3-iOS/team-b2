@@ -160,6 +160,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="guideLabel" destination="4b3-uh-ebq" id="8AR-cU-II9"/>
+                        <outlet property="tableView" destination="0wR-4H-8V8" id="IcA-sE-Jgz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JY3-tf-t5d" sceneMemberID="firstResponder"/>

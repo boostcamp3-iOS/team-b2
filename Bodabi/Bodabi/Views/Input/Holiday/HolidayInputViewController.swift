@@ -11,12 +11,17 @@ import UIKit
 class HolidayInputViewController: UIViewController {
     
     @IBOutlet weak var guideLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
-//    weak var delegate: HomeViewController?
+    weak var delegate: HomeViewController?
     var entryRoute: EntryRoute!
     var selectedHoliday: String?
     
-    let myHolidaies = ["+", "결혼", "생일", "돌잔치", "장례", "출산"]
+    var myHolidaies = ["+", "결혼", "생일", "돌잔치", "장례", "출산"] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +66,7 @@ class HolidayInputViewController: UIViewController {
             let viewController = storyboard(.input)
                 .instantiateViewController(ofType: NameInputViewController.self)
             
+            viewController.addHolidayDelegate = self
             viewController.entryRoute = .addHolidayAtHome
             self.present(viewController, animated: true, completion: nil)
         } else {
