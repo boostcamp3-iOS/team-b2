@@ -77,6 +77,17 @@
                                     <outlet property="dataSource" destination="VZi-B7-pNK" id="bhG-6Z-Vig"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HQ5-x7-pzJ">
+                                <rect key="frame" x="155" y="713" width="65" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="HQ5-x7-pzJ" secondAttribute="height" multiplier="1:1" id="Sz5-Ic-Iqt"/>
+                                    <constraint firstAttribute="width" constant="65" id="jNR-iK-6mw"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="ic_floatingButton"/>
+                                <connections>
+                                    <action selector="touchUpFloatingButotn:" destination="VZi-B7-pNK" eventType="touchUpInside" id="KLL-Vn-1aF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -88,6 +99,8 @@
                             <constraint firstItem="WZO-3N-upQ" firstAttribute="leading" secondItem="1Cq-Tb-wfr" secondAttribute="leading" constant="24" id="JnR-xw-Nqx"/>
                             <constraint firstItem="WZO-3N-upQ" firstAttribute="top" secondItem="dky-pF-8MW" secondAttribute="bottom" constant="24" id="V9t-hh-yTM"/>
                             <constraint firstItem="RWS-No-jtg" firstAttribute="top" secondItem="WZO-3N-upQ" secondAttribute="bottom" constant="16" id="dz1-Ge-ZCw"/>
+                            <constraint firstItem="HQ5-x7-pzJ" firstAttribute="centerX" secondItem="ny0-6d-gb2" secondAttribute="centerX" id="hhT-hK-ou3"/>
+                            <constraint firstItem="1Cq-Tb-wfr" firstAttribute="bottom" secondItem="HQ5-x7-pzJ" secondAttribute="bottom" id="ouT-Vo-wVm"/>
                             <constraint firstItem="1Cq-Tb-wfr" firstAttribute="trailing" secondItem="RWS-No-jtg" secondAttribute="trailing" constant="16" id="tzk-NZ-Bjk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1Cq-Tb-wfr"/>
@@ -96,6 +109,7 @@
                         <barButtonItem key="rightBarButtonItem" image="WhiteStar" style="done" id="G2K-1J-XPT"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="floatingButton" destination="HQ5-x7-pzJ" id="7z1-8a-gVe"/>
                         <outlet property="tableView" destination="RWS-No-jtg" id="LNg-9N-MgX"/>
                     </connections>
                 </viewController>
@@ -129,6 +143,7 @@
     </scenes>
     <resources>
         <image name="WhiteStar" width="24" height="24"/>
+        <image name="ic_floatingButton" width="64" height="65"/>
         <image name="ic_leftArrow" width="25" height="19"/>
         <image name="ic_rightArrow" width="25" height="19"/>
     </resources>

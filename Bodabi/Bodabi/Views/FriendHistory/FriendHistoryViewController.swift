@@ -13,6 +13,7 @@ class FriendHistoryViewController: UIViewController {
     // MARK: - IBOutlets
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var floatingButton: UIButton!
     
     // MARK: - Properties
     
@@ -45,6 +46,15 @@ class FriendHistoryViewController: UIViewController {
         let cells = [FriendHistoryReceiveViewCell.self, FriendHistorySendViewCell.self]
         tableView.register(cells)
     
+    }
+    
+    @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
+        let viewController = storyboard(.input)
+            .instantiateViewController(ofType: HolidayInputViewController.self)
+        let navController = UINavigationController(rootViewController: viewController)
+        
+        viewController.entryRoute = .addHistoryAtFriendHistory
+        self.present(navController, animated: true, completion: nil)
     }
 }
 

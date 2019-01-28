@@ -119,8 +119,6 @@
 		DBF4CF3B21FC546B001536A8 /* HolidayInputViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayInputViewCell.swift; sourceTree = "<group>"; };
 		DBF4CF4321FCE4F7001536A8 /* UIButton+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Animation.swift"; sourceTree = "<group>"; };
 		DBF4CF4521FCE511001536A8 /* NSMutableAttributedString+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extension.swift"; sourceTree = "<group>"; };
-		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
-		F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistorySendViewCell.swift; sourceTree = "<group>"; };
 		F814529321FCC909004A2CF0 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F814529521FCCF6B004A2CF0 /* SettingViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewCell.swift; sourceTree = "<group>"; };
 		F814529621FCCF6B004A2CF0 /* SettingViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingViewCell.xib; sourceTree = "<group>"; };
@@ -309,11 +307,9 @@
 				49C0850521FAF2810060B02C /* UpcomingEventViewCell.swift */,
 				49C0850621FAF2810060B02C /* UpcomingEventViewCell.xib */,
 				49C084FB21FADDBB0060B02C /* HolidayViewCell.swift */,
-				49C0850021FADE640060B02C /* MyHolidayInputViewCell.xib */,
-				49C084FF21FADE640060B02C /* MyHolidayInputViewCell.swift */,
 				49C084FC21FADDBB0060B02C /* HolidayViewCell.xib */,
-				49C084FF21FADE640060B02C /* HolidayInputViewCell.swift */,
-				49C0850021FADE640060B02C /* HolidayInputViewCell.xib */,
+				49C084FF21FADE640060B02C /* MyHolidayInputViewCell.swift */,
+				49C0850021FADE640060B02C /* MyHolidayInputViewCell.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -322,9 +318,6 @@
 			isa = PBXGroup;
 			children = (
 				F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */,
-				F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */,
-				F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */,
-				F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */,
 				F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */,
 				F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */,
 				F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */,
@@ -657,13 +650,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4U9B5GDBZA;
 				INFOPLIST_FILE = "$(SRCROOT)/Bodabi/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.teamB2.Bodabi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teamB2.BodabiTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -675,13 +668,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4U9B5GDBZA;
 				INFOPLIST_FILE = "$(SRCROOT)/Bodabi/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.teamB2.Bodabi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teamB2.BodabiTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

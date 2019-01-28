@@ -69,7 +69,7 @@ class HomeViewController: UIViewController {
             .instantiateViewController(ofType: HolidayInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
         
-        viewController.delegate = self
+//        viewController.delegate = self
         viewController.entryRoute = .addHolidayAtHome
         self.present(navController, animated: true, completion: nil)
     }
@@ -79,7 +79,7 @@ class HomeViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
         
-        viewController.delegate = self
+//        viewController.delegate = self
         viewController.entryRoute = .addUpcomingEventAtHome
         self.present(navController, animated: true, completion: nil)
     }

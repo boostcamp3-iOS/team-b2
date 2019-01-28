@@ -19,7 +19,7 @@ extension UIColor {
     }
     
     class var starColor: UIColor {
-        return #colorLiteral(red: 0.9098039216, green: 0.6588235294, blue: 0.2784313725, alpha: 1)
+        return #colorLiteral(red: 1, green: 0.7723571658, blue: 0.3705800474, alpha: 1)
     }
     
     class var calendarColor: UIColor {
