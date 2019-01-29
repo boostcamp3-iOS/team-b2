@@ -16,9 +16,10 @@ struct History {
     let item: String
     
     // TODO: - Replace property to 'friendID' after database loading
+    
     let friendName: String
     
-    // MARK: - Helper Methods
+    // MARK: - Helper Properties
     
     var giveSentence: String {
         return "\(self.friendName)님께 \(self.holiday.addForSuffix()) \(self.item.addObjectSuffix()) 전달했습니다"
@@ -29,7 +30,7 @@ struct History {
     }
     
     // Dummy Data
-    static let dummyHistories: [History] = [
+    static let dummies: [History] = [
         History.init(id: 0, isTaken: true, holiday: "축의금", date: "12.10", item: "50,000원", friendName: "김철수"),
         History.init(id: 1, isTaken: false, holiday: "생일선물", date: "1.12", item: "커피", friendName: "김철수"),
         History.init(id: 2, isTaken: true, holiday: "생일선물", date: "1.16", item: "커피", friendName: "김철수"),

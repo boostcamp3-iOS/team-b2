@@ -24,7 +24,7 @@ class FriendHistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        histories = History.dummyHistories
+        histories = History.dummies
         initNavigationBar()
         initTableView()
     }
