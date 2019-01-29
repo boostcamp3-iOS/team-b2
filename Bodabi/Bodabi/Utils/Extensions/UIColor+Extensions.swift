@@ -11,22 +11,27 @@ import UIKit
 
 extension UIColor {
     class var mainColor: UIColor {
-        return #colorLiteral(red: 0.8588235294, green: 0.4588235294, blue: 0.368627451, alpha: 1)
+        // Color HexCode: DD7354
+        return #colorLiteral(red: 0.9294973612, green: 0.4212887287, blue: 0.292683661, alpha: 1)
     }
     
     class var weddingColor: UIColor {
-        return #colorLiteral(red: 0.9165593982, green: 0.6855664849, blue: 0.6328268647, alpha: 1)
+        // Color HexCode: EAAFA1
+        return #colorLiteral(red: 0.9176470588, green: 0.6862745098, blue: 0.631372549, alpha: 1)
     }
     
     class var starColor: UIColor {
-        return #colorLiteral(red: 0.9792938828, green: 0.7754263282, blue: 0.4397826791, alpha: 1)
+        // Color HexCode: FAC670
+        return #colorLiteral(red: 0.9803921569, green: 0.7764705882, blue: 0.4392156863, alpha: 1)
     }
     
     class var calendarColor: UIColor {
-        return #colorLiteral(red: 0.8689805865, green: 0.9021388292, blue: 0.9795609117, alpha: 1)
+        // Color HexCode: DEE6FA
+        return #colorLiteral(red: 0.8705882353, green: 0.9019607843, blue: 0.9803921569, alpha: 1)
     }
     
     class var offColor: UIColor {
-        return #colorLiteral(red: 0.9332286716, green: 0.9333921075, blue: 0.9332306385, alpha: 1)
+        // Color HexCode: EEEEEE
+        return #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
     }
 }
