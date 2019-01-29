@@ -11,9 +11,21 @@ import UIKit
 class HolidayViewCell: UICollectionViewCell {
 
     @IBOutlet weak var holidayImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    public var holiday: Holiday? {
+        didSet {
+            configure()
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
+    private func configure() {
+        titleLabel.text = holiday?.title
+        dateLabel.text = Date().toString(of: .year)
+    }
 }
