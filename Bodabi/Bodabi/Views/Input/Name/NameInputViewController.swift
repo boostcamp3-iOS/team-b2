@@ -64,20 +64,6 @@ class NameInputViewController: UIViewController {
         }
     }
     
-    private func initTextField() {
-        guard let entryRoute = entryRoute else { return }
-        
-        switch entryRoute {
-        case .addHolidayAtHome:
-            textField.placeholder = "졸업식"
-        case .addUpcomingEventAtHome,
-             .addFriendAtHoliday:
-            textField.placeholder = "김철수"
-        default:
-            break
-        }
-    }
-    
     private func initNextButton() {
         guard let entryRoute = entryRoute else { return }
         
@@ -111,7 +97,7 @@ class NameInputViewController: UIViewController {
                  .addFriendAtHoliday:
                 let attributedString = NSMutableAttributedString()
                     .color(newHolidayName ?? "", fontSize: 25)
-                    .bold("의\n이벤트인가요?", fontSize: 25)
+                    .bold("님의\n이벤트인가요?", fontSize: 25)
                 guideLabel.attributedText = attributedString
             default:
                 break
@@ -168,6 +154,21 @@ class NameInputViewController: UIViewController {
 }
 
 extension NameInputViewController: UITextFieldDelegate {
+    private func initTextField() {
+        nameTextField.addBottomLine(height: 1.0, color: UIColor.lightGray)
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            textField.placeholder = "졸업식"
+        case .addUpcomingEventAtHome,
+             .addFriendAtHoliday:
+            textField.placeholder = "김철수"
+        default:
+            break
+        }
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         newHolidayName = textField.text
         self.view.endEditing(true)

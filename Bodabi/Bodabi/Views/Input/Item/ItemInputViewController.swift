@@ -43,7 +43,7 @@ class ItemInputViewController: UIViewController {
     
     var item: Item = .cache {
         didSet {
-            setItemInputView()
+            setItemInputType()
             setKeyboardType()
         }
     }
@@ -59,6 +59,7 @@ class ItemInputViewController: UIViewController {
         initNavigationBar()
         initNextButton()
         initTapGesture()
+        initTextField()
     }
     
     private func initNavigationBar() {
@@ -84,7 +85,7 @@ class ItemInputViewController: UIViewController {
         }
     }
     
-    private func setItemInputView() {
+    private func setItemInputType() {
         itemTypeLabel.text = item.text
         itemInputTextField.placeholder = item.placeholder
         
@@ -126,10 +127,58 @@ class ItemInputViewController: UIViewController {
 }
 
 extension ItemInputViewController: UITextFieldDelegate {
+    private func initTextField() {
+        itemInputTextField.addBottomLine(height: 1.0, color: UIColor.lightGray)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         myItem = textField.text
         self.view.endEditing(true)
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard var preText = textField.text else { return true }
+        switch item {
+        case .cache:
+            let  char = string.cString(using: String.Encoding.utf8)!
+            let isBackSpace = strcmp(char, "\\b")
+            
+            if preText.last == "원" {
+                preText.popLast()
+            }
+        
+            preText = preText.deleteComma()
+            
+            if (isBackSpace == -92) {
+                preText.popLast()
+                
+                if preText != "" {
+                    preText += string
+                    
+                    if let insertedCommaString = preText.insertComma() {
+                        preText = insertedCommaString
+                    }
+                    preText += "원"
+                }
+            } else {
+                preText += string
+                
+                if let insertedCommaString = preText.insertComma() {
+                    preText = insertedCommaString
+                }
+                
+                preText += "원"
+                
+            }
+            
+            textField.text = preText
+            myItem = preText
+            
+            return false
+        default:
+            return true
+        }
     }
 }
 

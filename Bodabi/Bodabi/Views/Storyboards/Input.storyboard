@@ -24,7 +24,7 @@
                                 <color key="textColor" red="0.93349742889999998" green="0.50486880540000001" blue="0.39262455699999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="김철수" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A6P-2a-pwi">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="김철수" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A6P-2a-pwi">
                                 <rect key="frame" x="16" y="146" width="343" height="76"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
@@ -176,10 +176,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BOj-yW-bWf">
-                                <rect key="frame" x="134" y="108" width="107" height="29"/>
+                                <rect key="frame" x="150" y="108" width="75" height="29"/>
                                 <segments>
-                                    <segment title="Cache"/>
-                                    <segment title="Gift"/>
+                                    <segment title="현금"/>
+                                    <segment title="선물"/>
                                 </segments>
                                 <color key="tintColor" red="0.92638254170000001" green="0.42560976740000001" blue="0.30080345269999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
@@ -193,7 +193,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eni-N5-hpT">
-                                <rect key="frame" x="16" y="268.66666666666674" width="343" height="439.33333333333326"/>
+                                <rect key="frame" x="16" y="264.66666666666674" width="343" height="443.33333333333326"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4YE-35-fhN">
                                     <size key="itemSize" width="50" height="50"/>
@@ -212,13 +212,13 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="원" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hBR-Bf-Y2c">
-                                <rect key="frame" x="16" y="184.66666666666666" width="343" height="75.999999999999972"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="원" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hBR-Bf-Y2c">
+                                <rect key="frame" x="16" y="184.66666666666666" width="343" height="71.999999999999972"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
-                                    <action selector="textFieldDidChanging:" destination="wKl-B5-SVB" eventType="editingChanged" id="kkS-qx-kuY"/>
+                                    <action selector="textFieldDidChanging:" destination="wKl-B5-SVB" eventType="editingChanged" id="0CE-ww-y6T"/>
                                     <outlet property="delegate" destination="wKl-B5-SVB" id="OxZ-RB-scB"/>
                                 </connections>
                             </textField>
