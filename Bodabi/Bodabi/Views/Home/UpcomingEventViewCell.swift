@@ -15,6 +15,12 @@ class UpcomingEventViewCell: UITableViewCell {
     @IBOutlet weak var lastHistoryLabel: UILabel!
     @IBOutlet weak var dDayLabel: UILabel!
     
+    public var event: Event? {
+        didSet {
+            configure()
+        }
+    }
+    
     struct Const {
         static let buttonAnimationScale: CGFloat = 1.35
         static let buttonAnimationDuration: TimeInterval = 0.12
@@ -23,7 +29,6 @@ class UpcomingEventViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setUpUI()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -37,10 +42,18 @@ class UpcomingEventViewCell: UITableViewCell {
                                  duration: Const.buttonAnimationDuration)
     }
     
-    private func setUpUI() {
-        nameLabel.text = "김민수"
-        holidayLabel.text = "결혼"
-        lastHistoryLabel.text = "생일 50,000"
+    private func configure() {
+        guard let event = event else { return }
+        let friend = Friend.dummies.filter { $0.id == event.friendId }.first
+        
+        nameLabel.text = friend?.name
+        holidayLabel.text = event.holiday
         dDayLabel.text = "D-23"
+        
+        let friendHistories = History.dummies.filter { $0.friendId == (friend?.id ?? 0) }
+        guard let lastFriendHistory = friendHistories.last else { return }
+        lastHistoryLabel.text = String(format: "%@ %@",
+                                       lastFriendHistory.holiday,
+                                       lastFriendHistory.item)
     }
 }

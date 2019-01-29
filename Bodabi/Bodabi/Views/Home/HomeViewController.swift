@@ -12,6 +12,20 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    private var holidays: [Holiday] = Holiday.dummies {
+        didSet {
+            tableView
+                .reloadSections(IndexSet(integer: Section.holidays.rawValue),
+                                with: .automatic)
+        }
+    }
+    private var events: [Event] = Event.dummies {
+        didSet {
+            tableView
+                .reloadSections(IndexSet(integer: Section.friendEvents.rawValue),
+                                with: .automatic)
+        }
+    }
     var addedHoliday: String? {
         didSet {
             print(addedHoliday ?? "")
@@ -98,6 +112,7 @@ extension HomeViewController: UITableViewDelegate {
         case .friendEvents:
             let viewController = storyboard(.friendHistory)
                 .instantiateViewController(ofType: FriendHistoryViewController.self)
+            viewController.friendId = events[indexPath.row].friendId
             navigationController?.pushViewController(viewController, animated: true)
         default:
             break
@@ -135,9 +150,11 @@ extension HomeViewController: UITableViewDataSource {
         case .holidays:
             let cell = tableView.dequeue(MyHolidaysViewCell.self, for: indexPath)
             cell.collectionView.delegate = self
+            cell.holidays = holidays
             return cell
         case .friendEvents:
             let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
+            cell.event = events[indexPath.row]
             return cell
         }
     }

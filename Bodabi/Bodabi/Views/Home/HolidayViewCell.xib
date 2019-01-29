@@ -23,10 +23,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                         <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdv-PW-EyR">
+                        <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXP-Zt-pcN">
+                                <rect key="frame" x="10" y="49" width="3.5" height="16"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZpU-7Q-WNP">
+                                <rect key="frame" x="10" y="66" width="4" height="14"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ZpU-7Q-WNP" firstAttribute="top" secondItem="BXP-Zt-pcN" secondAttribute="bottom" constant="1" id="4Uf-8N-6bu"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BXP-Zt-pcN" secondAttribute="trailing" constant="10" id="LNh-Qh-v6p"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZpU-7Q-WNP" secondAttribute="trailing" constant="10" id="RV8-lF-QsW"/>
+                            <constraint firstItem="ZpU-7Q-WNP" firstAttribute="leading" secondItem="BXP-Zt-pcN" secondAttribute="leading" id="Xhq-fL-fZd"/>
+                            <constraint firstItem="BXP-Zt-pcN" firstAttribute="leading" secondItem="fdv-PW-EyR" secondAttribute="leading" constant="10" id="aw1-x9-gWF"/>
+                            <constraint firstAttribute="bottom" secondItem="ZpU-7Q-WNP" secondAttribute="bottom" constant="10" id="k0S-cC-OBs"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="mjf-ou-OU9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6Gf-l6-5zj"/>
+                <constraint firstItem="fdv-PW-EyR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="7iO-Yk-bIG"/>
+                <constraint firstItem="fdv-PW-EyR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="8Pb-3n-fbv"/>
+                <constraint firstAttribute="bottom" secondItem="fdv-PW-EyR" secondAttribute="bottom" id="Dg0-Xf-duc"/>
+                <constraint firstAttribute="trailing" secondItem="fdv-PW-EyR" secondAttribute="trailing" id="g8b-J1-nAm"/>
                 <constraint firstAttribute="trailing" secondItem="mjf-ou-OU9" secondAttribute="trailing" id="lGh-2k-1K8"/>
                 <constraint firstItem="mjf-ou-OU9" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="xjF-y2-Obe"/>
                 <constraint firstAttribute="bottom" secondItem="mjf-ou-OU9" secondAttribute="bottom" id="zzt-uX-uKI"/>
@@ -38,7 +68,9 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
+                <outlet property="dateLabel" destination="ZpU-7Q-WNP" id="4lv-Mw-bu7"/>
                 <outlet property="holidayImageView" destination="mjf-ou-OU9" id="T2b-4f-36J"/>
+                <outlet property="titleLabel" destination="BXP-Zt-pcN" id="VAy-aN-NHf"/>
             </connections>
             <point key="canvasLocation" x="137.59999999999999" y="153.82308845577214"/>
         </collectionViewCell>

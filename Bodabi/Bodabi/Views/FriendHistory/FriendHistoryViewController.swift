@@ -22,7 +22,11 @@ class FriendHistoryViewController: UIViewController {
             tableView.reloadData()
         }
     }
-    public var friendId: Int? = 2
+    public var friendId: Int?
+    
+    struct Const {
+        static let bottomInset: CGFloat = 90.0
+    }
     
     // MARK: - Lifecycle Methods
     
@@ -52,7 +56,7 @@ class FriendHistoryViewController: UIViewController {
     
     private func initNavigationBar() {
         navigationController?.view.backgroundColor = .clear
-        navigationItem.title = Friend.dummies[friendId ?? 2].name
+        navigationItem.title = Friend.dummies[friendId ?? 0].name
     }
     
     private func initTableView() {
@@ -60,6 +64,7 @@ class FriendHistoryViewController: UIViewController {
         let cells = [FriendHistoryReceiveViewCell.self, FriendHistorySendViewCell.self]
         tableView.register(cells)
     
+        tableView.contentInset.bottom = Const.bottomInset
     }
     
     @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
