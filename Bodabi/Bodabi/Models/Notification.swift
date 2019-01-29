@@ -14,6 +14,7 @@ struct Notification {
     let notificationDate: String
     
     // TODO: - Replace property to 'friendID' after database loading
+    
     var friendName: String {
         return Friend.dummies[friendId].name
     }
