@@ -51,17 +51,6 @@ class NameInputViewController: UIViewController {
     
     private func initNavigationBar() {
         self.navigationController?.navigationBar.clear()
-        
-        guard let entryRoute = entryRoute else { return }
-        
-        switch entryRoute {
-        case .addHolidayAtHome:
-            let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
-            
-            self.navigationItem.leftBarButtonItem = backButton
-        default:
-            break
-        }
     }
     
     private func initNextButton() {
