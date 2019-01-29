@@ -17,16 +17,20 @@ class FriendHistoryViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var histories: [History] = [History]()
-
+    private var histories: [History] = [History]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    public var friendId: Int? = 2
+    
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        histories = History.dummies
         initNavigationBar()
         initTableView()
+        initHistories()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -37,8 +41,18 @@ class FriendHistoryViewController: UIViewController {
     
     // MARK: - Initialization Methods
     
+    private func initHistories() {
+        histories = History.dummies
+        let friendHistories = histories.filter {
+            $0.friendId == friendId
+        }
+        
+        histories = friendHistories
+    }
+    
     private func initNavigationBar() {
         navigationController?.view.backgroundColor = .clear
+        navigationItem.title = Friend.dummies[friendId ?? 2].name
     }
     
     private func initTableView() {
