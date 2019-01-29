@@ -10,11 +10,16 @@ import Foundation
 
 struct Notification {
     let holiday: String
-    let date: String
-    let nofiticationDate: String
+    let date: Date
+    let notificationDate: String
     
     // TODO: - Replace property to 'friendID' after database loading
-    let friendName: String
+    
+    var friendName: String {
+        return Friend.dummies[friendId].name
+    }
+    
+    let friendId: Int
     
     // MARK: - Helper Methods
     
@@ -23,11 +28,11 @@ struct Notification {
     }
     
     // Dummy Data
-    static let dummyNotifications: [Notification] = [
-        Notification.init(holiday: "생일", date: "2019.01.25", nofiticationDate: "1일 전", friendName: "김철수"),
-        Notification.init(holiday: "결혼", date: "2019.01.28", nofiticationDate: "1일 전", friendName: "김철수"),
-        Notification.init(holiday: "생일", date: "2019.01.25", nofiticationDate: "1일 전", friendName: "박영희"),
-        Notification.init(holiday: "생일", date: "2019.01.25", nofiticationDate: "1일 전", friendName: "문재인"),
-        Notification.init(holiday: "생일", date: "2019.01.25", nofiticationDate: "1일 전", friendName: "김민수"),
-        Notification.init(holiday: "생일", date: "2019.01.25", nofiticationDate: "1일 전", friendName: "이문세")]
+    static let dummies: [Notification] = [
+        Notification.init(holiday: "생일", date: .init(), notificationDate: "1일 전", friendId: 0),
+        Notification.init(holiday: "결혼", date: .init(), notificationDate: "1일 전", friendId: 3),
+        Notification.init(holiday: "생일", date: .init(), notificationDate: "1일 전", friendId: 4),
+        Notification.init(holiday: "생일", date: .init(), notificationDate: "1일 전", friendId: 6),
+        Notification.init(holiday: "생일", date: .init(), notificationDate: "1일 전", friendId: 9),
+        Notification.init(holiday: "생일", date: .init(), notificationDate: "1일 전", friendId: 8)]
 }

@@ -28,7 +28,7 @@ class FriendHistoryReceiveViewCell: UITableViewCell {
             }
 
             holidayLabel.text = history.holiday
-            dateLabel.text = history.date
+            dateLabel.text = history.date.toString(of: .none)
             sentenceLabel.text = history.takeSentence
             
         }
