@@ -21,7 +21,11 @@ class FriendsViewController: UIViewController {
         static let bottomInset: CGFloat = 90.0
     }
     
-    var friends = 0...15
+    var friends: [Friend] = Friend.dummies {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     enum Section: Int, CaseIterable {
         case favoriteHeader
@@ -55,6 +59,16 @@ class FriendsViewController: UIViewController {
         
         searchBar.isTranslucent = false
         searchBar.backgroundImage = UIImage()
+    }
+    
+    @IBAction func touchUpAddFriendButton(_ sender: UIButton) {
+        let viewController = storyboard(.input)
+            .instantiateViewController(ofType: NameInputViewController.self)
+        
+        viewController.entryRoute = .addFriendAtFriends
+        viewController.addFriendDelegate = self
+        let navController = UINavigationController(rootViewController: viewController)
+        self.present(navController, animated: true, completion: nil)
     }
 }
 
@@ -91,7 +105,8 @@ extension FriendsViewController: UITableViewDataSource {
         case .favorite,
              .friends:
             let cell = tableView.dequeue(FriendViewCell.self, for: indexPath)
-            cell.nameLabel.text = "김민수"
+            let friend = friends[indexPath.row]
+            cell.nameLabel.text = friend.name
             cell.configure(line: indexPath.row == (friends.count - 1))
             return cell
         }

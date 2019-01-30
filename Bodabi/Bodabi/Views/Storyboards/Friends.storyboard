@@ -32,6 +32,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f75-ar-m1V">
                                 <rect key="frame" x="155.5" y="473" width="64" height="65"/>
                                 <state key="normal" image="ic_floatingButton"/>
+                                <connections>
+                                    <action selector="touchUpAddFriendButton:" destination="D7N-ri-hmc" eventType="touchUpInside" id="jbQ-l9-o8E"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
