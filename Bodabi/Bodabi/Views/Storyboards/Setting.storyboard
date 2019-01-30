@@ -18,6 +18,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YGX-Bc-r3M">
+                                <rect key="frame" x="-2" y="-2" width="379" height="89"/>
+                                <color key="backgroundColor" red="0.86097449064254761" green="0.45261687040328979" blue="0.32937878370285034" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="89" id="wvu-cJ-bqU"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8fw-es-D3F">
                                 <rect key="frame" x="16" y="120" width="343" height="609"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -26,7 +34,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="YGX-Bc-r3M" secondAttribute="trailing" constant="-2" id="37C-bm-xMg"/>
+                            <constraint firstItem="YGX-Bc-r3M" firstAttribute="top" secondItem="iOZ-g1-Ydu" secondAttribute="top" constant="-2" id="E0D-aW-c2o"/>
                             <constraint firstItem="8fw-es-D3F" firstAttribute="leading" secondItem="D2f-O3-GI2" secondAttribute="leading" constant="16" id="Re8-cF-p1Z"/>
+                            <constraint firstItem="YGX-Bc-r3M" firstAttribute="leading" secondItem="iOZ-g1-Ydu" secondAttribute="leading" constant="-2" id="UnW-cD-eZW"/>
                             <constraint firstItem="D2f-O3-GI2" firstAttribute="trailing" secondItem="8fw-es-D3F" secondAttribute="trailing" constant="16" id="VQU-70-bbW"/>
                             <constraint firstItem="8fw-es-D3F" firstAttribute="top" secondItem="D2f-O3-GI2" secondAttribute="top" constant="32" id="aBN-8h-i4P"/>
                             <constraint firstItem="D2f-O3-GI2" firstAttribute="bottom" secondItem="8fw-es-D3F" secondAttribute="bottom" id="bNj-BM-4ni"/>
@@ -52,7 +63,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="H7G-ea-cAl">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.8980392157" green="0.25882352939999997" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.86488586664199829" green="0.4526216983795166" blue="0.32937854528427124" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

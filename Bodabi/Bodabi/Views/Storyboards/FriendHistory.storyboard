@@ -22,31 +22,31 @@
                                 <rect key="frame" x="-2" y="-2" width="379" height="215"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100,000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCL-I8-deX">
-                                        <rect key="frame" x="274" y="116" width="85" height="27"/>
+                                        <rect key="frame" x="274" y="128" width="85" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_leftArrow" translatesAutoresizingMaskIntoConstraints="NO" id="urB-nz-1dw">
-                                        <rect key="frame" x="241" y="151" width="25" height="19"/>
+                                        <rect key="frame" x="241" y="163" width="25" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="urB-nz-1dw" secondAttribute="height" multiplier="25:19" id="7Uh-Zb-fYx"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100,000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c49-ZA-f9I">
-                                        <rect key="frame" x="274" y="147" width="85" height="27"/>
+                                        <rect key="frame" x="274" y="159" width="85" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_rightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="bCT-wc-f7J">
-                                        <rect key="frame" x="241" y="121" width="25" height="19"/>
+                                        <rect key="frame" x="241" y="132" width="25" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="bCT-wc-f7J" secondAttribute="height" multiplier="25:19" id="rQm-1j-OXJ"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.8980392157" green="0.25882352939999997" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.86488586664199829" green="0.4526216983795166" blue="0.32937854528427124" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="c49-ZA-f9I" firstAttribute="centerX" secondItem="cCL-I8-deX" secondAttribute="centerX" id="5N1-it-agp"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="cCL-I8-deX" secondAttribute="trailing" constant="12" id="7jb-TE-Bjx"/>
@@ -54,10 +54,10 @@
                                     <constraint firstItem="urB-nz-1dw" firstAttribute="centerX" secondItem="bCT-wc-f7J" secondAttribute="centerX" id="UJy-ph-rcB"/>
                                     <constraint firstAttribute="height" constant="215" id="UvU-VY-8Tu"/>
                                     <constraint firstItem="c49-ZA-f9I" firstAttribute="top" secondItem="cCL-I8-deX" secondAttribute="bottom" constant="4" id="WUG-fB-Hg9"/>
-                                    <constraint firstItem="cCL-I8-deX" firstAttribute="top" secondItem="dky-pF-8MW" secondAttribute="topMargin" constant="108" id="ass-mQ-mQQ"/>
+                                    <constraint firstItem="cCL-I8-deX" firstAttribute="top" secondItem="dky-pF-8MW" secondAttribute="topMargin" constant="120" id="ass-mQ-mQQ"/>
                                     <constraint firstItem="cCL-I8-deX" firstAttribute="leading" secondItem="bCT-wc-f7J" secondAttribute="trailing" constant="8" id="jMh-nA-iga"/>
                                     <constraint firstItem="urB-nz-1dw" firstAttribute="centerY" secondItem="c49-ZA-f9I" secondAttribute="centerY" id="jSV-Tz-N2L"/>
-                                    <constraint firstItem="bCT-wc-f7J" firstAttribute="top" secondItem="dky-pF-8MW" secondAttribute="topMargin" constant="113" id="q9T-i2-5aO"/>
+                                    <constraint firstItem="bCT-wc-f7J" firstAttribute="top" secondItem="dky-pF-8MW" secondAttribute="topMargin" constant="124" id="q9T-i2-5aO"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="주고받은 내역" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZO-3N-upQ">
@@ -134,7 +134,7 @@
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.8980392157" green="0.25882352939999997" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.86488586664199829" green="0.4526216983795166" blue="0.32937854528427124" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="largeTitleTextAttributes">
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         </textAttributes>

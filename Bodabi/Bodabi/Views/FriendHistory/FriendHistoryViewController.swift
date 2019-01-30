@@ -32,6 +32,7 @@ class FriendHistoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         initNavigationBar()
         initTableView()
         initHistories()
@@ -39,7 +40,6 @@ class FriendHistoryViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         navigationController?.popToRootViewController(animated: false)
     }
     
@@ -56,6 +56,7 @@ class FriendHistoryViewController: UIViewController {
     
     private func initNavigationBar() {
         navigationController?.view.backgroundColor = .clear
+        navigationController?.navigationBar.shadowImage = UIImage()
         navigationItem.title = Friend.dummies[friendId ?? 0].name
     }
     

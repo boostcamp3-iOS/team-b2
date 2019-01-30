@@ -23,12 +23,21 @@ class SettingViewController: UIViewController {
         initDummyUserDefaults()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        initNavigationBar()
+    }
+    
     // MARK: - Initialization Methods
     
     private func initTableView() {
         let cell = SettingViewCell.self
         tableView.register(cell)
         tableView.tableFooterView = UIView()
+    }
+    
+    private func initNavigationBar(){
+        navigationController?.navigationBar.clear()
     }
     
     private func initDummyUserDefaults() {
