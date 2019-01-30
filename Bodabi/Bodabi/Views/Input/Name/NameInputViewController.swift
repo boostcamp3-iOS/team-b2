@@ -14,12 +14,23 @@ class NameInputViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var background: UIView!
+    
+    @IBOutlet weak var bottomConstriant: NSLayoutConstraint!
+    @IBOutlet weak var heightConstriant: NSLayoutConstraint!
+
+    private var originalBottomConstraint: CGFloat = 0.0
+    private var originalHeightConstraint: CGFloat = 0.0
     
     weak var addHolidayDelegate: HolidayInputViewController?
     weak var addFriendDelegate: FriendsViewController?
     weak var homeDelegate: HolidayViewController?
     
     var entryRoute: EntryRoute!
+    var friends: [Friend] = Friend.dummies
+    var holidaies: [Holiday] = Holiday.dummies
+    
     var newHolidayName: String? {
         didSet {
             setGuideLabel()
@@ -36,11 +47,29 @@ class NameInputViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initKeyboard()
         initGuideLabelText()
         initNavigationBar()
         initTextField()
         initNextButton()
         initTapGesture()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    private func initKeyboard() {
+        originalBottomConstraint = bottomConstriant.constant
+        originalHeightConstraint = heightConstriant.constant
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChacnge(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChacnge(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChacnge(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     private func initGuideLabelText() {
@@ -95,7 +124,7 @@ class NameInputViewController: UIViewController {
             case .addUpcomingEventAtHome,
                  .addFriendAtHoliday:
                 let attributedString = NSMutableAttributedString()
-                    .color(newHolidayName ?? "", fontSize: 25)
+                    .color(newFriendName ?? "", fontSize: 25)
                     .bold("님의\n이벤트인가요?", fontSize: 25)
                 guideLabel.attributedText = attributedString
             case .addFriendAtFriends:
@@ -122,7 +151,8 @@ class NameInputViewController: UIViewController {
         guard let entryRoute = entryRoute else { return }
         
         switch entryRoute {
-        case .addFriendAtFriends:
+        case .addFriendAtFriends,
+             .addUpcomingEventAtHome:
             newFriendName = sender.text
         default:
             newHolidayName = sender.text
@@ -134,7 +164,6 @@ class NameInputViewController: UIViewController {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            // 데이터 저장 후 dismiss
             guard let newHoliday = newHolidayName else { return }
             addHolidayDelegate?.myHolidaies.insert(newHoliday, at: 1)
             self.dismiss(animated: true, completion: nil)
@@ -159,6 +188,33 @@ class NameInputViewController: UIViewController {
         }
     }
     
+    @objc func keyboardWillChacnge(_ notification: Foundation.Notification) {
+        if notification.name == UIWindow.keyboardWillChangeFrameNotification ||
+            notification.name == UIWindow.keyboardWillShowNotification {
+            let userInfo:NSDictionary = notification.userInfo! as NSDictionary
+            let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            nextButton.titleEdgeInsets.top = 0
+            bottomConstriant.constant = -keyboardHeight
+            heightConstriant.constant = CGFloat(40)
+            
+            UIView.animate(withDuration: 1.0) {
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            nextButton.titleEdgeInsets.top = -20
+            
+            bottomConstriant.constant = originalBottomConstraint
+            heightConstriant.constant = originalHeightConstraint
+            
+            UIView.animate(withDuration: 1.0) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -177,7 +233,8 @@ extension NameInputViewController: UITextFieldDelegate {
         case .addHolidayAtHome:
             textField.placeholder = "졸업식"
         case .addUpcomingEventAtHome,
-             .addFriendAtHoliday:
+             .addFriendAtHoliday,
+             .addFriendAtFriends:
             textField.placeholder = "김철수"
         default:
             break
@@ -185,7 +242,15 @@ extension NameInputViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        newHolidayName = textField.text
+        guard let entryRoute = entryRoute else { return true }
+        
+        switch entryRoute {
+        case .addFriendAtFriends,
+             .addUpcomingEventAtHome:
+            newFriendName = textField.text
+        default:
+            newHolidayName = textField.text
+        }
         self.view.endEditing(true)
         return true
     }
@@ -195,11 +260,78 @@ extension NameInputViewController: UIGestureRecognizerDelegate {
     private func initTapGesture() {
         let viewTapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
         viewTapGesture.delegate = self
-        self.view.addGestureRecognizer(viewTapGesture)
+        self.background.addGestureRecognizer(viewTapGesture)
     }
-    
+
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         self.view.endEditing(true)
         return true
+    }
+}
+
+extension NameInputViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            let holiday = holidaies[indexPath.row]
+            
+            nameTextField.text = holiday.title
+            newHolidayName = holiday.title
+            
+        case .addUpcomingEventAtHome,
+             .addFriendAtHoliday,
+             .addFriendAtFriends:
+            let friend = friends[indexPath.row]
+            
+            nameTextField.text = friend.name
+            newFriendName = friend.name
+        default:
+            break
+        }
+        
+        self.view.endEditing(true)
+    }
+}
+
+extension NameInputViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        guard let entryRoute = entryRoute else { return 0 }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            return holidaies.count
+        case .addUpcomingEventAtHome,
+             .addFriendAtHoliday,
+             .addFriendAtFriends:
+            return friends.count
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+    
+        guard let entryRoute = entryRoute else { return UITableViewCell() }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            let holiday = holidaies[indexPath.row]
+            cell.textLabel?.text = holiday.title
+            
+        case .addUpcomingEventAtHome,
+             .addFriendAtHoliday,
+             .addFriendAtFriends:
+            let friend = friends[indexPath.row]
+            cell.textLabel?.text = friend.name
+        default:
+            break
+        }
+        
+        return cell
     }
 }
