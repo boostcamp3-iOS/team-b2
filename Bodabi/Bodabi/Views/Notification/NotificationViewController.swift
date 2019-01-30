@@ -27,6 +27,11 @@ class NotificationViewController: UIViewController {
         initTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        initNavigationBar()
+    }
+    
     // MARK: - Initialization Methods
     
     private func initTableView() {
@@ -35,6 +40,10 @@ class NotificationViewController: UIViewController {
         let cell = NotificationViewCell.self
         tableView.register(cell)
         tableView.tableFooterView = UIView()
+    }
+    
+    private func initNavigationBar(){
+        navigationController?.navigationBar.clear()
     }
 }
 
