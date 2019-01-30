@@ -49,14 +49,14 @@ extension String {
     }
     
     func insertComma() -> String? {
+        guard let number = Int(self) else { return self }
+        
         let withSeparator: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.groupingSeparator = ","
             formatter.numberStyle = .decimal
             return formatter
         }()
-        
-        guard let number = Int(self) else { return self }
         
         return withSeparator.string(from: number as NSNumber)
     }

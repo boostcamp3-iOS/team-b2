@@ -141,27 +141,13 @@ extension ItemInputViewController: UITextFieldDelegate {
         guard var preText = textField.text else { return true }
         switch item {
         case .cash:
-            let  char = string.cString(using: String.Encoding.utf8)!
-            let isBackSpace = strcmp(char, "\\b")
-            
             if preText.last == "원" {
                 preText.popLast()
             }
-        
+            
             preText = preText.deleteComma()
             
-            if (isBackSpace == -92) {
-                preText.popLast()
-                
-                if preText != "" {
-                    preText += string
-                    
-                    if let insertedCommaString = preText.insertComma() {
-                        preText = insertedCommaString
-                    }
-                    preText += "원"
-                }
-            } else {
+            if range.length == 0 {
                 preText += string
                 
                 if let insertedCommaString = preText.insertComma() {
@@ -169,7 +155,16 @@ extension ItemInputViewController: UITextFieldDelegate {
                 }
                 
                 preText += "원"
+            } else {
+                preText.popLast()
                 
+                if preText != "" {
+                    if let insertedCommaString = preText.insertComma() {
+                        preText = insertedCommaString
+                    }
+                    
+                    preText += "원"
+                }
             }
             
             textField.text = preText
