@@ -68,7 +68,9 @@ class HolidayInputViewController: UIViewController {
             
             viewController.addHolidayDelegate = self
             viewController.entryRoute = .addHolidayAtHome
-            self.present(viewController, animated: true, completion: nil)
+            
+            let navController = UINavigationController(rootViewController: viewController)
+            self.present(navController, animated: true, completion: nil)
         } else {
             switch entryRoute {
             case .addHolidayAtHome:

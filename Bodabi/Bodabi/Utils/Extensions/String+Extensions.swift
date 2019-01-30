@@ -47,4 +47,25 @@ extension String {
         let suffix = self.isFinalConsonant() ? "이" : "가"
         return self + suffix
     }
+    
+    func insertComma() -> String? {
+        guard let number = Int(self) else { return self }
+        
+        let withSeparator: NumberFormatter = {
+            let formatter = NumberFormatter()
+            formatter.groupingSeparator = ","
+            formatter.numberStyle = .decimal
+            return formatter
+        }()
+        
+        return withSeparator.string(from: number as NSNumber)
+    }
+    
+    func deleteComma() -> String {
+        let deletedString = self.filter {
+            $0 != ","
+        }
+        print(deletedString)
+        return deletedString
+    }
 }

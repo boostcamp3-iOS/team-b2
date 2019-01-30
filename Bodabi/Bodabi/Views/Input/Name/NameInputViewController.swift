@@ -16,10 +16,18 @@ class NameInputViewController: UIViewController {
     @IBOutlet weak var textField: UITextField!
     
     weak var addHolidayDelegate: HolidayInputViewController?
+    weak var addFriendDelegate: FriendsViewController?
     weak var homeDelegate: HolidayViewController?
     
     var entryRoute: EntryRoute!
     var newHolidayName: String? {
+        didSet {
+            setGuideLabel()
+            setNextButton()
+        }
+    }
+    
+    var newFriendName: String? {
         didSet {
             setGuideLabel()
             setNextButton()
@@ -42,7 +50,8 @@ class NameInputViewController: UIViewController {
         case .addHolidayAtHome:
             guideLabel.text = "새로운 경조사의\n이름을 입력해주세요"
         case .addUpcomingEventAtHome,
-             .addFriendAtHoliday:
+             .addFriendAtHoliday,
+             .addFriendAtFriends:
             guideLabel.text = "친구의 이름이\n무엇인가요?"
         default:
             break
@@ -51,38 +60,14 @@ class NameInputViewController: UIViewController {
     
     private func initNavigationBar() {
         self.navigationController?.navigationBar.clear()
-        
-        guard let entryRoute = entryRoute else { return }
-        
-        switch entryRoute {
-        case .addHolidayAtHome:
-            let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
-            
-            self.navigationItem.leftBarButtonItem = backButton
-        default:
-            break
-        }
-    }
-    
-    private func initTextField() {
-        guard let entryRoute = entryRoute else { return }
-        
-        switch entryRoute {
-        case .addHolidayAtHome:
-            textField.placeholder = "졸업식"
-        case .addUpcomingEventAtHome,
-             .addFriendAtHoliday:
-            textField.placeholder = "김철수"
-        default:
-            break
-        }
     }
     
     private func initNextButton() {
         guard let entryRoute = entryRoute else { return }
         
         switch entryRoute {
-        case .addHolidayAtHome:
+        case .addHolidayAtHome,
+             .addFriendAtFriends:
             nextButton.setTitle("완료", for: .normal)
         case .addUpcomingEventAtHome,
              .addFriendAtHoliday:
@@ -111,7 +96,12 @@ class NameInputViewController: UIViewController {
                  .addFriendAtHoliday:
                 let attributedString = NSMutableAttributedString()
                     .color(newHolidayName ?? "", fontSize: 25)
-                    .bold("의\n이벤트인가요?", fontSize: 25)
+                    .bold("님의\n이벤트인가요?", fontSize: 25)
+                guideLabel.attributedText = attributedString
+            case .addFriendAtFriends:
+                let attributedString = NSMutableAttributedString()
+                    .color(newFriendName ?? "", fontSize: 25)
+                    .bold("님을 추가하시겠어요?", fontSize: 25)
                 guideLabel.attributedText = attributedString
             default:
                 break
@@ -129,7 +119,14 @@ class NameInputViewController: UIViewController {
     }
     
     @IBAction func textFieldDidChanging(_ sender: UITextField) {
-        newHolidayName = sender.text
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addFriendAtFriends:
+            newFriendName = sender.text
+        default:
+            newHolidayName = sender.text
+        }
     }
     
     @IBAction func touchUpNextButton(_ sender: UIButton) {
@@ -153,6 +150,10 @@ class NameInputViewController: UIViewController {
             
             viewController.entryRoute = entryRoute
             self.navigationController?.pushViewController(viewController, animated: true)
+        case .addFriendAtFriends:
+            guard let friendName = newFriendName else { return }
+            addFriendDelegate?.friends.insert(Friend(id: 11, name: friendName, phoneNumber: "01012341234", tags: nil, favorite: false), at: 1)
+            self.dismiss(animated: true, completion: nil)
         default:
             break
         }
@@ -168,6 +169,21 @@ class NameInputViewController: UIViewController {
 }
 
 extension NameInputViewController: UITextFieldDelegate {
+    private func initTextField() {
+        nameTextField.addBottomLine(height: 1.0, color: UIColor.lightGray)
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            textField.placeholder = "졸업식"
+        case .addUpcomingEventAtHome,
+             .addFriendAtHoliday:
+            textField.placeholder = "김철수"
+        default:
+            break
+        }
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         newHolidayName = textField.text
         self.view.endEditing(true)

@@ -16,12 +16,12 @@ class ItemInputViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     
     enum Item {
-        case cache
+        case cash
         case gift
         
         var text: String {
             switch self {
-            case .cache:
+            case .cash:
                 return "금액"
             case .gift:
                 return "선물"
@@ -30,7 +30,7 @@ class ItemInputViewController: UIViewController {
         
         var placeholder: String {
             switch self {
-            case .cache:
+            case .cash:
                 return "원"
             case .gift:
                 return "기프티콘"
@@ -41,9 +41,9 @@ class ItemInputViewController: UIViewController {
     weak var delegate: HomeViewController?
     var entryRoute: EntryRoute!
     
-    var item: Item = .cache {
+    var item: Item = .cash {
         didSet {
-            setItemInputView()
+            setItemInputType()
             setKeyboardType()
         }
     }
@@ -59,6 +59,7 @@ class ItemInputViewController: UIViewController {
         initNavigationBar()
         initNextButton()
         initTapGesture()
+        initTextField()
     }
     
     private func initNavigationBar() {
@@ -84,7 +85,7 @@ class ItemInputViewController: UIViewController {
         }
     }
     
-    private func setItemInputView() {
+    private func setItemInputType() {
         itemTypeLabel.text = item.text
         itemInputTextField.placeholder = item.placeholder
         
@@ -101,7 +102,7 @@ class ItemInputViewController: UIViewController {
     }
     
     @IBAction func switchItem(_ sender: UISegmentedControl) {
-        item = sender.selectedSegmentIndex == 0 ? .cache : .gift
+        item = sender.selectedSegmentIndex == 0 ? .cash : .gift
     }
     
     @IBAction func textFieldDidChanging(_ sender: UITextField) {
@@ -126,10 +127,53 @@ class ItemInputViewController: UIViewController {
 }
 
 extension ItemInputViewController: UITextFieldDelegate {
+    private func initTextField() {
+        itemInputTextField.addBottomLine(height: 1.0, color: UIColor.lightGray)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         myItem = textField.text
         self.view.endEditing(true)
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard var preText = textField.text else { return true }
+        switch item {
+        case .cash:
+            if preText.last == "원" {
+                preText.popLast()
+            }
+            
+            preText = preText.deleteComma()
+            
+            if range.length == 0 {
+                preText += string
+                
+                if let insertedCommaString = preText.insertComma() {
+                    preText = insertedCommaString
+                }
+                
+                preText += "원"
+            } else {
+                preText.popLast()
+                
+                if preText != "" {
+                    if let insertedCommaString = preText.insertComma() {
+                        preText = insertedCommaString
+                    }
+                    
+                    preText += "원"
+                }
+            }
+            
+            textField.text = preText
+            myItem = preText
+            
+            return false
+        default:
+            return true
+        }
     }
 }
 
