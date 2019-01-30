@@ -16,12 +16,12 @@ class ItemInputViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     
     enum Item {
-        case cache
+        case cash
         case gift
         
         var text: String {
             switch self {
-            case .cache:
+            case .cash:
                 return "금액"
             case .gift:
                 return "선물"
@@ -30,7 +30,7 @@ class ItemInputViewController: UIViewController {
         
         var placeholder: String {
             switch self {
-            case .cache:
+            case .cash:
                 return "원"
             case .gift:
                 return "기프티콘"
@@ -41,7 +41,7 @@ class ItemInputViewController: UIViewController {
     weak var delegate: HomeViewController?
     var entryRoute: EntryRoute!
     
-    var item: Item = .cache {
+    var item: Item = .cash {
         didSet {
             setItemInputType()
             setKeyboardType()
@@ -102,7 +102,7 @@ class ItemInputViewController: UIViewController {
     }
     
     @IBAction func switchItem(_ sender: UISegmentedControl) {
-        item = sender.selectedSegmentIndex == 0 ? .cache : .gift
+        item = sender.selectedSegmentIndex == 0 ? .cash : .gift
     }
     
     @IBAction func textFieldDidChanging(_ sender: UITextField) {
@@ -140,7 +140,7 @@ extension ItemInputViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard var preText = textField.text else { return true }
         switch item {
-        case .cache:
+        case .cash:
             let  char = string.cString(using: String.Encoding.utf8)!
             let isBackSpace = strcmp(char, "\\b")
             
