@@ -81,7 +81,7 @@ class NameInputViewController: UIViewController {
     }
     
     private func setGuideLabel() {
-        if newHolidayName == "" {
+        if newHolidayName == "" || newFriendName == "" {
             initGuideLabelText()
         } else {
             guard let entryRoute = entryRoute else { return }
@@ -101,7 +101,7 @@ class NameInputViewController: UIViewController {
             case .addFriendAtFriends:
                 let attributedString = NSMutableAttributedString()
                     .color(newFriendName ?? "", fontSize: 25)
-                    .bold("님을 추가하시겠어요?", fontSize: 25)
+                    .bold("님을\n추가하시겠어요?", fontSize: 25)
                 guideLabel.attributedText = attributedString
             default:
                 break
@@ -110,7 +110,7 @@ class NameInputViewController: UIViewController {
     }
     
     private func setNextButton() {
-        if newHolidayName == "" {
+        if newHolidayName == "" || newFriendName == "" {
             initNextButton()
         } else {
             nextButton.isEnabled = true
