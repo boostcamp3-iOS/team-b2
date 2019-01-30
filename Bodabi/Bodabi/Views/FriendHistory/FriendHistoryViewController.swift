@@ -32,14 +32,10 @@ class FriendHistoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        initNavigationBar()
         initTableView()
         initHistories()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        initNavigationBar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
