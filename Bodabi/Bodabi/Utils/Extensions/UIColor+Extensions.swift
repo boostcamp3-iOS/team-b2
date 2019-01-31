@@ -32,18 +32,18 @@ extension UIColor {
     
     class var calendarSelectedColor: UIColor {
         // Color HexCode: DEE6FA
-        return #colorLiteral(red: 0.8705882353, green: 0.9019607843, blue: 0.9803921569, alpha: 1)
+        return #colorLiteral(red: 0.6431372549, green: 0.6823529412, blue: 0.9215686275, alpha: 1)
     }
     
-    static var calendarPointColor: UIColor {
+    class var calendarPointColor: UIColor {
         return #colorLiteral(red: 0.9490196078, green: 0.7529411765, blue: 0.3568627451, alpha: 1)
     }
     
-    static var calendarTodayColor: UIColor {
+    class var calendarTodayColor: UIColor {
         return #colorLiteral(red: 0.4784313725, green: 0.5333333333, blue: 0.8862745098, alpha: 1)
     }
     
-    static var calendarWeekColor: UIColor {
+    class var calendarWeekColor: UIColor {
         return #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
     }
 }
