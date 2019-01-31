@@ -85,7 +85,7 @@ class HomeViewController: UIViewController {
     
         viewController.delegate = self
         viewController.entryRoute = .addHolidayAtHome
-        self.present(navController, animated: true, completion: nil)
+        present(navController, animated: true, completion: nil)
     }
     
     @objc func touchUpAddUpcomingEventButton(_ sender: UIButton) {
@@ -94,7 +94,7 @@ class HomeViewController: UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
         
         viewController.entryRoute = .addUpcomingEventAtHome
-        self.present(navController, animated: true, completion: nil)
+        present(navController, animated: true, completion: nil)
     }
 }
 
@@ -166,7 +166,7 @@ extension HomeViewController: UICollectionViewDelegate {
             .instantiateViewController(ofType: HolidayViewController.self)
         
         viewController.entryRoute = .addHistoryAtFriendHistory
-        self.navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

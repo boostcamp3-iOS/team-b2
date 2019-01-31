@@ -68,4 +68,52 @@ extension String {
         print(deletedString)
         return deletedString
     }
+    
+    func insertComma(with string: String?, range: NSRange?) -> String? {
+        var currentText = self
+        
+        if currentText.last == "원" {
+            let _ = currentText.popLast()
+        }
+        
+        currentText = currentText.deleteComma()
+        
+        // backButton이 아니면
+        if range?.length == 0 {
+            currentText += string ?? ""
+            
+            if let insertedCommaText = currentText.insertComma() {
+                currentText = insertedCommaText
+            } else {
+                return nil
+            }
+        } else {
+            let _ = currentText.popLast()
+            
+            if currentText != "" {
+                if let insertedCommaText = currentText.insertComma() {
+                    currentText = insertedCommaText
+                }
+            }
+        }
+        
+        return currentText
+    }
+    
+    
+    func plus(with value: String) -> String? {
+        var sum: Int = 0
+        
+        if self != "" {
+            guard let left = Int(self) else { return nil }
+            sum += left
+        }
+        
+        if value != "" {
+            guard let right = Int(value) else { return nil }
+            sum += right
+        }
+        
+        return String(sum)
+    }
 }

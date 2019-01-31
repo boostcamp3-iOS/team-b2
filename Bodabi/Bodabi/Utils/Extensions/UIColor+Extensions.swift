@@ -26,8 +26,8 @@ extension UIColor {
     }
     
     class var calendarColor: UIColor {
-        // Color HexCode: DEE6FA
-        return #colorLiteral(red: 0.8705882353, green: 0.9019607843, blue: 0.9803921569, alpha: 1)
+        // Color HexCode: A4AEEB
+        return #colorLiteral(red: 0.6431372549, green: 0.6823529412, blue: 0.9215686275, alpha: 1)
     }
     
     class var offColor: UIColor {

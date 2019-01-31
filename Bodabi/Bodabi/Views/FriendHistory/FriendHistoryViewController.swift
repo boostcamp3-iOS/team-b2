@@ -10,7 +10,7 @@ import UIKit
 
 class FriendHistoryViewController: UIViewController {
     
-    // MARK: - IBOutlets
+    // MARK: - @IBOutlets
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var floatingButton: UIButton!
@@ -68,6 +68,8 @@ class FriendHistoryViewController: UIViewController {
         tableView.contentInset.bottom = Const.bottomInset
     }
     
+    // MARK: - @IBAction
+    
     @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: HolidayInputViewController.self)
@@ -78,10 +80,9 @@ class FriendHistoryViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension FriendHistoryViewController: UITableViewDataSource {
-    
-    // MARK: - TableViewDataSource Methods
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return histories.count
     }
