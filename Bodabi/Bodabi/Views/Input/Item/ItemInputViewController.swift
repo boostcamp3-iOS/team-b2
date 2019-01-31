@@ -10,7 +10,7 @@ import UIKit
 
 class ItemInputViewController: UIViewController {
     
-    // MARK: - @IBOutlets
+    // MARK: - IBOutlet
     
     @IBOutlet weak var itemTypeLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
@@ -20,7 +20,7 @@ class ItemInputViewController: UIViewController {
     @IBOutlet weak var bottomConstriant: NSLayoutConstraint!
     @IBOutlet weak var heightConstriant: NSLayoutConstraint!
     
-    // MARK: - Properties
+    // MARK: - Property
 
     public weak var delegate: HomeViewController?
     public var entryRoute: EntryRoute!
@@ -32,7 +32,7 @@ class ItemInputViewController: UIViewController {
         }
     }
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,7 @@ class ItemInputViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
-    // MARK: - Initialization Methods
+    // MARK: - Initialization
     
     private func initCollectionView() {
         collectionView.delegate = self; collectionView.dataSource = self
@@ -75,11 +75,11 @@ class ItemInputViewController: UIViewController {
         originalBottomConstraint = bottomConstriant.constant
         originalHeightConstraint = heightConstriant.constant
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChacnge(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChacnge(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChacnge(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     
@@ -97,7 +97,7 @@ class ItemInputViewController: UIViewController {
         nextButton.isEnabled = false
     }
     
-    // MARK: - Setup Methods
+    // MARK: - Setup
     
     private func setNextButton() {
         if item.value == "" {
@@ -128,7 +128,7 @@ class ItemInputViewController: UIViewController {
         }
     }
     
-    // MARK: - @IBActions
+    // MARK: - IBAction
     
     @IBAction func switchItem(_ sender: UISegmentedControl) {
         item = sender.selectedSegmentIndex == 0 ? .cash(amount: "") : .gift(name: "")
@@ -160,9 +160,9 @@ class ItemInputViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - @objcs
+    // MARK: - Objc
     
-    @objc func keyboardWillChacnge(_ notification: Foundation.Notification) {
+    @objc func keyboardWillChange(_ notification: Foundation.Notification) {
         if notification.name == UIWindow.keyboardWillChangeFrameNotification ||
             notification.name == UIWindow.keyboardWillShowNotification {
             let userInfo:NSDictionary = notification.userInfo! as NSDictionary

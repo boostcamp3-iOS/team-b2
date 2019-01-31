@@ -10,13 +10,13 @@ import UIKit
 
 class DateInputViewController: UIViewController {
     
-    // MARK: - @IBOutlets
+    // MARK: - IBOutlet
     
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var dateLabel: UILabel!
     
-    // MARK: - Properties
+    // MARK: - Property
     
     private let dateFormatter: DateFormatter = {
         let formatter: DateFormatter = DateFormatter()
@@ -29,7 +29,7 @@ class DateInputViewController: UIViewController {
     public weak var delegate: HomeViewController?
     public var entryRoute: EntryRoute!
     
-    // MARK: - Lifecycle Method
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,12 +39,12 @@ class DateInputViewController: UIViewController {
         initNextButton()
     }
     
-    // MARK: - Initialization Methods
+    // MARK: - Initialization
     
     private func initDateLabel() {
         let date: Date = self.datePicker.date
         let dateString: String = self.dateFormatter.string(from: date)
-        self.dateLabel.text = dateString
+        dateLabel.text = dateString
         
     }
     
@@ -62,20 +62,21 @@ class DateInputViewController: UIViewController {
         nextButton.isEnabled = false
     }
     
-    // MARK: - Setup Method
+    // MARK: - Setup
     
     private func setNextButton() {
         nextButton.backgroundColor = UIColor.mainColor
         nextButton.isEnabled = true
     }
     
-    // MARK: - @IBActions
+    // MARK: - IBAction
     
     @IBAction func didDatePickerValueChaged(_ sender: UIDatePicker) {
         let holidayDate: Date = sender.date
         let dateString: String = self.dateFormatter.string(from: holidayDate)
-        dateLabel.text = dateString
         
+        dateLabel.text = dateString
+
         setNextButton()
     }
     
@@ -87,7 +88,7 @@ class DateInputViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - @objc
+    // MARK: - Objc
     
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
         navigationController?.popViewController(animated: true)

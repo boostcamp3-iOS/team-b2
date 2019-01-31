@@ -10,7 +10,7 @@ import UIKit
 
 class HolidayInputViewController: UIViewController {
     
-    // MARK: - @IBOutlet
+    // MARK: - IBOutlet
     
     @IBOutlet weak var guideLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -26,7 +26,7 @@ class HolidayInputViewController: UIViewController {
     }
     private var selectedHoliday: String?
     
-    // MARK: - Lifecycle Method
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,7 @@ class HolidayInputViewController: UIViewController {
         initNavigationBar()
     }
     
-    // MARK: - Initialization Method
+    // MARK: - Initialization
     
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
@@ -71,13 +71,13 @@ class HolidayInputViewController: UIViewController {
         navigationController?.navigationBar.clear()
     }
     
-    // MARK: - @IBAction Method
+    // MARK: - IBAction
     
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - @objc Method
+    // MARK: - objc
     
     @objc func touchUpHoildayButton(_ sender: UIButton) {
         selectedHoliday = sender.titleLabel?.text
@@ -128,9 +128,7 @@ extension HolidayInputViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "holidayCellId", for: indexPath) as? HolidayInputViewCell else {
-            return UITableViewCell()
-        }
+        let cell = tableView.dequeue(HolidayInputViewCell.self, for: indexPath)
         
         cell.holidaybutton.setTitle(myHolidaies[indexPath.row], for: .normal)
         cell.holidaybutton.addTarget(self, action: #selector(touchUpHoildayButton(_:)), for: .touchUpInside)

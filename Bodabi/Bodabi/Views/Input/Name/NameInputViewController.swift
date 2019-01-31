@@ -74,11 +74,11 @@ class NameInputViewController: UIViewController {
         originalBottomConstraint = bottomConstriant.constant
         originalHeightConstraint = heightConstriant.constant
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChacnge(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChacnge(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChacnge(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     private func initGuideLabelText() {
@@ -209,7 +209,7 @@ class NameInputViewController: UIViewController {
     
     // MARK: - @objcs
     
-    @objc func keyboardWillChacnge(_ notification: Foundation.Notification) {
+    @objc func keyboardWillChange(_ notification: Foundation.Notification) {
         if notification.name == UIWindow.keyboardWillChangeFrameNotification ||
             notification.name == UIWindow.keyboardWillShowNotification {
             let userInfo:NSDictionary = notification.userInfo! as NSDictionary
