@@ -223,15 +223,17 @@ extension ItemInputViewController: UICollectionViewDelegate {
         var selectedItem = item.list[indexPath.item]
         
         switch item {
-        case var .cash(amount):
+        case let .cash(amount):
             selectedItem = amount.plus(with: selectedItem) ?? ""
             item = .cash(amount: selectedItem)
+            guard let currentText = selectedItem.insertComma() else { return }
+            textField.text = currentText + "원"
         case .gift:
             item = .gift(name: selectedItem)
+            textField.text = selectedItem
         }
         
-        guard let currentText = selectedItem.insertComma() else { return }
-        textField.text = currentText + "원"
+        view.endEditing(true)
     }
 }
 

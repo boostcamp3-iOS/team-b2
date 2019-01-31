@@ -73,7 +73,7 @@ extension String {
         var currentText = self
         
         if currentText.last == "원" {
-            currentText.popLast()
+            let _ = currentText.popLast()
         }
         
         currentText = currentText.deleteComma()
@@ -88,7 +88,7 @@ extension String {
                 return nil
             }
         } else {
-            currentText.popLast()
+            let _ = currentText.popLast()
             
             if currentText != "" {
                 if let insertedCommaText = currentText.insertComma() {
@@ -101,7 +101,7 @@ extension String {
     }
     
     
-    mutating func plus(with value: String) -> String? {
+    func plus(with value: String) -> String? {
         var sum: Int = 0
         
         if self != "" {
