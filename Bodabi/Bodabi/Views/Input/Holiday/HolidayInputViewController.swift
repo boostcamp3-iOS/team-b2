@@ -10,12 +10,12 @@ import UIKit
 
 class HolidayInputViewController: UIViewController {
     
-    // MARK: - @IBOutlets
+    // MARK: - @IBOutlet
     
     @IBOutlet weak var guideLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    // MARK: - Properties
+    // MARK: - Property
     
     public weak var delegate: HomeViewController?
     public var entryRoute: EntryRoute!
@@ -36,7 +36,7 @@ class HolidayInputViewController: UIViewController {
         initNavigationBar()
     }
     
-    // MARK: - Initialization Methods
+    // MARK: - Initialization Method
     
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
@@ -71,13 +71,13 @@ class HolidayInputViewController: UIViewController {
         navigationController?.navigationBar.clear()
     }
     
-    // MARK: - @IBAction Methods
+    // MARK: - @IBAction Method
     
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - @objc Methods
+    // MARK: - @objc Method
     
     @objc func touchUpHoildayButton(_ sender: UIButton) {
         selectedHoliday = sender.titleLabel?.text
