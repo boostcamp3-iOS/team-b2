@@ -49,6 +49,8 @@
 		DB3873C5220012B900ADF0CB /* Holiday.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873C4220012B900ADF0CB /* Holiday.swift */; };
 		DB3873C722001BBC00ADF0CB /* Date+ToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873C622001BBC00ADF0CB /* Date+ToString.swift */; };
 		DB3873C922006D3900ADF0CB /* UITextField+BottomLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873C822006D3900ADF0CB /* UITextField+BottomLine.swift */; };
+		DB3873CB22017DC100ADF0CB /* ItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB3873CA22017DC100ADF0CB /* ItemViewCell.xib */; };
+		DB3873CD22017E5300ADF0CB /* ItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873CC22017E5300ADF0CB /* ItemViewCell.swift */; };
 		DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */; };
 		DBF4CEFE21FAE59B001536A8 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */; };
 		DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CF0821FB8452001536A8 /* UIView+InitFromXib.swift */; };
@@ -125,6 +127,8 @@
 		DB3873C4220012B900ADF0CB /* Holiday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Holiday.swift; sourceTree = "<group>"; };
 		DB3873C622001BBC00ADF0CB /* Date+ToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ToString.swift"; sourceTree = "<group>"; };
 		DB3873C822006D3900ADF0CB /* UITextField+BottomLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+BottomLine.swift"; sourceTree = "<group>"; };
+		DB3873CA22017DC100ADF0CB /* ItemViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemViewCell.xib; sourceTree = "<group>"; };
+		DB3873CC22017E5300ADF0CB /* ItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewCell.swift; sourceTree = "<group>"; };
 		DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+ActionSheet.swift"; sourceTree = "<group>"; };
 		DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		DBF4CF0821FB8452001536A8 /* UIView+InitFromXib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+InitFromXib.swift"; sourceTree = "<group>"; };
@@ -385,6 +389,8 @@
 			isa = PBXGroup;
 			children = (
 				DBF4CF3721FC5429001536A8 /* ItemInputViewController.swift */,
+				DB3873CA22017DC100ADF0CB /* ItemViewCell.xib */,
+				DB3873CC22017E5300ADF0CB /* ItemViewCell.swift */,
 			);
 			path = Item;
 			sourceTree = "<group>";
@@ -473,6 +479,7 @@
 				49C084FE21FADDBB0060B02C /* HolidayViewCell.xib in Resources */,
 				DBF4CF1921FBE843001536A8 /* Input.storyboard in Resources */,
 				4998129021F9D99C000DB7B2 /* Setting.storyboard in Resources */,
+				DB3873CB22017DC100ADF0CB /* ItemViewCell.xib in Resources */,
 				49C0851821FDA8A60060B02C /* FriendsHeaderViewCell.xib in Resources */,
 				DB38739F21FEEE8100ADF0CB /* ThanksFriendViewCell.xib in Resources */,
 				49C0850821FAF2810060B02C /* UpcomingEventViewCell.xib in Resources */,
@@ -523,6 +530,7 @@
 				49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */,
 				F814529721FCCF6B004A2CF0 /* SettingViewCell.swift in Sources */,
 				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,
+				DB3873CD22017E5300ADF0CB /* ItemViewCell.swift in Sources */,
 				DB3873C922006D3900ADF0CB /* UITextField+BottomLine.swift in Sources */,
 				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
 				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,

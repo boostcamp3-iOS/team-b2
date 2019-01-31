@@ -80,10 +80,6 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="7Ym-fw-2xK" id="XmS-WD-dP2"/>
-                                    <outlet property="delegate" destination="7Ym-fw-2xK" id="mB8-tI-vSK"/>
-                                </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="해당하는 분이 이미 있다면 아래에서 선택해주세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLl-bG-phh">
                                 <rect key="frame" x="16" y="298" width="343" height="21"/>
@@ -222,9 +218,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="ywc-Xz-R2s" id="nLO-7z-iDG"/>
-                                </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="어떤 경조사를 추가하시겠어요?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4b3-uh-ebq">
                                 <rect key="frame" x="16" y="108" width="305.66666666666669" height="30"/>
@@ -268,6 +261,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OgH-DY-JXp">
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BOj-yW-bWf">
                                 <rect key="frame" x="150" y="108" width="75" height="29"/>
                                 <segments>
@@ -312,7 +310,6 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
                                     <action selector="textFieldDidChanging:" destination="wKl-B5-SVB" eventType="editingChanged" id="0CE-ww-y6T"/>
-                                    <outlet property="delegate" destination="wKl-B5-SVB" id="OxZ-RB-scB"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esE-17-svj">
@@ -359,10 +356,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="itemInputTextField" destination="hBR-Bf-Y2c" id="mGF-pP-Ihu"/>
+                        <outlet property="background" destination="OgH-DY-JXp" id="SQ5-kM-zRr"/>
+                        <outlet property="bottomConstriant" destination="eIh-4U-ery" id="8bz-V8-tI4"/>
+                        <outlet property="collectionView" destination="eni-N5-hpT" id="xaK-kv-WXL"/>
+                        <outlet property="heightConstriant" destination="9hb-cT-2td" id="8we-og-SQc"/>
                         <outlet property="itemTypeLabel" destination="TOP-0y-9Bl" id="eOa-26-vs2"/>
                         <outlet property="nextButton" destination="esE-17-svj" id="ys9-MN-y3d"/>
-                        <outlet property="usedItemCollectionView" destination="eni-N5-hpT" id="xaK-kv-WXL"/>
+                        <outlet property="textField" destination="hBR-Bf-Y2c" id="mGF-pP-Ihu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qvJ-zx-jv1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -386,9 +386,8 @@
                                     <action selector="didDatePickerValueChaged:" destination="R9B-4A-5Wf" eventType="valueChanged" id="8Qf-48-57p"/>
                                 </connections>
                             </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="날짜를 선택해주세요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xmr-gX-lhI">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="날짜를 선택해주세요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xmr-gX-lhI">
                                 <rect key="frame" x="15" y="143" width="200" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <color key="textColor" red="0.93349742889999998" green="0.50486880540000001" blue="0.39262455699999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -419,9 +418,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="sla-P7-fya" firstAttribute="trailing" secondItem="ogR-1A-ayY" secondAttribute="trailing" id="8vD-OT-mCC"/>
+                            <constraint firstItem="Xmr-gX-lhI" firstAttribute="leading" secondItem="sla-P7-fya" secondAttribute="leading" constant="15" id="EPF-ct-TCV"/>
                             <constraint firstItem="ogR-1A-ayY" firstAttribute="bottom" secondItem="ih9-Et-SMK" secondAttribute="bottom" id="Enp-T2-yFu"/>
+                            <constraint firstItem="YNO-08-lb4" firstAttribute="top" relation="lessThanOrEqual" secondItem="Xmr-gX-lhI" secondAttribute="bottom" constant="93" id="FXZ-Rt-8Tx"/>
                             <constraint firstItem="sla-P7-fya" firstAttribute="trailing" secondItem="AvS-3B-WhE" secondAttribute="trailing" constant="16" id="Fba-sz-WMd"/>
                             <constraint firstItem="sla-P7-fya" firstAttribute="trailing" secondItem="YNO-08-lb4" secondAttribute="trailing" constant="16" id="Rah-dm-Sb7"/>
+                            <constraint firstItem="Xmr-gX-lhI" firstAttribute="top" secondItem="sla-P7-fya" secondAttribute="top" constant="55" id="Rvt-07-Vak"/>
                             <constraint firstItem="YNO-08-lb4" firstAttribute="leading" relation="lessThanOrEqual" secondItem="AvS-3B-WhE" secondAttribute="centerX" id="S3U-mY-jde"/>
                             <constraint firstItem="AvS-3B-WhE" firstAttribute="leading" secondItem="sla-P7-fya" secondAttribute="leading" constant="16" id="SVr-D1-h4a"/>
                             <constraint firstItem="ogR-1A-ayY" firstAttribute="leading" secondItem="sla-P7-fya" secondAttribute="leading" id="VPN-Mf-Qpt"/>

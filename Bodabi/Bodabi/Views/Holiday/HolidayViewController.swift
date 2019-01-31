@@ -10,13 +10,6 @@ import UIKit
 
 class HolidayViewController: UIViewController {
     
-    // MARK: - Type
-    
-    struct ThankFriend {
-        var name: String
-        var item: String
-    }
-    
     // MARK: - IBOutlets
     
     @IBOutlet weak var tableView: UITableView!
@@ -24,6 +17,7 @@ class HolidayViewController: UIViewController {
     
     // MARK: - Properties
     
+    public var entryRoute: EntryRoute!
     private var thanksFriendList: [ThankFriend] = [
         ThankFriend(name: "김철수", item: "50,000"),
         ThankFriend(name: "박영희", item: "30,000"),
@@ -39,22 +33,27 @@ class HolidayViewController: UIViewController {
         ThankFriend(name: "김철수", item: "50,000"),
         ThankFriend(name: "김철수", item: "50,000")]
     
-    public var entryRoute: EntryRoute!
-    
-    // MARK: - Lifecycle Methods
+    // MARK: - Lifecycle Method
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initNavigationBar()
         initTableView()
+        initNavigationBar()
     }
     
     // MARK: - Initialization Methods
     
+    private func initTableView() {
+        tableView.delegate = self; tableView.dataSource = self
+        tableView.register(ThanksFriendViewCell.self)
+    }
+    
     private func initNavigationBar() {
         navigationController?.view.backgroundColor = .clear
     }
+    
+    // MARK: - @IBAction
     
     @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
         let viewController = storyboard(.input)
@@ -62,25 +61,19 @@ class HolidayViewController: UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
         
         viewController.entryRoute = .addHistoryAtFriendHistory
-        self.present(navController, animated: true, completion: nil)
+        present(navController, animated: true, completion: nil)
     }
+    
+    // MARK: - @objc
     
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }
 
-extension HolidayViewController: UITableViewDelegate {
-    private func initTableView() {
-        tableView.delegate = self; tableView.dataSource = self
-        tableView.register(ThanksFriendViewCell.self)
-    }
-}
+// MARK: - UITableViewDataSource
 
 extension HolidayViewController: UITableViewDataSource {
-    
-    // MARK: - TableViewDataSource Methods
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return thanksFriendList.count
     }
@@ -93,5 +86,20 @@ extension HolidayViewController: UITableViewDataSource {
         cell.nameLabel.text = friend.name
         
         return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension HolidayViewController: UITableViewDelegate {
+    
+}
+
+// MARK: - Type
+
+extension HolidayViewController {
+    struct ThankFriend {
+        var name: String
+        var item: String
     }
 }
