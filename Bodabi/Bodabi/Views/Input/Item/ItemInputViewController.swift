@@ -28,10 +28,7 @@ class ItemInputViewController: UIViewController {
     private var originalHeightConstraint: CGFloat = 0.0
     private var item: Item = .cash(amount: "") {
         didSet {
-            setItemInputType()
             setNextButton()
-            
-            collectionView.reloadData()
         }
     }
     
@@ -72,7 +69,6 @@ class ItemInputViewController: UIViewController {
     private func initTextField() {
         textField.delegate = self
         textField.addBottomLine(height: 1.0, color: UIColor.lightGray)
-        textField.text = ""
     }
     
     private func initKeyboard() {
@@ -113,15 +109,19 @@ class ItemInputViewController: UIViewController {
         nextButton.backgroundColor = UIColor.mainColor
     }
     
-    private func setItemInputType() {
-        itemTypeLabel.text = item.text
+    private func setTextField() {
+        textField.text = ""
         textField.placeholder = item.placeholder
+    }
+    
+    private func setItemLabel() {
+        itemTypeLabel.text = item.text
     }
     
     private func setKeyboardType() {
         view.endEditing(true)
 
-        if itemTypeLabel.text == "금액" {
+        if item.text == "금액" {
             textField.keyboardType = .numberPad
         } else {
             textField.keyboardType = .default
@@ -132,12 +132,16 @@ class ItemInputViewController: UIViewController {
     
     @IBAction func switchItem(_ sender: UISegmentedControl) {
         item = sender.selectedSegmentIndex == 0 ? .cash(amount: "") : .gift(name: "")
-        initTextField()
+    
+        setItemLabel()
         setKeyboardType()
+        setTextField()
+        
+        collectionView.reloadData()
     }
     
     @IBAction func textFieldDidChanging(_ sender: UITextField) {
-        if itemTypeLabel.text == "금액" {
+        if item.text == "금액" {
             item = .cash(amount: sender.text ?? "")
         } else {
             item = .gift(name: sender.text ?? "")
@@ -216,7 +220,18 @@ extension ItemInputViewController: UICollectionViewDataSource {
 
 extension ItemInputViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var selectedItem = item.list[indexPath.item]
         
+        switch item {
+        case var .cash(amount):
+            selectedItem = amount.plus(with: selectedItem) ?? ""
+            item = .cash(amount: selectedItem)
+        case .gift:
+            item = .gift(name: selectedItem)
+        }
+        
+        guard let currentText = selectedItem.insertComma() else { return }
+        textField.text = currentText + "원"
     }
 }
 
@@ -253,12 +268,14 @@ extension ItemInputViewController: UITextFieldDelegate {
                 return true
             }
             
+            item = .cash(amount: currentText.deleteComma())
+            
             if currentText != "" {
                 currentText += "원"
             }
             
-            item = .cash(amount: currentText)
             textField.text = currentText
+            
             return false
         default:
             return true
@@ -271,6 +288,7 @@ extension ItemInputViewController: UITextFieldDelegate {
 extension ItemInputViewController: UIGestureRecognizerDelegate {
     private func initTapGesture() {
         let viewTapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
+        
         viewTapGesture.delegate = self
         background.addGestureRecognizer(viewTapGesture)
     }

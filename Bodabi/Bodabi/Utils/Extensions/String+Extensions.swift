@@ -87,8 +87,6 @@ extension String {
             } else {
                 return nil
             }
-            
-//            currentText += suffix ?? ""
         } else {
             currentText.popLast()
             
@@ -96,11 +94,26 @@ extension String {
                 if let insertedCommaText = currentText.insertComma() {
                     currentText = insertedCommaText
                 }
-                
-//                currentText += suffix ?? ""
             }
         }
         
         return currentText
+    }
+    
+    
+    mutating func plus(with value: String) -> String? {
+        var sum: Int = 0
+        
+        if self != "" {
+            guard let left = Int(self) else { return nil }
+            sum += left
+        }
+        
+        if value != "" {
+            guard let right = Int(value) else { return nil }
+            sum += right
+        }
+        
+        return String(sum)
     }
 }
