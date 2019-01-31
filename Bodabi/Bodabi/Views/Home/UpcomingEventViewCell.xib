@@ -71,7 +71,7 @@
                             <constraint firstAttribute="bottom" secondItem="t2a-Ww-mKU" secondAttribute="bottom" constant="13" id="6bx-Hm-sna"/>
                             <constraint firstAttribute="trailing" secondItem="W5N-Ui-hl5" secondAttribute="trailing" constant="30" id="8ge-R1-Qex"/>
                             <constraint firstItem="oit-aY-vGK" firstAttribute="leading" secondItem="0cc-qc-23U" secondAttribute="trailing" constant="5" id="Hkg-pr-Pee"/>
-                            <constraint firstAttribute="height" constant="75.5" id="R87-Se-sX7"/>
+                            <constraint firstAttribute="height" priority="999" constant="75.5" id="R87-Se-sX7"/>
                             <constraint firstItem="0cc-qc-23U" firstAttribute="leading" secondItem="f11-bA-pMX" secondAttribute="leading" constant="15" id="XVh-Mg-BYh"/>
                             <constraint firstAttribute="bottom" secondItem="W5N-Ui-hl5" secondAttribute="bottom" constant="6" id="ai2-n1-Mon"/>
                             <constraint firstAttribute="trailing" secondItem="gZp-cM-PwI" secondAttribute="trailing" constant="-75" id="bIF-5G-x7N"/>

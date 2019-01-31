@@ -54,7 +54,7 @@
                     <navigationItem key="navigationItem" title="친구 목록" id="04i-rE-MVZ">
                         <barButtonItem key="backBarButtonItem" title=" " id="TJh-w5-Vus"/>
                         <rightBarButtonItems>
-                            <barButtonItem image="icSort" id="L04-zp-veJ">
+                            <barButtonItem image="ic_sort" id="L04-zp-veJ">
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </barButtonItem>
                             <barButtonItem title="Item" systemItem="edit" id="DeX-15-GCt">
@@ -97,7 +97,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icSort" width="25" height="25"/>
         <image name="ic_floatingButton" width="64" height="65"/>
+        <image name="ic_sort" width="18" height="21"/>
     </resources>
 </document>
