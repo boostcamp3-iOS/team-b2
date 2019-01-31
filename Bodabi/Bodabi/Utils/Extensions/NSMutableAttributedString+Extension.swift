@@ -22,7 +22,7 @@ extension NSMutableAttributedString {
     }
     
     func color(_ text: String, fontSize: CGFloat) -> NSMutableAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.calendarColor]
+        let attrs: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.calendarSelectedColor]
         self.append(NSMutableAttributedString(string: text, attributes: attrs))
         return self
     }

@@ -25,13 +25,25 @@ extension UIColor {
         return #colorLiteral(red: 0.9803921569, green: 0.7764705882, blue: 0.4392156863, alpha: 1)
     }
     
-    class var calendarColor: UIColor {
+    class var offColor: UIColor {
+        // Color HexCode: EEEEEE
+        return #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
+    }
+    
+    class var calendarSelectedColor: UIColor {
         // Color HexCode: DEE6FA
         return #colorLiteral(red: 0.8705882353, green: 0.9019607843, blue: 0.9803921569, alpha: 1)
     }
     
-    class var offColor: UIColor {
-        // Color HexCode: EEEEEE
-        return #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
+    static var calendarPointColor: UIColor {
+        return #colorLiteral(red: 0.9490196078, green: 0.7529411765, blue: 0.3568627451, alpha: 1)
+    }
+    
+    static var calendarTodayColor: UIColor {
+        return #colorLiteral(red: 0.4784313725, green: 0.5333333333, blue: 0.8862745098, alpha: 1)
+    }
+    
+    static var calendarWeekColor: UIColor {
+        return #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
     }
 }
