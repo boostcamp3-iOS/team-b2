@@ -22,24 +22,16 @@ class ItemInputViewController: UIViewController {
     
     // MARK: - Properties
 
-    private let cashList: [String] = ["10000", "30000", "50000", "70000", "100000", "200000"]
-    private let giftList: [String] = ["꽃", "기프티콘", "냉장고", "전자레인지", "옷", "케이크", "화장품", "상품권"]
-
     public weak var delegate: HomeViewController?
     public var entryRoute: EntryRoute!
     private var originalBottomConstraint: CGFloat = 0.0
     private var originalHeightConstraint: CGFloat = 0.0
-    private var item: Item = .cash {
+    private var item: Item = .cash(amount: "") {
         didSet {
             setItemInputType()
-            setKeyboardType()
+            setNextButton()
             
             collectionView.reloadData()
-        }
-    }
-    private var myItem: String? {
-        didSet {
-            setNextButton()
         }
     }
     
@@ -80,6 +72,7 @@ class ItemInputViewController: UIViewController {
     private func initTextField() {
         textField.delegate = self
         textField.addBottomLine(height: 1.0, color: UIColor.lightGray)
+        textField.text = ""
     }
     
     private func initKeyboard() {
@@ -111,27 +104,24 @@ class ItemInputViewController: UIViewController {
     // MARK: - Setup Methods
     
     private func setNextButton() {
-        if myItem == "" {
+        if item.value == "" {
             initNextButton()
-        } else {
-            nextButton.isEnabled = true
-            nextButton.backgroundColor = UIColor.mainColor
+            return
         }
+        
+        nextButton.isEnabled = true
+        nextButton.backgroundColor = UIColor.mainColor
     }
     
     private func setItemInputType() {
         itemTypeLabel.text = item.text
-        
         textField.placeholder = item.placeholder
-        textField.text = ""
-        
-        initNextButton()
     }
     
     private func setKeyboardType() {
         view.endEditing(true)
-        
-        if item.text == "금액" {
+
+        if itemTypeLabel.text == "금액" {
             textField.keyboardType = .numberPad
         } else {
             textField.keyboardType = .default
@@ -141,11 +131,17 @@ class ItemInputViewController: UIViewController {
     // MARK: - @IBActions
     
     @IBAction func switchItem(_ sender: UISegmentedControl) {
-        item = sender.selectedSegmentIndex == 0 ? .cash : .gift
+        item = sender.selectedSegmentIndex == 0 ? .cash(amount: "") : .gift(name: "")
+        initTextField()
+        setKeyboardType()
     }
     
     @IBAction func textFieldDidChanging(_ sender: UITextField) {
-        myItem = sender.text
+        if itemTypeLabel.text == "금액" {
+            item = .cash(amount: sender.text ?? "")
+        } else {
+            item = .gift(name: sender.text ?? "")
+        }
     }
     
     @IBAction func touchUpNextButton(_ sender: UIButton) {
@@ -199,12 +195,7 @@ class ItemInputViewController: UIViewController {
 
 extension ItemInputViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch item {
-        case .cash:
-            return cashList.count
-        case .gift:
-            return giftList.count
-        }
+        return item.list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -212,13 +203,9 @@ extension ItemInputViewController: UICollectionViewDataSource {
         
         switch item {
         case .cash:
-            if let insertedCommaString = cashList[indexPath.item].insertComma() {
-                cell.itemLabel.text = "+" + insertedCommaString
-            }
+            cell.itemLabel.text = "+" + item.list[indexPath.item]
         case .gift:
-            if let insertedCommaString = giftList[indexPath.item].insertComma() {
-                cell.itemLabel.text = insertedCommaString
-            }
+            cell.itemLabel.text = item.list[indexPath.item]
         }
         
         return cell
@@ -239,13 +226,7 @@ extension ItemInputViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let label = UILabel(frame: CGRect.zero)
         
-        switch item {
-        case .cash:
-            label.text = cashList[indexPath.item]
-        case .gift:
-            label.text = giftList[indexPath.item]
-        }
-        
+        label.text = item.list[indexPath.item]
         label.sizeToFit()
         
         return CGSize(width: label.frame.width + 32, height: 32)
@@ -256,44 +237,28 @@ extension ItemInputViewController: UICollectionViewDelegateFlowLayout {
 
 extension ItemInputViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        myItem = textField.text
+        let currentText = textField.text
+        
+        item = itemTypeLabel.text == "금액" ? .cash(amount: currentText ?? "") : .gift(name: currentText ?? "")
+        
         view.endEditing(true)
         return true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard var preText = textField.text else { return true }
+        guard let preText = textField.text else { return true }
         switch item {
         case .cash:
-            if preText.last == "원" {
-                preText.popLast()
+            guard var currentText = preText.insertComma(with: string, range: range) else {
+                return true
             }
             
-            preText = preText.deleteComma()
-            
-            if range.length == 0 {
-                preText += string
-                
-                if let insertedCommaString = preText.insertComma() {
-                    preText = insertedCommaString
-                }
-                
-                preText += "원"
-            } else {
-                preText.popLast()
-                
-                if preText != "" {
-                    if let insertedCommaString = preText.insertComma() {
-                        preText = insertedCommaString
-                    }
-                    
-                    preText += "원"
-                }
+            if currentText != "" {
+                currentText += "원"
             }
             
-            textField.text = preText
-            myItem = preText
-            
+            item = .cash(amount: currentText)
+            textField.text = currentText
             return false
         default:
             return true
@@ -320,8 +285,8 @@ extension ItemInputViewController: UIGestureRecognizerDelegate {
 
 extension ItemInputViewController {
     enum Item {
-        case cash
-        case gift
+        case cash(amount: String)
+        case gift(name: String)
         
         var text: String {
             switch self {
@@ -338,6 +303,24 @@ extension ItemInputViewController {
                 return "원"
             case .gift:
                 return "기프티콘"
+            }
+        }
+        
+        var list: [String] {
+            switch  self {
+            case .cash:
+                return ["10000", "30000", "50000", "70000", "100000", "200000"]
+            case .gift:
+                return ["꽃", "기프티콘", "냉장고", "전자레인지", "옷", "케이크", "화장품", "상품권"]
+            }
+        }
+        
+        var value: String {
+            switch self {
+            case let .cash(amount):
+                return amount
+            case let .gift(name):
+                return name
             }
         }
     }
