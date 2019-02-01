@@ -10,13 +10,15 @@ import UIKit
 
 class NotificationViewCell: UITableViewCell {
     
+    // MARK: - IBOutlet
+    
     @IBOutlet weak var imageContainerView: UIView!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var notificationLabel: UILabel!
     @IBOutlet weak var notificationDateLabel: UILabel!
     
-    // MARK: - Properties
+    // MARK: - Property
 
     var notification: Notification? {
         didSet {
@@ -36,6 +38,8 @@ class NotificationViewCell: UITableViewCell {
             notificationDateLabel.text = "1일 전"
         }
     }
+    
+    // MARK: - Life Cycle
     
     override func prepareForReuse() {
         super.prepareForReuse()

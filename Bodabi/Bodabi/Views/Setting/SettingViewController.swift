@@ -10,11 +10,11 @@ import UIKit
 
 class SettingViewController: UIViewController {
     
-    // MARK: - IBOutlets
+    // MARK: - IBOutlet
     
     @IBOutlet weak var tableView: UITableView!
 
-    // MARK: - Lifecycle Methods
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class SettingViewController: UIViewController {
         initNavigationBar()
     }
     
-    // MARK: - Initialization Methods
+    // MARK: - Initialization
     
     private func initTableView() {
         let cell = SettingViewCell.self
@@ -45,7 +45,7 @@ class SettingViewController: UIViewController {
     }
 }
 
-// MARK: - TableView DataSource
+// MARK: - UITableViewDataSource
 
 extension SettingViewController: UITableViewDataSource {
     

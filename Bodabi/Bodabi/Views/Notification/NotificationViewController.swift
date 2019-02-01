@@ -10,15 +10,15 @@ import UIKit
 
 class NotificationViewController: UIViewController {
     
-    // MARK: - IBOutlets
+    // MARK: - IBOutlet
     
     @IBOutlet weak var tableView: UITableView!
     
-    // MARK: - Properties
+    // MARK: - Propertie
     
     private var notifications: [Notification]?
     
-    // MARK: - Lifecycle Methods
+    // MARK: - Lifecycle Method
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class NotificationViewController: UIViewController {
         initNavigationBar()
     }
     
-    // MARK: - Initialization Methods
+    // MARK: - Initialization
     
     private func initTableView() {
         tableView.dataSource = self
@@ -47,7 +47,7 @@ class NotificationViewController: UIViewController {
     }
 }
 
-// MARK: - TableView DataSource
+// MARK: - UITableViewDataSource
 
 extension NotificationViewController: UITableViewDataSource {
     
@@ -67,7 +67,7 @@ extension NotificationViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - TableView Delegate
+// MARK: - UITableViewDelegate
 
 extension NotificationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
