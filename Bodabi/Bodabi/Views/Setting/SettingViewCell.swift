@@ -10,9 +10,9 @@ import UIKit
 
 class SettingViewCell: UITableViewCell {
     
-    // MARK: - Properties
+    // MARK: - Property
     
-    var setting: SettingOptions? {
+    public var setting: SettingOptions? {
         didSet {
             guard let setting = setting else {
                 textLabel?.text = ""
@@ -32,6 +32,8 @@ class SettingViewCell: UITableViewCell {
             textLabel?.text = setting.description()
         }
     }
+    
+    // MARK: - Life Cycle
 
     override func prepareForReuse() {
         super.prepareForReuse()

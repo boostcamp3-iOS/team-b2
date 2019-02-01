@@ -10,31 +10,24 @@ import UIKit
 
 class FriendHistorySendViewCell: UITableViewCell {
 
-    // MARK: - IBOutlets
+    // MARK: - IBOutlet
     
     @IBOutlet weak var holidayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var sentenceLabel: UILabel!
-    
-    // MARK: - Properties
-    
-    internal var history: History? {
-        didSet {
-            guard let history = history else {
-                holidayLabel.text = ""
-                dateLabel.text = ""
-                sentenceLabel.text = ""
-                return
-            }
-            
-            holidayLabel.text = history.holiday
-            dateLabel.text = history.date.toString(of: .none)
-            sentenceLabel.text = history.giveSentence
+}
+
+// MARK: - Binding
+
+extension FriendHistorySendViewCell: FriendHistoryCellProtocol {
+    func bind(item: FriendHistorySectionItem) {
+        switch item {
+        case let .giveHistory(giveHistory):
+            holidayLabel.text = giveHistory.holiday
+            dateLabel.text = giveHistory.date.toString(of: .none)
+            sentenceLabel.text = giveHistory.giveSentence
+        default:
+            return
         }
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.history = nil
     }
 }
