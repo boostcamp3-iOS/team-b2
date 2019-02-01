@@ -23,7 +23,7 @@ struct History {
     
     let friendId: Int
     
-    // MARK: - Helper Properties
+    // MARK: - Property
     
     var giveSentence: String {
         return "\(self.friendName)님께 \(self.holiday.addForSuffix()) \(self.item.addObjectSuffix()) 전달했습니다"
@@ -35,11 +35,11 @@ struct History {
     
     // Dummy Data
     static let dummies: [History] = [
-        History.init(id: 0, isTaken: true, holiday: "축의금", date: .init(), item: "50,000원", friendId: 2),
-        History.init(id: 1, isTaken: false, holiday: "생일선물", date: .init(), item: "커피", friendId: 2),
-        History.init(id: 2, isTaken: true, holiday: "생일선물", date: .init(), item: "커피", friendId: 2),
-        History.init(id: 3, isTaken: true, holiday: "어머니 장례", date: .init(), item: "100,000원", friendId: 2),
-        History.init(id: 4, isTaken: false, holiday: "축의금", date: .init(), item: "50,000원", friendId: 2)]
+        History.init(id: 0, isTaken: true, holiday: "축의금", date: "20190103", item: "50000", friendId: 2),
+        History.init(id: 1, isTaken: false, holiday: "생일선물", date: "20190108", item: "커피", friendId: 2),
+        History.init(id: 2, isTaken: true, holiday: "생일선물", date: "20180926", item: "커피", friendId: 2),
+        History.init(id: 3, isTaken: true, holiday: "어머니 장례", date: "20181125", item: "100000", friendId: 2),
+        History.init(id: 4, isTaken: false, holiday: "축의금", date: "20181210", item: "50000", friendId: 2)]
 }
 
 
