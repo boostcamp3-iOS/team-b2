@@ -28,7 +28,7 @@
                                     <constraint firstAttribute="width" constant="70" id="Aza-ni-KFW"/>
                                     <constraint firstAttribute="height" constant="20" id="YRt-3Z-O2L"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -38,7 +38,7 @@
                                     <constraint firstAttribute="width" constant="250" id="5WL-a8-KVF"/>
                                     <constraint firstAttribute="height" constant="20" id="Me6-8S-dEe"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -54,7 +54,7 @@
                             <constraint firstAttribute="height" constant="15" id="80F-Nk-YOS"/>
                             <constraint firstAttribute="width" constant="35" id="Vgv-WN-YB9"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
