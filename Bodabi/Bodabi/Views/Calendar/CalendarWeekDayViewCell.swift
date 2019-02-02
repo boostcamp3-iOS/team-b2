@@ -22,13 +22,7 @@ class CalendarWeekDayViewCell: UICollectionViewCell {
         isUserInteractionEnabled = false
     }
     
-    public func configure(weekType: CalendarWeekType, weekDay: Int) {
-        if weekDay == 0 || weekDay == 6 {
-            weekLabel.textColor = .calendarPointColor
-        } else {
-            weekLabel.textColor = .calendarWeekColor
-        }
-        
+    public func configure(weekType: CalendarViewStyle.CalendarWeekType, weekDay: Int) {
         let formatter = DateFormatter()
         switch weekType {
         case .long:
@@ -37,6 +31,16 @@ class CalendarWeekDayViewCell: UICollectionViewCell {
             weekLabel.text = formatter.shortWeekdaySymbols[weekDay]
         case .short:
             weekLabel.text = formatter.veryShortWeekdaySymbols[weekDay]
+        }
+    }
+    
+    public func setWeekend(_ isWeekend: Bool,
+                           weekendColor: UIColor,
+                           weekColor: UIColor) {
+        if isWeekend {
+            weekLabel.textColor = weekendColor
+        } else {
+            weekLabel.textColor = weekColor
         }
     }
 }

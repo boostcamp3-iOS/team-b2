@@ -17,6 +17,15 @@ class TestViewController: UIViewController {
         super.viewDidLoad()
 
         calendarView.delegate = self
+        
+        var calendarStyle: CalendarViewStyle = .init()
+        calendarStyle.todayColor = .calendarTodayColor
+        calendarStyle.dayColor = .black
+        calendarStyle.weekColor = .calendarWeekColor
+        calendarStyle.weekendColor = .calendarPointColor
+        calendarStyle.eventColor = .mainColor
+        calendarStyle.selectedColor = .calendarSelectedColor
+        calendarView.style = calendarStyle
     }
     
     @IBAction func preAction(_ sender: Any) {

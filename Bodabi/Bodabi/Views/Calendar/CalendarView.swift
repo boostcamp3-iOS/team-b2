@@ -9,21 +9,6 @@
 import Foundation
 import UIKit
 
-enum FirstWeekType {
-    case monday
-    case sunday
-}
-
-enum CalendarSelectType {
-    case squre
-    case round
-}
-
-enum CalendarWeekType {
-    case long
-    case nomal
-    case short
-}
 
 @objc
 protocol CalendarViewDelegate: class {
@@ -35,14 +20,7 @@ class CalendarView: UIView {
     
     weak var delegate: CalendarViewDelegate? {
         didSet {
-            guard let pageController = pageController else { return }
-            if let firstPageController = pageViewController(date: currentVisibleDate) {
-                delegate?.calendar?(self, currentVisibleItem: currentVisibleDate)
-                pageController.setViewControllers([firstPageController],
-                                                  direction: .forward,
-                                                  animated: false,
-                                                  completion: nil)
-            }
+            setPageFirstView()
         }
     }
     
@@ -50,25 +28,19 @@ class CalendarView: UIView {
     public var pageController: UIPageViewController?
     public var currentVisibleDate: Date = .init()
     
-    struct Style {
-        static var scrollOrientation: UIPageViewController.NavigationOrientation = .horizontal
-        
-        static var firstWeekType: FirstWeekType = .sunday
-        static var selectedType: CalendarSelectType = .round
-        static var weekType: CalendarWeekType = .short
-        
-        static var weekendColor: UIColor = .red
-        static var weekColor: UIColor = .gray
-        static var dayColor: UIColor = .black
-        static var todayColor: UIColor = .blue
-        static var selectedColor: UIColor = .yellow
-        static var eventColor: UIColor = .red
-    }
+    public var style: CalendarViewStyle = .init()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         setUpUI()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        pageController?.view.frame = bounds
+        setPageFirstView()
     }
     
     override init(frame: CGRect) {
@@ -85,15 +57,28 @@ class CalendarView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         
         pageController = UIPageViewController(transitionStyle: .scroll,
-                                              navigationOrientation: Style.scrollOrientation,
+                                              navigationOrientation: style.scrollOrientation,
                                               options: nil)
         guard let pageController = pageController else { return }
         pageController.view.translatesAutoresizingMaskIntoConstraints = false
-        pageController.view.frame = self.bounds
+        pageController.view.frame = bounds
         pageController.delegate = self; pageController.dataSource = self
+        setPageFirstView()
         addSubview(pageController.view)
         
         findParentViewController()?.addChild(pageController)
+    }
+    
+    private func setPageFirstView() {
+        guard let pageController = pageController else { return }
+        if let firstPageController = pageViewController(date: currentVisibleDate) {
+            pageController.setViewControllers([firstPageController],
+                                              direction: .forward,
+                                              animated: false,
+                                              completion: nil)
+            
+            delegate?.calendar?(self, currentVisibleItem: currentVisibleDate)
+        }
     }
     
     public func movePage(to date: Date?) {
@@ -141,8 +126,7 @@ extension CalendarView: UIPageViewControllerDataSource {
         let viewController = CalendarMonthViewController()
         viewController.delegate = delegate
         viewController.superFrame = bounds
-        viewController.firstWeekday = Style.firstWeekType
-        viewController.weekType = Style.weekType
+        viewController.style = style
         
         viewController.setCurrentVisibleMonth(date: date)
         return viewController

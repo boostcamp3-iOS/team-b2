@@ -14,7 +14,7 @@ class CalendarDayViewCell: UICollectionViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var eventView: UIView!
     
-    var selectedType: CalendarSelectType = .round {
+    var selectedType: CalendarViewStyle.CalendarSelectType = .round {
         didSet {
             switch selectedType {
             case .squre:
@@ -22,12 +22,6 @@ class CalendarDayViewCell: UICollectionViewCell {
             case .round:
                 makeRound(with: .widthRound)
             }
-        }
-    }
-    
-    var isToday: Bool = false {
-        didSet {
-            dayLabel.textColor = isToday ? .calendarTodayColor : .black
         }
     }
     
@@ -40,6 +34,10 @@ class CalendarDayViewCell: UICollectionViewCell {
         isHidden = !isDayOfMonth
         
         eventView.isHidden = !(events.count > 0)
+    }
+    
+    public func setToday(_ isToday: Bool, todayColor: UIColor, dayColor: UIColor) {
+        dayLabel.textColor = isToday ? todayColor : dayColor
     }
 
 }
