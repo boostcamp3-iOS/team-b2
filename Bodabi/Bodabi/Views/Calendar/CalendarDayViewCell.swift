@@ -14,30 +14,38 @@ class CalendarDayViewCell: UICollectionViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var eventView: UIView!
     
-    var selectedType: CalendarViewStyle.CalendarSelectType = .round {
+    public var style: CalendarViewStyle = .init()
+    public var day: Int = 0 {
         didSet {
-            switch selectedType {
-            case .squre:
-                break
-            case .round:
-                makeRound(with: .widthRound)
-            }
+            dayLabel.text = String(format: "%d", day)
+        }
+    }
+    public var events: [Int] = [] {
+        didSet {
+            eventView.isHidden = !(events.count > 0)
+            eventView.backgroundColor = style.eventColor
+        }
+    }
+    public var isToday: Bool = false {
+        didSet {
+            dayLabel.textColor = isToday ? style.todayColor : style.dayColor
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-    }
-    
-    public func configure(_ day: Int, isDayOfMonth: Bool, events: [Int] = []) {
-        dayLabel.text = "\(day)"
-        isHidden = !isDayOfMonth
         
-        eventView.isHidden = !(events.count > 0)
+        setUpUI()
     }
     
-    public func setToday(_ isToday: Bool, todayColor: UIColor, dayColor: UIColor) {
-        dayLabel.textColor = isToday ? todayColor : dayColor
+    private func setUpUI() {
+        eventView.isHidden = true
     }
-
+    
+    public func configure(daysOfMonth: ClosedRange<Int>) {
+        isHidden = !(daysOfMonth ~= day)
+        
+        guard style.selectedType == .round else { return }
+        makeRound(with: .widthRound)
+    }
 }

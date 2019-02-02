@@ -12,6 +12,8 @@ class CalendarWeekDayViewCell: UICollectionViewCell {
 
     @IBOutlet weak var weekLabel: UILabel!
     
+    public var style: CalendarViewStyle = .init()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -22,25 +24,12 @@ class CalendarWeekDayViewCell: UICollectionViewCell {
         isUserInteractionEnabled = false
     }
     
-    public func configure(weekType: CalendarViewStyle.CalendarWeekType, weekDay: Int) {
-        let formatter = DateFormatter()
-        switch weekType {
-        case .long:
-            weekLabel.text = formatter.standaloneWeekdaySymbols[weekDay]
-        case .nomal:
-            weekLabel.text = formatter.shortWeekdaySymbols[weekDay]
-        case .short:
-            weekLabel.text = formatter.veryShortWeekdaySymbols[weekDay]
-        }
-    }
-    
-    public func setWeekend(_ isWeekend: Bool,
-                           weekendColor: UIColor,
-                           weekColor: UIColor) {
-        if isWeekend {
-            weekLabel.textColor = weekendColor
-        } else {
-            weekLabel.textColor = weekColor
-        }
+    public func configure(index: Int) {
+        let weeksArray = style.weekType.weeksArray
+        let week = style.firstWeekType.getWeekDay(arr: weeksArray, index: index)
+        weekLabel.text = week
+        
+        guard let weekFirstCharacter = week.first else { return }
+        weekLabel.textColor = String(weekFirstCharacter) == "S" ? style.weekendColor : style.weekColor
     }
 }

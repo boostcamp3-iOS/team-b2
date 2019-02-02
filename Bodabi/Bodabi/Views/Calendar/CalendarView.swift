@@ -82,17 +82,37 @@ class CalendarView: UIView {
     }
     
     public func movePage(to date: Date?) {
-        guard let date = date, currentVisibleDate != date else { return }
-        
+        if let viewController
+            = pageController?.viewControllers?.first as? CalendarMonthViewController {
+            guard let toDate = date,
+                let fromDate = viewController.visibleMonthFirstDay else { return }
+            let visibleDateString = fromDate.toString(of: .noDay)
+            let dateToMoveString = toDate.toString(of: .noDay)
+            
+            guard visibleDateString != dateToMoveString else { return }
+            setNextPageView(fromDate: fromDate, toDate: toDate)
+        }
+    }
+    
+    public func movePage(addMonth count: Int) {
+        if let viewController
+            = pageController?.viewControllers?.first as? CalendarMonthViewController {
+            guard let toDate = viewController.getDate(addMonth: count),
+                let fromDate = viewController.visibleMonthFirstDay else { return }
+            setNextPageView(fromDate: fromDate, toDate: toDate)
+        }
+    }
+    
+    private func setNextPageView(fromDate: Date, toDate: Date) {
         let direction: UIPageViewController.NavigationDirection
-            = currentVisibleDate > date ? .reverse : .forward
+            = fromDate > toDate ? .reverse : .forward
         
-        if let nextPageController = pageViewController(date: date) {
+        if let nextPageController = pageViewController(date: toDate) {
             pageController?.setViewControllers([nextPageController],
                                                direction: direction,
                                                animated: true,
                                                completion: nil)
-            delegate?.calendar?(self, currentVisibleItem: date)
+            delegate?.calendar?(self, currentVisibleItem: toDate)
         }
     }
 }
@@ -110,13 +130,13 @@ extension CalendarView: UIPageViewControllerDelegate {
 extension CalendarView: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewController = viewController as? CalendarMonthViewController else { return nil }
-        let previousDate = viewController.getPreviousMonth(date: viewController.visibleMonthFirstDay)
+        let previousDate = viewController.getDate(addMonth: -1)
         return self.pageViewController(date: previousDate)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let viewController = viewController as? CalendarMonthViewController else { return nil }
-        let nextDate = viewController.getNextMonth(date: viewController.visibleMonthFirstDay)
+        let nextDate = viewController.getDate(addMonth: 1)
         return self.pageViewController(date: nextDate)
     }
     

@@ -13,17 +13,35 @@ struct CalendarViewStyle {
     public enum FirstWeekType {
         case monday
         case sunday
+        
+        func getWeekDay(arr: [String], index: Int) -> String {
+            switch self {
+            case .monday:
+                return arr[(index + 1) % 7]
+            case .sunday:
+                return arr[index]
+            }
+        }
+    }
+    
+    public enum CalendarWeekType {
+        case long
+        case normal
+        case short
+        
+        var weeksArray: [String] {
+            let formatter = DateFormatter()
+            switch self {
+            case .long: return formatter.standaloneWeekdaySymbols
+            case .normal: return formatter.shortWeekdaySymbols
+            case .short: return formatter.veryShortWeekdaySymbols
+            }
+        }
     }
     
     public enum CalendarSelectType {
         case squre
         case round
-    }
-    
-    public enum CalendarWeekType {
-        case long
-        case nomal
-        case short
     }
     
     public var scrollOrientation: UIPageViewController.NavigationOrientation = .horizontal
@@ -32,6 +50,7 @@ struct CalendarViewStyle {
     public var selectedType: CalendarSelectType = .round
     public var weekType: CalendarWeekType = .short
     
+//    public var weekHeaderHeight: CGFloat = 80.0
     public var weekendColor: UIColor = .red
     public var weekColor: UIColor = .gray
     public var dayColor: UIColor = .black

@@ -9,7 +9,6 @@
 import UIKit
 
 class CalendarMonthViewController: UICollectionViewController {
-    
     public lazy var calendar : Calendar = {
         var gregorian = Calendar(identifier: .gregorian)
         gregorian.timeZone = TimeZone(abbreviation: "UTC")!
@@ -21,7 +20,6 @@ class CalendarMonthViewController: UICollectionViewController {
     // MARK: Calendar style
     
     public var style: CalendarViewStyle = .init()
-    
     public var superFrame: CGRect = .init() {
         didSet {
             setUpUI()
@@ -87,27 +85,6 @@ class CalendarMonthViewController: UICollectionViewController {
         collectionView?.register(cells)
     }
     
-    public func setCurrentVisibleMonth(date: Date) {
-        var currentDateComponents = calendar.dateComponents([.era, .year, .month],
-                                                            from: date)
-        currentDateComponents.day = 1
-        visibleMonthFirstDay = calendar.date(from: currentDateComponents)
-    }
-    
-    public func getNextMonth(date: Date?) -> Date? {
-        guard let date = date else { return nil }
-        var addDateComponents = DateComponents()
-        addDateComponents.month = 1
-        return calendar.date(byAdding: addDateComponents, to: date)
-    }
-    
-    public func getPreviousMonth(date: Date?) -> Date? {
-        guard let date = date else { return nil }
-        var addDateComponents = DateComponents()
-        addDateComponents.month = -1
-        return calendar.date(byAdding: addDateComponents, to: date)
-    }
-    
     private func cellSize(in bounds: CGRect) -> CGSize {
         return CGSize(width:   bounds.size.width / 7.0,
                       height: bounds.size.height / 7.0)
@@ -124,19 +101,33 @@ class CalendarMonthViewController: UICollectionViewController {
         return (firstDay: firstWeekdayOfMonthIndex, daysTotal: rangeOfDaysInMonth.count)
     }
     
+    public func setCurrentVisibleMonth(date: Date) {
+        var currentDateComponents = calendar.dateComponents([.era, .year, .month],
+                                                            from: date)
+        currentDateComponents.day = 1
+        visibleMonthFirstDay = calendar.date(from: currentDateComponents)
+    }
+    
+    public func getDate(addMonth count: Int) -> Date? {
+        guard let date = visibleMonthFirstDay else { return nil }
+        var addDateComponents = DateComponents()
+        addDateComponents.month = count
+        return calendar.date(byAdding: addDateComponents, to: date)
+    }
+    
 }
 
 extension CalendarMonthViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section),
             section == .day else { return }
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = style.selectedColor
+        guard let cell
+            = collectionView.cellForItem(at: indexPath) as? CalendarDayViewCell else { return }
+        cell.backgroundColor = style.selectedColor
         
-        guard let visibleMonth = visibleMonthFirstDay,
-            let visibleMonthInfo = visibleMonthInfo else { return }
+        guard let visibleMonth = visibleMonthFirstDay else { return }
         var dateComponents = calendar.dateComponents([.era, .year, .month], from: visibleMonth)
-        dateComponents.day = indexPath.item - visibleMonthInfo.firstDay + 1
+        dateComponents.day = cell.day
         
         guard let calendarView = view.superview?.superview?.superview?.superview as? CalendarView,
             let selectedDate = calendar.date(from: dateComponents) else { return }
@@ -171,34 +162,37 @@ extension CalendarMonthViewController {
         switch section {
         case .week:
             let cell = collectionView.dequeue(CalendarWeekDayViewCell.self, for: indexPath)
-            cell.configure(weekType: style.weekType, weekDay: indexPath.item)
-            let isWeekend = style.firstWeekType == .monday ? (indexPath.item == 5 || indexPath.item == 6) : (indexPath.item == 0 || indexPath.item == 6)
-            cell.setWeekend(isWeekend,
-                            weekendColor: style.weekendColor,
-                            weekColor: style.weekColor)
+            cell.style = style
+            cell.configure(index: indexPath.item)
             return cell
         case .day:
             let cell = collectionView.dequeue(CalendarDayViewCell.self, for: indexPath)
-            cell.selectedType = .round
-            var events: [Int] = []
-            if indexPath.item % 15 == 0 {
-                events = [1]
-            }
-            cell.configure(indexPath.row - (visibleMonthInfo?.firstDay ?? 0) + 1,
-                           isDayOfMonth: (visibleMonthInfo?.firstDay ?? 0)..<(visibleMonthInfo?.firstDay ?? 0)+(visibleMonthInfo?.daysTotal ?? 0) ~= indexPath.row, events: events)
-            cell.eventView.backgroundColor = style.eventColor
+            cell.style = style
             
-            let currentMonth = calendar.component(.month, from: visibleMonthFirstDay ?? Date())
-            let todayMonthComponents = calendar.dateComponents([.month, .day], from: Date())
-            if currentMonth == todayMonthComponents.month ?? 0 {
-                let isToday = indexPath.item + 1 ==
-                    (todayMonthComponents.day ?? 0) + (visibleMonthInfo?.firstDay ?? 0)
-                
-                cell.setToday(isToday,
-                              todayColor: style.todayColor,
-                              dayColor: style.dayColor)
+            guard let visibleMonthInfo = visibleMonthInfo,
+                let visibleMonthFirstDay = visibleMonthFirstDay else { return cell }
+            cell.day = indexPath.item - visibleMonthInfo.firstDay + 1
+            cell.configure(daysOfMonth: 1...visibleMonthInfo.daysTotal)
+            
+            let visibleComponents = calendar.dateComponents([.era, .year, .month],
+                                                            from: visibleMonthFirstDay)
+            let todayComponents = calendar.dateComponents([.era, .year, .month, .day],
+                                                          from: Date())
+            if (visibleComponents.year, visibleComponents.month) ==
+                (todayComponents.year, todayComponents.month),
+                 let day = todayComponents.day {
+                cell.isToday = cell.day == day
             }
             return cell
         }
     }
 }
+
+//extension CalendarMonthViewController: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        guard let section = Section(rawValue: indexPath.section),
+//            section == .week else { return cellSize(in: superFrame) }
+//        return CGSize(width: superFrame.size.width / 7,
+//                      height: style.weekHeaderHeight)
+//    }
+//}

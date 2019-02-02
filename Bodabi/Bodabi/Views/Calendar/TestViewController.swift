@@ -22,24 +22,28 @@ class TestViewController: UIViewController {
         calendarStyle.todayColor = .calendarTodayColor
         calendarStyle.dayColor = .black
         calendarStyle.weekColor = .calendarWeekColor
-        calendarStyle.weekendColor = .calendarPointColor
+        calendarStyle.weekendColor = .red
         calendarStyle.eventColor = .mainColor
         calendarStyle.selectedColor = .calendarSelectedColor
         calendarView.style = calendarStyle
+        
+        calendarView.style.weekType = .normal // long short normal
+        calendarView.style.firstWeekType = .sunday
     }
     
     @IBAction func preAction(_ sender: Any) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        calendarView.movePage(to: formatter.date(from: "2018-02-02"))
+        calendarView.movePage(addMonth: -1)
     }
     
     @IBAction func nextAction(_ sender: Any) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        calendarView.movePage(to: formatter.date(from: "2020-03-02"))
+        calendarView.movePage(addMonth: 1)
     }
     
+    @IBAction func goToDateAction(_ sender: Any) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        calendarView.movePage(to: formatter.date(from: "2022-08-24"))
+    }
 }
 extension TestViewController: CalendarViewDelegate {
     func calendar(_ calendar: CalendarView, didSelectedItem date: Date) {
