@@ -14,7 +14,6 @@
 		496683C121FAC662003FBA5B /* HomeTitleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */; };
 		4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4998126D21F9D7B4000DB7B2 /* AppDelegate.swift */; };
 		4998127321F9D7B4000DB7B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998127121F9D7B4000DB7B2 /* Main.storyboard */; };
-		4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4998127421F9D7B4000DB7B2 /* Bodabi.xcdatamodeld */; };
 		4998127821F9D7B6000DB7B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4998127721F9D7B6000DB7B2 /* Assets.xcassets */; };
 		4998127B21F9D7B6000DB7B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998127921F9D7B6000DB7B2 /* LaunchScreen.storyboard */; };
 		4998128A21F9D97E000DB7B2 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4998128921F9D97E000DB7B2 /* Home.storyboard */; };
@@ -44,9 +43,6 @@
 		DB38739D21FEDB0200ADF0CB /* HolidayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB38739C21FEDB0200ADF0CB /* HolidayViewController.swift */; };
 		DB38739F21FEEE8100ADF0CB /* ThanksFriendViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB38739E21FEEE8100ADF0CB /* ThanksFriendViewCell.xib */; };
 		DB3873A121FEEF0D00ADF0CB /* ThanksFriendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873A021FEEF0D00ADF0CB /* ThanksFriendViewCell.swift */; };
-		DB3873C12200110800ADF0CB /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873C02200110800ADF0CB /* Friend.swift */; };
-		DB3873C32200129F00ADF0CB /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873C22200129F00ADF0CB /* Event.swift */; };
-		DB3873C5220012B900ADF0CB /* Holiday.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873C4220012B900ADF0CB /* Holiday.swift */; };
 		DB3873C722001BBC00ADF0CB /* Date+ToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873C622001BBC00ADF0CB /* Date+ToString.swift */; };
 		DB3873C922006D3900ADF0CB /* UITextField+BottomLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873C822006D3900ADF0CB /* UITextField+BottomLine.swift */; };
 		DB3873CB22017DC100ADF0CB /* ItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB3873CA22017DC100ADF0CB /* ItemViewCell.xib */; };
@@ -68,6 +64,7 @@
 		F80C28A62202C82B0032DE3E /* FriendHistorySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80C28A52202C82B0032DE3E /* FriendHistorySection.swift */; };
 		F80C28A822030D500032DE3E /* FriendHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80C28A722030D500032DE3E /* FriendHistoryHeaderView.swift */; };
 		F80C28AA22031E740032DE3E /* FriendHistoryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F80C28A922031E740032DE3E /* FriendHistoryHeaderView.xib */; };
+		F80C28AE22040FDB0032DE3E /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80C28AD22040FDB0032DE3E /* DatabaseManager.swift */; };
 		F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529321FCC909004A2CF0 /* SettingViewController.swift */; };
 		F814529721FCCF6B004A2CF0 /* SettingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529521FCCF6B004A2CF0 /* SettingViewCell.swift */; };
 		F814529821FCCF6B004A2CF0 /* SettingViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F814529621FCCF6B004A2CF0 /* SettingViewCell.xib */; };
@@ -75,16 +72,15 @@
 		F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529B21FCDD76004A2CF0 /* NotificationViewController.swift */; };
 		F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529D21FCDDE0004A2CF0 /* NotificationViewCell.swift */; };
 		F81452A021FCDDE0004A2CF0 /* NotificationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F814529E21FCDDE0004A2CF0 /* NotificationViewCell.xib */; };
-		F81452A221FD884E004A2CF0 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81452A121FD884E004A2CF0 /* Notification.swift */; };
 		F81452A421FD8C1B004A2CF0 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81452A321FD8C1B004A2CF0 /* String+Extensions.swift */; };
 		F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */; };
 		F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */; };
 		F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */; };
 		F8367C9C21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */; };
-		F8367C9F21FAECF200EBA91E /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9E21FAECF200EBA91E /* History.swift */; };
 		F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8485CF621FA11BB003C935C /* FriendHistory.storyboard */; };
 		F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */; };
 		F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */; };
+		F85D06F822041E5B002212E9 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F85D06F522041E5B002212E9 /* Bodabi.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,7 +102,6 @@
 		4998126A21F9D7B4000DB7B2 /* Bodabi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bodabi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4998126D21F9D7B4000DB7B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4998127221F9D7B4000DB7B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4998127521F9D7B4000DB7B2 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 		4998127721F9D7B6000DB7B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4998127A21F9D7B6000DB7B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4998127C21F9D7B6000DB7B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -137,14 +132,10 @@
 		DB38739C21FEDB0200ADF0CB /* HolidayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayViewController.swift; sourceTree = "<group>"; };
 		DB38739E21FEEE8100ADF0CB /* ThanksFriendViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThanksFriendViewCell.xib; sourceTree = "<group>"; };
 		DB3873A021FEEF0D00ADF0CB /* ThanksFriendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanksFriendViewCell.swift; sourceTree = "<group>"; };
-		DB3873C02200110800ADF0CB /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
-		DB3873C22200129F00ADF0CB /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		DB3873C4220012B900ADF0CB /* Holiday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Holiday.swift; sourceTree = "<group>"; };
 		DB3873C622001BBC00ADF0CB /* Date+ToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ToString.swift"; sourceTree = "<group>"; };
 		DB3873C822006D3900ADF0CB /* UITextField+BottomLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+BottomLine.swift"; sourceTree = "<group>"; };
 		DB3873CA22017DC100ADF0CB /* ItemViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemViewCell.xib; sourceTree = "<group>"; };
 		DB3873CC22017E5300ADF0CB /* ItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewCell.swift; sourceTree = "<group>"; };
-		DBCBF6A622030EFD00C9B0DC /* BodabiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BodabiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBCBF6AA22030EFD00C9B0DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+ActionSheet.swift"; sourceTree = "<group>"; };
 		DBF4CEFA21FAE59B001536A8 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
@@ -163,6 +154,7 @@
 		F80C28A52202C82B0032DE3E /* FriendHistorySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistorySection.swift; sourceTree = "<group>"; };
 		F80C28A722030D500032DE3E /* FriendHistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistoryHeaderView.swift; sourceTree = "<group>"; };
 		F80C28A922031E740032DE3E /* FriendHistoryHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendHistoryHeaderView.xib; sourceTree = "<group>"; };
+		F80C28AD22040FDB0032DE3E /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		F814529321FCC909004A2CF0 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F814529521FCCF6B004A2CF0 /* SettingViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewCell.swift; sourceTree = "<group>"; };
 		F814529621FCCF6B004A2CF0 /* SettingViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingViewCell.xib; sourceTree = "<group>"; };
@@ -170,16 +162,16 @@
 		F814529B21FCDD76004A2CF0 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		F814529D21FCDDE0004A2CF0 /* NotificationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewCell.swift; sourceTree = "<group>"; };
 		F814529E21FCDDE0004A2CF0 /* NotificationViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationViewCell.xib; sourceTree = "<group>"; };
-		F81452A121FD884E004A2CF0 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		F81452A321FD8C1B004A2CF0 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
 		F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistorySendViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistorySendViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendHistoryReceiveViewCell.xib; sourceTree = "<group>"; };
 		F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendHistorySendViewCell.xib; sourceTree = "<group>"; };
-		F8367C9E21FAECF200EBA91E /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		F8485CF621FA11BB003C935C /* FriendHistory.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FriendHistory.storyboard; sourceTree = "<group>"; };
 		F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryViewController.swift; path = Bodabi/Views/FriendHistory/FriendHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryReceiveViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistoryReceiveViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F85D06F622041E5B002212E9 /* Bodabi_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi_2.xcdatamodel; sourceTree = "<group>"; };
+		F85D06F722041E5B002212E9 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,7 +196,6 @@
 			isa = PBXGroup;
 			children = (
 				4998126C21F9D7B4000DB7B2 /* Bodabi */,
-				DBCBF6A722030EFD00C9B0DC /* BodabiUITests */,
 				4998126B21F9D7B4000DB7B2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -213,7 +204,6 @@
 			isa = PBXGroup;
 			children = (
 				4998126A21F9D7B4000DB7B2 /* Bodabi.app */,
-				DBCBF6A622030EFD00C9B0DC /* BodabiUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,10 +211,10 @@
 		4998126C21F9D7B4000DB7B2 /* Bodabi */ = {
 			isa = PBXGroup;
 			children = (
+				F80C28AB22040EDB0032DE3E /* Services */,
 				4998126D21F9D7B4000DB7B2 /* AppDelegate.swift */,
 				4998128521F9D854000DB7B2 /* Views */,
 				4998128421F9D853000DB7B2 /* Models */,
-				4998128321F9D852000DB7B2 /* Services */,
 				4998128621F9D880000DB7B2 /* Utils */,
 				4998128221F9D851000DB7B2 /* Supporting Files */,
 			);
@@ -241,22 +231,10 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4998128321F9D852000DB7B2 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		4998128421F9D853000DB7B2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				DB3873C02200110800ADF0CB /* Friend.swift */,
-				F8367C9E21FAECF200EBA91E /* History.swift */,
-				DB3873C22200129F00ADF0CB /* Event.swift */,
-				DB3873C4220012B900ADF0CB /* Holiday.swift */,
-				F81452A121FD884E004A2CF0 /* Notification.swift */,
-				4998127421F9D7B4000DB7B2 /* Bodabi.xcdatamodeld */,
+				F85D06F522041E5B002212E9 /* Bodabi.xcdatamodeld */,
 				F814529921FCD4BC004A2CF0 /* SettingOptions.swift */,
 			);
 			path = Models;
@@ -332,14 +310,6 @@
 				DB3873A021FEEF0D00ADF0CB /* ThanksFriendViewCell.swift */,
 			);
 			path = Holiday;
-			sourceTree = "<group>";
-		};
-		DBCBF6A722030EFD00C9B0DC /* BodabiUITests */ = {
-			isa = PBXGroup;
-			children = (
-				DBCBF6AA22030EFD00C9B0DC /* Info.plist */,
-			);
-			path = BodabiUITests;
 			sourceTree = "<group>";
 		};
 		DBF4CF0321FB0B2D001536A8 /* Setting */ = {
@@ -456,6 +426,22 @@
 			path = Holiday;
 			sourceTree = "<group>";
 		};
+		F80C28AB22040EDB0032DE3E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F80C28AC22040FA00032DE3E /* Database */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F80C28AC22040FA00032DE3E /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				F80C28AD22040FDB0032DE3E /* DatabaseManager.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -475,24 +461,6 @@
 			productName = Bodabi;
 			productReference = 4998126A21F9D7B4000DB7B2 /* Bodabi.app */;
 			productType = "com.apple.product-type.application";
-		};
-		DBCBF6A522030EFD00C9B0DC /* BodabiUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DBCBF6AF22030EFD00C9B0DC /* Build configuration list for PBXNativeTarget "BodabiUITests" */;
-			buildPhases = (
-				DBCBF6A222030EFD00C9B0DC /* Sources */,
-				DBCBF6A322030EFD00C9B0DC /* Frameworks */,
-				DBCBF6A422030EFD00C9B0DC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DBCBF6AC22030EFD00C9B0DC /* PBXTargetDependency */,
-			);
-			name = BodabiUITests;
-			productName = BodabiUITests;
-			productReference = DBCBF6A622030EFD00C9B0DC /* BodabiUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -527,7 +495,6 @@
 			projectRoot = "";
 			targets = (
 				4998126921F9D7B4000DB7B2 /* Bodabi */,
-				DBCBF6A522030EFD00C9B0DC /* BodabiUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -582,8 +549,6 @@
 				DBF4CEFE21FAE59B001536A8 /* UIViewController+Alert.swift in Sources */,
 				F81452A421FD8C1B004A2CF0 /* String+Extensions.swift in Sources */,
 				496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */,
-				F8367C9F21FAECF200EBA91E /* History.swift in Sources */,
-				4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */,
 				DB38739D21FEDB0200ADF0CB /* HolidayViewController.swift in Sources */,
 				49C0851321FD979A0060B02C /* FriendViewCell.swift in Sources */,
 				DB3873A121FEEF0D00ADF0CB /* ThanksFriendViewCell.swift in Sources */,
@@ -594,9 +559,7 @@
 				DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */,
 				496683C021FAC662003FBA5B /* HomeTitleViewCell.swift in Sources */,
 				DBF4CF3621FC5418001536A8 /* NameInputViewController.swift in Sources */,
-				DB3873C12200110800ADF0CB /* Friend.swift in Sources */,
 				496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */,
-				4998127621F9D7B4000DB7B2 /* Bodabi.xcdatamodeld in Sources */,
 				49C084EA21FACE260060B02C /* UITableView+Extensions.swift in Sources */,
 				F80C28A62202C82B0032DE3E /* FriendHistorySection.swift in Sources */,
 				49C0850E21FB10020060B02C /* UIViewController+Storyboard.swift in Sources */,
@@ -609,11 +572,11 @@
 				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,
 				DB3873CD22017E5300ADF0CB /* ItemViewCell.swift in Sources */,
 				DB3873C922006D3900ADF0CB /* UITextField+BottomLine.swift in Sources */,
+				F80C28AE22040FDB0032DE3E /* DatabaseManager.swift in Sources */,
 				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
 				F80C28A122026F0D0032DE3E /* FriendHistoryInformationViewCell.swift in Sources */,
 				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
-				F81452A221FD884E004A2CF0 /* Notification.swift in Sources */,
 				F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */,
 				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,
 				49C0850A21FAF6AA0060B02C /* UIView+Animation.swift in Sources */,
@@ -623,15 +586,14 @@
 				49C0851021FD8A7F0060B02C /* FriendsViewController.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
 				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
+				F85D06F822041E5B002212E9 /* Bodabi.xcdatamodeld in Sources */,
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
-				DB3873C32200129F00ADF0CB /* Event.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
 				DBF4CF3421FC5405001536A8 /* HolidayInputViewController.swift in Sources */,
 				DB3873C722001BBC00ADF0CB /* Date+ToString.swift in Sources */,
 				DBF4CF4621FCE511001536A8 /* NSMutableAttributedString+Extension.swift in Sources */,
 				DBF4CF3C21FC546B001536A8 /* HolidayInputViewCell.swift in Sources */,
-				DB3873C5220012B900ADF0CB /* Holiday.swift in Sources */,
 				F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */,
 				49C0851721FDA8A60060B02C /* FriendsHeaderViewCell.swift in Sources */,
 				F814529A21FCD4BC004A2CF0 /* SettingOptions.swift in Sources */,
@@ -795,8 +757,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = Y6J9HAPEME;
 				INFOPLIST_FILE = "$(SRCROOT)/Bodabi/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -804,6 +766,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamB2.Bodabi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = Bodabi_Develop;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -813,8 +776,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = Y6J9HAPEME;
 				INFOPLIST_FILE = "$(SRCROOT)/Bodabi/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -822,46 +785,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamB2.Bodabi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = Bodabi_Develop;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		DBCBF6AD22030EFD00C9B0DC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4U9B5GDBZA;
-				INFOPLIST_FILE = BodabiUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Kim-DongHwan.BodabiUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Bodabi;
-			};
-			name = Debug;
-		};
-		DBCBF6AE22030EFD00C9B0DC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4U9B5GDBZA;
-				INFOPLIST_FILE = BodabiUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Kim-DongHwan.BodabiUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Bodabi;
 			};
 			name = Release;
 		};
@@ -886,25 +812,17 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DBCBF6AF22030EFD00C9B0DC /* Build configuration list for PBXNativeTarget "BodabiUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DBCBF6AD22030EFD00C9B0DC /* Debug */,
-				DBCBF6AE22030EFD00C9B0DC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		4998127421F9D7B4000DB7B2 /* Bodabi.xcdatamodeld */ = {
+		F85D06F522041E5B002212E9 /* Bodabi.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				4998127521F9D7B4000DB7B2 /* Bodabi.xcdatamodel */,
+				F85D06F722041E5B002212E9 /* Bodabi.xcdatamodel */,
 			);
-			currentVersion = 4998127521F9D7B4000DB7B2 /* Bodabi.xcdatamodel */;
-			path = Bodabi.xcdatamodeld;
+			currentVersion = F85D06F722041E5B002212E9 /* Bodabi.xcdatamodel */;
+			name = Bodabi.xcdatamodeld;
+			path = ../../../../../Bodabi.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -29,8 +29,8 @@ class NameInputViewController: UIViewController {
     public var entryRoute: EntryRoute!
     private var originalBottomConstraint: CGFloat = 0.0
     private var originalHeightConstraint: CGFloat = 0.0
-    private var friends: [Friend] = Friend.dummies
-    private var holidaies: [Holiday] = Holiday.dummies
+//    private var friends: [Friend] = Friend.dummies
+//    private var holidaies: [Holiday] = Holiday.dummies
     private var newHolidayName: String? {
         didSet {
             setGuideLabel()
@@ -195,8 +195,8 @@ class NameInputViewController: UIViewController {
             navigationController?.pushViewController(viewController, animated: true)
         case .addFriendAtFriends:
             guard let friendName = newFriendName else { return }
-            
-            addFriendDelegate?.friends.insert(Friend(id: 11, name: friendName, phoneNumber: "01012341234", tags: nil, favorite: false), at: 1)
+//            
+//            addFriendDelegate?.friends.insert(Friend(id: 11, name: friendName, phoneNumber: "01012341234", tags: nil, favorite: false), at: 1)
             dismiss(animated: true, completion: nil)
         default:
             break
@@ -248,11 +248,11 @@ extension NameInputViewController: UITableViewDataSource {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            return holidaies.count
+            return 0 //holidaies.count
         case .addUpcomingEventAtHome,
              .addFriendAtHoliday,
              .addFriendAtFriends:
-            return friends.count
+            return 0 //friends.count
         default:
             return 0
         }
@@ -264,16 +264,16 @@ extension NameInputViewController: UITableViewDataSource {
         guard let entryRoute = entryRoute else { return UITableViewCell() }
         
         switch entryRoute {
-        case .addHolidayAtHome:
-            let holiday = holidaies[indexPath.row]
-            
-            cell.textLabel?.text = holiday.title
-        case .addUpcomingEventAtHome,
-             .addFriendAtHoliday,
-             .addFriendAtFriends:
-            let friend = friends[indexPath.row]
-            
-            cell.textLabel?.text = friend.name
+//        case .addHolidayAtHome:
+//            let holiday = holidaies[indexPath.row]
+//
+//            cell.textLabel?.text = holiday.title
+//        case .addUpcomingEventAtHome,
+//             .addFriendAtHoliday,
+//             .addFriendAtFriends:
+//            let friend = friends[indexPath.row]
+//
+//            cell.textLabel?.text = friend.name
         default:
             break
         }
@@ -289,19 +289,21 @@ extension NameInputViewController: UITableViewDelegate {
         guard let entryRoute = entryRoute else { return }
         
         switch entryRoute {
-        case .addHolidayAtHome:
-            let holiday = holidaies[indexPath.row]
             
-            nameTextField.text = holiday.title
-            newHolidayName = holiday.title
-            
-        case .addUpcomingEventAtHome,
-             .addFriendAtHoliday,
-             .addFriendAtFriends:
-            let friend = friends[indexPath.row]
-            
-            nameTextField.text = friend.name
-            newFriendName = friend.name
+// FIXME: - CoreData Issue
+//        case .addHolidayAtHome:
+//            let holiday = holidaies[indexPath.row]
+//            
+//            nameTextField.text = holiday.title
+//            newHolidayName = holiday.title
+//            
+//        case .addUpcomingEventAtHome,
+//             .addFriendAtHoliday,
+//             .addFriendAtFriends:
+//            let friend = friends[indexPath.row]
+//            
+//            nameTextField.text = friend.name
+//            newFriendName = friend.name
         default:
             break
         }
