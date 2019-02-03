@@ -29,6 +29,14 @@ extension Date {
         dateFormatter.dateFormat = type.description
         return dateFormatter.string(from: self)
     }
+    
+    func offsetFrom(date : Date) -> Int {
+        let difference = NSCalendar.current.dateComponents([.day], from: date, to: self);
+        if let day = difference.day, day > 0 {
+            return day
+        }
+        return 0
+    }
 }
 
 extension Date: ExpressibleByStringLiteral {
