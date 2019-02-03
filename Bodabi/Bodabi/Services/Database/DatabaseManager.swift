@@ -9,6 +9,10 @@
 import Foundation
 import CoreData
 
+protocol DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager)
+}
+
 class DatabaseManager {
     let persistentContainer: NSPersistentContainer
     

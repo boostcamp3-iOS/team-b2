@@ -16,6 +16,7 @@ class NotificationViewController: UIViewController {
     
     // MARK: - Propertie
     
+    internal var databaseManager: DatabaseManager?
     private var notifications: [Notification]?
     
     // MARK: - Lifecycle Method
@@ -74,6 +75,12 @@ extension NotificationViewController: UITableViewDelegate {
         let viewController = storyboard(.friendHistory)
             .instantiateViewController(ofType: FriendHistoryViewController.self)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+extension NotificationViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
     }
 }
 

@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class HomeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    public var databaseManager: DatabaseManager!
+    internal var databaseManager: DatabaseManager?
 //    private var holidays: [Holiday] = Holiday.dummies {
 //        didSet {
 //            tableView
@@ -113,7 +114,15 @@ extension HomeViewController: UITableViewDelegate {
         case .friendEvents:
             let viewController = storyboard(.friendHistory)
                 .instantiateViewController(ofType: FriendHistoryViewController.self)
-//            viewController.friendId = events[indexPath.row].friendId
+            
+            let request: NSFetchRequest<Friend> = Friend.fetchRequest()
+            request.predicate = NSPredicate(format: "name = %@", "박영희")
+            if let friend = try? databaseManager?.viewContext.fetch(request),
+                let databaseManager = databaseManager {
+                viewController.setDatabaseManager(databaseManager)
+                viewController.friend = friend?.first
+            }
+            
             navigationController?.pushViewController(viewController, animated: true)
         default:
             break
@@ -168,6 +177,12 @@ extension HomeViewController: UICollectionViewDelegate {
         
         viewController.entryRoute = .addHistoryAtFriendHistory
         navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+extension HomeViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
     }
 }
 

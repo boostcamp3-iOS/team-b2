@@ -33,9 +33,12 @@
                                     <outlet property="delegate" destination="VZi-B7-pNK" id="adT-0l-gXm"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HQ5-x7-pzJ">
-                                <rect key="frame" x="155" y="1697" width="65" height="65"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HQ5-x7-pzJ">
+                                <rect key="frame" x="155" y="697" width="65" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="65" id="hFc-mz-UNk"/>
+                                    <constraint firstAttribute="height" constant="65" id="pMS-xC-BZ6"/>
+                                </constraints>
                                 <state key="normal" title="Button" image="ic_floatingButton"/>
                                 <connections>
                                     <action selector="touchUpFloatingButotn:" destination="VZi-B7-pNK" eventType="touchUpInside" id="KLL-Vn-1aF"/>
@@ -44,9 +47,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="HQ5-x7-pzJ" firstAttribute="centerX" secondItem="ny0-6d-gb2" secondAttribute="centerX" id="9sy-hK-Lvx"/>
                             <constraint firstAttribute="trailing" secondItem="PUU-eK-6pG" secondAttribute="trailing" id="Aqr-bX-NwA"/>
                             <constraint firstItem="PUU-eK-6pG" firstAttribute="top" secondItem="ny0-6d-gb2" secondAttribute="top" id="DgS-8X-wDQ"/>
                             <constraint firstItem="Pab-Qj-5Nt" firstAttribute="top" secondItem="PUU-eK-6pG" secondAttribute="bottom" id="N2F-yP-LsL"/>
+                            <constraint firstItem="1Cq-Tb-wfr" firstAttribute="bottom" secondItem="HQ5-x7-pzJ" secondAttribute="bottom" constant="16" id="SVX-HS-SvW"/>
                             <constraint firstItem="Pab-Qj-5Nt" firstAttribute="leading" secondItem="1Cq-Tb-wfr" secondAttribute="leading" id="fjA-Ge-bOw"/>
                             <constraint firstItem="1Cq-Tb-wfr" firstAttribute="trailing" secondItem="Pab-Qj-5Nt" secondAttribute="trailing" id="iHN-pi-RZG"/>
                             <constraint firstItem="PUU-eK-6pG" firstAttribute="leading" secondItem="ny0-6d-gb2" secondAttribute="leading" id="kdk-TG-Dcc"/>
