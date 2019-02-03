@@ -9,6 +9,8 @@
 import UIKit
 
 class FriendsViewController: UIViewController {
+    
+    // MARK: - IBOutlet
 
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -17,10 +19,11 @@ class FriendsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: - Property
+    
     struct Const {
         static let bottomInset: CGFloat = 90.0
     }
-    
 //    var friends: [Friend] = Friend.dummies {
 //        didSet {
 //            tableView.reloadData()
@@ -45,12 +48,16 @@ class FriendsViewController: UIViewController {
         }
     }
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUpUI()
         initTableView()
     }
+    
+    // MARK: - Initialization
     
     private func setUpUI() {
         // navigation bar line clear
@@ -60,6 +67,8 @@ class FriendsViewController: UIViewController {
         searchBar.isTranslucent = false
         searchBar.backgroundImage = UIImage()
     }
+    
+    // MARK: - IBAction
     
     @IBAction func touchUpAddFriendButton(_ sender: UIButton) {
         let viewController = storyboard(.input)
@@ -82,6 +91,8 @@ extension FriendsViewController: UITableViewDelegate {
         tableView.contentInset.bottom = Const.bottomInset
     }
 }
+
+// MARK: - UITableViewDataSource
 
 extension FriendsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
