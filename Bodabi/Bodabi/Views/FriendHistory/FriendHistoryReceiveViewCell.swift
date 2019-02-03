@@ -24,8 +24,8 @@ extension FriendHistoryReceiveViewCell: FriendHistoryCellProtocol {
         switch item {
         case let .takeHistory(takeHistory):
             holidayLabel.text = takeHistory.holiday
-            dateLabel.text = takeHistory.date.toString(of: .none)
-            sentenceLabel.text = takeHistory.takeSentence
+//            dateLabel.text = takeHistory.date.toString(of: .none)
+//            sentenceLabel.text = takeHistory.takeSentence
         default:
             return
         }
