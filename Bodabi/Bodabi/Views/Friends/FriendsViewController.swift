@@ -21,11 +21,11 @@ class FriendsViewController: UIViewController {
         static let bottomInset: CGFloat = 90.0
     }
     
-    var friends: [Friend] = Friend.dummies {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+//    var friends: [Friend] = Friend.dummies {
+//        didSet {
+//            tableView.reloadData()
+//        }
+//    }
     
     enum Section: Int, CaseIterable {
         case favoriteHeader
@@ -91,7 +91,8 @@ extension FriendsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let section = Section(rawValue: section),
             (section == .favorite || section == .friends) else { return 1 }
-        return friends.count
+//        return friends.count
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -105,9 +106,9 @@ extension FriendsViewController: UITableViewDataSource {
         case .favorite,
              .friends:
             let cell = tableView.dequeue(FriendViewCell.self, for: indexPath)
-            let friend = friends[indexPath.row]
-            cell.nameLabel.text = friend.name
-            cell.configure(line: indexPath.row == (friends.count - 1))
+//            let friend = friends[indexPath.row]
+//            cell.nameLabel.text = friend.name
+//            cell.configure(line: indexPath.row == (friends.count - 1))
             return cell
         }
     }

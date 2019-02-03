@@ -12,11 +12,11 @@ class MyHolidaysViewCell: UITableViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    public var holidays: [Holiday] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+//    public var holidays: [Holiday] = [] {
+//        didSet {
+//            collectionView.reloadData()
+//        }
+//    }
     
     struct Const {
         static let sectionInsetLength: CGFloat = 15.0
@@ -46,12 +46,12 @@ extension MyHolidaysViewCell: UICollectionViewDelegate {
 
 extension MyHolidaysViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return holidays.count
+        return 0 //holidays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeue(HolidayViewCell.self, for: indexPath)
-        cell.holiday = holidays[indexPath.row]
+//        cell.holiday = holidays[indexPath.row]
         return cell
     }
 }

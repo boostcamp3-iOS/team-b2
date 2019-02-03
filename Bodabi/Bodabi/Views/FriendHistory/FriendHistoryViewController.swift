@@ -29,21 +29,21 @@ class FriendHistoryViewController: UIViewController {
             var income: Int = 0
             var expenditure: Int = 0
             var historyItems: [FriendHistorySectionItem] = []
-            for history in histories {
-                if let amount = Int(history.item) {
-                    switch history.isTaken {
-                    case true:
-                        income += amount
-                    case false:
-                        expenditure += amount
-                    }
-                }
-                if history.isTaken == true {
-                    historyItems.append(.takeHistory(history: history))
-                } else {
-                    historyItems.append(.giveHistory(history: history))
-                }
-            }
+//            for history in histories {
+//                if let amount = Int(history.item) {
+//                    switch history.isTaken {
+//                    case true:
+//                        income += amount
+//                    case false:
+//                        expenditure += amount
+//                    }
+//                }
+//                if history.isTaken == true {
+//                    historyItems.append(.takeHistory(history: history))
+//                } else {
+//                    historyItems.append(.giveHistory(history: history))
+//                }
+//            }
             sections.append(.information(items: [.information(income: String(income), expenditure: String(expenditure))]))
             sections.append(.history(items: historyItems))
         }
@@ -68,16 +68,16 @@ class FriendHistoryViewController: UIViewController {
     // MARK: - Initialization
     
     private func initHistories() {
-        let friendHistories = History.dummies.filter {
-            $0.friendId == friendId ?? 0
-        }
-        histories = friendHistories
-        sortHistories(descending: false)
+//        let friendHistories = History.dummies.filter {
+//            $0.friendId == friendId ?? 0
+//        }
+//        histories = friendHistories
+//        sortHistories(descending: false)
     }
     
     private func initNavigationBar() {
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationItem.title = Friend.dummies[friendId ?? 0].name
+//        navigationItem.title = Friend.dummies[friendId ?? 0].name
     }
     
     private func initTableView() {
@@ -96,11 +96,11 @@ class FriendHistoryViewController: UIViewController {
     // MARK: - Method
     
     func sortHistories(descending: Bool) {
-        if descending == true {
-            histories = histories.sorted(by: {$0.date > $1.date})
-        } else {
-            histories = histories.sorted(by: {$0.date < $1.date})
-        }
+//        if descending == true {
+//            histories = histories.sorted(by: {$0.date > $1.date})
+//        } else {
+//            histories = histories.sorted(by: {$0.date < $1.date})
+//        }
     }
     
     // MARK: - IBAction

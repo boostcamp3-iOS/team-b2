@@ -23,7 +23,7 @@ class NotificationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        notifications = Notification.dummies
+//        notifications = Notification.dummies
         initTableView()
     }
     
