@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class NotificationViewController: UIViewController {
     
@@ -14,17 +15,18 @@ class NotificationViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    // MARK: - Propertie
+    // MARK: - Property
     
     internal var databaseManager: DatabaseManager?
-    private var notifications: [Notification]?
+    private var fetchedResultsController: NSFetchedResultsController<Notification>?
     
-    // MARK: - Lifecycle Method
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        notifications = Notification.dummies
+        initFetchedResultsController()
         initTableView()
     }
     
@@ -46,6 +48,20 @@ class NotificationViewController: UIViewController {
     private func initNavigationBar(){
         navigationController?.navigationBar.clear()
     }
+    
+    private func initFetchedResultsController() {
+        let fetchResult: NSFetchRequest<Notification> = Notification.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
+        fetchResult.sortDescriptors = [sortDescriptor]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchResult, managedObjectContext: (databaseManager?.viewContext)!, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController?.delegate = self
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            fatalError("The fetch could not be performed: \(error.localizedDescription)")
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -53,13 +69,13 @@ class NotificationViewController: UIViewController {
 extension NotificationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notifications?.count ?? 0
+        return fetchedResultsController?.sections?.first?.numberOfObjects ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(NotificationViewCell.self, for: indexPath)
         
-        guard let notification = notifications?[indexPath.row] else {
+        guard let notification = fetchedResultsController?.object(at: indexPath) else {
             return cell
         }
         
@@ -76,11 +92,51 @@ extension NotificationViewController: UITableViewDelegate {
             .instantiateViewController(ofType: FriendHistoryViewController.self)
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    func tableView (_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if let objectToDelete = fetchedResultsController?.object(at: indexPath) {
+                databaseManager?.viewContext.delete(objectToDelete)
+                do {
+                    try databaseManager?.viewContext.save()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
 }
+
+// MARK: - DatabaseManagerClient
 
 extension NotificationViewController: DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager
+    }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension NotificationViewController: NSFetchedResultsControllerDelegate {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .fade)
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+        }
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
     }
 }
 

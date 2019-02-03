@@ -82,6 +82,7 @@
 		F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */; };
 		F85D06F822041E5B002212E9 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F85D06F522041E5B002212E9 /* Bodabi.xcdatamodeld */; };
 		F85D06FA220662F2002212E9 /* History+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85D06F9220662F2002212E9 /* History+Extensions.swift */; };
+		F85D06FF22073558002212E9 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85D06FE22073558002212E9 /* Notification+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +163,7 @@
 		F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryReceiveViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistoryReceiveViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F85D06F722041E5B002212E9 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 		F85D06F9220662F2002212E9 /* History+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+Extensions.swift"; sourceTree = "<group>"; };
+		F85D06FE22073558002212E9 /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +222,7 @@
 				F85D06F522041E5B002212E9 /* Bodabi.xcdatamodeld */,
 				F814529921FCD4BC004A2CF0 /* SettingOptions.swift */,
 				F85D06F9220662F2002212E9 /* History+Extensions.swift */,
+				F85D06FE22073558002212E9 /* Notification+Extensions.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
 				DBF4CF3421FC5405001536A8 /* HolidayInputViewController.swift in Sources */,
 				DB3873C722001BBC00ADF0CB /* Date+ToString.swift in Sources */,
+				F85D06FF22073558002212E9 /* Notification+Extensions.swift in Sources */,
 				DBF4CF4621FCE511001536A8 /* NSMutableAttributedString+Extension.swift in Sources */,
 				DBF4CF3C21FC546B001536A8 /* HolidayInputViewCell.swift in Sources */,
 				F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */,

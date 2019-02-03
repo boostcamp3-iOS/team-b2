@@ -33,8 +33,8 @@ class NotificationViewCell: UITableViewCell {
             imageContainerView.makeRound(with: .heightRound)
             // TODO: - Image Setup for each holiday
             iconImageView.image = UIImage(named: "ic_fullStar")
-//            eventDateLabel.text = notification.date.toString(of: .year)
-//            notificationLabel.text = notification.sentence
+            eventDateLabel.text = notification.date?.toString(of: .year)
+            notificationLabel.text = notification.sentence
             notificationDateLabel.text = "1일 전"
         }
     }
