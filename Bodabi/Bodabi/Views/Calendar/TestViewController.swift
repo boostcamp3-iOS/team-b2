@@ -45,6 +45,7 @@ class TestViewController: UIViewController {
         calendarView.movePage(to: formatter.date(from: "2022-08-24"))
     }
 }
+
 extension TestViewController: CalendarViewDelegate {
     func calendar(_ calendar: CalendarView, didSelectedItem date: Date) {
         print(date)

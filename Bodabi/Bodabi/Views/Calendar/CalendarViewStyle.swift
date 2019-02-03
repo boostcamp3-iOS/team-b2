@@ -14,12 +14,12 @@ struct CalendarViewStyle {
         case monday
         case sunday
         
-        func getWeekDay(arr: [String], index: Int) -> String {
+        func getWeekDay(weeks: [String], index: Int) -> String {
             switch self {
             case .monday:
-                return arr[(index + 1) % 7]
+                return weeks[(index + 1) % 7]
             case .sunday:
-                return arr[index]
+                return weeks[index]
             }
         }
     }
