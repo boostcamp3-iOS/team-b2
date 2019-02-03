@@ -26,7 +26,7 @@ class CalendarWeekDayViewCell: UICollectionViewCell {
     
     public func configure(index: Int) {
         let weeksArray = style.weekType.weeksArray
-        let week = style.firstWeekType.getWeekDay(arr: weeksArray, index: index)
+        let week = style.firstWeekType.getWeekDay(weeks: weeksArray, index: index)
         weekLabel.text = week
         
         guard let weekFirstCharacter = week.first else { return }
