@@ -33,3 +33,11 @@ extension Date {
         return dateFormatter.string(from: self)
     }
 }
+
+extension Date: ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        self = formatter.date(from: value) ?? Date()
+    }
+}

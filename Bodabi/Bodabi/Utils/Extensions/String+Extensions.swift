@@ -16,6 +16,10 @@ extension String {
         guard let lastSyllable = UnicodeScalar(String(lastWord))?.value else {
             return false
         }
+        // Check if it's hangul
+        if lastSyllable < 0xac00 || lastSyllable > 0xd7a3 {
+            return false
+        }
         let finalConsonant: Bool = (lastSyllable - 0xac00) % 28 != 0
         return finalConsonant
     }
@@ -25,6 +29,10 @@ extension String {
             return false
         }
         guard let lastSyllable = UnicodeScalar(String(lastWord))?.value else {
+            return false
+        }
+        // Check if it's hangul
+        if lastSyllable < 0xac00 || lastSyllable > 0xd7a3 {
             return false
         }
         let finalConsonantFourth: Bool = (lastSyllable - 0xac00) % 28 == 8

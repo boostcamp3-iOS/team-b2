@@ -11,7 +11,7 @@ import UIKit
 
 extension UIColor {
     class var mainColor: UIColor {
-        // Color HexCode: DD7354
+        // Color HexCode: DB7253
         return #colorLiteral(red: 0.9294973612, green: 0.4212887287, blue: 0.292683661, alpha: 1)
     }
     

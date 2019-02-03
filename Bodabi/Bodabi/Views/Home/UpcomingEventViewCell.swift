@@ -43,17 +43,17 @@ class UpcomingEventViewCell: UITableViewCell {
     }
     
     private func configure() {
-        guard let event = event else { return }
-        let friend = Friend.dummies.filter { $0.id == event.friendId }.first
-        
-        nameLabel.text = friend?.name
-        holidayLabel.text = event.holiday
-        dDayLabel.text = "D-23"
-        
-        let friendHistories = History.dummies.filter { $0.friendId == (friend?.id ?? 0) }
-        guard let lastFriendHistory = friendHistories.last else { return }
-        lastHistoryLabel.text = String(format: "%@ %@",
-                                       lastFriendHistory.holiday,
-                                       lastFriendHistory.item)
+//        guard let event = event else { return }
+//        let friend = Friend.dummies.filter { $0.id == event.friendId }.first
+//        
+//        nameLabel.text = friend?.name
+//        holidayLabel.text = event.holiday
+//        dDayLabel.text = "D-23"
+//        
+//        let friendHistories = History.dummies.filter { $0.friendId == (friend?.id ?? 0) }
+//        guard let lastFriendHistory = friendHistories.last else { return }
+//        lastHistoryLabel.text = String(format: "%@ %@",
+//                                       lastFriendHistory.holiday,
+//                                       lastFriendHistory.item)
     }
 }

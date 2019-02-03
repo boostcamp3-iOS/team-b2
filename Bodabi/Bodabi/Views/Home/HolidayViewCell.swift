@@ -14,11 +14,11 @@ class HolidayViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-    public var holiday: Holiday? {
-        didSet {
-            configure()
-        }
-    }
+//    public var holiday: Holiday? {
+//        didSet {
+//            configure()
+//        }
+//    }
    
     // FIXME: - Data dummy image
     let imageOfHoliday: [(holiday: String, image: UIImage)] = [
@@ -33,14 +33,14 @@ class HolidayViewCell: UICollectionViewCell {
     }
 
     private func configure() {
-        titleLabel.text = holiday?.title
+//        titleLabel.text = holiday?.title
         dateLabel.text = Date().toString(of: .year)
         
-        imageOfHoliday.forEach {
-            if holiday?.title.contains($0.holiday) ?? true {
-                holidayImageView.image = $0.image
-                return
-            }
-        }
+//        imageOfHoliday.forEach {
+//            if holiday?.title.contains($0.holiday) ?? true {
+//                holidayImageView.image = $0.image
+//                return
+//            }
+//        }
     }
 }
