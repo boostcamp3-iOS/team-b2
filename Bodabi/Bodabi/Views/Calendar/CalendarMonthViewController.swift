@@ -86,14 +86,14 @@ class CalendarMonthViewController: UICollectionViewController {
     }
     
     private func cellSize(in bounds: CGRect) -> CGSize {
-        return CGSize(width:   bounds.size.width / 7.0,
+        return CGSize(width: bounds.size.width / 7.0,
                       height: bounds.size.height / 7.0)
     }
     
     private func getMonthInfo(for date: Date) -> (firstDay: Int, daysTotal: Int)? {
-        var firstWeekdayOfMonthIndex    = calendar.component(.weekday, from: date)
-        firstWeekdayOfMonthIndex       -= style.firstWeekType == .monday ? 1 : 0
-        firstWeekdayOfMonthIndex        = (firstWeekdayOfMonthIndex + 6) % 7
+        let firstWeekdayOfMonth    = calendar.component(.weekday, from: date)
+            - (style.firstWeekType == .monday ? 1 : 0)
+        let firstWeekdayOfMonthIndex        = (firstWeekdayOfMonth + 6) % 7
         
         guard let rangeOfDaysInMonth
             = calendar.range(of: .day, in: .month, for: date) else { return nil }
@@ -121,8 +121,10 @@ extension CalendarMonthViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section),
             section == .day else { return }
-        guard let cell
-            = collectionView.cellForItem(at: indexPath) as? CalendarDayViewCell else { return }
+        guard let cell =
+            collectionView.cellForItem(at: indexPath) as? CalendarDayViewCell else {
+                return
+        }
         cell.backgroundColor = style.selectedColor
         
         guard let visibleMonth = visibleMonthFirstDay else { return }
