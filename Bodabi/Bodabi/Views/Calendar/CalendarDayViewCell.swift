@@ -11,8 +11,12 @@ import UIKit
 
 class CalendarDayViewCell: UICollectionViewCell {
 
+    // MARK: - IBOutlet
+    
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var eventView: UIView!
+    
+    // MARK: - Property
     
     public var style: CalendarViewStyle = .init()
     public var day: Int = 0 {
@@ -41,6 +45,8 @@ class CalendarDayViewCell: UICollectionViewCell {
     private func setUpUI() {
         eventView.isHidden = true
     }
+    
+    // MARK: - Configure
     
     public func configure(daysOfMonth: ClosedRange<Int>) {
         isHidden = !(daysOfMonth ~= day)

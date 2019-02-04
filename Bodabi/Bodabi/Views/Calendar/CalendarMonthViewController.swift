@@ -9,15 +9,16 @@
 import UIKit
 
 class CalendarMonthViewController: UICollectionViewController {
+    
+    // MARK: - Property
+    
     public lazy var calendar : Calendar = {
         var gregorian = Calendar(identifier: .gregorian)
         gregorian.timeZone = TimeZone(abbreviation: "UTC")!
         return gregorian
     }()
     
-    weak var delegate: CalendarViewDelegate?
-    
-    // MARK: Calendar style
+    public weak var delegate: CalendarViewDelegate?
     
     public var style: CalendarViewStyle = .init()
     public var superFrame: CGRect = .init() {
@@ -25,8 +26,6 @@ class CalendarMonthViewController: UICollectionViewController {
             setUpUI()
         }
     }
-
-    // MARK: Properties
     
     public var visibleMonthFirstDay: Date? {
         didSet {
@@ -42,6 +41,17 @@ class CalendarMonthViewController: UICollectionViewController {
         case day
     }
     
+    // MARK: - Life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setUpUI()
+        initCollectionView()
+    }
+    
+    // MARK: - Initialization
+    
     init() {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
         setUpUI()
@@ -49,13 +59,6 @@ class CalendarMonthViewController: UICollectionViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setUpUI()
-        initCollectionView()
     }
     
     private func setUpUI() {
@@ -84,6 +87,8 @@ class CalendarMonthViewController: UICollectionViewController {
         let cells = [CalendarWeekDayViewCell.self, CalendarDayViewCell.self]
         collectionView?.register(cells)
     }
+    
+    // MAKR: - Method
     
     private func cellSize(in bounds: CGRect) -> CGSize {
         return CGSize(width: bounds.size.width / 7.0,
@@ -117,6 +122,8 @@ class CalendarMonthViewController: UICollectionViewController {
     
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension CalendarMonthViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section),
@@ -143,6 +150,8 @@ extension CalendarMonthViewController {
         cell?.backgroundColor = .clear
     }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension CalendarMonthViewController {
     override func numberOfSections(in collectionView: UICollectionView) -> Int {

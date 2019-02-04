@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// MARK: - CalendarViewDelegate
 
 @objc
 protocol CalendarViewDelegate: class {
@@ -16,9 +17,13 @@ protocol CalendarViewDelegate: class {
     @objc optional func calendar(_ calendar: CalendarView, didSelectedItem date: Date)
 }
 
+// MARK: - CalendarView
+
 class CalendarView: UIView {
     
-    weak var delegate: CalendarViewDelegate? {
+    // MARK: - Property
+    
+    public weak var delegate: CalendarViewDelegate? {
         didSet {
             setPageFirstView()
         }
@@ -29,6 +34,8 @@ class CalendarView: UIView {
     public var currentVisibleDate: Date = .init()
     
     public var style: CalendarViewStyle = .init()
+    
+    // MARK: - Initialization
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -68,6 +75,8 @@ class CalendarView: UIView {
         
         findParentViewController()?.addChild(pageController)
     }
+    
+    // MAKR: - Method
     
     private func setPageFirstView() {
         guard let pageController = pageController else { return }
@@ -117,6 +126,8 @@ class CalendarView: UIView {
     }
 }
 
+// MARK: - UIPageViewControllerDelegate
+
 extension CalendarView: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if let viewController =
@@ -126,6 +137,8 @@ extension CalendarView: UIPageViewControllerDelegate {
         }
     }
 }
+
+// MARK: - UIPageViewControllerDataSource
 
 extension CalendarView: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {

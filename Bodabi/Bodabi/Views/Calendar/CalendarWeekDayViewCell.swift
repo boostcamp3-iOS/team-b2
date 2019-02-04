@@ -9,8 +9,12 @@
 import UIKit
 
 class CalendarWeekDayViewCell: UICollectionViewCell {
+    
+    // MARK: - IBOutlet
 
     @IBOutlet weak var weekLabel: UILabel!
+    
+    // MARK: - Property
     
     public var style: CalendarViewStyle = .init()
     
@@ -23,6 +27,8 @@ class CalendarWeekDayViewCell: UICollectionViewCell {
     private func setupUI() {
         isUserInteractionEnabled = false
     }
+    
+    // MARK: - Configure
     
     public func configure(index: Int) {
         let weeksArray = style.weekType.weeksArray
