@@ -18,7 +18,7 @@ class FriendsHeaderViewCell: UITableViewCell {
     
     public var type: FriendsViewController.Section = .favoriteHeader {
         didSet {
-            setUpUI()
+            initTitle()
         }
     }
     
@@ -32,7 +32,7 @@ class FriendsHeaderViewCell: UITableViewCell {
     
     // MARK: - Initialization
     
-    private func setUpUI() {
+    private func initTitle() {
         titleLabel.text = type.title
     }
 }

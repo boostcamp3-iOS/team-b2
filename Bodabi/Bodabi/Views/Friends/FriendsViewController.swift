@@ -13,10 +13,6 @@ class FriendsViewController: UIViewController {
     // MARK: - IBOutlet
 
     @IBOutlet weak var searchBar: UISearchBar!
-    
-    @IBOutlet var headerView: UIView!
-    @IBOutlet weak var headerTitleLabel: UILabel!
-    
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Property
@@ -53,19 +49,9 @@ class FriendsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setUpUI()
+        initNavigationBar()
+        initSearchBar()
         initTableView()
-    }
-    
-    // MARK: - Initialization
-    
-    private func setUpUI() {
-        // navigation bar line clear
-        // Please make 'isTranslucent' false in storyboard
-        navigationController?.navigationBar.shadowImage = UIImage()
-        
-        searchBar.isTranslucent = false
-        searchBar.backgroundImage = UIImage()
     }
     
     // MARK: - IBAction
@@ -79,9 +65,20 @@ class FriendsViewController: UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
         self.present(navController, animated: true, completion: nil)
     }
-}
-
-extension FriendsViewController: UITableViewDelegate {
+    
+    // MARK: - Initialization
+    
+    private func initNavigationBar() {
+        // navigation bar line clear
+        // Please make 'isTranslucent' false in storyboard
+        navigationController?.navigationBar.shadowImage = UIImage()
+    }
+    
+    private func initSearchBar() {
+        searchBar.isTranslucent = false
+        searchBar.backgroundImage = UIImage()
+    }
+    
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
         
@@ -90,6 +87,11 @@ extension FriendsViewController: UITableViewDelegate {
         
         tableView.contentInset.bottom = Const.bottomInset
     }
+}
+
+// MARK: - UITableViewDelegate
+
+extension FriendsViewController: UITableViewDelegate {
 }
 
 // MARK: - UITableViewDataSource

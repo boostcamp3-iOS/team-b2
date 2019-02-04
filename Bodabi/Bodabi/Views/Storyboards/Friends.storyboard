@@ -57,7 +57,7 @@
                             <barButtonItem image="ic_sort" id="L04-zp-veJ">
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </barButtonItem>
-                            <barButtonItem title="Item" systemItem="edit" id="DeX-15-GCt">
+                            <barButtonItem systemItem="edit" id="DeX-15-GCt">
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </barButtonItem>
                         </rightBarButtonItems>
