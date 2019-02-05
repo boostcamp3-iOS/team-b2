@@ -186,7 +186,7 @@ class NameInputViewController: UIViewController {
                 .instantiateViewController(ofType: HolidayInputViewController.self)
             
             viewController.entryRoute = entryRoute
-            self.navigationController?.pushViewController(viewController, animated: true)
+            navigationController?.pushViewController(viewController, animated: true)
         case .addFriendAtHoliday:
             let viewController = storyboard(.input)
                 .instantiateViewController(ofType: ItemInputViewController.self)

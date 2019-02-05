@@ -46,7 +46,7 @@ extension MyHolidaysViewCell: UICollectionViewDelegate {
 
 extension MyHolidaysViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0 //holidays.count
+        return 1 //holidays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

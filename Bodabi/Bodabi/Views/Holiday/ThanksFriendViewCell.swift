@@ -17,3 +17,15 @@ class ThanksFriendViewCell: UITableViewCell {
         super.awakeFromNib()
     }
 }
+
+extension ThanksFriendViewCell: HolidayCellProtocol {
+    func bind(item: HolidaySectionItem) {
+        switch item {
+        case let .thanksFriend(name, item):
+            nameLabel.text = name
+            itemLabel.text = item
+        default:
+            return
+        }
+    }
+}

@@ -67,6 +67,7 @@
             <connections>
                 <outlet property="headerTitleLabel" destination="I6O-xp-3EJ" id="BS0-o5-cj2"/>
             </connections>
+            <point key="canvasLocation" x="25" y="-35"/>
         </view>
     </objects>
     <resources>
