@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="40" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="s3C-h3-E04">
-                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="4t5-aM-naE" id="hWo-1t-Sam"/>
@@ -36,30 +36,24 @@
                                     <action selector="touchUpFloatingButotn:" destination="4t5-aM-naE" eventType="touchUpInside" id="9Ue-6g-s6A"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="18x-tp-Eeb">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
-                                <color key="backgroundColor" red="0.86097449059999998" green="0.45261687039999998" blue="0.32937878370000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="89" id="j3n-5q-QdD"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="1Ni-zn-qaK" firstAttribute="centerX" secondItem="NxS-IZ-ta3" secondAttribute="centerX" id="Hxv-V8-Ri8"/>
                             <constraint firstItem="tVf-Pz-G6J" firstAttribute="bottom" secondItem="1Ni-zn-qaK" secondAttribute="bottom" constant="16" id="MB0-gJ-Gva"/>
                             <constraint firstItem="tVf-Pz-G6J" firstAttribute="trailing" secondItem="s3C-h3-E04" secondAttribute="trailing" id="MaY-Ex-aQE"/>
-                            <constraint firstItem="18x-tp-Eeb" firstAttribute="top" secondItem="NxS-IZ-ta3" secondAttribute="top" id="cJE-x8-Dfu"/>
-                            <constraint firstItem="s3C-h3-E04" firstAttribute="top" secondItem="tVf-Pz-G6J" secondAttribute="top" id="eXG-9F-6IE"/>
-                            <constraint firstAttribute="trailing" secondItem="18x-tp-Eeb" secondAttribute="trailing" id="fMD-RT-l0B"/>
+                            <constraint firstItem="s3C-h3-E04" firstAttribute="top" secondItem="NxS-IZ-ta3" secondAttribute="top" id="eXG-9F-6IE"/>
                             <constraint firstItem="tVf-Pz-G6J" firstAttribute="bottom" secondItem="s3C-h3-E04" secondAttribute="bottom" id="h8e-2i-oi8"/>
                             <constraint firstItem="s3C-h3-E04" firstAttribute="leading" secondItem="tVf-Pz-G6J" secondAttribute="leading" id="hEQ-Cn-XVw"/>
-                            <constraint firstItem="18x-tp-Eeb" firstAttribute="leading" secondItem="NxS-IZ-ta3" secondAttribute="leading" id="l2W-4z-jp9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tVf-Pz-G6J"/>
                     </view>
                     <navigationItem key="navigationItem" title="결혼" id="rDx-so-VJ7">
-                        <barButtonItem key="rightBarButtonItem" image="ic_camera" style="done" id="BoP-Cs-rBk"/>
+                        <barButtonItem key="rightBarButtonItem" image="ic_camera" style="done" id="BoP-Cs-rBk">
+                            <connections>
+                                <action selector="touchUpCameraButton:" destination="4t5-aM-naE" id="E0V-Sh-TVb"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="floatingButton" destination="1Ni-zn-qaK" id="EFr-aN-QoW"/>
@@ -78,7 +72,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Bvf-4a-ryD">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.8648858666" green="0.45262169839999999" blue="0.32937854529999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.92244803905487061" green="0.42172273993492126" blue="0.29231581091880798" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="largeTitleTextAttributes">

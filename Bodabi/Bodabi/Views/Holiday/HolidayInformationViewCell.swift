@@ -15,4 +15,21 @@ class HolidayInformationViewCell: UITableViewCell {
     @IBOutlet weak var incomeLabel: UILabel!
     @IBOutlet weak var incomeIcon: UIImageView!
     @IBOutlet weak var holidayImageView: UIImageView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+extension HolidayInformationViewCell: HolidayCellProtocol {
+    func bind(item: HolidaySectionItem) {
+        switch item {
+        case let .information(income, image):
+            incomeLabel.text = income
+            guard let image = image else { return }
+            holidayImageView.image = image
+        default:
+            return
+        }
+    }
 }

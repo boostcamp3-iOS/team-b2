@@ -17,6 +17,8 @@ class HolidayViewController: UIViewController {
     
     // MARK: - Properties
     
+    private let picker = UIImagePickerController()
+    
     public var entryRoute: EntryRoute!
     private struct Const {
         static let bottomInset: CGFloat = 90.0
@@ -27,7 +29,9 @@ class HolidayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        picker.delegate = self
+        picker.allowsEditing = true
+        
         initTableView()
         initNavigationBar()
     }
@@ -46,7 +50,7 @@ class HolidayViewController: UIViewController {
         
         tableView.register(cells)
         
-        sections.append(HolidaySection.information(items: [HolidaySectionItem.information(income: "100,000")]))
+        sections.append(HolidaySection.information(items: [HolidaySectionItem.information(income: "100,000", image: nil)]))
         sections.append(HolidaySection.thanksFriend(items: [
             HolidaySectionItem.thanksFriend(name: "김철수", item: "50,000"),
             HolidaySectionItem.thanksFriend(name: "박영희", item: "30,000"),
@@ -64,7 +68,6 @@ class HolidayViewController: UIViewController {
     
     private func initNavigationBar() {
         navigationController?.view.backgroundColor = .clear
-        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.927362144, green: 0.4233368039, blue: 0.2925595641, alpha: 1)
     }
     
     // MARK: - @IBAction
@@ -78,6 +81,11 @@ class HolidayViewController: UIViewController {
         present(navController, animated: true, completion: nil)
     }
     
+    @IBAction func touchUpCameraButton(_ sender: UIBarButtonItem) {
+        let actionSheet = BodabiAlertController(type: .camera(SourceTypes: [.camera, .savedPhotosAlbum, .photoLibrary]), style: .ActionSheet)
+        actionSheet.delegate = self
+        actionSheet.show()
+    }
     // MARK: - @objc
     
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
@@ -109,7 +117,7 @@ extension HolidayViewController: UITableViewDataSource {
         let section = sections[indexPath.section]
         switch section {
         case .information:
-            return 120
+            return 188
         default:
             return 45
         }
@@ -165,6 +173,42 @@ extension HolidayViewController: UITableViewDelegate {
     }
 }
 
+extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
+    private func presentPicker(source: UIImagePickerController.SourceType) {
+        guard UIImagePickerController.isSourceTypeAvailable(source) else {
+            let alert = BodabiAlertController(title: "사용할 수 없는 타입입니다", message: nil, type: nil, style: .Alert)
+            alert.cancelButtonTitle = "확인"
+            alert.show()
+            
+            return
+        }
+        
+        
+        picker.sourceType = source
+        
+        present(picker, animated: false)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        var image: UIImage?
+        
+        if let editedImage = info[.editedImage] as? UIImage {
+            image = editedImage
+        } else if let originalImage = info[.originalImage] as? UIImage {
+            image = originalImage
+        }
+        
+        
+        
+        guard let informationCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? HolidayInformationViewCell else { return }
+        
+        let item = HolidaySectionItem.information(income: informationCell.incomeLabel.text ?? "0", image: image)
+        
+        informationCell.bind(item: item)
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
 // MARK: - Type
 
 extension HolidayViewController {
@@ -191,4 +235,11 @@ extension HolidaySection {
 
 protocol HolidayCellProtocol {
     func bind(item: HolidaySectionItem)
+}
+
+
+extension HolidayViewController: BodabiAlertControllerDelegate {
+    func bodabiAlert(type: UIImagePickerController.SourceType) {
+        presentPicker(source: type)
+    }
 }

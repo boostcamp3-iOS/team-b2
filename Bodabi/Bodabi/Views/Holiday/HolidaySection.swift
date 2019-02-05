@@ -6,7 +6,7 @@
 //  Copyright © 2019 LeeHyeJin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum HolidaySection {
     case information(items: [HolidaySectionItem])
@@ -35,6 +35,6 @@ enum HolidaySection {
 // MARK: - Type
 
 enum HolidaySectionItem {
-    case information(income: String)
+    case information(income: String, image: UIImage?)
     case thanksFriend(name: String, item: String)
 }
