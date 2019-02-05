@@ -95,9 +95,8 @@ class HolidayInputViewController: UIViewController {
             present(navController, animated: true, completion: nil)
         } else {
             switch entryRoute {
-            case .addHolidayAtHome:
-                dismiss(animated: true, completion: nil)
-            case .addUpcomingEventAtHome:
+            case .addHolidayAtHome,
+                 .addUpcomingEventAtHome:
                 let viewController = storyboard(.input)
                     .instantiateViewController(ofType: DateInputViewController.self)
                 

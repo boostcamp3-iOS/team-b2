@@ -52,7 +52,7 @@ class DateInputViewController: UIViewController {
         navigationController?.navigationBar.clear()
         
         let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
-        
+        backButton.tintColor = #colorLiteral(red: 0.9224480391, green: 0.4217227399, blue: 0.2923158109, alpha: 1)
         navigationItem.leftBarButtonItem = backButton
     }
     
