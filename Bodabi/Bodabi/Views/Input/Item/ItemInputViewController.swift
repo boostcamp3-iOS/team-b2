@@ -56,14 +56,7 @@ class ItemInputViewController: UIViewController {
     private func initCollectionView() {
         collectionView.delegate = self; collectionView.dataSource = self
         collectionView.register(ItemViewCell.self)
-        collectionView.contentInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-        
-        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
-        
-        collectionView.collectionViewLayout = layout
+        collectionView.collectionViewLayout = ItemCollectionViewFlowLayout()
     }
     
     private func initTextField() {
@@ -300,48 +293,3 @@ extension ItemInputViewController: UIGestureRecognizerDelegate {
         return true
     }
 }
-
-// MARK: - Type
-
-//extension ItemInputViewController {
-//    enum Item {
-//        case cash(amount: String)
-//        case gift(name: String)
-//        
-//        var text: String {
-//            switch self {
-//            case .cash:
-//                return "금액"
-//            case .gift:
-//                return "선물"
-//            }
-//        }
-//        
-//        var placeholder: String {
-//            switch self {
-//            case .cash:
-//                return "원"
-//            case .gift:
-//                return "기프티콘"
-//            }
-//        }
-//        
-//        var list: [String] {
-//            switch  self {
-//            case .cash:
-//                return ["10000", "30000", "50000", "70000", "100000", "200000"]
-//            case .gift:
-//                return ["꽃", "기프티콘", "냉장고", "전자레인지", "옷", "케이크", "화장품", "상품권"]
-//            }
-//        }
-//        
-//        var value: String {
-//            switch self {
-//            case let .cash(amount):
-//                return amount
-//            case let .gift(name):
-//                return name
-//            }
-//        }
-//    }
-//}

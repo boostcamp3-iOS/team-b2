@@ -284,7 +284,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eni-N5-hpT">
-                                <rect key="frame" x="16" y="264.66666666666674" width="343" height="467.33333333333326"/>
+                                <rect key="frame" x="16" y="293.66666666666674" width="343" height="438.33333333333326"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4YE-35-fhN">
                                     <size key="itemSize" width="50" height="50"/>
@@ -312,6 +312,12 @@
                                     <action selector="textFieldDidChanging:" destination="wKl-B5-SVB" eventType="editingChanged" id="0CE-ww-y6T"/>
                                 </connections>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아래 버튼을 이용하여 손쉽게 추갈 할 수 있습니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gx9-tp-vAM">
+                                <rect key="frame" x="16" y="264.66666666666669" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.92638254170000001" green="0.42560976740000001" blue="0.30080345269999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esE-17-svj">
                                 <rect key="frame" x="0.0" y="732" width="375" height="80"/>
                                 <color key="backgroundColor" red="0.92638254170000001" green="0.42560976740000001" blue="0.30080345269999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -336,9 +342,12 @@
                             <constraint firstItem="TOP-0y-9Bl" firstAttribute="leading" secondItem="WtJ-9h-21M" secondAttribute="leading" constant="16" id="GEK-LD-ssu"/>
                             <constraint firstItem="WtJ-9h-21M" firstAttribute="trailing" secondItem="eni-N5-hpT" secondAttribute="trailing" constant="16" id="NE9-Bb-YKS"/>
                             <constraint firstItem="TOP-0y-9Bl" firstAttribute="top" secondItem="BOj-yW-bWf" secondAttribute="bottom" constant="8" id="Rpg-Ni-dPv"/>
-                            <constraint firstItem="eni-N5-hpT" firstAttribute="top" secondItem="hBR-Bf-Y2c" secondAttribute="bottom" constant="8" id="co3-uk-7jP"/>
+                            <constraint firstItem="eni-N5-hpT" firstAttribute="top" secondItem="gx9-tp-vAM" secondAttribute="bottom" constant="8" id="Zxb-GG-X8M"/>
                             <constraint firstItem="esE-17-svj" firstAttribute="bottom" secondItem="NNe-j0-NbO" secondAttribute="bottom" id="eIh-4U-ery"/>
                             <constraint firstItem="esE-17-svj" firstAttribute="leading" secondItem="WtJ-9h-21M" secondAttribute="leading" id="f12-UD-7dt"/>
+                            <constraint firstItem="gx9-tp-vAM" firstAttribute="leading" secondItem="WtJ-9h-21M" secondAttribute="leading" constant="16" id="fJb-zt-Q5f"/>
+                            <constraint firstItem="WtJ-9h-21M" firstAttribute="trailing" secondItem="gx9-tp-vAM" secondAttribute="trailing" constant="16" id="j7a-CY-itB"/>
+                            <constraint firstItem="gx9-tp-vAM" firstAttribute="top" secondItem="hBR-Bf-Y2c" secondAttribute="bottom" constant="8" id="mzT-ft-THT"/>
                             <constraint firstItem="esE-17-svj" firstAttribute="top" secondItem="eni-N5-hpT" secondAttribute="bottom" id="n4A-cN-D2b"/>
                             <constraint firstItem="BOj-yW-bWf" firstAttribute="top" secondItem="WtJ-9h-21M" secondAttribute="top" constant="20" id="oaN-yg-plz"/>
                             <constraint firstItem="eni-N5-hpT" firstAttribute="leading" secondItem="WtJ-9h-21M" secondAttribute="leading" constant="16" id="xLV-oq-Bli"/>
