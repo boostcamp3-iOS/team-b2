@@ -12,6 +12,7 @@ extension Date {
     enum FormatType {
         case year
         case none
+        case noDay
         
         var description: String {
             switch self {
@@ -19,6 +20,8 @@ extension Date {
                 return "yyyy.MM.dd"
             case .none:
                 return "MM.dd"
+            case .noDay:
+                return "yyyy.MM"
             }
         }
     }
