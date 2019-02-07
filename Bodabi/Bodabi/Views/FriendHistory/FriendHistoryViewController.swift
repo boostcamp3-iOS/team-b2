@@ -13,8 +13,10 @@ class FriendHistoryViewController: UIViewController {
     
     // MARK: - IBOutlet
     
+    @IBOutlet weak var navigationBarView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var floatingButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIBarButtonItem!
     
     // MARK: - Property
     
@@ -79,6 +81,7 @@ class FriendHistoryViewController: UIViewController {
     private func initNavigationBar() {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationItem.title = friend?.name ?? ""
+        favoriteButton.image = friend?.favorite == true ? #imageLiteral(resourceName: "ic_emptyStar") : #imageLiteral(resourceName: "WhiteStar")
     }
     
     private func initTableView() {
@@ -113,6 +116,18 @@ class FriendHistoryViewController: UIViewController {
         
         viewController.entryRoute = .addHistoryAtFriendHistory
         present(navController, animated: true, completion: nil)
+    }
+    
+    @IBAction func touchUpFavoriteButton(_ sender: UIBarButtonItem) {
+        if favoriteButton.image == #imageLiteral(resourceName: "ic_emptyStar") {
+            friend?.favorite = false
+            favoriteButton.image = #imageLiteral(resourceName: "WhiteStar")
+            try? databaseManager?.viewContext.save()
+        } else {
+            friend?.favorite = true
+            favoriteButton.image = #imageLiteral(resourceName: "ic_emptyStar")
+            try? databaseManager?.viewContext.save()
+        }
     }
 }
 
