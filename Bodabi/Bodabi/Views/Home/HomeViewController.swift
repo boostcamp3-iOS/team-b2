@@ -175,6 +175,14 @@ extension HomeViewController: UICollectionViewDelegate {
         let viewController = storyboard(.holiday)
             .instantiateViewController(ofType: HolidayViewController.self)
         
+        if let databaseManager = databaseManager {
+            let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
+            request.predicate = NSPredicate(format: "title = %@", "내 결혼식")
+            let result = try? databaseManager.viewContext.fetch(request)
+            viewController.setDatabaseManager(databaseManager)
+            viewController.holiday = result?.first
+        }
+        
         viewController.entryRoute = .addHistoryAtFriendHistory
         navigationController?.pushViewController(viewController, animated: true)
     }

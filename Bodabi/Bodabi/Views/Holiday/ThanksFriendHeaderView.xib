@@ -16,6 +16,10 @@
             <rect key="frame" x="0.0" y="0.0" width="321" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bzW-P9-27S">
+                    <rect key="frame" x="0.0" y="0.0" width="321" height="60"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="주고받은 내역" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J1c-Fj-5BY">
                     <rect key="frame" x="16" y="15" width="142.5" height="30"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
@@ -40,12 +44,16 @@
                 <accessibilityTraits key="traits" header="YES"/>
             </accessibility>
             <constraints>
+                <constraint firstItem="274-Kn-gZL" firstAttribute="trailing" secondItem="bzW-P9-27S" secondAttribute="trailing" id="2cV-Ce-yps"/>
                 <constraint firstItem="TTh-TG-MbP" firstAttribute="leading" secondItem="Yej-b3-YAh" secondAttribute="trailing" constant="8" id="IXg-kb-vCq"/>
                 <constraint firstItem="J1c-Fj-5BY" firstAttribute="centerY" secondItem="4BU-3C-2hv" secondAttribute="centerY" id="Ibt-nH-RD7"/>
                 <constraint firstItem="TTh-TG-MbP" firstAttribute="centerY" secondItem="Yej-b3-YAh" secondAttribute="centerY" id="KjP-6p-Ghq"/>
+                <constraint firstItem="bzW-P9-27S" firstAttribute="top" secondItem="4BU-3C-2hv" secondAttribute="top" id="M60-vg-Cru"/>
                 <constraint firstItem="Yej-b3-YAh" firstAttribute="centerY" secondItem="J1c-Fj-5BY" secondAttribute="centerY" id="OHs-I7-CPt"/>
+                <constraint firstItem="bzW-P9-27S" firstAttribute="leading" secondItem="274-Kn-gZL" secondAttribute="leading" id="amn-yV-anL"/>
                 <constraint firstItem="274-Kn-gZL" firstAttribute="trailing" secondItem="TTh-TG-MbP" secondAttribute="trailing" constant="16" id="dVe-14-zzJ"/>
                 <constraint firstItem="J1c-Fj-5BY" firstAttribute="leading" secondItem="274-Kn-gZL" secondAttribute="leading" constant="16" id="iUF-ut-xlZ"/>
+                <constraint firstAttribute="bottom" secondItem="bzW-P9-27S" secondAttribute="bottom" id="smp-up-rr7"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="274-Kn-gZL"/>

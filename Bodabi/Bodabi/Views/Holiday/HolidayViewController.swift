@@ -15,18 +15,23 @@ class HolidayViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var floatingButton: UIButton!
+    @IBOutlet weak var informationView: UIView!
     
     // MARK: - Properties
     
-    private let picker = UIImagePickerController()
-    
+    public var databaseManager: DatabaseManager?
     public var entryRoute: EntryRoute!
+
     private struct Const {
         static let bottomInset: CGFloat = 90.0
     }
+    
+    private let picker = UIImagePickerController()
     private var holidayImage: UIImage?
-    private var databaseManager: DatabaseManager?
-    private var thanksFriends: [ThanksFriend]?
+    private var thanksFriends: [ThanksFriend]? = []
+    private var originalBottomConstraint: CGFloat = 0.0
+    
+    public var holiday: Holiday?
     
     // MARK: - Lifecycle Method
     
@@ -39,7 +44,33 @@ class HolidayViewController: UIViewController {
         initNavigationBar()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        fetchHistory()
+    }
+    
     // MARK: - Initialization Methods
+
+    private func fetchHistory() {
+        let request: NSFetchRequest<History> = History.fetchRequest()
+        let firstPredicate = NSPredicate(format: "holiday = %@", holiday?.title ?? "")
+        let secondPredicate = NSPredicate(format: "isTaken = %@", NSNumber(value: true))
+
+        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [firstPredicate, secondPredicate])
+        request.predicate = andPredicate
+        
+        do {
+            if let result: [History] = try databaseManager?.viewContext.fetch(request) {
+                thanksFriends?.removeAll()
+                for history in result {
+                    thanksFriends?.append(ThanksFriend(name: history.friend?.name ?? "", item: history.item ?? ""))
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        tableView.reloadData()
+    }
     
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
@@ -50,27 +81,11 @@ class HolidayViewController: UIViewController {
         tableView.contentInset.bottom = Const.bottomInset
         
         tableView.register(ThanksFriendViewCell.self)
-        
-        thanksFriends?.append(ThanksFriend(name: "김철수", item: "50,000"))
-        thanksFriends?.append(ThanksFriend(name: "박영희", item: "20,000"))
-
-//        thankFriends.append((items: [
-//            HolidaySectionItem.thanksFriend(name: "김철수", item: "50,000"),
-//            HolidaySectionItem.thanksFriend(name: "박영희", item: "30,000"),
-//            HolidaySectionItem.thanksFriend(name: "문재인", item: "500,000"),
-//            HolidaySectionItem.thanksFriend(name: "성시경", item: "50,000"),
-//            HolidaySectionItem.thanksFriend(name: "김미영", item: "전자레인지"),
-//            HolidaySectionItem.thanksFriend(name: "박영민", item: "100,000"),
-//            HolidaySectionItem.thanksFriend(name: "엄마", item: "냉장고"),
-//            HolidaySectionItem.thanksFriend(name: "고민준", item: "TV"),
-//            HolidaySectionItem.thanksFriend(name: "김철수", item: "50,000"),
-//            HolidaySectionItem.thanksFriend(name: "김철수", item: "50,000"),
-//            HolidaySectionItem.thanksFriend(name: "김철수", item: "50,000"),
-//            HolidaySectionItem.thanksFriend(name: "김철수", item: "50,000")]))
     }
     
     private func initNavigationBar() {
         navigationController?.view.backgroundColor = .clear
+        navigationItem.title = holiday?.title
     }
     
     // MARK: - @IBAction
@@ -80,7 +95,15 @@ class HolidayViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
         
-        viewController.entryRoute = .addFriendAtHoliday
+        if let databaseManager = databaseManager {
+            viewController.setDatabaseManager(databaseManager)
+        }
+        
+        var inputData = InputData()
+        inputData.date = holiday?.date
+        inputData.holiday = holiday?.title
+        viewController.inputData = inputData
+        viewController.entryRoute = .addHistoryAtHoliday
         present(navController, animated: true, completion: nil)
     }
     
@@ -120,18 +143,23 @@ extension HolidayViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension HolidayViewController: UITableViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        let offsetY = scrollView.contentOffset.y
 //        guard scrollView.contentOffset.y > 0 else {
 //            scrollView.contentOffset.y = 0
 //            return
 //        }
-//
-//        guard let informationCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? HolidayInformationViewCell else { return }
-//
-//        informationCell.incomeLabel.alpha = CGFloat(min(1.2 - Double(offsetY) * 0.023, 1.0))
-//        informationCell.incomeIcon.alpha = CGFloat(min(1.2 - Double(offsetY) * 0.023, 1.0))
-//    }
+        
+//        bottomConstriant.constant = -50
+//        informationView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+//        heightConstriant.constant = 0
+        
+//        UIView.animate(withDuration: 0.5) {
+//            self.view.layoutIfNeeded()
+//        }
+        
+        
+    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ThanksFriendHeaderView.reuseIdentifier) as? ThanksFriendHeaderView else { return UIView() }
@@ -142,24 +170,7 @@ extension HolidayViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 1 {
             return 60
-        }
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            cell.transform = CGAffineTransform(translationX: 0, y: cell.frame.height / 2)
-            cell.alpha = 0
-            UIView.animate(withDuration: 0.5,
-                           delay: 0.05 * Double(indexPath.row),
-                           options: .curveEaseOut,
-                           animations: {
-                            cell.transform = CGAffineTransform(translationX: 0, y: 0)
-                            cell.alpha = 1
-            })
-        }
     }
 }
 
@@ -199,6 +210,12 @@ extension HolidayViewController: BodabiAlertControllerDelegate {
     }
 }
 
+extension HolidayViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
+    }
+}
+
 // MARK: - Type
 
 struct ThanksFriend {
@@ -211,3 +228,5 @@ struct ThanksFriend {
 protocol HolidayCellProtocol {
     func bind(friend: ThanksFriend)
 }
+
+

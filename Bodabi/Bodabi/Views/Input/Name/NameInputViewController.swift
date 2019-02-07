@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class NameInputViewController: UIViewController {
     
@@ -27,10 +28,19 @@ class NameInputViewController: UIViewController {
     public weak var addFriendDelegate: FriendsViewController?
     public weak var homeDelegate: HolidayViewController?
     public var entryRoute: EntryRoute!
+    public var inputData: InputData?
+    
+    private var databaseManager: DatabaseManager!
+    private var friends: [Friend]?
+    private var searchedFriends: [Friend]? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     private var originalBottomConstraint: CGFloat = 0.0
     private var originalHeightConstraint: CGFloat = 0.0
-//    private var friends: [Friend] = Friend.dummies
-//    private var holidaies: [Holiday] = Holiday.dummies
+    
     private var newHolidayName: String? {
         didSet {
             setGuideLabel()
@@ -41,6 +51,7 @@ class NameInputViewController: UIViewController {
         didSet {
             setGuideLabel()
             setNextButton()
+            setTableView()
         }
     }
     
@@ -58,6 +69,11 @@ class NameInputViewController: UIViewController {
         initTapGesture()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        initData()
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -65,6 +81,39 @@ class NameInputViewController: UIViewController {
     }
     
     // MARK: - Initialization Methods
+    
+    private func initData() {
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            print("addFriendAtHoliday")
+        case .addUpcomingEventAtHome:
+            print("addUpcomingEventAtHome")
+        case .addHistoryAtHoliday:
+            fetchFriend()
+        case .addFriendAtFriends:
+            print("addFriendAtFriends")
+        default:
+            break
+        }
+    }
+    
+    private func fetchFriend() {
+        let request: NSFetchRequest<Friend> = Friend.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+        
+        do {
+            if let result: [Friend] = try databaseManager?.viewContext.fetch(request) {
+                friends = result
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        tableView.reloadData()
+    }
     
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
@@ -88,7 +137,7 @@ class NameInputViewController: UIViewController {
         case .addHolidayAtHome:
             guideLabel.text = "새로운 경조사의\n이름을 입력해주세요"
         case .addUpcomingEventAtHome,
-             .addFriendAtHoliday,
+             .addHistoryAtHoliday,
              .addFriendAtFriends:
             guideLabel.text = "친구의 이름이\n무엇인가요?"
         default:
@@ -108,7 +157,7 @@ class NameInputViewController: UIViewController {
              .addFriendAtFriends:
             nextButton.setTitle("완료", for: .normal)
         case .addUpcomingEventAtHome,
-             .addFriendAtHoliday:
+             .addHistoryAtHoliday:
             nextButton.setTitle("다음", for: .normal)
         default:
             break
@@ -119,6 +168,14 @@ class NameInputViewController: UIViewController {
     }
     
     // MARK: - Setup Method
+    
+    private func setTableView() {
+        let searchedFriends = friends?.filter { friend in
+            friend.name?.hasPrefix(newFriendName ?? "") ?? false
+        }
+        
+        self.searchedFriends = searchedFriends
+    }
     
     private func setGuideLabel() {
         if newHolidayName == "" || newFriendName == "" {
@@ -133,7 +190,7 @@ class NameInputViewController: UIViewController {
                     .bold("을(를)\n추가하시겠어요?", fontSize: 25)
                 guideLabel.attributedText = attributedString
             case .addUpcomingEventAtHome,
-                 .addFriendAtHoliday:
+                 .addHistoryAtHoliday:
                 let attributedString = NSMutableAttributedString()
                     .color(newFriendName ?? "", fontSize: 25)
                     .bold("님의\n이벤트인가요?", fontSize: 25)
@@ -158,21 +215,7 @@ class NameInputViewController: UIViewController {
         }
     }
     
-    // MARK: - @IBActions
-    
-    @IBAction func textFieldDidChanging(_ sender: UITextField) {
-        guard let entryRoute = entryRoute else { return }
-        
-        switch entryRoute {
-        case .addFriendAtFriends,
-             .addUpcomingEventAtHome:
-            newFriendName = sender.text
-        default:
-            newHolidayName = sender.text
-        }
-    }
-    
-    @IBAction func touchUpNextButton(_ sender: UIButton) {
+    private func moveToNextInputView() {
         guard let entryRoute = entryRoute else { return }
         
         switch entryRoute {
@@ -187,20 +230,40 @@ class NameInputViewController: UIViewController {
             
             viewController.entryRoute = entryRoute
             navigationController?.pushViewController(viewController, animated: true)
-        case .addFriendAtHoliday:
+        case .addHistoryAtHoliday:
             let viewController = storyboard(.input)
                 .instantiateViewController(ofType: ItemInputViewController.self)
             
+            viewController.setDatabaseManager(databaseManager)
             viewController.entryRoute = entryRoute
+
+            inputData?.name = newFriendName
+            viewController.inputData = inputData
             navigationController?.pushViewController(viewController, animated: true)
         case .addFriendAtFriends:
-            guard let friendName = newFriendName else { return }
-//            
-//            addFriendDelegate?.friends.insert(Friend(id: 11, name: friendName, phoneNumber: "01012341234", tags: nil, favorite: false), at: 1)
             dismiss(animated: true, completion: nil)
         default:
             break
         }
+    }
+    
+    // MARK: - @IBActions
+    
+    @IBAction func textFieldDidChanging(_ sender: UITextField) {
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addFriendAtFriends,
+             .addUpcomingEventAtHome,
+             .addHistoryAtHoliday:
+            newFriendName = sender.text
+        default:
+            newHolidayName = sender.text
+        }
+    }
+    
+    @IBAction func touchUpNextButton(_ sender: UIButton) {
+        moveToNextInputView()
     }
     
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
@@ -248,11 +311,16 @@ extension NameInputViewController: UITableViewDataSource {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            return 0 //holidaies.count
+            return 0
         case .addUpcomingEventAtHome,
-             .addFriendAtHoliday,
+             .addHistoryAtHoliday,
              .addFriendAtFriends:
-            return 0 //friends.count
+            if newFriendName == nil || newFriendName == "" {
+                return friends?.count ?? 0
+            } else {
+                return searchedFriends?.count ?? 0
+            }
+            
         default:
             return 0
         }
@@ -268,12 +336,18 @@ extension NameInputViewController: UITableViewDataSource {
 //            let holiday = holidaies[indexPath.row]
 //
 //            cell.textLabel?.text = holiday.title
-//        case .addUpcomingEventAtHome,
-//             .addFriendAtHoliday,
-//             .addFriendAtFriends:
-//            let friend = friends[indexPath.row]
-//
-//            cell.textLabel?.text = friend.name
+        case .addUpcomingEventAtHome,
+             .addHistoryAtHoliday,
+             .addFriendAtFriends:
+            if newFriendName == nil || newFriendName == "" {
+                let friend = friends?[indexPath.row]
+                
+                cell.textLabel?.text = friend?.name
+            } else {
+                let friend = searchedFriends?[indexPath.row]
+                cell.textLabel?.text = friend?.name
+            }
+            
         default:
             break
         }
@@ -286,28 +360,12 @@ extension NameInputViewController: UITableViewDataSource {
 
 extension NameInputViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let entryRoute = entryRoute else { return }
+        let cell = tableView.cellForRow(at: indexPath)
         
-        switch entryRoute {
-            
-// FIXME: - CoreData Issue
-//        case .addHolidayAtHome:
-//            let holiday = holidaies[indexPath.row]
-//            
-//            nameTextField.text = holiday.title
-//            newHolidayName = holiday.title
-//            
-//        case .addUpcomingEventAtHome,
-//             .addFriendAtHoliday,
-//             .addFriendAtFriends:
-//            let friend = friends[indexPath.row]
-//            
-//            nameTextField.text = friend.name
-//            newFriendName = friend.name
-        default:
-            break
-        }
+        textField.text = cell?.textLabel?.text
+        newFriendName = cell?.textLabel?.text
         
+        moveToNextInputView()
         view.endEditing(true)
     }
 }
@@ -324,7 +382,7 @@ extension NameInputViewController: UITextFieldDelegate {
         case .addHolidayAtHome:
             textField.placeholder = "졸업식"
         case .addUpcomingEventAtHome,
-             .addFriendAtHoliday,
+             .addHistoryAtHoliday,
              .addFriendAtFriends:
             textField.placeholder = "김철수"
         default:
@@ -361,5 +419,11 @@ extension NameInputViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         view.endEditing(true)
         return true
+    }
+}
+
+extension NameInputViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
     }
 }

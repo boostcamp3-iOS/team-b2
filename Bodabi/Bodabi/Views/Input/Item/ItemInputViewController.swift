@@ -23,7 +23,11 @@ class ItemInputViewController: UIViewController {
     // MARK: - Property
 
     public weak var delegate: HomeViewController?
+    
+    public var inputData: InputData?
     public var entryRoute: EntryRoute!
+    public var databaseManager: DatabaseManager!
+    
     private var originalBottomConstraint: CGFloat = 0.0
     private var originalHeightConstraint: CGFloat = 0.0
     private var item: Item = .cash(amount: "") {
@@ -43,6 +47,7 @@ class ItemInputViewController: UIViewController {
         initNextButton()
         initTapGesture()
         initTextField()
+        initData()
     }
     
     deinit {
@@ -52,6 +57,23 @@ class ItemInputViewController: UIViewController {
     }
     
     // MARK: - Initialization
+    
+    private func initData() {
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            print("addFriendAtHoliday")
+        case .addUpcomingEventAtHome:
+            print("addUpcomingEventAtHome")
+        case .addHistoryAtHoliday:
+            print("addHistoryAtHoliday")
+        case .addFriendAtFriends:
+            print("addFriendAtFriends")
+        default:
+            break
+        }
+    }
     
     private func initCollectionView() {
         collectionView.delegate = self; collectionView.dataSource = self
@@ -142,11 +164,26 @@ class ItemInputViewController: UIViewController {
     }
     
     @IBAction func touchUpNextButton(_ sender: UIButton) {
-        let viewController = storyboard(.input)
-            .instantiateViewController(ofType: DateInputViewController.self)
+        guard var inputData = inputData else { return }
         
-        viewController.entryRoute = entryRoute
-        navigationController?.pushViewController(viewController, animated: true)
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHistoryAtFriendHistory:
+            let viewController = storyboard(.input)
+                .instantiateViewController(ofType: DateInputViewController.self)
+            viewController.setDatabaseManager(databaseManager)
+            viewController.entryRoute = entryRoute
+            viewController.inputData = inputData
+            navigationController?.pushViewController(viewController, animated: true)
+            print("addHistoryAtFriendHistory")
+        case .addHistoryAtHoliday:
+            inputData.item = item
+            InputManager.write(context: databaseManager.viewContext, entryRoute: entryRoute, data: inputData)
+            dismiss(animated: true, completion: nil)
+        default:
+            break
+        }
     }
     
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
@@ -291,5 +328,11 @@ extension ItemInputViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         view.endEditing(true)
         return true
+    }
+}
+
+extension ItemInputViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
     }
 }

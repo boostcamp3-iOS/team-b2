@@ -12,6 +12,6 @@ enum EntryRoute: String {
     case addHolidayAtHome
     case addUpcomingEventAtHome
     case addHistoryAtFriendHistory
-    case addFriendAtHoliday
+    case addHistoryAtHoliday
     case addFriendAtFriends
 }

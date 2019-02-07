@@ -18,12 +18,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="40" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="s3C-h3-E04">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nb8-hE-gvH" customClass="HolidayInformationView" customModule="Bodabi" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="188"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Ml-zf-7ov">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="188"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100,000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESE-WH-pWO">
+                                        <rect key="frame" x="265" y="141.66666666666666" width="94" height="30.333333333333343"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_boxIn" translatesAutoresizingMaskIntoConstraints="NO" id="OTQ-cC-fAz">
+                                        <rect key="frame" x="232" y="144.33333333333334" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="3rc-ah-tc4"/>
+                                            <constraint firstAttribute="width" secondItem="OTQ-cC-fAz" secondAttribute="height" multiplier="1:1" id="zlL-VU-wmA"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.92244803909999995" green="0.42172273989999998" blue="0.29231581089999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="1Ml-zf-7ov" firstAttribute="bottom" secondItem="nb8-hE-gvH" secondAttribute="bottom" id="FL6-Tf-zPd"/>
+                                    <constraint firstItem="OTQ-cC-fAz" firstAttribute="centerY" secondItem="ESE-WH-pWO" secondAttribute="centerY" id="J2w-OU-pxi"/>
+                                    <constraint firstItem="ESE-WH-pWO" firstAttribute="trailing" secondItem="nb8-hE-gvH" secondAttribute="trailing" constant="-16" id="Op6-ri-baJ"/>
+                                    <constraint firstAttribute="height" constant="188" id="TJH-mw-6Bc"/>
+                                    <constraint firstItem="ESE-WH-pWO" firstAttribute="bottom" secondItem="nb8-hE-gvH" secondAttribute="bottom" constant="-16" id="Z1k-oL-9SO"/>
+                                    <constraint firstItem="1Ml-zf-7ov" firstAttribute="leading" secondItem="nb8-hE-gvH" secondAttribute="leading" id="dSx-bw-G3F"/>
+                                    <constraint firstItem="1Ml-zf-7ov" firstAttribute="top" secondItem="nb8-hE-gvH" secondAttribute="top" id="gjt-r2-yxG"/>
+                                    <constraint firstItem="1Ml-zf-7ov" firstAttribute="trailing" secondItem="nb8-hE-gvH" secondAttribute="trailing" id="mgh-ZG-ocv"/>
+                                    <constraint firstItem="OTQ-cC-fAz" firstAttribute="trailing" secondItem="ESE-WH-pWO" secondAttribute="leading" constant="-8" id="pW6-Zf-BeA"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="CUC-fN-Ldp"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="4t5-aM-naE" id="hWo-1t-Sam"/>
+                                    <outlet property="holidayImageView" destination="1Ml-zf-7ov" id="xom-1q-lde"/>
+                                    <outlet property="incomeIcon" destination="OTQ-cC-fAz" id="t0e-f7-zEu"/>
+                                    <outlet property="incomeLabel" destination="ESE-WH-pWO" id="u3f-Xy-UGO"/>
                                 </connections>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="40" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="s3C-h3-E04">
+                                <rect key="frame" x="0.0" y="188" width="375" height="590"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ni-zn-qaK">
                                 <rect key="frame" x="155" y="697" width="65" height="65"/>
@@ -39,11 +75,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="nb8-hE-gvH" firstAttribute="top" secondItem="NxS-IZ-ta3" secondAttribute="top" id="BXe-Ns-7kZ"/>
                             <constraint firstItem="1Ni-zn-qaK" firstAttribute="centerX" secondItem="NxS-IZ-ta3" secondAttribute="centerX" id="Hxv-V8-Ri8"/>
-                            <constraint firstItem="tVf-Pz-G6J" firstAttribute="bottom" secondItem="1Ni-zn-qaK" secondAttribute="bottom" constant="16" id="MB0-gJ-Gva"/>
-                            <constraint firstItem="tVf-Pz-G6J" firstAttribute="trailing" secondItem="s3C-h3-E04" secondAttribute="trailing" id="MaY-Ex-aQE"/>
-                            <constraint firstItem="s3C-h3-E04" firstAttribute="top" secondItem="NxS-IZ-ta3" secondAttribute="top" id="eXG-9F-6IE"/>
-                            <constraint firstItem="tVf-Pz-G6J" firstAttribute="bottom" secondItem="s3C-h3-E04" secondAttribute="bottom" id="h8e-2i-oi8"/>
+                            <constraint firstItem="1Ni-zn-qaK" firstAttribute="bottom" secondItem="tVf-Pz-G6J" secondAttribute="bottom" constant="-16" id="MB0-gJ-Gva"/>
+                            <constraint firstItem="s3C-h3-E04" firstAttribute="trailing" secondItem="tVf-Pz-G6J" secondAttribute="trailing" id="MaY-Ex-aQE"/>
+                            <constraint firstItem="nb8-hE-gvH" firstAttribute="bottom" secondItem="s3C-h3-E04" secondAttribute="top" id="Ovr-bx-AdG"/>
+                            <constraint firstItem="nb8-hE-gvH" firstAttribute="trailing" secondItem="tVf-Pz-G6J" secondAttribute="trailing" id="VTl-QN-uhh"/>
+                            <constraint firstItem="nb8-hE-gvH" firstAttribute="leading" secondItem="tVf-Pz-G6J" secondAttribute="leading" id="anS-K7-pbs"/>
+                            <constraint firstItem="s3C-h3-E04" firstAttribute="bottom" secondItem="tVf-Pz-G6J" secondAttribute="bottom" id="h8e-2i-oi8"/>
                             <constraint firstItem="s3C-h3-E04" firstAttribute="leading" secondItem="tVf-Pz-G6J" secondAttribute="leading" id="hEQ-Cn-XVw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tVf-Pz-G6J"/>
@@ -57,12 +96,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="floatingButton" destination="1Ni-zn-qaK" id="EFr-aN-QoW"/>
+                        <outlet property="informationView" destination="nb8-hE-gvH" id="Kxp-TA-Yl8"/>
                         <outlet property="tableView" destination="s3C-h3-E04" id="Pbb-Iq-w1t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9l3-0F-esb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1052" y="85.007496251874073"/>
+            <point key="canvasLocation" x="1052" y="84.975369458128085"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="AeC-lh-Ygi">
@@ -89,6 +129,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic_boxIn" width="474" height="440"/>
         <image name="ic_camera" width="24" height="20"/>
         <image name="ic_floatingButton" width="64" height="65"/>
     </resources>

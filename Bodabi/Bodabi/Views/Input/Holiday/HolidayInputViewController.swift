@@ -17,6 +17,7 @@ class HolidayInputViewController: UIViewController {
     
     // MARK: - Property
     
+    public var inputData: InputData = InputData()
     public weak var delegate: HomeViewController?
     public var entryRoute: EntryRoute!
     public var myHolidaies = ["+", "결혼", "생일", "돌잔치", "장례", "출산"] {

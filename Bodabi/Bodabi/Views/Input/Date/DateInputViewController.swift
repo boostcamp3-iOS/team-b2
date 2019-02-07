@@ -26,8 +26,10 @@ class DateInputViewController: UIViewController {
         return formatter
     }()
     
+    public var inputData: InputData?
     public weak var delegate: HomeViewController?
     public var entryRoute: EntryRoute!
+    private var databaseManager: DatabaseManager?
     
     // MARK: - Life Cycle
     
@@ -92,5 +94,13 @@ class DateInputViewController: UIViewController {
     
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - DatabaseManagerClient
+
+extension DateInputViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
     }
 }
