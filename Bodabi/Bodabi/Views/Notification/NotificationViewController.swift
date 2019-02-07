@@ -90,7 +90,10 @@ extension NotificationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewController = storyboard(.friendHistory)
             .instantiateViewController(ofType: FriendHistoryViewController.self)
-        navigationController?.pushViewController(viewController, animated: true)
+        if let notification = fetchedResultsController?.object(at: indexPath) {
+            viewController.friend = notification.event?.friend
+            navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func tableView (_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
