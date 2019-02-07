@@ -19,13 +19,8 @@ class ThanksFriendViewCell: UITableViewCell {
 }
 
 extension ThanksFriendViewCell: HolidayCellProtocol {
-    func bind(item: HolidaySectionItem) {
-        switch item {
-        case let .thanksFriend(name, item):
-            nameLabel.text = name
-            itemLabel.text = item
-        default:
-            return
-        }
+    func bind(friend: ThanksFriend) {
+        nameLabel.text = friend.name
+        itemLabel.text = friend.item
     }
 }

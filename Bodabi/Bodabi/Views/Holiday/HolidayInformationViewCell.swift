@@ -20,16 +20,3 @@ class HolidayInformationViewCell: UITableViewCell {
         super.awakeFromNib()
     }
 }
-
-extension HolidayInformationViewCell: HolidayCellProtocol {
-    func bind(item: HolidaySectionItem) {
-        switch item {
-        case let .information(income, image):
-            incomeLabel.text = income
-            guard let image = image else { return }
-            holidayImageView.image = image
-        default:
-            return
-        }
-    }
-}
