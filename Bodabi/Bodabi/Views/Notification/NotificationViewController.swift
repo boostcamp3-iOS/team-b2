@@ -121,6 +121,7 @@ extension NotificationViewController: DatabaseManagerClient {
 // MARK: - NSFetchedResultsControllerDelegate
 
 extension NotificationViewController: NSFetchedResultsControllerDelegate {
+    // Implementation about Early crash
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
