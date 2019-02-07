@@ -17,6 +17,7 @@ class FriendsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    internal var databaseManager: DatabaseManager?
     struct Const {
         static let bottomInset: CGFloat = 90.0
     }
@@ -113,3 +114,10 @@ extension FriendsViewController: UITableViewDataSource {
         }
     }
 }
+
+extension FriendsViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
+    }
+}
+

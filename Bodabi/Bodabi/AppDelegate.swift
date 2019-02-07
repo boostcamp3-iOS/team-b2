@@ -23,9 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         databaseManager.insertDummies()
         
         let tabBarController = window?.rootViewController
-        let navigationViewController = tabBarController?.children.first
-        let homeViewController = navigationViewController?.children.first as? HomeViewController
-        homeViewController?.databaseManager = databaseManager
+        for navigationController in tabBarController?.children ?? [] {
+            let viewController = navigationController.children.first as? DatabaseManagerClient
+            viewController?.setDatabaseManager(databaseManager)
+        }
         return true
     }
 

@@ -99,6 +99,10 @@
 		F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8485CF621FA11BB003C935C /* FriendHistory.storyboard */; };
 		F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */; };
 		F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */; };
+		F85D06F822041E5B002212E9 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F85D06F522041E5B002212E9 /* Bodabi.xcdatamodeld */; };
+		F85D06FA220662F2002212E9 /* History+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85D06F9220662F2002212E9 /* History+Extensions.swift */; };
+		F85D06FF22073558002212E9 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85D06FE22073558002212E9 /* Notification+Extensions.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -196,6 +200,10 @@
 		F8485CF621FA11BB003C935C /* FriendHistory.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FriendHistory.storyboard; sourceTree = "<group>"; };
 		F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryViewController.swift; path = Bodabi/Views/FriendHistory/FriendHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryReceiveViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistoryReceiveViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F85D06F722041E5B002212E9 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
+		F85D06F9220662F2002212E9 /* History+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+Extensions.swift"; sourceTree = "<group>"; };
+		F85D06FE22073558002212E9 /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +276,8 @@
 			children = (
 				DB2725FA22096FAA00F30CBC /* Bodabi.xcdatamodeld */,
 				F814529921FCD4BC004A2CF0 /* SettingOptions.swift */,
+				F85D06F9220662F2002212E9 /* History+Extensions.swift */,
+				F85D06FE22073558002212E9 /* Notification+Extensions.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -595,6 +605,7 @@
 				F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */,
 				DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */,
 				496683C021FAC662003FBA5B /* HomeTitleViewCell.swift in Sources */,
+				F85D06FA220662F2002212E9 /* History+Extensions.swift in Sources */,
 				4910CCA922043EB4004BDBF1 /* CalendarViewStyle.swift in Sources */,
 				4967D6642202C31300223ADF /* CalendarMonthViewController.swift in Sources */,
 				DBF4CF3621FC5418001536A8 /* NameInputViewController.swift in Sources */,
@@ -637,6 +648,7 @@
 				4967D6672202C64700223ADF /* CalendarWeekDayViewCell.swift in Sources */,
 				DBF4CF3421FC5405001536A8 /* HolidayInputViewController.swift in Sources */,
 				DB3873C722001BBC00ADF0CB /* Date+ToString.swift in Sources */,
+				F85D06FF22073558002212E9 /* Notification+Extensions.swift in Sources */,
 				DBF4CF4621FCE511001536A8 /* NSMutableAttributedString+Extension.swift in Sources */,
 				DB27260A2209AD9700F30CBC /* Item.swift in Sources */,
 				DB27263D220A042100F30CBC /* BodabiAlertController.swift in Sources */,

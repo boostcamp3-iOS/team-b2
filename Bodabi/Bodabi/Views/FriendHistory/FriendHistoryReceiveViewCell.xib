@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +15,7 @@
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendHistoryReceiveViewCell" rowHeight="87" id="338-gO-Vm9" customClass="FriendHistoryReceiveViewCell" customModule="Bodabi" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="321" height="87"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="338-gO-Vm9" id="4Sq-ZM-WvW">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="338-gO-Vm9" id="4Sq-ZM-WvW">
                 <rect key="frame" x="0.0" y="0.0" width="321" height="86.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
@@ -47,6 +48,7 @@
                         <color key="backgroundColor" red="0.93332195281982422" green="0.93332749605178833" blue="0.93334168195724487" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="hcA-0M-Dgd" firstAttribute="leading" secondItem="mJt-lG-RqE" secondAttribute="leading" constant="16" id="3gi-bj-dWn"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="DvK-lC-OJc"/>
                             <constraint firstItem="ZjE-wM-AC3" firstAttribute="centerY" secondItem="PKq-59-auJ" secondAttribute="centerY" id="ZVQ-9P-M1Z"/>
                             <constraint firstItem="hcA-0M-Dgd" firstAttribute="top" secondItem="PKq-59-auJ" secondAttribute="bottom" constant="4" id="cZ1-yJ-bOc"/>
                             <constraint firstItem="PKq-59-auJ" firstAttribute="leading" secondItem="mJt-lG-RqE" secondAttribute="leading" constant="16" id="fNQ-wi-ELq"/>
@@ -65,10 +67,11 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="mJt-lG-RqE" secondAttribute="bottom" constant="4" id="Tls-rK-WiQ"/>
-                    <constraint firstItem="mJt-lG-RqE" firstAttribute="leading" secondItem="4Sq-ZM-WvW" secondAttribute="leading" constant="24" id="dhg-Iq-kuU"/>
+                    <constraint firstItem="mJt-lG-RqE" firstAttribute="leading" secondItem="Uep-Po-y3J" secondAttribute="leading" constant="24" id="dhg-Iq-kuU"/>
                     <constraint firstItem="mJt-lG-RqE" firstAttribute="top" secondItem="4Sq-ZM-WvW" secondAttribute="top" constant="4" id="pNg-QA-Xot"/>
-                    <constraint firstAttribute="trailing" secondItem="mJt-lG-RqE" secondAttribute="trailing" constant="100" id="vsz-Pl-pi5"/>
+                    <constraint firstItem="Uep-Po-y3J" firstAttribute="trailing" secondItem="mJt-lG-RqE" secondAttribute="trailing" priority="900" constant="100" id="vsz-Pl-pi5"/>
                 </constraints>
+                <viewLayoutGuide key="safeArea" id="Uep-Po-y3J"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="dateLabel" destination="ZjE-wM-AC3" id="u91-Nd-zo7"/>
