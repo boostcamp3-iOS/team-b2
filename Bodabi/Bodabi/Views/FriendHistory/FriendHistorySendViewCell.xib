@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +15,7 @@
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendHistorySendViewCell" id="338-gO-Vm9" customClass="FriendHistorySendViewCell" customModule="Bodabi" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="321" height="88"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="338-gO-Vm9" id="4Sq-ZM-WvW">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="338-gO-Vm9" id="4Sq-ZM-WvW">
                 <rect key="frame" x="0.0" y="0.0" width="321" height="87.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
@@ -46,6 +47,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.94732159376144409" green="0.78329348564147949" blue="0.49014055728912354" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="3yx-8o-bc3"/>
                             <constraint firstItem="Zgo-ky-LZm" firstAttribute="leading" secondItem="mJt-lG-RqE" secondAttribute="leading" constant="16" id="TZd-Mk-88X"/>
                             <constraint firstItem="TOL-c3-LBX" firstAttribute="height" secondItem="GG7-Nv-0Ot" secondAttribute="height" id="g0b-82-Lyd"/>
                             <constraint firstItem="TOL-c3-LBX" firstAttribute="centerY" secondItem="GG7-Nv-0Ot" secondAttribute="centerY" id="gpl-Qd-pUb"/>
@@ -64,11 +66,12 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="mJt-lG-RqE" firstAttribute="leading" secondItem="4Sq-ZM-WvW" secondAttribute="leading" constant="100" id="PKA-z3-Ubn"/>
+                    <constraint firstItem="mJt-lG-RqE" firstAttribute="leading" secondItem="WD0-vu-wvp" secondAttribute="leading" priority="900" constant="100" id="PKA-z3-Ubn"/>
                     <constraint firstItem="mJt-lG-RqE" firstAttribute="top" secondItem="4Sq-ZM-WvW" secondAttribute="top" constant="4" id="c6k-un-2cH"/>
-                    <constraint firstAttribute="trailing" secondItem="mJt-lG-RqE" secondAttribute="trailing" constant="24" id="hCa-rN-4HC"/>
+                    <constraint firstItem="WD0-vu-wvp" firstAttribute="trailing" secondItem="mJt-lG-RqE" secondAttribute="trailing" constant="24" id="hCa-rN-4HC"/>
                     <constraint firstAttribute="bottom" secondItem="mJt-lG-RqE" secondAttribute="bottom" constant="4" id="moI-LW-1rr"/>
                 </constraints>
+                <viewLayoutGuide key="safeArea" id="WD0-vu-wvp"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="dateLabel" destination="TOL-c3-LBX" id="EM7-fD-1Pf"/>

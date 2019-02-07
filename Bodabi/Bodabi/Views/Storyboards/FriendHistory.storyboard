@@ -19,14 +19,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PUU-eK-6pG">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
                                 <color key="backgroundColor" red="0.86097449059999998" green="0.45261687039999998" blue="0.32937878370000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="89" id="4c0-lh-ZJ7"/>
-                                </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Pab-Qj-5Nt">
-                                <rect key="frame" x="0.0" y="89" width="375" height="688"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pab-Qj-5Nt">
+                                <rect key="frame" x="0.0" y="88" width="375" height="689"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="VZi-B7-pNK" id="uyX-bo-8Nd"/>
@@ -48,22 +45,29 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="HQ5-x7-pzJ" firstAttribute="centerX" secondItem="ny0-6d-gb2" secondAttribute="centerX" id="9sy-hK-Lvx"/>
+                            <constraint firstItem="1Cq-Tb-wfr" firstAttribute="top" secondItem="PUU-eK-6pG" secondAttribute="bottom" id="ADJ-ZR-3Ch"/>
                             <constraint firstAttribute="trailing" secondItem="PUU-eK-6pG" secondAttribute="trailing" id="Aqr-bX-NwA"/>
                             <constraint firstItem="PUU-eK-6pG" firstAttribute="top" secondItem="ny0-6d-gb2" secondAttribute="top" id="DgS-8X-wDQ"/>
                             <constraint firstItem="Pab-Qj-5Nt" firstAttribute="top" secondItem="PUU-eK-6pG" secondAttribute="bottom" id="N2F-yP-LsL"/>
                             <constraint firstItem="1Cq-Tb-wfr" firstAttribute="bottom" secondItem="HQ5-x7-pzJ" secondAttribute="bottom" constant="16" id="SVX-HS-SvW"/>
-                            <constraint firstItem="Pab-Qj-5Nt" firstAttribute="leading" secondItem="1Cq-Tb-wfr" secondAttribute="leading" id="fjA-Ge-bOw"/>
-                            <constraint firstItem="1Cq-Tb-wfr" firstAttribute="trailing" secondItem="Pab-Qj-5Nt" secondAttribute="trailing" id="iHN-pi-RZG"/>
+                            <constraint firstItem="Pab-Qj-5Nt" firstAttribute="leading" secondItem="ny0-6d-gb2" secondAttribute="leading" id="fjA-Ge-bOw"/>
+                            <constraint firstAttribute="trailing" secondItem="Pab-Qj-5Nt" secondAttribute="trailing" id="iHN-pi-RZG"/>
                             <constraint firstItem="PUU-eK-6pG" firstAttribute="leading" secondItem="ny0-6d-gb2" secondAttribute="leading" id="kdk-TG-Dcc"/>
                             <constraint firstItem="1Cq-Tb-wfr" firstAttribute="bottom" secondItem="Pab-Qj-5Nt" secondAttribute="bottom" constant="1" id="nNK-cT-0nq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1Cq-Tb-wfr"/>
                     </view>
                     <navigationItem key="navigationItem" title="김철수" id="mId-4k-HJh">
-                        <barButtonItem key="rightBarButtonItem" image="WhiteStar" style="done" id="G2K-1J-XPT"/>
+                        <barButtonItem key="rightBarButtonItem" image="WhiteStar" style="done" id="G2K-1J-XPT">
+                            <connections>
+                                <action selector="touchUpFavoriteButton:" destination="VZi-B7-pNK" id="395-Vv-hPu"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="favoriteButton" destination="G2K-1J-XPT" id="GOr-qz-fes"/>
                         <outlet property="floatingButton" destination="HQ5-x7-pzJ" id="7z1-8a-gVe"/>
+                        <outlet property="navigationBarView" destination="PUU-eK-6pG" id="v9E-hI-da0"/>
                         <outlet property="tableView" destination="Pab-Qj-5Nt" id="wDQ-tg-3bv"/>
                     </connections>
                 </viewController>
