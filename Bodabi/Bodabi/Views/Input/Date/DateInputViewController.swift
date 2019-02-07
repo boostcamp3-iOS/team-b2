@@ -27,9 +27,13 @@ class DateInputViewController: UIViewController {
     }()
     
     public var inputData: InputData?
-    public weak var delegate: HomeViewController?
     public var entryRoute: EntryRoute!
-    private var databaseManager: DatabaseManager?
+    private var databaseManager: DatabaseManager!
+    private var date: Date? {
+        didSet {
+            setNextButton()
+        }
+    }
     
     // MARK: - Life Cycle
     
@@ -54,7 +58,7 @@ class DateInputViewController: UIViewController {
         navigationController?.navigationBar.clear()
         
         let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
-        backButton.tintColor = #colorLiteral(red: 0.9224480391, green: 0.4217227399, blue: 0.2923158109, alpha: 1)
+        backButton.tintColor = UIColor.mainColor
         navigationItem.leftBarButtonItem = backButton
     }
     
@@ -78,11 +82,14 @@ class DateInputViewController: UIViewController {
         let dateString: String = self.dateFormatter.string(from: holidayDate)
         
         dateLabel.text = dateString
-
-        setNextButton()
+        date = holidayDate
     }
     
     @IBAction func touchUpNextButton(_ sender: UIButton) {
+        guard var inputData = inputData else { return }
+        
+        inputData.date = date
+        InputManager.write(context: databaseManager.viewContext, entryRoute: entryRoute, data: inputData)
         dismiss(animated: true, completion: nil)
     }
     

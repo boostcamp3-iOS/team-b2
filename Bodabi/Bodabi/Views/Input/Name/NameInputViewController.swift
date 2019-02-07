@@ -222,7 +222,7 @@ class NameInputViewController: UIViewController {
         case .addHolidayAtHome:
             guard let newHoliday = newHolidayName else { return }
             
-            addHolidayDelegate?.myHolidaies.insert(newHoliday, at: 1)
+//            addHolidayDelegate?.myHolidaies.insert(newHoliday, at: 1)
             dismiss(animated: true, completion: nil)
         case .addUpcomingEventAtHome:
             let viewController = storyboard(.input)

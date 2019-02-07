@@ -34,7 +34,7 @@ struct InputManager {
             history.item = data.item?.value
             history.holiday = data.holiday
             history.date = data.date
-            history.isTaken = true
+            history.isTaken = entryRoute == .addHistoryAtHoliday ? true : false
         case .addFriendAtFriends:
             let friend: Friend = Friend(context: context)
             friend.name = data.name

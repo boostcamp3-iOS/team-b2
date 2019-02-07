@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class HolidayInputViewController: UIViewController {
     
@@ -17,15 +18,16 @@ class HolidayInputViewController: UIViewController {
     
     // MARK: - Property
     
-    public var inputData: InputData = InputData()
-    public weak var delegate: HomeViewController?
+    public var inputData: InputData?
     public var entryRoute: EntryRoute!
-    public var myHolidaies = ["+", "결혼", "생일", "돌잔치", "장례", "출산"] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+//    public var myHolidaies = ["+", "결혼", "생일", "돌잔치", "장례", "출산"] {
+//        didSet {
+//            tableView.reloadData()
+//        }
+//    }
+    private var myHolidaies: [Holiday]?
     private var selectedHoliday: String?
+    private var databaseManager: DatabaseManager!
     
     // MARK: - Life Cycle
     
@@ -35,6 +37,25 @@ class HolidayInputViewController: UIViewController {
         initTableView()
         initGuideLabel()
         initNavigationBar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        fetchHoliday()
+    }
+    
+    private func fetchHoliday() {
+        let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
+        
+        do {
+            if let result: [Holiday] = try databaseManager?.viewContext.fetch(request) {
+                myHolidaies = result
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        tableView.reloadData()
     }
     
     // MARK: - Initialization
@@ -108,6 +129,9 @@ class HolidayInputViewController: UIViewController {
                     .instantiateViewController(ofType: ItemInputViewController.self)
                 
                 viewController.entryRoute = entryRoute
+                inputData?.holiday = selectedHoliday
+                viewController.inputData = inputData
+                viewController.setDatabaseManager(databaseManager)
                 navigationController?.pushViewController(viewController, animated: true)
             default:
                 break
@@ -124,17 +148,24 @@ class HolidayInputViewController: UIViewController {
 
 extension HolidayInputViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myHolidaies.count
+        guard let myHolidaies = myHolidaies else {
+            return 1
+        }
+        return 1 + myHolidaies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(HolidayInputViewCell.self, for: indexPath)
         
-        cell.holidaybutton.setTitle(myHolidaies[indexPath.row], for: .normal)
-        cell.holidaybutton.addTarget(self, action: #selector(touchUpHoildayButton(_:)), for: .touchUpInside)
         if indexPath.row == 0 {
             cell.holidaybutton.backgroundColor = UIColor.offColor
+            cell.holidaybutton.setTitle("+", for: .normal)
+        } else {
+            cell.holidaybutton.setTitle(myHolidaies?[indexPath.row - 1].title, for: .normal)
         }
+        
+        cell.holidaybutton.addTarget(self, action: #selector(touchUpHoildayButton(_:)), for: .touchUpInside)
+        
         return cell
     }
 }
@@ -143,4 +174,11 @@ extension HolidayInputViewController: UITableViewDataSource {
 
 extension HolidayInputViewController: UITableViewDelegate {
     
+}
+
+// MARK: -
+extension HolidayInputViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
+    }
 }
