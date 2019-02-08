@@ -14,11 +14,11 @@ class HolidayViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-//    public var holiday: Holiday? {
-//        didSet {
-//            configure()
-//        }
-//    }
+    public var holiday: Holiday? {
+        didSet {
+            configure()
+        }
+    }
    
     // FIXME: - Data dummy image
     let imageOfHoliday: [(holiday: String, image: UIImage)] = [
@@ -31,16 +31,22 @@ class HolidayViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        holidayImageView.image = nil
+    }
 
     private func configure() {
-//        titleLabel.text = holiday?.title
-        dateLabel.text = Date().toString(of: .year)
+        titleLabel.text = holiday?.title
+        dateLabel.text = holiday?.date?.toString(of: .year)
         
-//        imageOfHoliday.forEach {
-//            if holiday?.title.contains($0.holiday) ?? true {
-//                holidayImageView.image = $0.image
-//                return
-//            }
-//        }
+        imageOfHoliday.forEach {
+            if holiday?.title?.contains($0.holiday) ?? true {
+                holidayImageView.image = $0.image
+                return
+            }
+        }
     }
 }

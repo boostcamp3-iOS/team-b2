@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         databaseManager.load()
-        databaseManager.deleteAll()
-        databaseManager.insertDummies()
+//        databaseManager.deleteAll()
+//        databaseManager.insertDummies()
         
         let tabBarController = window?.rootViewController
         for navigationController in tabBarController?.children ?? [] {

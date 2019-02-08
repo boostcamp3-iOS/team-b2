@@ -14,25 +14,14 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     private var databaseManager: DatabaseManager!
-//    private var holidays: [Holiday] = Holiday.dummies {
-//        didSet {
-//            tableView
-//                .reloadSections(IndexSet(integer: Section.holidays.rawValue),
-//                                with: .automatic)
-//        }
-//    }
-//    private var events: [Event] = Event.dummies {
-//        didSet {
-//            tableView
-//                .reloadSections(IndexSet(integer: Section.friendEvents.rawValue),
-//                                with: .automatic)
-//        }
-//    }
+
     var addedHoliday: String? {
         didSet {
             print(addedHoliday ?? "")
         }
     }
+    private var events: [Event]?
+    private var holidays: [Holiday]?
     
     enum Section: Int, CaseIterable {
         case holidaysHeader
@@ -57,12 +46,15 @@ class HomeViewController: UIViewController {
         
         setUpUI()
         initTableView()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setUpUI()
+        fetchEvent()
+        fetchHoliday()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -78,6 +70,31 @@ class HomeViewController: UIViewController {
     
     private func getBackUI() {
         navigationController?.navigationBar.isHidden = false
+    }
+    
+    private func fetchEvent() {
+        let request: NSFetchRequest<Event> = Event.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+
+        let predicate: NSPredicate = NSPredicate(format: "date >= %@", NSDate())
+        request.predicate = predicate
+
+        if let result = try? databaseManager.viewContext.fetch(request) {
+            events = result
+            tableView.reloadSections(IndexSet(integer: Section.friendEvents.rawValue), with: .none)
+        }
+    }
+    
+    private func fetchHoliday() {
+        let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
+        request.sortDescriptors = [sortDescriptor]
+        
+        if let result = try? databaseManager.viewContext.fetch(request) {
+            holidays = result
+            tableView.reloadSections(IndexSet(integer: Section.holidays.rawValue), with: .none)
+        }
     }
     
     @objc func touchUpAddHolidayButton(_ sender: UIButton) {
@@ -113,16 +130,13 @@ extension HomeViewController: UITableViewDelegate {
         guard let section = Section(rawValue: indexPath.section) else { return }
         switch section {
         case .friendEvents:
+            let event = events?[indexPath.row]
+            let friend = event?.friend
+            
             let viewController = storyboard(.friendHistory)
                 .instantiateViewController(ofType: FriendHistoryViewController.self)
-            
-            let request: NSFetchRequest<Friend> = Friend.fetchRequest()
-            request.predicate = NSPredicate(format: "name = %@", "박영희")
-            if let friend = try? databaseManager?.viewContext.fetch(request),
-                let databaseManager = databaseManager {
-                viewController.setDatabaseManager(databaseManager)
-                viewController.friend = friend?.first
-            }
+            viewController.setDatabaseManager(databaseManager)
+            viewController.friend = friend
             
             navigationController?.pushViewController(viewController, animated: true)
         default:
@@ -141,7 +155,7 @@ extension HomeViewController: UITableViewDataSource {
             return 1
         }
         
-        return 10
+        return events?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -161,11 +175,11 @@ extension HomeViewController: UITableViewDataSource {
         case .holidays:
             let cell = tableView.dequeue(MyHolidaysViewCell.self, for: indexPath)
             cell.collectionView.delegate = self
-//            cell.holidays = holidays
+            cell.holidays = holidays
             return cell
         case .friendEvents:
             let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
-//            cell.event = events[indexPath.row]
+            cell.event = events?[indexPath.row]
             return cell
         }
     }
@@ -175,15 +189,8 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let viewController = storyboard(.holiday)
             .instantiateViewController(ofType: HolidayViewController.self)
-        
-        if let databaseManager = databaseManager {
-            let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
-            request.predicate = NSPredicate(format: "title = %@", "내 결혼식")
-            let result = try? databaseManager.viewContext.fetch(request)
-            viewController.setDatabaseManager(databaseManager)
-            viewController.holiday = result?.first
-        }
-        
+        viewController.setDatabaseManager(databaseManager)
+        viewController.holiday = holidays?[indexPath.item]
         viewController.entryRoute = .addHistoryAtFriendHistory
         navigationController?.pushViewController(viewController, animated: true)
     }
@@ -194,4 +201,3 @@ extension HomeViewController: DatabaseManagerClient {
         databaseManager = manager
     }
 }
-

@@ -6,27 +6,25 @@
 //  Copyright © 2019년 LeeHyeJin. All rights reserved.
 //
 
+import CoreData
 import UIKit
 
 class FriendsViewController: UIViewController {
+    
+    // MARK: - IBOutlet
 
     @IBOutlet weak var searchBar: UISearchBar!
-    
-    @IBOutlet var headerView: UIView!
-    @IBOutlet weak var headerTitleLabel: UILabel!
-    
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: - Property
+    
     private var databaseManager: DatabaseManager!
+    private var friends: [Friend]?
+    private var favoriteFriends: [Friend]?
+    
     struct Const {
         static let bottomInset: CGFloat = 90.0
     }
-    
-//    var friends: [Friend] = Friend.dummies {
-//        didSet {
-//            tableView.reloadData()
-//        }
-//    }
     
     enum Section: Int, CaseIterable {
         case favoriteHeader
@@ -46,21 +44,23 @@ class FriendsViewController: UIViewController {
         }
     }
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setUpUI()
+        initNavigationBar()
+        initSearchBar()
         initTableView()
     }
     
-    private func setUpUI() {
-        // navigation bar line clear
-        // Please make 'isTranslucent' false in storyboard
-        navigationController?.navigationBar.shadowImage = UIImage()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        searchBar.isTranslucent = false
-        searchBar.backgroundImage = UIImage()
+        fetchFriend()
     }
+    
+    // MARK: - IBAction
     
     @IBAction func touchUpAddFriendButton(_ sender: UIButton) {
         let viewController = storyboard(.input)
@@ -72,9 +72,20 @@ class FriendsViewController: UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
         self.present(navController, animated: true, completion: nil)
     }
-}
-
-extension FriendsViewController: UITableViewDelegate {
+    
+    // MARK: - Initialization
+    
+    private func initNavigationBar() {
+        // navigation bar line clear
+        // Please make 'isTranslucent' false in storyboard
+        navigationController?.navigationBar.shadowImage = UIImage()
+    }
+    
+    private func initSearchBar() {
+        searchBar.isTranslucent = false
+        searchBar.backgroundImage = UIImage()
+    }
+    
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
         
@@ -83,7 +94,38 @@ extension FriendsViewController: UITableViewDelegate {
         
         tableView.contentInset.bottom = Const.bottomInset
     }
+    
+    private func fetchFriend() {
+        let request: NSFetchRequest<Friend> = Friend.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+        
+        if let result = try? databaseManager.viewContext.fetch(request) {
+            friends = result.filter { $0.favorite == false }
+            favoriteFriends = result.filter { $0.favorite == true }
+            tableView.reloadData()
+        }
+    }
 }
+
+// MARK: - UITableViewDelegate
+
+extension FriendsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = Section(rawValue: indexPath.section),
+            (section == .favorite || section == .friends) else { return }
+        let viewController = storyboard(.friendHistory)
+            .instantiateViewController(ofType: FriendHistoryViewController.self)
+        viewController.setDatabaseManager(databaseManager)
+        
+        let friend = section == .favorite ? favoriteFriends?[indexPath.row] : friends?[indexPath.row]
+        
+        viewController.friend = friend
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+// MARK: - UITableViewDataSource
 
 extension FriendsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -93,8 +135,10 @@ extension FriendsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let section = Section(rawValue: section),
             (section == .favorite || section == .friends) else { return 1 }
-//        return friends.count
-        return 0
+        if section == .favorite {
+            return favoriteFriends?.count ?? 0
+        }
+        return friends?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -105,12 +149,17 @@ extension FriendsViewController: UITableViewDataSource {
             let cell = tableView.dequeue(FriendsHeaderViewCell.self, for: indexPath)
             cell.type = section
             return cell
-        case .favorite,
-             .friends:
+        case .favorite:
             let cell = tableView.dequeue(FriendViewCell.self, for: indexPath)
-//            let friend = friends[indexPath.row]
-//            cell.nameLabel.text = friend.name
-//            cell.configure(line: indexPath.row == (friends.count - 1))
+            guard let friends = favoriteFriends else { return UITableViewCell() }
+            cell.nameLabel.text = friends[indexPath.row].name
+            cell.configure(line: indexPath.row == (friends.count - 1))
+            return cell
+        case .friends:
+            let cell = tableView.dequeue(FriendViewCell.self, for: indexPath)
+            guard let friends = friends else { return UITableViewCell() }
+            cell.nameLabel.text = friends[indexPath.row].name
+            cell.configure(line: indexPath.row == (friends.count - 1))
             return cell
         }
     }

@@ -10,11 +10,15 @@ import UIKit
 
 class FriendsHeaderViewCell: UITableViewCell {
 
+    // MARK: - IBOutlet
+    
     @IBOutlet weak var titleLabel: UILabel!
+    
+    // MARK: - Property
     
     public var type: FriendsViewController.Section = .favoriteHeader {
         didSet {
-            setUpUI()
+            initTitle()
         }
     }
     
@@ -26,7 +30,9 @@ class FriendsHeaderViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    private func setUpUI() {
+    // MARK: - Initialization
+    
+    private func initTitle() {
         titleLabel.text = type.title
     }
 }

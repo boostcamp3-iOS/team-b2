@@ -146,7 +146,7 @@ class DatabaseManager {
     }
 
     func insertHolidays() {
-        let titleList = ["내 결혼식", "어머니 장례식", "동생 결혼식", "내 생일", "아버지 환갑잔치"]
+        let titleList = ["내 결혼식", "어머니 장례", "동생 결혼식", "내 생일", "아버지 환갑잔치"]
         let dateList = ["20161210", "20180105", "20170724", "19921203", "20120410"]
         let numberOfRows: Int = titleList.count
         
@@ -195,7 +195,7 @@ class DatabaseManager {
     
     func insertEvents() {
         let titleList = ["결혼", "결혼", "졸업식", "생일", "입학식", "개업식", "생일", "생일", "결혼", "결혼"]
-        let dateList = ["20181210", "20180105", "20180724", "20181203", "20190121", "20190125", "20190220", "20190315", "20190505", "20190710"]
+        let dateList = ["20181210", "20190305", "20180724", "20181203", "20190121", "20190125", "20190220", "20190315", "20190505", "20190710"]
         let friendIdList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         let numberOfRows: Int = titleList.count
         

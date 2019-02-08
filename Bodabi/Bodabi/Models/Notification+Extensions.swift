@@ -12,16 +12,10 @@ extension Notification {
     
     // MARK: - Helper
     
-    var dday: Int {
-        if let date = self.event?.date {
-            return date.offsetFrom(date: Date())
-        }
-        return 0
-    }
-    
     var sentence: String {
         if let name = self.event?.friend?.name,
-            let title = self.event?.title?.addObjectSuffix() {
+            let title = self.event?.title?.addObjectSuffix(),
+            let dday = self.event?.dday {
             switch dday {
             case 0:
                 return "\(name)님의 지난 \(title) 축하해주셨나요?"
