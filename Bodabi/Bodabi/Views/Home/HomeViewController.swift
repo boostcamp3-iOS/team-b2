@@ -103,6 +103,8 @@ class HomeViewController: UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
     
         viewController.entryRoute = .addHolidayAtHome
+        viewController.setDatabaseManager(databaseManager)
+        viewController.inputData = InputData()
         present(navController, animated: true, completion: nil)
     }
     

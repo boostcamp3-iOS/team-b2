@@ -149,7 +149,33 @@ extension HolidayViewController: UITableViewDataSource {
 
 extension HolidayViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
+        let offsetY = scrollView.contentOffset.y
+        print(offsetY)
+        
+        let width = view.frame.size.width
+        guard let navHeight = navigationController?.navigationBar.frame.size.height else { return }
+        
+        // 위로 스크롤
+        if offsetY > 0 {
+            var height = informationView.frame.height - offsetY
+            
+            if height <= navHeight {
+                height = navHeight
+            }
+            
+            tableView.frame.origin.y = height
+            informationView.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        } else {
+            // 아래로 스크롤
+            var height = informationView.frame.height - offsetY
+            
+            if height >= 250 {
+                height = 250
+            }
+            
+            tableView.frame.origin.y = height
+            informationView.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
