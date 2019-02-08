@@ -53,13 +53,14 @@ class FriendHistoryViewController: UIViewController {
             sections.append(.history(items: historyItems))
         }
     }
-    private var databaseManager: DatabaseManager?
+    private var databaseManager: DatabaseManager!
     private struct Const {
         static let bottomInset: CGFloat = 90.0
     }
     private var isSortDescending: Bool = true
     private var sections: [FriendHistorySection] = []
     
+    private var inputData: InputData = InputData()
     
     // MARK: - Life Cycle
     
@@ -115,6 +116,9 @@ class FriendHistoryViewController: UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
         
         viewController.entryRoute = .addHistoryAtFriendHistory
+        viewController.setDatabaseManager(databaseManager)
+        inputData.name = friend?.name
+        viewController.inputData = inputData
         present(navController, animated: true, completion: nil)
     }
     

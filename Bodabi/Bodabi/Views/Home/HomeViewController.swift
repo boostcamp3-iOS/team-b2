@@ -85,7 +85,6 @@ class HomeViewController: UIViewController {
             .instantiateViewController(ofType: HolidayInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
     
-        viewController.delegate = self
         viewController.entryRoute = .addHolidayAtHome
         present(navController, animated: true, completion: nil)
     }

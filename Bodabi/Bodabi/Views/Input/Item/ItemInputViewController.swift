@@ -47,7 +47,6 @@ class ItemInputViewController: UIViewController {
         initNextButton()
         initTapGesture()
         initTextField()
-        initData()
     }
     
     deinit {
@@ -57,23 +56,6 @@ class ItemInputViewController: UIViewController {
     }
     
     // MARK: - Initialization
-    
-    private func initData() {
-        guard let entryRoute = entryRoute else { return }
-        
-        switch entryRoute {
-        case .addHolidayAtHome:
-            print("addFriendAtHoliday")
-        case .addUpcomingEventAtHome:
-            print("addUpcomingEventAtHome")
-        case .addHistoryAtHoliday:
-            print("addHistoryAtHoliday")
-        case .addFriendAtFriends:
-            print("addFriendAtFriends")
-        default:
-            break
-        }
-    }
     
     private func initCollectionView() {
         collectionView.delegate = self; collectionView.dataSource = self
@@ -102,7 +84,7 @@ class ItemInputViewController: UIViewController {
         navigationController?.navigationBar.clear()
         
         let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
-        
+        backButton.tintColor = UIColor.mainColor
         navigationItem.leftBarButtonItem = backButton
     }
     
@@ -174,9 +156,9 @@ class ItemInputViewController: UIViewController {
                 .instantiateViewController(ofType: DateInputViewController.self)
             viewController.setDatabaseManager(databaseManager)
             viewController.entryRoute = entryRoute
+            inputData.item = item
             viewController.inputData = inputData
             navigationController?.pushViewController(viewController, animated: true)
-            print("addHistoryAtFriendHistory")
         case .addHistoryAtHoliday:
             inputData.item = item
             InputManager.write(context: databaseManager.viewContext, entryRoute: entryRoute, data: inputData)
