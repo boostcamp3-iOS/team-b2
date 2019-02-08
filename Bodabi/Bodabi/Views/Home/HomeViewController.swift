@@ -13,7 +13,7 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    internal var databaseManager: DatabaseManager?
+    private var databaseManager: DatabaseManager!
 //    private var holidays: [Holiday] = Holiday.dummies {
 //        didSet {
 //            tableView
@@ -57,10 +57,6 @@ class HomeViewController: UIViewController {
         
         setUpUI()
         initTableView()
-        
-        let cloudManager = CloudManager()
-        
-        cloudManager.save()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,6 +95,8 @@ class HomeViewController: UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
         
         viewController.entryRoute = .addUpcomingEventAtHome
+        viewController.setDatabaseManager(databaseManager)
+        viewController.inputData = InputData()
         present(navController, animated: true, completion: nil)
     }
 }

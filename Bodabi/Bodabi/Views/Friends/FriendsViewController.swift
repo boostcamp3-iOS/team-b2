@@ -67,7 +67,7 @@ class FriendsViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         
         viewController.entryRoute = .addFriendAtFriends
-        viewController.addFriendDelegate = self
+//        viewController.addFriendDelegate = self
         let navController = UINavigationController(rootViewController: viewController)
         self.present(navController, animated: true, completion: nil)
     }

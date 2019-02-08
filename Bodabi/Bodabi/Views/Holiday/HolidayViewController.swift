@@ -15,23 +15,27 @@ class HolidayViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var floatingButton: UIButton!
+    @IBOutlet weak var holidayImageView: UIImageView!
     @IBOutlet weak var informationView: UIView!
     
     // MARK: - Properties
     
-    public var databaseManager: DatabaseManager?
     public var entryRoute: EntryRoute!
-
+    public var holiday: Holiday?
+    
     private struct Const {
         static let bottomInset: CGFloat = 90.0
     }
     
+    private var databaseManager: DatabaseManager!
     private let picker = UIImagePickerController()
-    private var holidayImage: UIImage?
+    private var holidayImage: UIImage? {
+        didSet {
+            holidayImageView.image = holidayImage
+        }
+    }
     private var thanksFriends: [ThanksFriend]? = []
     private var originalBottomConstraint: CGFloat = 0.0
-    
-    public var holiday: Holiday?
     
     // MARK: - Lifecycle Method
     
@@ -43,8 +47,9 @@ class HolidayViewController: UIViewController {
         initTableView()
         initNavigationBar()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchHistory()
     }
     
@@ -144,21 +149,7 @@ extension HolidayViewController: UITableViewDataSource {
 
 extension HolidayViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let offsetY = scrollView.contentOffset.y
-//        guard scrollView.contentOffset.y > 0 else {
-//            scrollView.contentOffset.y = 0
-//            return
-//        }
-        
-//        bottomConstriant.constant = -50
-//        informationView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-//        heightConstriant.constant = 0
-        
-//        UIView.animate(withDuration: 0.5) {
-//            self.view.layoutIfNeeded()
-//        }
-        
-        
+
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
