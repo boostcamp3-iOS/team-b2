@@ -48,6 +48,8 @@
 		49C0851421FD979A0060B02C /* FriendViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C0851221FD979A0060B02C /* FriendViewCell.xib */; };
 		49C0851721FDA8A60060B02C /* FriendsHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0851521FDA8A60060B02C /* FriendsHeaderViewCell.swift */; };
 		49C0851821FDA8A60060B02C /* FriendsHeaderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C0851621FDA8A60060B02C /* FriendsHeaderViewCell.xib */; };
+		DB147035220D4363000EA1D7 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB147034220D4363000EA1D7 /* CloudKit.framework */; };
+		DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB147036220D4707000EA1D7 /* CloudManager.swift */; };
 		DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */; };
 		DB2726022209740700F30CBC /* ThanksFriendHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */; };
 		DB27260422097D5000F30CBC /* HolidayInformationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB27260322097D5000F30CBC /* HolidayInformationViewCell.xib */; };
@@ -150,6 +152,9 @@
 		49C0851221FD979A0060B02C /* FriendViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendViewCell.xib; sourceTree = "<group>"; };
 		49C0851521FDA8A60060B02C /* FriendsHeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsHeaderViewCell.swift; sourceTree = "<group>"; };
 		49C0851621FDA8A60060B02C /* FriendsHeaderViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendsHeaderViewCell.xib; sourceTree = "<group>"; };
+		DB147032220D426A000EA1D7 /* Bodabi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bodabi.entitlements; sourceTree = "<group>"; };
+		DB147034220D4363000EA1D7 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		DB147036220D4707000EA1D7 /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
 		DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanksFriendHeaderView.swift; sourceTree = "<group>"; };
 		DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThanksFriendHeaderView.xib; sourceTree = "<group>"; };
 		DB27260322097D5000F30CBC /* HolidayInformationViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HolidayInformationViewCell.xib; sourceTree = "<group>"; };
@@ -213,6 +218,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB147035220D4363000EA1D7 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +245,7 @@
 			children = (
 				4998126C21F9D7B4000DB7B2 /* Bodabi */,
 				4998126B21F9D7B4000DB7B2 /* Products */,
+				DB147033220D4363000EA1D7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -253,6 +260,7 @@
 		4998126C21F9D7B4000DB7B2 /* Bodabi */ = {
 			isa = PBXGroup;
 			children = (
+				DB147032220D426A000EA1D7 /* Bodabi.entitlements */,
 				F80C28AB22040EDB0032DE3E /* Services */,
 				4998126D21F9D7B4000DB7B2 /* AppDelegate.swift */,
 				4998128521F9D854000DB7B2 /* Views */,
@@ -347,6 +355,14 @@
 				4967D6612202C1B000223ADF /* UIView+ParentViewController.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DB147033220D4363000EA1D7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB147034220D4363000EA1D7 /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		DB38739B21FEDAD500ADF0CB /* Holiday */ = {
@@ -488,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				F80C28AC22040FA00032DE3E /* Database */,
+				DB147036220D4707000EA1D7 /* CloudManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -532,6 +549,14 @@
 				TargetAttributes = {
 					4998126921F9D7B4000DB7B2 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -633,6 +658,7 @@
 				F814529721FCCF6B004A2CF0 /* SettingViewCell.swift in Sources */,
 				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,
 				DB3873CD22017E5300ADF0CB /* ItemViewCell.swift in Sources */,
+				DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */,
 				DB272663220BCA4200F30CBC /* HolidayInformationView.swift in Sources */,
 				DB3873C922006D3900ADF0CB /* UITextField+BottomLine.swift in Sources */,
 				F80C28AE22040FDB0032DE3E /* DatabaseManager.swift in Sources */,
@@ -812,6 +838,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Bodabi/Bodabi.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = Y6J9HAPEME;
 				INFOPLIST_FILE = "$(SRCROOT)/Bodabi/Supporting Files/Info.plist";
@@ -831,6 +858,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Bodabi/Bodabi.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = Y6J9HAPEME;
 				INFOPLIST_FILE = "$(SRCROOT)/Bodabi/Supporting Files/Info.plist";

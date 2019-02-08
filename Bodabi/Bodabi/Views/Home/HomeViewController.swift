@@ -57,6 +57,10 @@ class HomeViewController: UIViewController {
         
         setUpUI()
         initTableView()
+        
+        let cloudManager = CloudManager()
+        
+        cloudManager.save()
     }
     
     override func viewWillAppear(_ animated: Bool) {
