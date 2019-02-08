@@ -17,7 +17,7 @@ class FriendsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    internal var databaseManager: DatabaseManager?
+    private var databaseManager: DatabaseManager!
     struct Const {
         static let bottomInset: CGFloat = 90.0
     }
@@ -67,7 +67,8 @@ class FriendsViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         
         viewController.entryRoute = .addFriendAtFriends
-//        viewController.addFriendDelegate = self
+        viewController.setDatabaseManager(databaseManager)
+        viewController.inputData = InputData()
         let navController = UINavigationController(rootViewController: viewController)
         self.present(navController, animated: true, completion: nil)
     }

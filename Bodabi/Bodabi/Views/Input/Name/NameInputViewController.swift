@@ -86,10 +86,9 @@ class NameInputViewController: UIViewController {
         case .addHolidayAtHome:
             print("addFriendAtHoliday")
         case .addUpcomingEventAtHome,
-             .addHistoryAtHoliday:
+             .addHistoryAtHoliday,
+             .addFriendAtFriends:
             fetchFriend()
-        case .addFriendAtFriends:
-            print("addFriendAtFriends")
         default:
             break
         }
@@ -237,6 +236,10 @@ class NameInputViewController: UIViewController {
             viewController.inputData = inputData
             navigationController?.pushViewController(viewController, animated: true)
         case .addFriendAtFriends:
+            inputData?.name = newFriendName
+            
+            guard let inputData = inputData else { return }
+            InputManager.write(context: databaseManager.viewContext, entryRoute: entryRoute, data: inputData)
             dismiss(animated: true, completion: nil)
         default:
             break
@@ -328,10 +331,6 @@ extension NameInputViewController: UITableViewDataSource {
         guard let entryRoute = entryRoute else { return UITableViewCell() }
         
         switch entryRoute {
-//        case .addHolidayAtHome:
-//            let holiday = holidaies[indexPath.row]
-//
-//            cell.textLabel?.text = holiday.title
         case .addUpcomingEventAtHome,
              .addHistoryAtHoliday,
              .addFriendAtFriends:
@@ -391,6 +390,7 @@ extension NameInputViewController: UITextFieldDelegate {
         
         switch entryRoute {
         case .addFriendAtFriends,
+             .addHistoryAtHoliday,
              .addUpcomingEventAtHome:
             newFriendName = textField.text
         default:
