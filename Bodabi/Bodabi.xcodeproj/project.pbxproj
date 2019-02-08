@@ -276,7 +276,7 @@
 		4998128421F9D853000DB7B2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				DBABB18C220C00BF00B808F6 /* Bodabi.xcdatamodeld */,
+				4910CCB7220D0F29004BDBF1 /* Bodabi.xcdatamodeld */,
 				F814529921FCD4BC004A2CF0 /* SettingOptions.swift */,
 				F85D06F9220662F2002212E9 /* History+Extensions.swift */,
 				F85D06FE22073558002212E9 /* Notification+Extensions.swift */,
@@ -641,6 +641,7 @@
 				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
 				F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */,
+				4910CCB9220D0F29004BDBF1 /* Bodabi.xcdatamodeld in Sources */,
 				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,
 				49C0850A21FAF6AA0060B02C /* UIView+Animation.swift in Sources */,
 				F80C28A822030D500032DE3E /* FriendHistoryHeaderView.swift in Sources */,
@@ -870,12 +871,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		DBABB18C220C00BF00B808F6 /* Bodabi.xcdatamodeld */ = {
+		4910CCB7220D0F29004BDBF1 /* Bodabi.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				DBABB18D220C00BF00B808F6 /* Bodabi.xcdatamodel */,
+				4910CCB8220D0F29004BDBF1 /* Bodabi.xcdatamodel */,
 			);
-			currentVersion = DBABB18D220C00BF00B808F6 /* Bodabi.xcdatamodel */;
+			currentVersion = 4910CCB8220D0F29004BDBF1 /* Bodabi.xcdatamodel */;
 			path = Bodabi.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
