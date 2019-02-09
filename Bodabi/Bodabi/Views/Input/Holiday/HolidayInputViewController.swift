@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+//import CoreData
 
 class HolidayInputViewController: UIViewController {
     
@@ -20,9 +20,10 @@ class HolidayInputViewController: UIViewController {
     
     public var inputData: InputData?
     public var entryRoute: EntryRoute!
-    public var myHolidaies = ["+", "결혼", "생일", "돌잔치", "장례", "출산"] {
+    public var myHolidaies: [String]? {
         didSet {
             tableView.reloadData()
+            UserDefaults.standard.set(myHolidaies, forKey: "defaultHoliday")
         }
     }
     
@@ -37,6 +38,10 @@ class HolidayInputViewController: UIViewController {
         initTableView()
         initGuideLabel()
         initNavigationBar()
+        
+        if let defaultHoliday = UserDefaults.standard.array(forKey: "defaultHoliday") as? [String] {
+            myHolidaies = defaultHoliday
+        }
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
@@ -111,7 +116,7 @@ class HolidayInputViewController: UIViewController {
                 .instantiateViewController(ofType: NameInputViewController.self)
             
             viewController.entryRoute = .addHolidayAtHome
-            
+            viewController.delegate = self
             let navController = UINavigationController(rootViewController: viewController)
             present(navController, animated: true, completion: nil)
         } else {
@@ -150,14 +155,20 @@ class HolidayInputViewController: UIViewController {
 
 extension HolidayInputViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myHolidaies.count
+        return myHolidaies?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(HolidayInputViewCell.self, for: indexPath)
         
         cell.holidaybutton.backgroundColor = indexPath.row == 0 ? UIColor.offColor : UIColor.starColor
-        cell.holidaybutton.setTitle(myHolidaies[indexPath.row], for: .normal)
+
+        if let myHolidaies = myHolidaies {
+            cell.holidaybutton.setTitle(myHolidaies[indexPath.row], for: .normal)
+        } else {
+            cell.holidaybutton.setTitle("+", for: .normal)
+        }
+        
         cell.holidaybutton.addTarget(self, action: #selector(touchUpHoildayButton(_:)), for: .touchUpInside)
         
         return cell

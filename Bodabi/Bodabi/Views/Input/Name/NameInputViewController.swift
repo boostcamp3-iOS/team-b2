@@ -24,6 +24,7 @@ class NameInputViewController: UIViewController {
 
     // MARK: - Properties
     
+    public weak var delegate: HolidayInputViewController?
     public var entryRoute: EntryRoute!
     public var inputData: InputData?
     
@@ -215,6 +216,8 @@ class NameInputViewController: UIViewController {
         
         switch entryRoute {
         case .addHolidayAtHome:
+            guard let newHolidayName = newHolidayName else { return }
+            delegate?.myHolidaies?.insert(newHolidayName, at: 1)
             dismiss(animated: true, completion: nil)
         case .addUpcomingEventAtHome:
             let viewController = storyboard(.input)
