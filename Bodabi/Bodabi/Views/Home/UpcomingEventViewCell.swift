@@ -14,7 +14,9 @@ class UpcomingEventViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var holidayLabel: UILabel!
+    @IBOutlet weak var lastHistoryView: UIView!
     @IBOutlet weak var lastHistoryLabel: UILabel!
+    @IBOutlet weak var lastHistoryImageView: UIImageView!
     @IBOutlet weak var dDayLabel: UILabel!
     
     // MARK: - Property
@@ -33,11 +35,18 @@ class UpcomingEventViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        initLastHistory()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
+    }
+    
+    // MARK: - Initialization
+    
+    private func initLastHistory() {
+        lastHistoryView.isHidden = true
     }
     
     // MARK: - IBAction
@@ -60,10 +69,14 @@ class UpcomingEventViewCell: UITableViewCell {
         let friendHistories = event.friend?.histories
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
         let histories = friendHistories?.sortedArray(using: [sortDescriptor])
-        let lastHistory = histories?.first as? History
-        guard let lastFriendHistory = lastHistory else { return }
+        guard let lastHistory = histories?.first as? History else {
+            initLastHistory()
+            return
+        }
+        lastHistoryView.isHidden = false
+        lastHistoryImageView.image = lastHistory.isTaken ? #imageLiteral(resourceName: "ic_boxIn") : #imageLiteral(resourceName: "ic_boxOut")
         lastHistoryLabel.text = String(format: "%@ %@",
-                                       lastFriendHistory.holiday ?? "",
-                                       lastFriendHistory.item ?? "")
+                                       lastHistory.holiday ?? "",
+                                       lastHistory.item ?? "")
     }
 }

@@ -56,8 +56,7 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         initNavigationBar()
-        fetchEvent()
-        fetchHoliday()
+        fetchData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,6 +82,15 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - Method
+    
+    private func fetchData() {
+        if events == nil {
+            fetchEvent()
+        }
+        if holidays == nil {
+            fetchHoliday()
+        }
+    }
     
     private func fetchEvent() {
         let request: NSFetchRequest<Event> = Event.fetchRequest()
