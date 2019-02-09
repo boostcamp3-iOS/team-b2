@@ -58,6 +58,7 @@ class FriendHistoryViewController: UIViewController {
         static let bottomInset: CGFloat = 90.0
     }
     private var isSortDescending: Bool = true
+    private var isTableViewLoaded: Bool = false
     private var sections: [FriendHistorySection] = []
     
     // MARK: - Life Cycle
@@ -193,16 +194,15 @@ extension FriendHistoryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == 1, isTableViewLoaded == false {
             cell.transform = CGAffineTransform(translationX: 0, y: cell.frame.height / 2)
             cell.alpha = 0
             UIView.animate(withDuration: 0.5,
-                           delay: 0.05 * Double(indexPath.row),
-                           options: UIView.AnimationOptions.curveEaseOut,
-                           animations: {
-                            cell.transform = CGAffineTransform(translationX: 0, y: 0)
-                            cell.alpha = 1
-            })
+                               delay: 0.05 * Double(indexPath.row),
+                               options: .curveEaseOut,
+                               animations: { cell.transform = CGAffineTransform(translationX: 0, y: 0)
+                                cell.alpha = 1 },
+                               completion: { [unowned self] (Bool) in self.isTableViewLoaded = true })
         }
     }
 }
@@ -212,6 +212,7 @@ extension FriendHistoryViewController: UITableViewDelegate {
 extension FriendHistoryViewController: FriendHistoryHeaderViewDelegate {
     func friendHistoryHeaderView(_ headerView: FriendHistoryHeaderView, didTapSortButtonWith descending: Bool) {
         sortHistories(descending: isSortDescending)
+        isTableViewLoaded = false
         tableView.reloadData()
         isSortDescending = !isSortDescending
     }
