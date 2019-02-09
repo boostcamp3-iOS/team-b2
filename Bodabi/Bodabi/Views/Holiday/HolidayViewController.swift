@@ -15,23 +15,27 @@ class HolidayViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var floatingButton: UIButton!
+    @IBOutlet weak var holidayImageView: UIImageView!
     @IBOutlet weak var informationView: UIView!
     
     // MARK: - Properties
     
-    public var databaseManager: DatabaseManager?
     public var entryRoute: EntryRoute!
-
+    public var holiday: Holiday?
+    
     private struct Const {
         static let bottomInset: CGFloat = 90.0
     }
     
+    private var databaseManager: DatabaseManager!
     private let picker = UIImagePickerController()
-    private var holidayImage: UIImage?
+    private var holidayImage: UIImage? {
+        didSet {
+            holidayImageView.image = holidayImage
+        }
+    }
     private var thanksFriends: [ThanksFriend]? = []
     private var originalBottomConstraint: CGFloat = 0.0
-    
-    public var holiday: Holiday?
     
     // MARK: - Lifecycle Method
     
@@ -43,8 +47,9 @@ class HolidayViewController: UIViewController {
         initTableView()
         initNavigationBar()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchHistory()
     }
     
@@ -95,9 +100,7 @@ class HolidayViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
         
-        if let databaseManager = databaseManager {
-            viewController.setDatabaseManager(databaseManager)
-        }
+        viewController.setDatabaseManager(databaseManager)
         
         var inputData = InputData()
         inputData.date = holiday?.date
@@ -143,23 +146,35 @@ extension HolidayViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension HolidayViewController: UITableViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        let offsetY = scrollView.contentOffset.y
-//        guard scrollView.contentOffset.y > 0 else {
-//            scrollView.contentOffset.y = 0
-//            return
+//        print(offsetY)
+//
+//        let width = view.frame.size.width
+//        guard let navHeight = navigationController?.navigationBar.frame.size.height else { return }
+//
+//        // 위로 스크롤
+//        if offsetY > 0 {
+//            var height = informationView.frame.height - offsetY
+//
+//            if height <= navHeight {
+//                height = navHeight
+//            }
+//
+//            tableView.frame.origin.y = height
+//            informationView.frame = CGRect(x: 0, y: 0, width: width, height: height)
+//        } else {
+//            // 아래로 스크롤
+//            var height = informationView.frame.height - offsetY
+//
+//            if height >= 250 {
+//                height = 250
+//            }
+//
+//            tableView.frame.origin.y = height
+//            informationView.frame = CGRect(x: 0, y: 0, width: width, height: height)
 //        }
-        
-//        bottomConstriant.constant = -50
-//        informationView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-//        heightConstriant.constant = 0
-        
-//        UIView.animate(withDuration: 0.5) {
-//            self.view.layoutIfNeeded()
-//        }
-        
-        
-    }
+//    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ThanksFriendHeaderView.reuseIdentifier) as? ThanksFriendHeaderView else { return UIView() }

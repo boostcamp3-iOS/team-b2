@@ -15,21 +15,6 @@ class HomeViewController: UIViewController {
     
     private var databaseManager: DatabaseManager!
 
-    
-//    private var holidays: [Holiday] = Holiday.dummies {
-//        didSet {
-//            tableView
-//                .reloadSections(IndexSet(integer: Section.holidays.rawValue),
-//                                with: .automatic)
-//        }
-//    }
-//    private var events: [Event] = Event.dummies {
-//        didSet {
-//            tableView
-//                .reloadSections(IndexSet(integer: Section.friendEvents.rawValue),
-//                                with: .automatic)
-//        }
-//    }
     var addedHoliday: String? {
         didSet {
             print(addedHoliday ?? "")
@@ -97,7 +82,7 @@ class HomeViewController: UIViewController {
 
         if let result = try? databaseManager.viewContext.fetch(request) {
             events = result
-            tableView.reloadSections(IndexSet(integer: Section.friendEvents.rawValue), with: .automatic)
+            tableView.reloadSections(IndexSet(integer: Section.friendEvents.rawValue), with: .none)
         }
     }
     
@@ -108,7 +93,7 @@ class HomeViewController: UIViewController {
         
         if let result = try? databaseManager.viewContext.fetch(request) {
             holidays = result
-            tableView.reloadSections(IndexSet(integer: Section.holidays.rawValue), with: .automatic)
+            tableView.reloadSections(IndexSet(integer: Section.holidays.rawValue), with: .none)
         }
     }
     
@@ -118,6 +103,8 @@ class HomeViewController: UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
     
         viewController.entryRoute = .addHolidayAtHome
+        viewController.setDatabaseManager(databaseManager)
+        viewController.inputData = InputData()
         present(navController, animated: true, completion: nil)
     }
     
@@ -127,6 +114,8 @@ class HomeViewController: UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
         
         viewController.entryRoute = .addUpcomingEventAtHome
+        viewController.setDatabaseManager(databaseManager)
+        viewController.inputData = InputData()
         present(navController, animated: true, completion: nil)
     }
 }

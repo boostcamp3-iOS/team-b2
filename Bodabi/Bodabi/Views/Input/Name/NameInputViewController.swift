@@ -24,9 +24,7 @@ class NameInputViewController: UIViewController {
 
     // MARK: - Properties
     
-    public weak var addHolidayDelegate: HolidayInputViewController?
-    public weak var addFriendDelegate: FriendsViewController?
-    public weak var homeDelegate: HolidayViewController?
+    public weak var delegate: HolidayInputViewController?
     public var entryRoute: EntryRoute!
     public var inputData: InputData?
     
@@ -68,9 +66,9 @@ class NameInputViewController: UIViewController {
         initNextButton()
         initTapGesture()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         initData()
     }
     
@@ -88,12 +86,10 @@ class NameInputViewController: UIViewController {
         switch entryRoute {
         case .addHolidayAtHome:
             print("addFriendAtHoliday")
-        case .addUpcomingEventAtHome:
-            print("addUpcomingEventAtHome")
-        case .addHistoryAtHoliday:
+        case .addUpcomingEventAtHome,
+             .addHistoryAtHoliday,
+             .addFriendAtFriends:
             fetchFriend()
-        case .addFriendAtFriends:
-            print("addFriendAtFriends")
         default:
             break
         }
@@ -220,15 +216,17 @@ class NameInputViewController: UIViewController {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            guard let newHoliday = newHolidayName else { return }
-            
-//            addHolidayDelegate?.myHolidaies.insert(newHoliday, at: 1)
+            guard let newHolidayName = newHolidayName else { return }
+            delegate?.myHolidaies?.insert(newHolidayName, at: 1)
             dismiss(animated: true, completion: nil)
         case .addUpcomingEventAtHome:
             let viewController = storyboard(.input)
                 .instantiateViewController(ofType: HolidayInputViewController.self)
             
             viewController.entryRoute = entryRoute
+            inputData?.name = newFriendName
+            viewController.inputData = inputData
+            viewController.setDatabaseManager(databaseManager)
             navigationController?.pushViewController(viewController, animated: true)
         case .addHistoryAtHoliday:
             let viewController = storyboard(.input)
@@ -241,6 +239,10 @@ class NameInputViewController: UIViewController {
             viewController.inputData = inputData
             navigationController?.pushViewController(viewController, animated: true)
         case .addFriendAtFriends:
+            inputData?.name = newFriendName
+            
+            guard let inputData = inputData else { return }
+            InputManager.write(context: databaseManager.viewContext, entryRoute: entryRoute, data: inputData)
             dismiss(animated: true, completion: nil)
         default:
             break
@@ -332,10 +334,6 @@ extension NameInputViewController: UITableViewDataSource {
         guard let entryRoute = entryRoute else { return UITableViewCell() }
         
         switch entryRoute {
-//        case .addHolidayAtHome:
-//            let holiday = holidaies[indexPath.row]
-//
-//            cell.textLabel?.text = holiday.title
         case .addUpcomingEventAtHome,
              .addHistoryAtHoliday,
              .addFriendAtFriends:
@@ -395,6 +393,7 @@ extension NameInputViewController: UITextFieldDelegate {
         
         switch entryRoute {
         case .addFriendAtFriends,
+             .addHistoryAtHoliday,
              .addUpcomingEventAtHome:
             newFriendName = textField.text
         default:

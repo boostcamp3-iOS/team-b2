@@ -67,7 +67,8 @@ class FriendsViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         
         viewController.entryRoute = .addFriendAtFriends
-        viewController.addFriendDelegate = self
+        viewController.setDatabaseManager(databaseManager)
+        viewController.inputData = InputData()
         let navController = UINavigationController(rootViewController: viewController)
         self.present(navController, animated: true, completion: nil)
     }

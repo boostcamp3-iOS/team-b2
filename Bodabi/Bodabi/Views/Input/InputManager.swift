@@ -38,6 +38,7 @@ struct InputManager {
         case .addFriendAtFriends:
             let friend: Friend = Friend(context: context)
             friend.name = data.name
+            friend.favorite = false
         }
         
         do {

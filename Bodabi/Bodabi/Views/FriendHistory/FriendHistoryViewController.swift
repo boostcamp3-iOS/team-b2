@@ -60,8 +60,6 @@ class FriendHistoryViewController: UIViewController {
     private var isSortDescending: Bool = true
     private var sections: [FriendHistorySection] = []
     
-    private var inputData: InputData = InputData()
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -117,6 +115,7 @@ class FriendHistoryViewController: UIViewController {
         
         viewController.entryRoute = .addHistoryAtFriendHistory
         viewController.setDatabaseManager(databaseManager)
+        var inputData = InputData()
         inputData.name = friend?.name
         viewController.inputData = inputData
         present(navController, animated: true, completion: nil)

@@ -18,9 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        
+        if !launchedBefore  {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            UserDefaults.standard.set(["+", "결혼", "생일", "돌잔치", "장례", "출산", "개업"], forKey: "defaultHoliday")
+        }
+        
         databaseManager.load()
-        databaseManager.deleteAll()
-        databaseManager.insertDummies()
+//        databaseManager.deleteAll()
+//        databaseManager.insertDummies()
         
         let tabBarController = window?.rootViewController
         for navigationController in tabBarController?.children ?? [] {
