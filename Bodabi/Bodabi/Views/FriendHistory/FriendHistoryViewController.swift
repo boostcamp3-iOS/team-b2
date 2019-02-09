@@ -161,10 +161,6 @@ extension FriendHistoryViewController: UITableViewDataSource {
 extension FriendHistoryViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
-        guard scrollView.contentOffset.y > 0 else {
-            scrollView.contentOffset.y = 0
-            return
-        }
         guard let informationCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? FriendHistoryInformationViewCell else {
             return
         }
@@ -172,6 +168,11 @@ extension FriendHistoryViewController: UITableViewDelegate {
         informationCell.expenditureLabel.alpha = CGFloat(min(1.2 - Double(offsetY) * 0.04, 1.0))
         informationCell.incomeIcon.alpha = CGFloat(min(1.2 - Double(offsetY) * 0.023, 1.0))
         informationCell.expenditureIcon.alpha = CGFloat(min(1.2 - Double(offsetY) * 0.04, 1.0))
+        
+        guard scrollView.contentOffset.y > 0 else {
+            scrollView.contentOffset.y = 0
+            return
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -202,7 +203,7 @@ extension FriendHistoryViewController: UITableViewDelegate {
                                options: .curveEaseOut,
                                animations: { cell.transform = CGAffineTransform(translationX: 0, y: 0)
                                 cell.alpha = 1 },
-                               completion: { [unowned self] (Bool) in self.isTableViewLoaded = true })
+                               completion: { _ in self.isTableViewLoaded = true })
         }
     }
 }
