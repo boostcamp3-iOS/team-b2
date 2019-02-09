@@ -48,9 +48,6 @@
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                 <state key="normal" image="ic_emptyStar"/>
                                 <state key="selected" image="ic_fullLineStar"/>
-                                <connections>
-                                    <action selector="touchUpAddFavoriteButton:" destination="TKY-8z-Vqb" eventType="touchUpInside" id="sv1-Im-2rP"/>
-                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5jR-ny-vpi">
                                 <rect key="frame" x="16" y="43.5" width="28" height="19"/>
@@ -113,6 +110,7 @@
             <viewLayoutGuide key="safeArea" id="i3e-Vw-Sse"/>
             <connections>
                 <outlet property="dDayLabel" destination="W5N-Ui-hl5" id="a3k-n3-hbo"/>
+                <outlet property="favoriteButton" destination="AbE-yz-HBP" id="wce-gH-QlY"/>
                 <outlet property="holidayLabel" destination="oit-aY-vGK" id="iS8-cp-VhW"/>
                 <outlet property="lastHistoryImageView" destination="t2a-Ww-mKU" id="mbI-Ot-tZq"/>
                 <outlet property="lastHistoryLabel" destination="VpX-sE-5X9" id="UgD-Os-E4u"/>

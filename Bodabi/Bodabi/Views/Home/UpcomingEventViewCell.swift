@@ -14,6 +14,8 @@ class UpcomingEventViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var holidayLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
+    
     @IBOutlet weak var lastHistoryView: UIView!
     @IBOutlet weak var lastHistoryLabel: UILabel!
     @IBOutlet weak var lastHistoryImageView: UIImageView!
@@ -47,14 +49,6 @@ class UpcomingEventViewCell: UITableViewCell {
     
     private func initLastHistory() {
         lastHistoryView.isHidden = true
-    }
-    
-    // MARK: - IBAction
-    
-    @IBAction func touchUpAddFavoriteButton(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        sender.setScaleAnimation(scale: Const.buttonAnimationScale,
-                                 duration: Const.buttonAnimationDuration)
     }
     
     // MARK: - Configure

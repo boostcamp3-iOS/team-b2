@@ -23,6 +23,9 @@ class HomeViewController: UIViewController {
     
     struct Const {
         static let bottomInset: CGFloat = 60.0
+        
+        static let buttonAnimationScale: CGFloat = 1.35
+        static let buttonAnimationDuration: TimeInterval = 0.12
     }
     
     enum Section: Int, CaseIterable {
@@ -56,7 +59,8 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         initNavigationBar()
-        fetchData()
+        fetchEvent()
+        fetchHoliday()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,15 +87,6 @@ class HomeViewController: UIViewController {
     
     // MARK: - Method
     
-    private func fetchData() {
-        if events == nil {
-            fetchEvent()
-        }
-        if holidays == nil {
-            fetchHoliday()
-        }
-    }
-    
     private func fetchEvent() {
         let request: NSFetchRequest<Event> = Event.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
@@ -101,10 +96,11 @@ class HomeViewController: UIViewController {
         request.predicate = predicate
 
         if let result = try? databaseManager.viewContext.fetch(request) {
+            guard events != result else { return }
             events = result
             tableView.reloadSections(
                 IndexSet(integer: Section.friendEvents.rawValue),
-                with: .none
+                with: .fade
             )
         }
     }
@@ -115,10 +111,11 @@ class HomeViewController: UIViewController {
         request.sortDescriptors = [sortDescriptor]
         
         if let result = try? databaseManager.viewContext.fetch(request) {
+            guard holidays != result else { return }
             holidays = result
             tableView.reloadSections(
                 IndexSet(integer: Section.holidays.rawValue),
-                with: .none
+                with: .fade
             )
         }
     }
@@ -145,6 +142,16 @@ class HomeViewController: UIViewController {
         viewController.setDatabaseManager(databaseManager)
         viewController.inputData = InputData()
         present(navController, animated: true, completion: nil)
+    }
+    
+    // FIXME: there's not event favorite
+    @objc func touchUpUpcomingEventFavoriteButton(_ sender: UIButton) {
+        sender.setScaleAnimation(scale: Const.buttonAnimationScale,
+                                 duration: Const.buttonAnimationDuration)
+        
+        sender.isSelected = !sender.isSelected
+//        events?[sender.tag].favorite = sender.isSelected
+//        try? databaseManager?.viewContext.save()
     }
 }
 
@@ -192,12 +199,16 @@ extension HomeViewController: UITableViewDataSource {
         switch section {
         case .holidaysHeader:
             let cell = tableView.dequeue(HomeTitleViewCell.self, for: indexPath)
-            cell.addHolidayButton.addTarget(self, action: #selector(touchUpAddHolidayButton(_:)), for: .touchUpInside)
+            cell.addHolidayButton.addTarget(self,
+                                            action: #selector(touchUpAddHolidayButton(_:)),
+                                            for: .touchUpInside)
             cell.type = section
             return cell
         case .friendEventsHeader:
             let cell = tableView.dequeue(HomeTitleViewCell.self, for: indexPath)
-            cell.addHolidayButton.addTarget(self, action: #selector(touchUpAddUpcomingEventButton(_:)), for: .touchUpInside)
+            cell.addHolidayButton.addTarget(self,
+                                            action: #selector(touchUpAddUpcomingEventButton(_:)),
+                                            for: .touchUpInside)
             cell.type = section
             return cell
         case .holidays:
@@ -207,6 +218,10 @@ extension HomeViewController: UITableViewDataSource {
             return cell
         case .friendEvents:
             let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
+            cell.favoriteButton.tag = indexPath.row
+            cell.favoriteButton.addTarget(self,
+                                          action: #selector(touchUpUpcomingEventFavoriteButton(_:)),
+                                          for: .touchUpInside)
             cell.event = events?[indexPath.row]
             return cell
         }
