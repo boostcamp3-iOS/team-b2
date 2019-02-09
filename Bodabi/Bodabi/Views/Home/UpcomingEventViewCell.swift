@@ -9,11 +9,15 @@
 import UIKit
 
 class UpcomingEventViewCell: UITableViewCell {
+    
+    // MARK: - IBOutlet
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var holidayLabel: UILabel!
     @IBOutlet weak var lastHistoryLabel: UILabel!
     @IBOutlet weak var dDayLabel: UILabel!
+    
+    // MARK: - Property
     
     public var event: Event? {
         didSet {
@@ -36,11 +40,15 @@ class UpcomingEventViewCell: UITableViewCell {
         
     }
     
+    // MARK: - IBAction
+    
     @IBAction func touchUpAddFavoriteButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         sender.setScaleAnimation(scale: Const.buttonAnimationScale,
                                  duration: Const.buttonAnimationDuration)
     }
+    
+    // MARK: - Configure
     
     private func configure() {
         guard let event = event else { return }

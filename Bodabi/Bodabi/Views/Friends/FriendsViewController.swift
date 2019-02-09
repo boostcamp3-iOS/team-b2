@@ -95,6 +95,8 @@ class FriendsViewController: UIViewController {
         tableView.contentInset.bottom = Const.bottomInset
     }
     
+    // MARK: - Method
+    
     private func fetchFriend() {
         let request: NSFetchRequest<Friend> = Friend.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
@@ -164,6 +166,8 @@ extension FriendsViewController: UITableViewDataSource {
         }
     }
 }
+
+// MARK: - DatabaseManagerClient
 
 extension FriendsViewController: DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager) {

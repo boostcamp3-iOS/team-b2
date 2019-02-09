@@ -9,14 +9,18 @@
 import UIKit
 
 class HomeTitleViewCell: UITableViewCell {
+    
+    // MARK: - IBOutlet
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var sortingButton: UIButton!
     @IBOutlet weak var addHolidayButton: UIButton!
     
+    // MARK: - Property
+    
     public var type: HomeViewController.Section = .holidaysHeader {
         didSet {
-            setUpUI(type)
+            initTitle(type)
         }
     }
 
@@ -28,16 +32,11 @@ class HomeTitleViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    private func setUpUI(_ type: HomeViewController.Section) {
+    // MARK: - Initialization
+    
+    private func initTitle(_ type: HomeViewController.Section) {
         titleLabel.text = type.title
         
-        switch type {
-        case .holidaysHeader:
-            sortingButton.isHidden = true
-        case .friendEventsHeader:
-            sortingButton.isHidden = false
-        default:
-            break
-        }
+        sortingButton.isHidden = type == .holidaysHeader ? true : false
     }
 }

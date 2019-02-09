@@ -9,8 +9,12 @@
 import UIKit
 
 class MyHolidaysViewCell: UITableViewCell {
+    
+    // MARK: - IBOutlet
 
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    // MARK: - Property
     
     public var holidays: [Holiday]? {
         didSet {
@@ -33,16 +37,17 @@ class MyHolidaysViewCell: UITableViewCell {
 
     }
     
-}
-
-extension MyHolidaysViewCell: UICollectionViewDelegate {
+    // MARK: - Initialization
+    
     private func initCollectionView() {
-        collectionView.delegate = self; collectionView.dataSource = self
+        collectionView.dataSource = self
         
         let cells = [HolidayViewCell.self, MyHolidayInputViewCell.self]
         collectionView.register(cells)
     }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension MyHolidaysViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

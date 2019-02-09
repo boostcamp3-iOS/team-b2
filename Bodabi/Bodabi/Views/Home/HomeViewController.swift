@@ -11,17 +11,19 @@ import CoreData
 
 class HomeViewController: UIViewController {
 
+    // MARK: - IBOutlet
+    
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: - Property
+    
     private var databaseManager: DatabaseManager!
-
-    var addedHoliday: String? {
-        didSet {
-            print(addedHoliday ?? "")
-        }
-    }
     private var events: [Event]?
     private var holidays: [Holiday]?
+    
+    struct Const {
+        static let bottomInset: CGFloat = 60.0
+    }
     
     enum Section: Int, CaseIterable {
         case holidaysHeader
@@ -41,18 +43,19 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUpUI()
+        initNavigationBar()
         initTableView()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setUpUI()
+        initNavigationBar()
         fetchEvent()
         fetchHoliday()
     }
@@ -60,17 +63,26 @@ class HomeViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        getBackUI()
+        navigationController?.navigationBar.isHidden = false
     }
     
-    private func setUpUI() {
+    // MARK: - Initialization
+    
+    private func initNavigationBar() {
         navigationController?.navigationBar.clear()
         navigationController?.navigationBar.isHidden = true
     }
     
-    private func getBackUI() {
-        navigationController?.navigationBar.isHidden = false
+    private func initTableView() {
+        tableView.delegate = self; tableView.dataSource = self
+        
+        let cells = [HomeTitleViewCell.self, MyHolidaysViewCell.self, UpcomingEventViewCell.self]
+        tableView.register(cells)
+        
+        tableView.contentInset.bottom = Const.bottomInset
     }
+    
+    // MARK: - Method
     
     private func fetchEvent() {
         let request: NSFetchRequest<Event> = Event.fetchRequest()
@@ -82,7 +94,10 @@ class HomeViewController: UIViewController {
 
         if let result = try? databaseManager.viewContext.fetch(request) {
             events = result
-            tableView.reloadSections(IndexSet(integer: Section.friendEvents.rawValue), with: .none)
+            tableView.reloadSections(
+                IndexSet(integer: Section.friendEvents.rawValue),
+                with: .none
+            )
         }
     }
     
@@ -93,9 +108,14 @@ class HomeViewController: UIViewController {
         
         if let result = try? databaseManager.viewContext.fetch(request) {
             holidays = result
-            tableView.reloadSections(IndexSet(integer: Section.holidays.rawValue), with: .none)
+            tableView.reloadSections(
+                IndexSet(integer: Section.holidays.rawValue),
+                with: .none
+            )
         }
     }
+    
+    // MARK: - @objcs
     
     @objc func touchUpAddHolidayButton(_ sender: UIButton) {
         let viewController = storyboard(.input)
@@ -120,14 +140,9 @@ class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension HomeViewController: UITableViewDelegate {
-    private func initTableView() {
-        tableView.delegate = self; tableView.dataSource = self
-        
-        let cells = [HomeTitleViewCell.self, MyHolidaysViewCell.self, UpcomingEventViewCell.self]
-        tableView.register(cells)
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section) else { return }
         switch section {
@@ -147,13 +162,16 @@ extension HomeViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension HomeViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return Section.allCases.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = Section(rawValue: section), section == .friendEvents else {
+        guard let section = Section(rawValue: section),
+            section == .friendEvents else {
             return 1
         }
         
@@ -187,6 +205,8 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let viewController = storyboard(.holiday)
@@ -197,6 +217,8 @@ extension HomeViewController: UICollectionViewDelegate {
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
+
+// MARK: - DatabaseManagerClient
 
 extension HomeViewController: DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager) {

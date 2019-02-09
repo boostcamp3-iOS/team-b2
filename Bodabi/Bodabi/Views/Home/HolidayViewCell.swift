@@ -9,17 +9,20 @@
 import UIKit
 
 class HolidayViewCell: UICollectionViewCell {
+    
+    // MARK: - IBOutlet
 
     @IBOutlet weak var holidayImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    
+    // MARK: - Property
     
     public var holiday: Holiday? {
         didSet {
             configure()
         }
     }
-   
     // FIXME: - Data dummy image
     let imageOfHoliday: [(holiday: String, image: UIImage)] = [
         (holiday: "생일", image: #imageLiteral(resourceName: "birthday")),
@@ -37,6 +40,8 @@ class HolidayViewCell: UICollectionViewCell {
         
         holidayImageView.image = nil
     }
+    
+    // MARK: - Configure
 
     private func configure() {
         titleLabel.text = holiday?.title
