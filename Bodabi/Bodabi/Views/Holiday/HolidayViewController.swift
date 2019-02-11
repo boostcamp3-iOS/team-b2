@@ -33,6 +33,15 @@ class HolidayViewController: UIViewController {
     private var holidayImage: UIImage? {
         didSet {
             holidayImageView.image = holidayImage
+            guard let image = holidayImage?.jpegData(compressionQuality: 1.0) else { return }
+            holiday?.image = image
+            
+            do {
+                try databaseManager.viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+            
         }
     }
     private var thanksFriends: [ThanksFriend]? = []
@@ -46,6 +55,7 @@ class HolidayViewController: UIViewController {
         picker.allowsEditing = true
         
         initTableView()
+        initHolidayImage()
         initNavigationBar()
     }
 
@@ -87,6 +97,11 @@ class HolidayViewController: UIViewController {
         tableView.contentInset.bottom = Const.bottomInset
         
         tableView.register(ThanksFriendViewCell.self)
+    }
+    
+    private func initHolidayImage() {
+        guard let holiday = holiday, let imageData = holiday.image else { return }
+        holidayImage = UIImage(data: imageData)
     }
     
     private func initNavigationBar() {
