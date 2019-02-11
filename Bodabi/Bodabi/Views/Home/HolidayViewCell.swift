@@ -49,13 +49,14 @@ class HolidayViewCell: UICollectionViewCell {
 
         if let imageData = holiday?.image {
             holidayImageView.image = UIImage(data: imageData)
-        } else {
-            imageOfHoliday.forEach {
-                if holiday?.title?.contains($0.holiday) ?? true {
-                    holidayImageView.image = $0.image
-                    return
-                }
-            }
         }
+//        } else {
+//            imageOfHoliday.forEach {
+//                if holiday?.title?.contains($0.holiday) ?? true {
+//                    holidayImageView.image = $0.image
+//                    return
+//                }
+//            }
+//        }
     }
 }

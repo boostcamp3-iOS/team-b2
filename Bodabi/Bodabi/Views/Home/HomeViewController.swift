@@ -111,7 +111,7 @@ class HomeViewController: UIViewController {
         request.sortDescriptors = [sortDescriptor]
         
         if let result = try? databaseManager.viewContext.fetch(request) {
-            guard holidays != result else { return }
+//            guard holidays != result else { return }
             holidays = result
             tableView.reloadSections(
                 IndexSet(integer: Section.holidays.rawValue),
