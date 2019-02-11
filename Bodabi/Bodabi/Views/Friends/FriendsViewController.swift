@@ -22,6 +22,8 @@ class FriendsViewController: UIViewController {
     private var friends: [Friend]?
     private var favoriteFriends: [Friend]?
     
+    private var keyboardDismissGesture: UITapGestureRecognizer?
+    
     struct Const {
         static let bottomInset: CGFloat = 90.0
     }
@@ -52,6 +54,7 @@ class FriendsViewController: UIViewController {
         initNavigationBar()
         initSearchBar()
         initTableView()
+        initKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +68,6 @@ class FriendsViewController: UIViewController {
     @IBAction func touchUpAddFriendButton(_ sender: UIButton) {
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: NameInputViewController.self)
-        
         viewController.entryRoute = .addFriendAtFriends
         viewController.setDatabaseManager(databaseManager)
         viewController.inputData = InputData()
@@ -95,6 +97,16 @@ class FriendsViewController: UIViewController {
         tableView.contentInset.bottom = Const.bottomInset
     }
     
+    private func initKeyboard() {
+        NotificationCenter.default
+            .addObserver(self, selector: #selector(keyboardWillShow(_:)),
+                         name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default
+            .addObserver(self, selector: #selector(keyboardWillHide(_:)),
+                         name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     // MARK: - Method
     
     private func fetchFriend() {
@@ -108,6 +120,35 @@ class FriendsViewController: UIViewController {
             tableView.reloadData()
         }
     }
+}
+
+// MARK: - Keyboard will change
+
+extension FriendsViewController {
+    private func adjustKeyboardDismisTapGesture(isKeyboardVisible: Bool) {
+        guard isKeyboardVisible else {
+            guard let gesture = keyboardDismissGesture else { return }
+            view.removeGestureRecognizer(gesture)
+            keyboardDismissGesture = nil
+            return
+        }
+        keyboardDismissGesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
+        guard let gesture = keyboardDismissGesture else { return }
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc func tapBackground(_ sender: UITapGestureRecognizer?) {
+        searchBar.resignFirstResponder()
+    }
+    
+    @objc func keyboardWillShow(_ notification: Foundation.Notification) {
+        adjustKeyboardDismisTapGesture(isKeyboardVisible: true)
+    }
+    
+    @objc func keyboardWillHide(_ notification: Foundation.Notification) {
+        adjustKeyboardDismisTapGesture(isKeyboardVisible: false)
+    }
+    
 }
 
 // MARK: - UITableViewDelegate
@@ -174,4 +215,3 @@ extension FriendsViewController: DatabaseManagerClient {
         databaseManager = manager
     }
 }
-
