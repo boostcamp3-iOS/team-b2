@@ -26,6 +26,8 @@ class FriendsViewController: UIViewController {
     
     struct Const {
         static let bottomInset: CGFloat = 90.0
+        static let buttonAnimationScale: CGFloat = 1.3
+        static let buttonAnimationDuration: TimeInterval = 0.18
     }
     
     enum Section: Int, CaseIterable {
@@ -120,6 +122,22 @@ class FriendsViewController: UIViewController {
             tableView.reloadData()
         }
     }
+    
+    // MARK: - @objcs
+    
+    @objc func touchUpFriendFavoriteButton(_ sender: UIButton) {
+//        sender.setScaleAnimation(scale: Const.buttonAnimationScale,
+//                                 duration: Const.buttonAnimationDuration)
+        (sender.isSelected ? favoriteFriends?[sender.tag] : friends?[sender.tag])?.favorite = !sender.isSelected
+        try? databaseManager?.viewContext.save()
+        
+        guard let friends = friends,
+            let favoriteFriends = favoriteFriends else { return }
+        let allFriends = (friends + favoriteFriends).sorted { $0.name ?? "" < $1.name ?? "" }
+        self.friends = allFriends.filter { $0.favorite == false }
+        self.favoriteFriends = allFriends.filter { $0.favorite == true }
+        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
+    }
 }
 
 // MARK: - Keyboard will change
@@ -192,17 +210,17 @@ extension FriendsViewController: UITableViewDataSource {
             let cell = tableView.dequeue(FriendsHeaderViewCell.self, for: indexPath)
             cell.type = section
             return cell
-        case .favorite:
+        case .favorite,
+             .friends:
             let cell = tableView.dequeue(FriendViewCell.self, for: indexPath)
-            guard let friends = favoriteFriends else { return UITableViewCell() }
-            cell.nameLabel.text = friends[indexPath.row].name
-            cell.configure(line: indexPath.row == (friends.count - 1))
-            return cell
-        case .friends:
-            let cell = tableView.dequeue(FriendViewCell.self, for: indexPath)
-            guard let friends = friends else { return UITableViewCell() }
-            cell.nameLabel.text = friends[indexPath.row].name
-            cell.configure(line: indexPath.row == (friends.count - 1))
+            cell.favoriteButton.tag = indexPath.row
+            cell.favoriteButton
+                .addTarget(self, action: #selector(touchUpFriendFavoriteButton(_:)),
+                           for: .touchUpInside)
+            
+            guard let friends = section == .friends ? friends : favoriteFriends else { return cell }
+            cell.friend = friends[indexPath.row]
+            cell.setLastLine(line: indexPath.row == (friends.count - 1))
             return cell
         }
     }

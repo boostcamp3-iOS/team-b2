@@ -19,6 +19,12 @@ class FriendViewCell: UITableViewCell {
     
     // MARK: - Property
     
+    public var friend: Friend? {
+        didSet {
+            configure()
+        }
+    }
+    
     struct Const {
         static let buttonAnimationScale: CGFloat = 1.3
         static let buttonAnimationDuration: TimeInterval = 0.18
@@ -33,17 +39,16 @@ class FriendViewCell: UITableViewCell {
 
     }
     
-    // MARK: - IBAction
+    // MARK: - Method
     
-    @IBAction func touchUpFavoriteButton(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        sender.setScaleAnimation(scale: Const.buttonAnimationScale,
-                                 duration: Const.buttonAnimationDuration)
+    public func setLastLine(line hidden: Bool) {
+        bottomView.isHidden = hidden
     }
     
     // MARK: - Configure
     
-    public func configure(line hidden: Bool) {
-        bottomView.isHidden = hidden
+    private func configure() {
+        nameLabel.text = friend?.name
+        favoriteButton.isSelected = friend?.favorite ?? true
     }
 }
