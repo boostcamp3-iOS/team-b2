@@ -38,6 +38,7 @@ struct InputManager {
             if let friend = getFriend(context: context, name: data.name ?? "") {
                 event.friend = friend
             }
+            event.favorite = false
             event.friend?.name = data.name
             event.title = data.holiday
             event.date = data.date

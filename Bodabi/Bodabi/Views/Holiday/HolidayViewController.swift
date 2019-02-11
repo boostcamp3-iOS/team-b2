@@ -16,8 +16,7 @@ class HolidayViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var floatingButton: UIButton!
-    @IBOutlet weak var holidayImageView: UIImageView!
-    @IBOutlet weak var informationView: UIView!
+    @IBOutlet weak var informationView: HolidayInformationView!
     
     // MARK: - Properties
     
@@ -30,22 +29,7 @@ class HolidayViewController: UIViewController {
     
     private var databaseManager: DatabaseManager!
     private let picker = UIImagePickerController()
-    private var holidayImage: UIImage? {
-        didSet {
-            holidayImageView.image = holidayImage
-            guard let image = holidayImage?.jpegData(compressionQuality: 1.0) else { return }
-            holiday?.image = image
-            
-            do {
-                try databaseManager.viewContext.save()
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-        }
-    }
     private var thanksFriends: [ThanksFriend]? = []
-    private var originalBottomConstraint: CGFloat = 0.0
     
     // MARK: - Lifecycle Method
     
@@ -55,7 +39,7 @@ class HolidayViewController: UIViewController {
         picker.allowsEditing = true
         
         initTableView()
-        initHolidayImage()
+        initInformationView()
         initNavigationBar()
     }
 
@@ -86,6 +70,7 @@ class HolidayViewController: UIViewController {
         }
         
         tableView.reloadData()
+        setIncomeLabel()
     }
     
     private func initTableView() {
@@ -99,14 +84,27 @@ class HolidayViewController: UIViewController {
         tableView.register(ThanksFriendViewCell.self)
     }
     
-    private func initHolidayImage() {
-        guard let holiday = holiday, let imageData = holiday.image else { return }
-        holidayImage = UIImage(data: imageData)
+    private func initInformationView() {
+        guard let holiday = holiday else { return }
+        guard let imageData = holiday.image else { return }
+        informationView.holidayImageView.image = UIImage(data: imageData)
     }
     
     private func initNavigationBar() {
         navigationController?.view.backgroundColor = .clear
         navigationItem.title = holiday?.title
+    }
+    
+    private func setIncomeLabel() {
+        guard let thanksFriends = thanksFriends else { return }
+        
+        let totallyIncome = thanksFriends.reduce(0) {
+            if let income = Int($1.item) {
+                return $0 + income
+            } else { return $0 }
+        }
+        
+        informationView.incomeLabel.text = String(totallyIncome).insertComma()
     }
     
     private func shouldAccessPhotoLibrary() -> Bool {
@@ -247,11 +245,27 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        var image: UIImage?
         if let editedImage = info[.editedImage] as? UIImage {
-            holidayImage = editedImage
+            image = editedImage
         } else if let originalImage = info[.originalImage] as? UIImage {
-            holidayImage = originalImage
+            image = originalImage
         }
+        
+        guard let holidayImage = image else { return }
+        
+        informationView.holidayImageView.image = holidayImage
+        
+        guard let imageData = holidayImage.jpegData(compressionQuality: 1.0) else { return }
+        
+        holiday?.image = imageData
+        
+        do {
+            try databaseManager.viewContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+        
         
         picker.dismiss(animated: true, completion: nil)
     }

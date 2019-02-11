@@ -72,6 +72,6 @@ class UpcomingEventViewCell: UITableViewCell {
         lastHistoryImageView.image = lastHistory.isTaken ? #imageLiteral(resourceName: "ic_boxIn") : #imageLiteral(resourceName: "ic_boxOut")
         lastHistoryLabel.text = String(format: "%@ %@",
                                        lastHistory.holiday ?? "",
-                                       lastHistory.item ?? "")
+                                       lastHistory.item?.insertComma() ?? "")
     }
 }

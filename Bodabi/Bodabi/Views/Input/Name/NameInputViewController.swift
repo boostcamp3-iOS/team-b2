@@ -185,8 +185,7 @@ class NameInputViewController: UIViewController {
                     .color(newHolidayName ?? "", fontSize: 25)
                     .bold("을(를)\n추가하시겠어요?", fontSize: 25)
                 guideLabel.attributedText = attributedString
-            case .addUpcomingEventAtHome,
-                 .addHistoryAtHoliday:
+            case .addUpcomingEventAtHome:
                 let attributedString = NSMutableAttributedString()
                     .color(newFriendName ?? "", fontSize: 25)
                     .bold("님의\n이벤트인가요?", fontSize: 25)
@@ -195,6 +194,11 @@ class NameInputViewController: UIViewController {
                 let attributedString = NSMutableAttributedString()
                     .color(newFriendName ?? "", fontSize: 25)
                     .bold("님을\n추가하시겠어요?", fontSize: 25)
+                guideLabel.attributedText = attributedString
+            case .addHistoryAtHoliday:
+                let attributedString = NSMutableAttributedString()
+                    .color(newFriendName ?? "", fontSize: 25)
+                    .bold("님이\n축하해주셨나요?", fontSize: 25)
                 guideLabel.attributedText = attributedString
             default:
                 break

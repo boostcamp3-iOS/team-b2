@@ -96,7 +96,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="floatingButton" destination="1Ni-zn-qaK" id="EFr-aN-QoW"/>
-                        <outlet property="holidayImageView" destination="1Ml-zf-7ov" id="tO9-Wp-4Zu"/>
                         <outlet property="informationView" destination="nb8-hE-gvH" id="Vae-E6-bw9"/>
                         <outlet property="tableView" destination="s3C-h3-E04" id="Pbb-Iq-w1t"/>
                     </connections>
