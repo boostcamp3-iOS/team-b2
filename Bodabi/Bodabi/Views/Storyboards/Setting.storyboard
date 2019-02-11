@@ -51,11 +51,13 @@
             </objects>
             <point key="canvasLocation" x="790" y="99"/>
         </scene>
-        <!--Setting-->
+        <!--Navigation Controller-->
         <scene sceneID="RpB-z2-HoV">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uLS-uK-Oll" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Setting" id="I7J-ec-O1Z"/>
+                    <tabBarItem key="tabBarItem" title="" image="ic_setting" selectedImage="ic_setting" id="I7J-ec-O1Z">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="H7G-ea-cAl">
@@ -77,4 +79,7 @@
             <point key="canvasLocation" x="77.599999999999994" y="99.400299850074973"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ic_setting" width="25" height="25"/>
+    </resources>
 </document>

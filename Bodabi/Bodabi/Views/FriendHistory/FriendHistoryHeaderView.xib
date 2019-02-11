@@ -39,6 +39,7 @@
                             </connections>
                         </button>
                     </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="I6O-xp-3EJ" firstAttribute="top" secondItem="Xb4-7H-9SH" secondAttribute="top" constant="15" id="9of-KD-lIt"/>
                         <constraint firstAttribute="bottom" secondItem="suP-rE-FFj" secondAttribute="bottom" id="BRK-GS-41j"/>
@@ -52,7 +53,6 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <accessibility key="accessibilityConfiguration">
                 <accessibilityTraits key="traits" header="YES"/>
             </accessibility>

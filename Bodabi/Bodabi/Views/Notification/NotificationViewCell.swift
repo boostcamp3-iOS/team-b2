@@ -30,6 +30,7 @@ class NotificationViewCell: UITableViewCell {
                 return
             }
             
+            backgroundColor = notification.read ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) : #colorLiteral(red: 0.9764705896, green: 0.9394879168, blue: 0.8803283655, alpha: 1)
             imageContainerView.makeRound(with: .heightRound)
             // TODO: - Image Setup for each holiday
             iconImageView.image = UIImage(named: "ic_fullStar")

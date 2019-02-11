@@ -19,16 +19,6 @@ class SettingViewCell: UITableViewCell {
                 detailTextLabel?.text = ""
                 return
             }
-            
-            switch setting {
-            case .fontSize:
-                let fontSize = UserDefaults.standard.integer(forKey: "UserFontSize")
-                detailTextLabel?.isHidden = false
-                detailTextLabel?.text = String(fontSize)
-            default:
-                detailTextLabel?.isHidden = true
-            }
-            
             textLabel?.text = setting.description()
         }
     }
