@@ -30,7 +30,7 @@ class HolidayViewController: UIViewController {
     
     private var databaseManager: DatabaseManager!
     private let picker = UIImagePickerController()
-    public var holidayImage: UIImage? {
+    private var holidayImage: UIImage? {
         didSet {
             holidayImageView.image = holidayImage
             guard let image = holidayImage?.jpegData(compressionQuality: 1.0) else { return }
