@@ -52,11 +52,13 @@
             </objects>
             <point key="canvasLocation" x="790" y="99"/>
         </scene>
-        <!--Notification-->
+        <!--Navigation Controller-->
         <scene sceneID="8zw-hN-iMY">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Hz-k7-wme" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notification" id="hqD-ST-eRV"/>
+                    <tabBarItem key="tabBarItem" title="" image="ic_alarm" selectedImage="ic_alarm" id="hqD-ST-eRV">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="BXg-xE-E4e">
@@ -78,4 +80,7 @@
             <point key="canvasLocation" x="77.599999999999994" y="99.400299850074973"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ic_alarm" width="22" height="25"/>
+    </resources>
 </document>

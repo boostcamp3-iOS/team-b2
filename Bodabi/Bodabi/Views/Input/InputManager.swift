@@ -6,18 +6,33 @@
 //  Copyright © 2019 LeeHyeJin. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import UIKit
 
 struct InputManager {
     
     static func write(context: NSManagedObjectContext, entryRoute: EntryRoute, data: InputData) {
+        // FIXME: - Data dummy image
+        let imageOfHoliday: [(holiday: String, image: UIImage)] = [
+            (holiday: "생일", image: #imageLiteral(resourceName: "birthday")),
+            (holiday: "출산", image: #imageLiteral(resourceName: "babyborn")),
+            (holiday: "결혼", image: #imageLiteral(resourceName: "wedding")),
+            (holiday: "장례", image: #imageLiteral(resourceName: "funeral"))
+        ]
+        
         switch entryRoute {
         case .addHolidayAtHome:
             let holiday: Holiday = Holiday(context: context)
             holiday.createdDate = Date()
             holiday.title = data.holiday
             holiday.date = data.date
+            imageOfHoliday.forEach {
+                if holiday.title?.contains($0.holiday) ?? true {
+                    guard let image = $0.image.jpegData(compressionQuality: 1.0) else { return }
+                    holiday.image = image
+                    return
+                }
+            }
         case .addUpcomingEventAtHome:
             let event: Event = Event(context: context)
             if let friend = getFriend(context: context, name: data.name ?? "") {
