@@ -15,6 +15,7 @@ struct InputManager {
         switch entryRoute {
         case .addHolidayAtHome:
             let holiday: Holiday = Holiday(context: context)
+            holiday.createdDate = Date()
             holiday.title = data.holiday
             holiday.date = data.date
         case .addUpcomingEventAtHome:
