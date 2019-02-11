@@ -427,16 +427,16 @@
 			isa = PBXGroup;
 			children = (
 				49C084E721FAC9B80060B02C /* HomeViewController.swift */,
-				496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */,
 				496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */,
-				49C084EF21FAD36D0060B02C /* MyHolidaysViewCell.swift */,
+				496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */,
 				49C084F021FAD36D0060B02C /* MyHolidaysViewCell.xib */,
-				49C0850521FAF2810060B02C /* UpcomingEventViewCell.swift */,
+				49C084EF21FAD36D0060B02C /* MyHolidaysViewCell.swift */,
 				49C0850621FAF2810060B02C /* UpcomingEventViewCell.xib */,
-				49C084FB21FADDBB0060B02C /* HolidayViewCell.swift */,
+				49C0850521FAF2810060B02C /* UpcomingEventViewCell.swift */,
 				49C084FC21FADDBB0060B02C /* HolidayViewCell.xib */,
-				49C084FF21FADE640060B02C /* MyHolidayInputViewCell.swift */,
+				49C084FB21FADDBB0060B02C /* HolidayViewCell.swift */,
 				49C0850021FADE640060B02C /* MyHolidayInputViewCell.xib */,
+				49C084FF21FADE640060B02C /* MyHolidayInputViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
