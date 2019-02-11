@@ -53,14 +53,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="친구 목록" id="04i-rE-MVZ">
                         <barButtonItem key="backBarButtonItem" title=" " id="TJh-w5-Vus"/>
-                        <rightBarButtonItems>
-                            <barButtonItem image="ic_sort" id="L04-zp-veJ">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </barButtonItem>
-                            <barButtonItem systemItem="edit" id="DeX-15-GCt">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" title="편집" id="DeX-15-GCt">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="ic_sort" id="L04-zp-veJ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="zdh-xO-tiw" id="nJA-ft-HFM"/>
