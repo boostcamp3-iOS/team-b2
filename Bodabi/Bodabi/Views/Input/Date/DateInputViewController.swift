@@ -13,7 +13,7 @@ class DateInputViewController: UIViewController {
     // MARK: - IBOutlet
     
     @IBOutlet weak var nextButton: UIButton!
-    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var calendarView: CalendarView!
     @IBOutlet weak var dateLabel: UILabel!
     
     // MARK: - Property
@@ -40,18 +40,28 @@ class DateInputViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initDateLabel()
+        initCalendar()
         initNavigationBar()
         initNextButton()
     }
     
     // MARK: - Initialization
     
-    private func initDateLabel() {
-        let date: Date = self.datePicker.date
-        let dateString: String = self.dateFormatter.string(from: date)
-        dateLabel.text = dateString
+    private func initCalendar() {
+        calendarView.delegate = self
         
+        var calendarStyle: CalendarViewStyle = .init()
+        
+        calendarStyle.todayColor = .calendarTodayColor
+        calendarStyle.dayColor = .black
+        calendarStyle.weekColor = .calendarWeekColor
+        calendarStyle.weekendColor = .red
+        calendarStyle.eventColor = .mainColor
+        calendarStyle.selectedColor = .calendarSelectedColor
+        
+        calendarView.style = calendarStyle
+        calendarView.style.weekType = .normal // long short normal
+        calendarView.style.firstWeekType = .sunday
     }
     
     private func initNavigationBar() {
@@ -71,19 +81,15 @@ class DateInputViewController: UIViewController {
     // MARK: - Setup
     
     private func setNextButton() {
+        guard date != nil else {
+            initNextButton()
+            return
+        }
         nextButton.backgroundColor = UIColor.mainColor
         nextButton.isEnabled = true
     }
     
     // MARK: - IBAction
-    
-    @IBAction func didDatePickerValueChaged(_ sender: UIDatePicker) {
-        let holidayDate: Date = sender.date
-        let dateString: String = self.dateFormatter.string(from: holidayDate)
-        
-        dateLabel.text = dateString
-        date = holidayDate
-    }
     
     @IBAction func touchUpNextButton(_ sender: UIButton) {
         guard var inputData = inputData else { return }
@@ -109,5 +115,19 @@ class DateInputViewController: UIViewController {
 extension DateInputViewController: DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager
+    }
+}
+
+// MARK: - CalendarViewDelegate
+
+extension DateInputViewController: CalendarViewDelegate {
+    func calendar(_ calendar: CalendarView, didSelectedItem date: Date) {
+        self.date = date
+        dateLabel.text = date.toString(of: .year)
+    }
+    
+    func calendar(_ calendar: CalendarView, currentVisibleItem date: Date) {
+        self.date = nil
+        dateLabel.text = date.toString(of: .noDay)
     }
 }

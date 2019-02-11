@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import CoreData
 
 class HolidayInputViewController: UIViewController {
     
@@ -43,25 +42,6 @@ class HolidayInputViewController: UIViewController {
             myHolidaies = defaultHoliday
         }
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        fetchHoliday()
-//    }
-//
-//    private func fetchHoliday() {
-//        let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
-//
-//        do {
-//            if let result: [Holiday] = try databaseManager?.viewContext.fetch(request) {
-//                myHolidaies = result
-//            }
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//
-//        tableView.reloadData()
-//    }
     
     // MARK: - Initialization
     
@@ -104,7 +84,7 @@ class HolidayInputViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - objc
+    // MARK: - Objc
     
     @objc func touchUpHoildayButton(_ sender: UIButton) {
         selectedHoliday = sender.titleLabel?.text

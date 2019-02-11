@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Photos
 
 class HolidayViewController: UIViewController {
     
@@ -32,6 +33,15 @@ class HolidayViewController: UIViewController {
     private var holidayImage: UIImage? {
         didSet {
             holidayImageView.image = holidayImage
+            guard let image = holidayImage?.jpegData(compressionQuality: 1.0) else { return }
+            holiday?.image = image
+            
+            do {
+                try databaseManager.viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+            
         }
     }
     private var thanksFriends: [ThanksFriend]? = []
@@ -45,6 +55,7 @@ class HolidayViewController: UIViewController {
         picker.allowsEditing = true
         
         initTableView()
+        initHolidayImage()
         initNavigationBar()
     }
 
@@ -88,9 +99,65 @@ class HolidayViewController: UIViewController {
         tableView.register(ThanksFriendViewCell.self)
     }
     
+    private func initHolidayImage() {
+        guard let holiday = holiday, let imageData = holiday.image else { return }
+        holidayImage = UIImage(data: imageData)
+    }
+    
     private func initNavigationBar() {
         navigationController?.view.backgroundColor = .clear
         navigationItem.title = holiday?.title
+    }
+    
+    private func shouldAccessPhotoLibrary() -> Bool {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch photoAuthorizationStatus {
+        case .authorized:
+            return true
+        case .notDetermined,
+             .denied,
+             .restricted:
+            PHPhotoLibrary.requestAuthorization { (status) in
+                switch status {
+                case .denied:
+                    DispatchQueue.main.async {
+                        let alert = BodabiAlertController(title: "주의", message: "사진 접근 권한이 허용되지 않았습니다. [설정]으로 이동하여 접근을 허용해주세요.", type: nil, style: .Alert)
+                        
+                        alert.cancelButtonTitle = "확인"
+                        alert.show()
+                    }
+                default:
+                    break
+                }
+            }
+            
+            return false
+        }
+    }
+    
+    private func shouldAccessCamera() -> Bool {
+        let cameraAuthorizationStatus: AVAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        
+        switch cameraAuthorizationStatus {
+        case .authorized:
+            return true
+        case .denied,
+             .notDetermined,
+             .restricted:
+            AVCaptureDevice.requestAccess(for: AVMediaType.video) { (granted) in
+                if !granted {
+                    DispatchQueue.main.async {
+                        let alert = BodabiAlertController(title: "주의", message: "카메라 접근 권한이 허용되지 않았습니다. [설정]으로 이동하여 접근을 허용해주세요.", type: nil, style: .Alert)
+                        
+                        alert.cancelButtonTitle = "확인"
+                        alert.show()
+                    }
+                }
+            }
+            
+            return false
+        }
     }
     
     // MARK: - @IBAction
@@ -146,36 +213,6 @@ extension HolidayViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension HolidayViewController: UITableViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let offsetY = scrollView.contentOffset.y
-//        print(offsetY)
-//
-//        let width = view.frame.size.width
-//        guard let navHeight = navigationController?.navigationBar.frame.size.height else { return }
-//
-//        // 위로 스크롤
-//        if offsetY > 0 {
-//            var height = informationView.frame.height - offsetY
-//
-//            if height <= navHeight {
-//                height = navHeight
-//            }
-//
-//            tableView.frame.origin.y = height
-//            informationView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-//        } else {
-//            // 아래로 스크롤
-//            var height = informationView.frame.height - offsetY
-//
-//            if height >= 250 {
-//                height = 250
-//            }
-//
-//            tableView.frame.origin.y = height
-//            informationView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-//        }
-//    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ThanksFriendHeaderView.reuseIdentifier) as? ThanksFriendHeaderView else { return UIView() }
         
@@ -200,6 +237,9 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
             
             return
         }
+        
+        if !shouldAccessPhotoLibrary() { return }
+        if source == .camera, !shouldAccessCamera() { return }
         
         picker.sourceType = source
         

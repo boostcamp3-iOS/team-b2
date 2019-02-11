@@ -46,11 +46,15 @@ class HolidayViewCell: UICollectionViewCell {
     private func configure() {
         titleLabel.text = holiday?.title
         dateLabel.text = holiday?.date?.toString(of: .year)
-        
-        imageOfHoliday.forEach {
-            if holiday?.title?.contains($0.holiday) ?? true {
-                holidayImageView.image = $0.image
-                return
+
+        if let imageData = holiday?.image {
+            holidayImageView.image = UIImage(data: imageData)
+        } else {
+            imageOfHoliday.forEach {
+                if holiday?.title?.contains($0.holiday) ?? true {
+                    holidayImageView.image = $0.image
+                    return
+                }
             }
         }
     }
