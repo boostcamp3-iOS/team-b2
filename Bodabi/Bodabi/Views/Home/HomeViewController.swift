@@ -115,7 +115,7 @@ class HomeViewController: UIViewController {
             holidays = result
             tableView.reloadSections(
                 IndexSet(integer: Section.holidays.rawValue),
-                with: .fade
+                with: .none
             )
         }
     }
