@@ -12,6 +12,10 @@ class TestViewController: UIViewController {
 
     @IBOutlet weak var currentMonthLabel: UILabel!
     @IBOutlet weak var calendarView: CalendarView!
+
+    public var inputData: InputData?
+    public var entryRoute: EntryRoute!
+    private var databaseManager: DatabaseManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +33,10 @@ class TestViewController: UIViewController {
         
         calendarView.style.weekType = .normal // long short normal
         calendarView.style.firstWeekType = .sunday
+        
+        let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
+        backButton.tintColor = UIColor.mainColor
+        navigationItem.leftBarButtonItem = backButton
     }
     
     @IBAction func preAction(_ sender: Any) {
@@ -44,6 +52,10 @@ class TestViewController: UIViewController {
         formatter.dateFormat = "yyyy-MM-dd"
         calendarView.movePage(to: formatter.date(from: "2022-08-24"))
     }
+    
+    @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension TestViewController: CalendarViewDelegate {
@@ -53,5 +65,11 @@ extension TestViewController: CalendarViewDelegate {
     
     func calendar(_ calendar: CalendarView, currentVisibleItem date: Date) {
         self.currentMonthLabel.text = date.toString(of: .noDay)
+    }
+}
+
+extension TestViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
     }
 }

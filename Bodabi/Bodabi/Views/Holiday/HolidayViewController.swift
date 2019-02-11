@@ -215,8 +215,6 @@ extension HolidayViewController: UITableViewDelegate {
 
 extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     private func presentPicker(source: UIImagePickerController.SourceType) {
-        if !shouldAccessPhotoLibrary() { return }
-        
         guard UIImagePickerController.isSourceTypeAvailable(source) else {
             let alert = BodabiAlertController(title: "사용할 수 없는 타입입니다", message: nil, type: nil, style: .Alert)
             alert.cancelButtonTitle = "확인"
@@ -225,6 +223,7 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
             return
         }
         
+        if !shouldAccessPhotoLibrary() { return }
         if source == .camera, !shouldAccessCamera() { return }
         
         picker.sourceType = source
