@@ -13,7 +13,7 @@ protocol TableViewCellType {
     static var identifier: String { get }
 }
 
-extension UITableViewCell: TableViewCellType{
+extension UITableViewCell: TableViewCellType {
     static var identifier: String {
         return String(describing: self.self)
     }

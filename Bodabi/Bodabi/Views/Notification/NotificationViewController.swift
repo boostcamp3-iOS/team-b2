@@ -62,6 +62,19 @@ class NotificationViewController: UIViewController {
             fatalError("The fetch could not be performed: \(error.localizedDescription)")
         }
     }
+    
+    // MARK: - Method
+    
+    func updateNotificationRead(indexPath: IndexPath) {
+        if let notification = fetchedResultsController?.object(at: indexPath) {
+            notification.read = true
+        }
+        do {
+            try databaseManager?.viewContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -91,6 +104,7 @@ extension NotificationViewController: UITableViewDelegate {
         let viewController = storyboard(.friendHistory)
             .instantiateViewController(ofType: FriendHistoryViewController.self)
         if let notification = fetchedResultsController?.object(at: indexPath) {
+            updateNotificationRead(indexPath: indexPath)
             viewController.setDatabaseManager(databaseManager)
             viewController.friend = notification.event?.friend
             navigationController?.pushViewController(viewController, animated: true)

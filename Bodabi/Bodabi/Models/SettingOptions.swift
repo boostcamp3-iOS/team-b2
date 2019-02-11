@@ -9,15 +9,12 @@
 import Foundation
 
 enum SettingOptions: Int, CaseIterable {
-    case fontSize
     case backup
     case review
     case question
     
     func description() -> String {
         switch self {
-        case .fontSize:
-            return "글씨 크기 설정"
         case .backup:
             return "백업"
         case .review:

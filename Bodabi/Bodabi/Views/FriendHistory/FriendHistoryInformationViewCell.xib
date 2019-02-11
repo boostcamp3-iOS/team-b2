@@ -30,10 +30,11 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_boxOut" translatesAutoresizingMaskIntoConstraints="NO" id="XH6-Nr-NWi">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_boxOut" translatesAutoresizingMaskIntoConstraints="NO" id="XH6-Nr-NWi">
                                 <rect key="frame" x="156" y="16" width="25" height="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="BJS-py-6Qd"/>
                                     <constraint firstAttribute="height" constant="25" id="oCr-1u-sPv"/>
@@ -47,10 +48,11 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_boxIn" translatesAutoresizingMaskIntoConstraints="NO" id="BQW-kh-j3H">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_boxIn" translatesAutoresizingMaskIntoConstraints="NO" id="BQW-kh-j3H">
                                 <rect key="frame" x="156" y="54" width="25" height="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="YcY-uR-ZzY"/>
                                     <constraint firstAttribute="height" constant="25" id="t0T-6P-UI2"/>
@@ -89,7 +91,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ic_boxIn" width="474" height="440"/>
-        <image name="ic_boxOut" width="474" height="440"/>
+        <image name="ic_boxIn" width="25" height="25"/>
+        <image name="ic_boxOut" width="25" height="25"/>
     </resources>
 </document>
