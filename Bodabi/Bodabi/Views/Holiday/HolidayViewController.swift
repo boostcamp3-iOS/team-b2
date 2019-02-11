@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Photos
 
 class HolidayViewController: UIViewController {
     
@@ -93,6 +94,57 @@ class HolidayViewController: UIViewController {
         navigationItem.title = holiday?.title
     }
     
+    private func shouldAccessPhotoLibrary() -> Bool {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch photoAuthorizationStatus {
+        case .authorized:
+            return true
+        case .notDetermined,
+             .denied,
+             .restricted:
+            PHPhotoLibrary.requestAuthorization { (status) in
+                switch status {
+                case .denied:
+                    DispatchQueue.main.async {
+                        let alert = BodabiAlertController(title: "주의", message: "사진 접근 권한이 허용되지 않았습니다. [설정]으로 이동하여 접근을 허용해주세요.", type: nil, style: .Alert)
+                        
+                        alert.cancelButtonTitle = "확인"
+                        alert.show()
+                    }
+                default:
+                    break
+                }
+            }
+            
+            return false
+        }
+    }
+    
+    private func shouldAccessCamera() -> Bool {
+        let cameraAuthorizationStatus: AVAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        
+        switch cameraAuthorizationStatus {
+        case .authorized:
+            return true
+        case .denied,
+             .notDetermined,
+             .restricted:
+            AVCaptureDevice.requestAccess(for: AVMediaType.video) { (granted) in
+                if !granted {
+                    DispatchQueue.main.async {
+                        let alert = BodabiAlertController(title: "주의", message: "카메라 접근 권한이 허용되지 않았습니다. [설정]으로 이동하여 접근을 허용해주세요.", type: nil, style: .Alert)
+                        
+                        alert.cancelButtonTitle = "확인"
+                        alert.show()
+                    }
+                }
+            }
+            
+            return false
+        }
+    }
+    
     // MARK: - @IBAction
     
     @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
@@ -146,36 +198,6 @@ extension HolidayViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension HolidayViewController: UITableViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let offsetY = scrollView.contentOffset.y
-//        print(offsetY)
-//
-//        let width = view.frame.size.width
-//        guard let navHeight = navigationController?.navigationBar.frame.size.height else { return }
-//
-//        // 위로 스크롤
-//        if offsetY > 0 {
-//            var height = informationView.frame.height - offsetY
-//
-//            if height <= navHeight {
-//                height = navHeight
-//            }
-//
-//            tableView.frame.origin.y = height
-//            informationView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-//        } else {
-//            // 아래로 스크롤
-//            var height = informationView.frame.height - offsetY
-//
-//            if height >= 250 {
-//                height = 250
-//            }
-//
-//            tableView.frame.origin.y = height
-//            informationView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-//        }
-//    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ThanksFriendHeaderView.reuseIdentifier) as? ThanksFriendHeaderView else { return UIView() }
         
@@ -193,6 +215,8 @@ extension HolidayViewController: UITableViewDelegate {
 
 extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     private func presentPicker(source: UIImagePickerController.SourceType) {
+        if !shouldAccessPhotoLibrary() { return }
+        
         guard UIImagePickerController.isSourceTypeAvailable(source) else {
             let alert = BodabiAlertController(title: "사용할 수 없는 타입입니다", message: nil, type: nil, style: .Alert)
             alert.cancelButtonTitle = "확인"
@@ -200,6 +224,8 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
             
             return
         }
+        
+        if source == .camera, !shouldAccessCamera() { return }
         
         picker.sourceType = source
         
