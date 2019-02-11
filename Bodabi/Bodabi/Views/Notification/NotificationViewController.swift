@@ -17,7 +17,7 @@ class NotificationViewController: UIViewController {
     
     // MARK: - Property
     
-    internal var databaseManager: DatabaseManager?
+    private var databaseManager: DatabaseManager!
     private var fetchedResultsController: NSFetchedResultsController<Notification>?
     
     
@@ -91,6 +91,7 @@ extension NotificationViewController: UITableViewDelegate {
         let viewController = storyboard(.friendHistory)
             .instantiateViewController(ofType: FriendHistoryViewController.self)
         if let notification = fetchedResultsController?.object(at: indexPath) {
+            viewController.setDatabaseManager(databaseManager)
             viewController.friend = notification.event?.friend
             navigationController?.pushViewController(viewController, animated: true)
         }

@@ -25,46 +25,21 @@ class FriendHistoryViewController: UIViewController {
             histories = (friend?.histories as? Set<History>)?.sorted(by: { $0.date! < $1.date! }) ?? []
         }
     }
-    private var histories: [History]? {
-        didSet {
-            guard let histories = histories else {
-                return
-            }
-            sections = []
-            var income: Int = 0
-            var expenditure: Int = 0
-            var historyItems: [FriendHistorySectionItem] = []
-            for history in histories {
-                if let amount = Int(history.item ?? "") {
-                    switch history.isTaken {
-                    case true:
-                        income += amount
-                    case false:
-                        expenditure += amount
-                    }
-                }
-                if history.isTaken == true {
-                    historyItems.append(.takeHistory(history: history))
-                } else {
-                    historyItems.append(.giveHistory(history: history))
-                }
-            }
-            sections.append(.information(items: [.information(income: String(income), expenditure: String(expenditure))]))
-            sections.append(.history(items: historyItems))
-        }
-    }
+    private var histories: [History]?
     private var databaseManager: DatabaseManager!
+    private var isSortDescending: Bool = true
+    private var isTableViewLoaded: Bool = false
+    private var sections: [FriendHistorySection] = []
     private struct Const {
         static let bottomInset: CGFloat = 90.0
     }
-    private var isSortDescending: Bool = true
-    private var sections: [FriendHistorySection] = []
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initSection()
         initNavigationBar()
         initTableView()
     }
@@ -87,13 +62,38 @@ class FriendHistoryViewController: UIViewController {
         tableView.delegate = self; tableView.dataSource = self
         
         let cells = [FriendHistoryInformationViewCell.self, FriendHistoryReceiveViewCell.self, FriendHistorySendViewCell.self]
-        tableView.register(cells)
-        
         let nib = UINib(nibName: "FriendHistoryHeaderView", bundle: nil)
+        tableView.register(cells)
         tableView.register(nib, forHeaderFooterViewReuseIdentifier: FriendHistoryHeaderView.reuseIdentifier)
-        
         tableView.contentInset.bottom = Const.bottomInset
         tableView.reloadData()
+    }
+    
+    private func initSection() {
+        guard let histories = histories else {
+            return
+        }
+        sections = []
+        var income: Int = 0
+        var expenditure: Int = 0
+        var historyItems: [FriendHistorySectionItem] = []
+        for history in histories {
+            if let amount = Int(history.item ?? "") {
+                switch history.isTaken {
+                case true:
+                    income += amount
+                case false:
+                    expenditure += amount
+                }
+            }
+            if history.isTaken == true {
+                historyItems.append(.takeHistory(history: history))
+            } else {
+                historyItems.append(.giveHistory(history: history))
+            }
+        }
+        sections.append(.information(items: [.information(income: String(income), expenditure: String(expenditure))]))
+        sections.append(.history(items: historyItems))
     }
     
     // MARK: - Method
@@ -111,14 +111,15 @@ class FriendHistoryViewController: UIViewController {
     @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: HolidayInputViewController.self)
-        let navController = UINavigationController(rootViewController: viewController)
+        let navigationController = UINavigationController(rootViewController: viewController)
         
-        viewController.entryRoute = .addHistoryAtFriendHistory
-        viewController.setDatabaseManager(databaseManager)
         var inputData = InputData()
         inputData.name = friend?.name
+        
         viewController.inputData = inputData
-        present(navController, animated: true, completion: nil)
+        viewController.entryRoute = .addHistoryAtFriendHistory
+        viewController.setDatabaseManager(databaseManager)
+        present(navigationController, animated: true, completion: nil)
     }
     
     @IBAction func touchUpFavoriteButton(_ sender: UIBarButtonItem) {
@@ -160,10 +161,6 @@ extension FriendHistoryViewController: UITableViewDataSource {
 extension FriendHistoryViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
-        guard scrollView.contentOffset.y > 0 else {
-            scrollView.contentOffset.y = 0
-            return
-        }
         guard let informationCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? FriendHistoryInformationViewCell else {
             return
         }
@@ -171,6 +168,11 @@ extension FriendHistoryViewController: UITableViewDelegate {
         informationCell.expenditureLabel.alpha = CGFloat(min(1.2 - Double(offsetY) * 0.04, 1.0))
         informationCell.incomeIcon.alpha = CGFloat(min(1.2 - Double(offsetY) * 0.023, 1.0))
         informationCell.expenditureIcon.alpha = CGFloat(min(1.2 - Double(offsetY) * 0.04, 1.0))
+        
+        guard scrollView.contentOffset.y > 0 else {
+            scrollView.contentOffset.y = 0
+            return
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -193,16 +195,15 @@ extension FriendHistoryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == 1, isTableViewLoaded == false {
             cell.transform = CGAffineTransform(translationX: 0, y: cell.frame.height / 2)
             cell.alpha = 0
             UIView.animate(withDuration: 0.5,
                            delay: 0.05 * Double(indexPath.row),
-                           options: UIView.AnimationOptions.curveEaseOut,
-                           animations: {
-                            cell.transform = CGAffineTransform(translationX: 0, y: 0)
-                            cell.alpha = 1
-            })
+                           options: .curveEaseOut,
+                           animations: { cell.transform = CGAffineTransform(translationX: 0, y: 0)
+                                         cell.alpha = 1 },
+                           completion: { _ in self.isTableViewLoaded = true })
         }
     }
 }
@@ -212,6 +213,7 @@ extension FriendHistoryViewController: UITableViewDelegate {
 extension FriendHistoryViewController: FriendHistoryHeaderViewDelegate {
     func friendHistoryHeaderView(_ headerView: FriendHistoryHeaderView, didTapSortButtonWith descending: Bool) {
         sortHistories(descending: isSortDescending)
+        isTableViewLoaded = false
         tableView.reloadData()
         isSortDescending = !isSortDescending
     }
