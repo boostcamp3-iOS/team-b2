@@ -22,17 +22,28 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="641"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="axT-ae-811">
+                                <rect key="frame" x="-2" y="-2" width="379" height="90"/>
+                                <color key="backgroundColor" red="0.86488586664199829" green="0.4526216983795166" blue="0.32937854528427124" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="jCK-Nj-a0q" firstAttribute="trailing" secondItem="8u9-aj-jee" secondAttribute="trailing" id="1d8-XS-c66"/>
+                            <constraint firstItem="axT-ae-811" firstAttribute="leading" secondItem="iwm-8g-HqH" secondAttribute="leading" constant="-2" id="48A-tT-gfJ"/>
                             <constraint firstItem="8u9-aj-jee" firstAttribute="leading" secondItem="jCK-Nj-a0q" secondAttribute="leading" id="CEF-Oi-CDg"/>
-                            <constraint firstItem="8u9-aj-jee" firstAttribute="top" secondItem="jCK-Nj-a0q" secondAttribute="top" id="Ztu-1x-dwF"/>
+                            <constraint firstAttribute="trailing" secondItem="axT-ae-811" secondAttribute="trailing" constant="-2" id="JNI-df-OKJ"/>
+                            <constraint firstItem="axT-ae-811" firstAttribute="top" secondItem="iwm-8g-HqH" secondAttribute="top" constant="-2" id="fcM-R2-eOT"/>
                             <constraint firstItem="jCK-Nj-a0q" firstAttribute="bottom" secondItem="8u9-aj-jee" secondAttribute="bottom" id="kCG-GP-po1"/>
+                            <constraint firstItem="jCK-Nj-a0q" firstAttribute="top" secondItem="axT-ae-811" secondAttribute="bottom" id="ugB-M0-hgv"/>
+                            <constraint firstItem="8u9-aj-jee" firstAttribute="top" secondItem="axT-ae-811" secondAttribute="bottom" id="yFg-TP-XWh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jCK-Nj-a0q"/>
                     </view>
-                    <navigationItem key="navigationItem" title="알림" id="1PT-BC-PS8"/>
+                    <navigationItem key="navigationItem" title="알림" id="1PT-BC-PS8">
+                        <barButtonItem key="backBarButtonItem" title=" " id="qOM-Al-yoE"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="8u9-aj-jee" id="FuK-Ef-brS"/>
                     </connections>
@@ -41,17 +52,23 @@
             </objects>
             <point key="canvasLocation" x="790" y="99"/>
         </scene>
-        <!--Notification-->
+        <!--Navigation Controller-->
         <scene sceneID="8zw-hN-iMY">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Hz-k7-wme" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notification" id="hqD-ST-eRV"/>
+                    <tabBarItem key="tabBarItem" title="" image="ic_alarm" selectedImage="ic_alarm" id="hqD-ST-eRV">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="BXg-xE-E4e">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.8980392157" green="0.25882352939999997" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.8666666666666667" green="0.45098039215686275" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -63,4 +80,7 @@
             <point key="canvasLocation" x="77.599999999999994" y="99.400299850074973"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ic_alarm" width="22" height="25"/>
+    </resources>
 </document>

@@ -9,8 +9,18 @@
 import UIKit
 
 class MyHolidaysViewCell: UITableViewCell {
+    
+    // MARK: - IBOutlet
 
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    // MARK: - Property
+    
+    public var holidays: [Holiday]? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     struct Const {
         static let sectionInsetLength: CGFloat = 15.0
@@ -27,25 +37,26 @@ class MyHolidaysViewCell: UITableViewCell {
 
     }
     
-}
-
-extension MyHolidaysViewCell: UICollectionViewDelegate {
+    // MARK: - Initialization
+    
     private func initCollectionView() {
-        collectionView.delegate = self; collectionView.dataSource = self
+        collectionView.dataSource = self
         
         let cells = [HolidayViewCell.self, MyHolidayInputViewCell.self]
         collectionView.register(cells)
     }
 }
 
+// MARK: - UICollectionViewDataSource
+
 extension MyHolidaysViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return holidays?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeue(HolidayViewCell.self, for: indexPath)
-        
+        cell.holiday = holidays?[indexPath.row]
         return cell
     }
 }

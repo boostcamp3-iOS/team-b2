@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CWO-Nd-VoY">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,23 +15,26 @@
             <objects>
                 <viewController storyboardIdentifier="FriendsViewController" id="D7N-ri-hmc" customClass="FriendsViewController" customModule="Bodabi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2q5-Cn-sT9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="search" translatesAutoresizingMaskIntoConstraints="NO" id="zdh-xO-tiw">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="barTintColor" red="0.89803921568627454" green="0.25882352941176467" blue="0.1764705882352941" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.8666666666666667" green="0.45098039215686275" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8n0-DD-S3D">
-                                <rect key="frame" x="0.0" y="56" width="375" height="498"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="585"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="25" minY="0.0" maxX="25" maxY="0.0"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f75-ar-m1V">
-                                <rect key="frame" x="155.5" y="473" width="64" height="65"/>
+                                <rect key="frame" x="155.66666666666666" y="560" width="64" height="65"/>
                                 <state key="normal" image="ic_floatingButton"/>
+                                <connections>
+                                    <action selector="touchUpAddFriendButton:" destination="D7N-ri-hmc" eventType="touchUpInside" id="jbQ-l9-o8E"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -40,8 +43,8 @@
                             <constraint firstItem="CYP-7a-ICk" firstAttribute="bottom" secondItem="8n0-DD-S3D" secondAttribute="bottom" id="NsL-HC-jPk"/>
                             <constraint firstItem="8n0-DD-S3D" firstAttribute="top" secondItem="zdh-xO-tiw" secondAttribute="bottom" id="ggJ-oD-Zmu"/>
                             <constraint firstItem="8n0-DD-S3D" firstAttribute="leading" secondItem="CYP-7a-ICk" secondAttribute="leading" id="ivD-9J-wO2"/>
-                            <constraint firstItem="zdh-xO-tiw" firstAttribute="leading" secondItem="CYP-7a-ICk" secondAttribute="leading" id="nW0-dV-21g"/>
-                            <constraint firstItem="zdh-xO-tiw" firstAttribute="trailing" secondItem="CYP-7a-ICk" secondAttribute="trailing" id="pzt-0v-puL"/>
+                            <constraint firstItem="zdh-xO-tiw" firstAttribute="leading" secondItem="2q5-Cn-sT9" secondAttribute="leading" id="nW0-dV-21g"/>
+                            <constraint firstItem="zdh-xO-tiw" firstAttribute="trailing" secondItem="2q5-Cn-sT9" secondAttribute="trailing" id="pzt-0v-puL"/>
                             <constraint firstItem="f75-ar-m1V" firstAttribute="centerX" secondItem="CYP-7a-ICk" secondAttribute="centerX" id="sbk-d3-2mw"/>
                             <constraint firstItem="zdh-xO-tiw" firstAttribute="top" secondItem="CYP-7a-ICk" secondAttribute="top" id="zEL-u8-DP2"/>
                             <constraint firstItem="CYP-7a-ICk" firstAttribute="bottom" secondItem="f75-ar-m1V" secondAttribute="bottom" constant="16" id="zuh-Fd-cbN"/>
@@ -50,14 +53,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="친구 목록" id="04i-rE-MVZ">
                         <barButtonItem key="backBarButtonItem" title=" " id="TJh-w5-Vus"/>
-                        <rightBarButtonItems>
-                            <barButtonItem image="icSort" id="L04-zp-veJ">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </barButtonItem>
-                            <barButtonItem title="Item" systemItem="edit" id="DeX-15-GCt">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" title="편집" id="DeX-15-GCt">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="ic_sort" id="L04-zp-veJ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="zdh-xO-tiw" id="nJA-ft-HFM"/>
@@ -68,17 +69,20 @@
             </objects>
             <point key="canvasLocation" x="789.60000000000002" y="98.50074962518741"/>
         </scene>
-        <!--Friends-->
+        <!--Navigation Controller-->
         <scene sceneID="AkO-Xv-38o">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CWO-Nd-VoY" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Friends" id="b4r-zR-HYs"/>
+                    <tabBarItem key="tabBarItem" title="" image="ic_person" selectedImage="ic_person" id="b4r-zR-HYs">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="hkn-Uk-12Y">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="hkn-Uk-12Y">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.89803921568627454" green="0.25882352941176467" blue="0.1764705882352941" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.8666666666666667" green="0.45098039215686275" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -94,7 +98,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icSort" width="25" height="25"/>
         <image name="ic_floatingButton" width="64" height="65"/>
+        <image name="ic_person" width="25" height="25"/>
+        <image name="ic_sort" width="18" height="21"/>
     </resources>
 </document>

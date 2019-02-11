@@ -10,11 +10,15 @@ import UIKit
 
 class DateInputViewController: UIViewController {
     
+    // MARK: - IBOutlet
+    
     @IBOutlet weak var nextButton: UIButton!
-    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var calendarView: CalendarView!
     @IBOutlet weak var dateLabel: UILabel!
     
-    let dateFormatter: DateFormatter = {
+    // MARK: - Property
+    
+    private let dateFormatter: DateFormatter = {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.dateFormat = "MMMM dd, yyyy"
@@ -22,29 +26,50 @@ class DateInputViewController: UIViewController {
         return formatter
     }()
     
-    weak var delegate: HomeViewController?
-    var entryRoute: EntryRoute!
+    public var inputData: InputData?
+    public var entryRoute: EntryRoute!
+    private var databaseManager: DatabaseManager!
+    private var date: Date? {
+        didSet {
+            setNextButton()
+        }
+    }
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initDateLabel()
+        
+        initCalendar()
         initNavigationBar()
         initNextButton()
     }
     
-    private func initDateLabel() {
-        let date: Date = self.datePicker.date
-        let dateString: String = self.dateFormatter.string(from: date)
-        self.dateLabel.text = dateString
+    // MARK: - Initialization
+    
+    private func initCalendar() {
+        calendarView.delegate = self
         
+        var calendarStyle: CalendarViewStyle = .init()
+        
+        calendarStyle.todayColor = .calendarTodayColor
+        calendarStyle.dayColor = .black
+        calendarStyle.weekColor = .calendarWeekColor
+        calendarStyle.weekendColor = .red
+        calendarStyle.eventColor = .mainColor
+        calendarStyle.selectedColor = .calendarSelectedColor
+        
+        calendarView.style = calendarStyle
+        calendarView.style.weekType = .normal // long short normal
+        calendarView.style.firstWeekType = .sunday
     }
     
     private func initNavigationBar() {
-        self.navigationController?.navigationBar.clear()
+        navigationController?.navigationBar.clear()
         
         let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
-        
-        self.navigationItem.leftBarButtonItem = backButton
+        backButton.tintColor = UIColor.mainColor
+        navigationItem.leftBarButtonItem = backButton
     }
     
     private func initNextButton() {
@@ -53,29 +78,56 @@ class DateInputViewController: UIViewController {
         nextButton.isEnabled = false
     }
     
+    // MARK: - Setup
+    
     private func setNextButton() {
+        guard date != nil else {
+            initNextButton()
+            return
+        }
         nextButton.backgroundColor = UIColor.mainColor
         nextButton.isEnabled = true
     }
     
-    @IBAction func didDatePickerValueChaged(_ sender: UIDatePicker) {
-        let holidayDate: Date = sender.date
-        let dateString: String = self.dateFormatter.string(from: holidayDate)
-        self.dateLabel.text = dateString
-        
-        setNextButton()
-    }
+    // MARK: - IBAction
     
     @IBAction func touchUpNextButton(_ sender: UIButton) {
-        // 입력 받은 데이터 처리 이후 dismiss
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        guard var inputData = inputData else { return }
+        
+        inputData.date = date
+        InputManager.write(context: databaseManager.viewContext, entryRoute: entryRoute, data: inputData)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Objc
+    
+    @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - DatabaseManagerClient
+
+extension DateInputViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
+    }
+}
+
+// MARK: - CalendarViewDelegate
+
+extension DateInputViewController: CalendarViewDelegate {
+    func calendar(_ calendar: CalendarView, didSelectedItem date: Date) {
+        self.date = date
+        dateLabel.text = date.toString(of: .year)
+    }
+    
+    func calendar(_ calendar: CalendarView, currentVisibleItem date: Date) {
+        self.date = nil
+        dateLabel.text = date.toString(of: .noDay)
     }
 }

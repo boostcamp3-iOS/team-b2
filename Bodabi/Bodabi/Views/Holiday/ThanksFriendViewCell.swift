@@ -17,3 +17,10 @@ class ThanksFriendViewCell: UITableViewCell {
         super.awakeFromNib()
     }
 }
+
+extension ThanksFriendViewCell: HolidayCellProtocol {
+    func bind(friend: ThanksFriend) {
+        nameLabel.text = friend.name
+        itemLabel.text = friend.item.insertComma()
+    }
+}

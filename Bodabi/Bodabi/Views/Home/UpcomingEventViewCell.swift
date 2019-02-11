@@ -9,11 +9,25 @@
 import UIKit
 
 class UpcomingEventViewCell: UITableViewCell {
+    
+    // MARK: - IBOutlet
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var holidayLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
+    
+    @IBOutlet weak var lastHistoryView: UIView!
     @IBOutlet weak var lastHistoryLabel: UILabel!
+    @IBOutlet weak var lastHistoryImageView: UIImageView!
     @IBOutlet weak var dDayLabel: UILabel!
+    
+    // MARK: - Property
+    
+    public var event: Event? {
+        didSet {
+            configure()
+        }
+    }
     
     struct Const {
         static let buttonAnimationScale: CGFloat = 1.35
@@ -23,7 +37,7 @@ class UpcomingEventViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setUpUI()
+        initLastHistory()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -31,16 +45,33 @@ class UpcomingEventViewCell: UITableViewCell {
         
     }
     
-    @IBAction func touchUpAddFavoriteButton(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        sender.setScaleAnimation(scale: Const.buttonAnimationScale,
-                                 duration: Const.buttonAnimationDuration)
+    // MARK: - Initialization
+    
+    private func initLastHistory() {
+        lastHistoryView.isHidden = true
     }
     
-    private func setUpUI() {
-        nameLabel.text = "김민수"
-        holidayLabel.text = "결혼"
-        lastHistoryLabel.text = "생일 50,000"
-        dDayLabel.text = "D-23"
+    // MARK: - Configure
+    
+    private func configure() {
+        guard let event = event else { return }
+
+        nameLabel.text = event.friend?.name
+        holidayLabel.text = event.title
+        dDayLabel.text = "D-\(event.dday)"
+        favoriteButton.isSelected = event.favorite
+        
+        let friendHistories = event.friend?.histories
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
+        let histories = friendHistories?.sortedArray(using: [sortDescriptor])
+        guard let lastHistory = histories?.first as? History else {
+            initLastHistory()
+            return
+        }
+        lastHistoryView.isHidden = false
+        lastHistoryImageView.image = lastHistory.isTaken ? #imageLiteral(resourceName: "ic_boxIn") : #imageLiteral(resourceName: "ic_boxOut")
+        lastHistoryLabel.text = String(format: "%@ %@",
+                                       lastHistory.holiday ?? "",
+                                       lastHistory.item?.insertComma() ?? "")
     }
 }

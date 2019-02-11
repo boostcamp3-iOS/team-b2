@@ -10,11 +10,11 @@ import UIKit
 
 class SettingViewController: UIViewController {
     
-    // MARK: - IBOutlets
+    // MARK: - IBOutlet
     
     @IBOutlet weak var tableView: UITableView!
 
-    // MARK: - Lifecycle Methods
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,12 @@ class SettingViewController: UIViewController {
         initDummyUserDefaults()
     }
     
-    // MARK: - Initialization Methods
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        initNavigationBar()
+    }
+    
+    // MARK: - Initialization
     
     private func initTableView() {
         let cell = SettingViewCell.self
@@ -31,12 +36,16 @@ class SettingViewController: UIViewController {
         tableView.tableFooterView = UIView()
     }
     
+    private func initNavigationBar(){
+        navigationController?.navigationBar.clear()
+    }
+    
     private func initDummyUserDefaults() {
         UserDefaults.standard.set(50,forKey: "UserFontSize")
     }
 }
 
-// MARK: - TableView DataSource
+// MARK: - UITableViewDataSource
 
 extension SettingViewController: UITableViewDataSource {
     

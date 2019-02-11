@@ -9,11 +9,54 @@
 import UIKit
 
 class HolidayViewCell: UICollectionViewCell {
+    
+    // MARK: - IBOutlet
 
     @IBOutlet weak var holidayImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    // MARK: - Property
+    
+    public var holiday: Holiday? {
+        didSet {
+            configure()
+        }
+    }
+    // FIXME: - Data dummy image
+    let imageOfHoliday: [(holiday: String, image: UIImage)] = [
+        (holiday: "생일", image: #imageLiteral(resourceName: "birthday")),
+        (holiday: "출산", image: #imageLiteral(resourceName: "babyborn")),
+        (holiday: "결혼", image: #imageLiteral(resourceName: "wedding")),
+        (holiday: "장례", image: #imageLiteral(resourceName: "funeral"))
+    ]
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        holidayImageView.image = nil
+    }
+    
+    // MARK: - Configure
 
+    private func configure() {
+        titleLabel.text = holiday?.title
+        dateLabel.text = holiday?.date?.toString(of: .year)
+
+        if let imageData = holiday?.image {
+            holidayImageView.image = UIImage(data: imageData)
+        }
+//        } else {
+//            imageOfHoliday.forEach {
+//                if holiday?.title?.contains($0.holiday) ?? true {
+//                    holidayImageView.image = $0.image
+//                    return
+//                }
+//            }
+//        }
+    }
 }

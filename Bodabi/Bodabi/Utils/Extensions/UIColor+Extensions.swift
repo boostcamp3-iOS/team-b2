@@ -11,22 +11,43 @@ import UIKit
 
 extension UIColor {
     class var mainColor: UIColor {
-        return #colorLiteral(red: 0.8980392157, green: 0.2588235294, blue: 0.1764705882, alpha: 1)
+        // Color HexCode: DB7253
+        return #colorLiteral(red: 0.9294973612, green: 0.4212887287, blue: 0.292683661, alpha: 1)
     }
     
     class var weddingColor: UIColor {
-        return #colorLiteral(red: 0.9333333333, green: 0.4039215686, blue: 0.3176470588, alpha: 1)
+        // Color HexCode: EAAFA1
+        return #colorLiteral(red: 0.9176470588, green: 0.6862745098, blue: 0.631372549, alpha: 1)
     }
     
     class var starColor: UIColor {
-        return #colorLiteral(red: 1, green: 0.7723571658, blue: 0.3705800474, alpha: 1)
-    }
-    
-    class var calendarColor: UIColor {
-        return #colorLiteral(red: 0.2823529412, green: 0.5803921569, blue: 0.9803921569, alpha: 1)
+        // Color HexCode: FAC670
+        return #colorLiteral(red: 0.9803921569, green: 0.7764705882, blue: 0.4392156863, alpha: 1)
     }
     
     class var offColor: UIColor {
-        return #colorLiteral(red: 0.737254902, green: 0.7333333333, blue: 0.7450980392, alpha: 1)
+        // Color HexCode: EEEEEE
+        return #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
+    }
+    
+    class var calendarSelectedColor: UIColor {
+        // Color HexCode: DEE6FA
+        return #colorLiteral(red: 0.6431372549, green: 0.6823529412, blue: 0.9215686275, alpha: 1)
+    }
+    
+    class var calendarPointColor: UIColor {
+        return #colorLiteral(red: 0.9490196078, green: 0.7529411765, blue: 0.3568627451, alpha: 1)
+    }
+    
+    class var calendarTodayColor: UIColor {
+        return #colorLiteral(red: 0.4784313725, green: 0.5333333333, blue: 0.8862745098, alpha: 1)
+    }
+    
+    class var calendarWeekColor: UIColor {
+        return #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
+    }
+    
+    class var overlayColor: UIColor {
+        return UIColor(white: 0, alpha: 0.2)
     }
 }

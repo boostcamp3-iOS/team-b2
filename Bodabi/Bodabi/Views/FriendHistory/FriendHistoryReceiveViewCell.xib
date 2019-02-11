@@ -6,40 +6,41 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendHistoryReceiveViewCell" rowHeight="84" id="338-gO-Vm9" customClass="FriendHistoryReceiveViewCell" customModule="Bodabi" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="321" height="84"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendHistoryReceiveViewCell" rowHeight="87" id="338-gO-Vm9" customClass="FriendHistoryReceiveViewCell" customModule="Bodabi" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="321" height="87"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="338-gO-Vm9" id="4Sq-ZM-WvW">
-                <rect key="frame" x="0.0" y="0.0" width="321" height="83.5"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="338-gO-Vm9" id="4Sq-ZM-WvW">
+                <rect key="frame" x="0.0" y="0.0" width="321" height="86.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mJt-lG-RqE">
-                        <rect key="frame" x="8" y="4" width="221" height="76"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mJt-lG-RqE" userLabel="Message View">
+                        <rect key="frame" x="24" y="4" width="197" height="78.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Holiday" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKq-59-auJ">
-                                <rect key="frame" x="16" y="12" width="100" height="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKq-59-auJ">
+                                <rect key="frame" x="16" y="12" width="140" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="ddg-Qa-0Dm"/>
-                                    <constraint firstAttribute="width" constant="100" id="nEb-a2-HgC"/>
+                                    <constraint firstAttribute="width" constant="140" id="nEb-a2-HgC"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12.26" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZjE-wM-AC3">
-                                <rect key="frame" x="170" y="12" width="35" height="16"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZjE-wM-AC3">
+                                <rect key="frame" x="148" y="12" width="33" height="16"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="김철수님이 축의금으로 50,000원을 전달해주셨습니다" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcA-0M-Dgd">
-                                <rect key="frame" x="16" y="32" width="201" height="31.5"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcA-0M-Dgd">
+                                <rect key="frame" x="16" y="32" width="171" height="34.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -47,13 +48,14 @@
                         <color key="backgroundColor" red="0.93332195281982422" green="0.93332749605178833" blue="0.93334168195724487" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="hcA-0M-Dgd" firstAttribute="leading" secondItem="mJt-lG-RqE" secondAttribute="leading" constant="16" id="3gi-bj-dWn"/>
-                            <constraint firstItem="ZjE-wM-AC3" firstAttribute="top" secondItem="mJt-lG-RqE" secondAttribute="top" constant="12" id="C5x-mR-Ajq"/>
-                            <constraint firstAttribute="width" constant="221" id="QoZ-po-0YL"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="DvK-lC-OJc"/>
+                            <constraint firstItem="ZjE-wM-AC3" firstAttribute="centerY" secondItem="PKq-59-auJ" secondAttribute="centerY" id="ZVQ-9P-M1Z"/>
                             <constraint firstItem="hcA-0M-Dgd" firstAttribute="top" secondItem="PKq-59-auJ" secondAttribute="bottom" constant="4" id="cZ1-yJ-bOc"/>
                             <constraint firstItem="PKq-59-auJ" firstAttribute="leading" secondItem="mJt-lG-RqE" secondAttribute="leading" constant="16" id="fNQ-wi-ELq"/>
-                            <constraint firstAttribute="trailing" secondItem="hcA-0M-Dgd" secondAttribute="trailing" constant="4" id="mUP-IF-9xM"/>
+                            <constraint firstAttribute="bottom" secondItem="hcA-0M-Dgd" secondAttribute="bottom" constant="12" id="hMq-XA-OdO"/>
+                            <constraint firstAttribute="trailing" secondItem="hcA-0M-Dgd" secondAttribute="trailing" constant="10" id="mUP-IF-9xM"/>
                             <constraint firstItem="PKq-59-auJ" firstAttribute="top" secondItem="mJt-lG-RqE" secondAttribute="top" constant="12" id="qvL-Xi-eZV"/>
-                            <constraint firstAttribute="height" constant="76" id="wAU-Dx-tqr"/>
+                            <constraint firstItem="ZjE-wM-AC3" firstAttribute="height" secondItem="PKq-59-auJ" secondAttribute="height" id="tIR-PT-LXg"/>
                             <constraint firstAttribute="trailing" secondItem="ZjE-wM-AC3" secondAttribute="trailing" constant="16" id="wzI-Zg-O20"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -64,16 +66,19 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="mJt-lG-RqE" firstAttribute="leading" secondItem="4Sq-ZM-WvW" secondAttribute="leading" constant="8" id="dhg-Iq-kuU"/>
-                    <constraint firstItem="mJt-lG-RqE" firstAttribute="centerY" secondItem="4Sq-ZM-WvW" secondAttribute="centerY" id="pxN-St-RsK"/>
+                    <constraint firstAttribute="bottom" secondItem="mJt-lG-RqE" secondAttribute="bottom" constant="4" id="Tls-rK-WiQ"/>
+                    <constraint firstItem="mJt-lG-RqE" firstAttribute="leading" secondItem="Uep-Po-y3J" secondAttribute="leading" constant="24" id="dhg-Iq-kuU"/>
+                    <constraint firstItem="mJt-lG-RqE" firstAttribute="top" secondItem="4Sq-ZM-WvW" secondAttribute="top" constant="4" id="pNg-QA-Xot"/>
+                    <constraint firstItem="Uep-Po-y3J" firstAttribute="trailing" secondItem="mJt-lG-RqE" secondAttribute="trailing" priority="900" constant="100" id="vsz-Pl-pi5"/>
                 </constraints>
+                <viewLayoutGuide key="safeArea" id="Uep-Po-y3J"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="dateLabel" destination="ZjE-wM-AC3" id="u91-Nd-zo7"/>
                 <outlet property="holidayLabel" destination="PKq-59-auJ" id="q4o-Wa-1Ea"/>
                 <outlet property="sentenceLabel" destination="hcA-0M-Dgd" id="7vA-Au-24b"/>
             </connections>
-            <point key="canvasLocation" x="58.399999999999999" y="118.74062968515743"/>
+            <point key="canvasLocation" x="92" y="112.89355322338831"/>
         </tableViewCell>
     </objects>
 </document>
