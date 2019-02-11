@@ -21,6 +21,6 @@ class ThanksFriendViewCell: UITableViewCell {
 extension ThanksFriendViewCell: HolidayCellProtocol {
     func bind(friend: ThanksFriend) {
         nameLabel.text = friend.name
-        itemLabel.text = friend.item
+        itemLabel.text = friend.item.insertComma()
     }
 }
