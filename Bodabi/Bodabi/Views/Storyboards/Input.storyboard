@@ -417,6 +417,10 @@
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-WU-Hc7" customClass="CalendarView" customModule="Bodabi" customModuleProvider="target">
                                 <rect key="frame" x="16" y="298" width="343" height="216"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="fDu-WU-Hc7" secondAttribute="height" multiplier="1:1" id="KAE-eS-Xwa"/>
+                                    <constraint firstAttribute="width" constant="343" id="ooT-Mg-hb0"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
