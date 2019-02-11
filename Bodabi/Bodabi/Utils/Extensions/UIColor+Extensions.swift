@@ -46,4 +46,8 @@ extension UIColor {
     class var calendarWeekColor: UIColor {
         return #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
     }
+    
+    class var overlayColor: UIColor {
+        return UIColor(white: 0, alpha: 0.2)
+    }
 }
