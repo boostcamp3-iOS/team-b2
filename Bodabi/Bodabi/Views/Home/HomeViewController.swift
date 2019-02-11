@@ -115,7 +115,7 @@ class HomeViewController: UIViewController {
             holidays = result
             tableView.reloadSections(
                 IndexSet(integer: Section.holidays.rawValue),
-                with: .fade
+                with: .none
             )
         }
     }
@@ -150,8 +150,8 @@ class HomeViewController: UIViewController {
                                  duration: Const.buttonAnimationDuration)
         
         sender.isSelected = !sender.isSelected
-//        events?[sender.tag].favorite = sender.isSelected
-//        try? databaseManager?.viewContext.save()
+        events?[sender.tag].favorite = sender.isSelected
+        try? databaseManager?.viewContext.save()
     }
 }
 
