@@ -107,7 +107,7 @@ class HomeViewController: UIViewController {
     
     private func fetchHoliday() {
         let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
         request.sortDescriptors = [sortDescriptor]
         
         if let result = try? databaseManager.viewContext.fetch(request) {

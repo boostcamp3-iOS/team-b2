@@ -39,7 +39,7 @@ class DatabaseManager {
     
     func read(){
         let fetchRequest: NSFetchRequest<Friend> = Friend.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         friendFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: viewContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -78,7 +78,7 @@ class DatabaseManager {
     
     func delete() {
         let request: NSFetchRequest<Friend> = Friend.fetchRequest()
-        request.predicate = NSPredicate(format: "id = %d", 14)
+        request.predicate = NSPredicate(format: "name = %@", "성시경")
         if let friend = try? viewContext.fetch(request),
             let objectToDelete = friend.first {
             viewContext.delete(objectToDelete)
@@ -106,7 +106,7 @@ class DatabaseManager {
     
     func update() {
         let request: NSFetchRequest<Friend> = Friend.fetchRequest()
-        request.predicate = NSPredicate(format: "id = %d", 3)
+        request.predicate = NSPredicate(format: "name = %@", "성시경")
         if let friend = try? viewContext.fetch(request) {
             friend.first?.name = "김동률"
         }
@@ -132,7 +132,6 @@ class DatabaseManager {
         
         for i in 0..<numberOfRows {
             let friend = Friend(context: viewContext)
-            friend.id = Int32(i)
             friend.favorite = favoriteList[i]
             friend.name = nameList[i]
             friend.phoneNumber = phoneNumberList[i]
@@ -148,13 +147,14 @@ class DatabaseManager {
     func insertHolidays() {
         let titleList = ["내 결혼식", "어머니 장례", "동생 결혼식", "내 생일", "아버지 환갑잔치"]
         let dateList = ["20161210", "20180105", "20170724", "19921203", "20120410"]
+        let createdDateList = ["20161210", "20180105", "20170724", "19921203", "20120410"]
         let numberOfRows: Int = titleList.count
         
         for i in 0..<numberOfRows {
             let holiday = Holiday(context: viewContext)
-            holiday.id = Int32(i)
             holiday.title = titleList[i]
             holiday.date = Date(stringLiteral: dateList[i])
+            holiday.createdDate = Date(stringLiteral: createdDateList[i])
             do {
                 try viewContext.save()
             } catch {
@@ -173,16 +173,14 @@ class DatabaseManager {
         
         for i in 0..<numberOfRows {
             let history = History(context: viewContext)
-            history.id = Int32(i)
             history.holiday = holidayList[i]
             history.date = Date(stringLiteral: dateList[i])
             history.item = itemList[i]
             history.isTaken = isTakenList[i]
             
             let request: NSFetchRequest<Friend> = Friend.fetchRequest()
-            request.predicate = NSPredicate(format: "id = %d", friendIdList[i])
-            if let friend = try? viewContext.fetch(request) {
-                history.friend = friend.first
+            if let friends = try? viewContext.fetch(request) {
+                history.friend = friends[friendIdList[i]]
             }
             
             do {
@@ -197,17 +195,18 @@ class DatabaseManager {
         let titleList = ["결혼", "결혼", "졸업식", "생일", "입학식", "개업식", "생일", "생일", "결혼", "결혼"]
         let dateList = ["20181210", "20190305", "20180724", "20181203", "20190121", "20190125", "20190220", "20190315", "20190505", "20190710"]
         let friendIdList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        let favoriteList = [false, false, true, true, false, true, false, false, false, true]
         let numberOfRows: Int = titleList.count
         
         for i in 0..<numberOfRows {
             let event = Event(context: viewContext)
             event.title = titleList[i]
             event.date = Date(stringLiteral: dateList[i])
+            event.favorite = favoriteList[i]
             
             let request: NSFetchRequest<Friend> = Friend.fetchRequest()
-            request.predicate = NSPredicate(format: "id = %d", friendIdList[i])
-            if let friend = try? viewContext.fetch(request) {
-                event.friend = friend.first
+            if let friends = try? viewContext.fetch(request) {
+                event.friend = friends[friendIdList[i]]
             }
             
             do {
@@ -227,9 +226,8 @@ class DatabaseManager {
             notification.date = Date(stringLiteral: dateList[i])
             
             let request: NSFetchRequest<Event> = Event.fetchRequest()
-            request.predicate = NSPredicate(format: "friend.id = %d", i+1)
-            if let event = try? viewContext.fetch(request) {
-                notification.event = event.first
+            if let events = try? viewContext.fetch(request) {
+                notification.event = events[i]
             }
             
             do {
