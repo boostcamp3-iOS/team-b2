@@ -17,6 +17,7 @@ class HolidayViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var floatingButton: UIButton!
     @IBOutlet weak var informationView: HolidayInformationView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     // MARK: - Properties
     
@@ -25,11 +26,15 @@ class HolidayViewController: UIViewController {
     
     private struct Const {
         static let bottomInset: CGFloat = 90.0
+        static let maximumImageHeight: CGFloat = 350.0
+        static var minimumImageHeight: CGFloat = 88.0
+        
     }
     
     private var databaseManager: DatabaseManager!
     private let picker = UIImagePickerController()
     private var thanksFriends: [ThanksFriend]? = []
+    private var isFirstScroll: Bool = true
     
     // MARK: - Lifecycle Method
     
@@ -37,7 +42,7 @@ class HolidayViewController: UIViewController {
         super.viewDidLoad()
         picker.delegate = self
         picker.allowsEditing = true
-        
+
         initTableView()
         initInformationView()
         initNavigationBar()
@@ -46,6 +51,11 @@ class HolidayViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchHistory()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        heightConstraint.constant = Const.minimumImageHeight
     }
     
     // MARK: - Initialization Methods
@@ -88,6 +98,7 @@ class HolidayViewController: UIViewController {
         guard let holiday = holiday else { return }
         guard let imageData = holiday.image else { return }
         informationView.holidayImageView.image = UIImage(data: imageData)
+        heightConstraint.constant = 170
     }
     
     private func initNavigationBar() {
@@ -224,6 +235,36 @@ extension HolidayViewController: UITableViewDelegate {
     }
 }
 
+extension HolidayViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        Const.minimumImageHeight = view.safeAreaLayoutGuide.layoutFrame.origin.y
+        
+        let offsetY = scrollView.contentOffset.y
+        var height = heightConstraint.constant - offsetY
+        
+        var alpha = (height - Const.minimumImageHeight) / (Const.maximumImageHeight - Const.minimumImageHeight)
+
+        if height < Const.minimumImageHeight {
+            height = Const.minimumImageHeight
+        } else if height > Const.maximumImageHeight {
+            height = Const.maximumImageHeight
+            isFirstScroll = false
+        }
+        
+        if isFirstScroll, offsetY <= 0 {
+            alpha = 1.0
+        } else if isFirstScroll, offsetY >= 0 {
+            isFirstScroll = false
+        }
+
+        informationView.incomeLabel.alpha = alpha
+        informationView.incomeIcon.alpha = alpha
+        
+        heightConstraint.constant = height
+    }
+}
+
+
 // MARK: - UIImagePickerControllerDelegate
 
 extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
@@ -297,5 +338,3 @@ struct ThanksFriend {
 protocol HolidayCellProtocol {
     func bind(friend: ThanksFriend)
 }
-
-

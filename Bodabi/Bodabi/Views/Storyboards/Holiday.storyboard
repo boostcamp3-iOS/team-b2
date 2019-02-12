@@ -96,6 +96,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="floatingButton" destination="1Ni-zn-qaK" id="EFr-aN-QoW"/>
+                        <outlet property="heightConstraint" destination="TJH-mw-6Bc" id="ud4-N7-rYV"/>
                         <outlet property="informationView" destination="nb8-hE-gvH" id="Vae-E6-bw9"/>
                         <outlet property="tableView" destination="s3C-h3-E04" id="Pbb-Iq-w1t"/>
                     </connections>
@@ -129,7 +130,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_boxIn" width="474" height="440"/>
+        <image name="ic_boxIn" width="25" height="25"/>
         <image name="ic_camera" width="24" height="20"/>
         <image name="ic_floatingButton" width="64" height="65"/>
     </resources>
