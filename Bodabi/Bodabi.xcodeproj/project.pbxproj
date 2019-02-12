@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4910CCA12202E0C4004BDBF1 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910CCA02202E0C4004BDBF1 /* TestViewController.swift */; };
 		4910CCA922043EB4004BDBF1 /* CalendarViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910CCA822043EB4004BDBF1 /* CalendarViewStyle.swift */; };
+		49484CF22212613B00C09384 /* String+Unicode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF12212613B00C09384 /* String+Unicode.swift */; };
+		49484CF42212981800C09384 /* Character+Unicode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF32212981800C09384 /* Character+Unicode.swift */; };
 		496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */; };
 		496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B821FAB294003FBA5B /* UIColor+Extensions.swift */; };
 		496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */; };
@@ -114,6 +116,8 @@
 /* Begin PBXFileReference section */
 		4910CCA02202E0C4004BDBF1 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		4910CCA822043EB4004BDBF1 /* CalendarViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewStyle.swift; sourceTree = "<group>"; };
+		49484CF12212613B00C09384 /* String+Unicode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Unicode.swift"; sourceTree = "<group>"; };
+		49484CF32212981800C09384 /* Character+Unicode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Unicode.swift"; sourceTree = "<group>"; };
 		496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Clear.swift"; sourceTree = "<group>"; };
 		496683B821FAB294003FBA5B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -362,6 +366,8 @@
 				DB3873C622001BBC00ADF0CB /* Date+ToString.swift */,
 				DB3873C822006D3900ADF0CB /* UITextField+BottomLine.swift */,
 				4967D6612202C1B000223ADF /* UIView+ParentViewController.swift */,
+				49484CF12212613B00C09384 /* String+Unicode.swift */,
+				49484CF32212981800C09384 /* Character+Unicode.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -672,6 +678,7 @@
 				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
 				F80C28A122026F0D0032DE3E /* FriendHistoryInformationViewCell.swift in Sources */,
 				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,
+				49484CF22212613B00C09384 /* String+Unicode.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
 				F82BE25B22111D2A00C194F1 /* Bodabi.xcdatamodeld in Sources */,
 				F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */,
@@ -680,6 +687,7 @@
 				F80C28A822030D500032DE3E /* FriendHistoryHeaderView.swift in Sources */,
 				DBF4CF2921FC42D7001536A8 /* EntryRoute.swift in Sources */,
 				49C0850121FADE640060B02C /* MyHolidayInputViewCell.swift in Sources */,
+				49484CF42212981800C09384 /* Character+Unicode.swift in Sources */,
 				DBABB194220C4DE000B808F6 /* InputManager.swift in Sources */,
 				49C0851021FD8A7F0060B02C /* FriendsViewController.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,

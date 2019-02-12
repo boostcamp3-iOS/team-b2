@@ -22,6 +22,9 @@ class FriendsViewController: UIViewController {
     private var friends: [Friend]?
     private var favoriteFriends: [Friend]?
     
+    private var searchFriends: [Friend]?
+    private var searchFavoriteFriends: [Friend]?
+    
     private var keyboardDismissGesture: UITapGestureRecognizer?
     
     struct Const {
@@ -86,6 +89,8 @@ class FriendsViewController: UIViewController {
     }
     
     private func initSearchBar() {
+        searchBar.delegate = self
+        
         searchBar.isTranslucent = false
         searchBar.backgroundImage = UIImage()
     }
@@ -119,15 +124,18 @@ class FriendsViewController: UIViewController {
         if let result = try? databaseManager.viewContext.fetch(request) {
             friends = result.filter { $0.favorite == false }
             favoriteFriends = result.filter { $0.favorite == true }
+            
+            searchFriends = friends
+            searchFavoriteFriends = favoriteFriends
             tableView.reloadData()
+            
+            searchBar.text = ""
         }
     }
     
     // MARK: - @objcs
     
     @objc func touchUpFriendFavoriteButton(_ sender: UIButton) {
-//        sender.setScaleAnimation(scale: Const.buttonAnimationScale,
-//                                 duration: Const.buttonAnimationDuration)
         (sender.isSelected ? favoriteFriends?[sender.tag] : friends?[sender.tag])?.favorite = !sender.isSelected
         try? databaseManager?.viewContext.save()
         
@@ -136,7 +144,12 @@ class FriendsViewController: UIViewController {
         let allFriends = (friends + favoriteFriends).sorted { $0.name ?? "" < $1.name ?? "" }
         self.friends = allFriends.filter { $0.favorite == false }
         self.favoriteFriends = allFriends.filter { $0.favorite == true }
+        
+        searchFriends = self.friends
+        searchFavoriteFriends = self.favoriteFriends
         tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
+        
+        searchBar.text = ""
     }
 }
 
@@ -179,7 +192,7 @@ extension FriendsViewController: UITableViewDelegate {
             .instantiateViewController(ofType: FriendHistoryViewController.self)
         viewController.setDatabaseManager(databaseManager)
         
-        let friend = section == .favorite ? favoriteFriends?[indexPath.row] : friends?[indexPath.row]
+        let friend = section == .favorite ? searchFavoriteFriends?[indexPath.row] : searchFriends?[indexPath.row]
         
         viewController.friend = friend
         navigationController?.pushViewController(viewController, animated: true)
@@ -197,9 +210,9 @@ extension FriendsViewController: UITableViewDataSource {
         guard let section = Section(rawValue: section),
             (section == .favorite || section == .friends) else { return 1 }
         if section == .favorite {
-            return favoriteFriends?.count ?? 0
+            return searchFavoriteFriends?.count ?? 0
         }
-        return friends?.count ?? 0
+        return searchFriends?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -218,7 +231,7 @@ extension FriendsViewController: UITableViewDataSource {
                 .addTarget(self, action: #selector(touchUpFriendFavoriteButton(_:)),
                            for: .touchUpInside)
             
-            guard let friends = section == .friends ? friends : favoriteFriends else { return cell }
+            guard let friends = section == .friends ? searchFriends : searchFavoriteFriends else { return cell }
             cell.friend = friends[indexPath.row]
             cell.setLastLine(line: indexPath.row == (friends.count - 1))
             return cell
@@ -231,5 +244,22 @@ extension FriendsViewController: UITableViewDataSource {
 extension FriendsViewController: DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager
+    }
+}
+
+extension FriendsViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let searchText = searchBar.text,
+            searchText != "" else {
+                searchFriends = friends
+                searchFavoriteFriends = favoriteFriends
+                tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
+                return
+        }
+        
+        searchFriends = friends?.filter { ($0.name ?? "").isContain(search: searchText) }
+        searchFavoriteFriends = favoriteFriends?.filter { ($0.name ?? "").isContain(search: searchText) }
+        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
+        
     }
 }
