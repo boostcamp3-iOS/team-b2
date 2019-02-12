@@ -28,7 +28,6 @@ class HolidayViewController: UIViewController {
         static let bottomInset: CGFloat = 90.0
         static let maximumImageHeight: CGFloat = 350.0
         static var minimumImageHeight: CGFloat = 88.0
-        
     }
     
     private var databaseManager: DatabaseManager!
@@ -98,7 +97,8 @@ class HolidayViewController: UIViewController {
         guard let holiday = holiday else { return }
         guard let imageData = holiday.image else { return }
         informationView.holidayImageView.image = UIImage(data: imageData)
-        heightConstraint.constant = 170
+        informationView.blurView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        informationView.incomeIcon.image = #imageLiteral(resourceName: "ic_boxIn")
     }
     
     private func initNavigationBar() {

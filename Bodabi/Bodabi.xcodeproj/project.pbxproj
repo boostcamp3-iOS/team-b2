@@ -57,7 +57,6 @@
 		DB27263D220A042100F30CBC /* BodabiAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB27263C220A042100F30CBC /* BodabiAlertController.swift */; };
 		DB272661220A90AE00F30CBC /* ItemCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB272660220A90AE00F30CBC /* ItemCollectionViewFlowLayout.swift */; };
 		DB272663220BCA4200F30CBC /* HolidayInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB272662220BCA4200F30CBC /* HolidayInformationView.swift */; };
-		DB272665220BCA4F00F30CBC /* HolidayInformationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB272664220BCA4F00F30CBC /* HolidayInformationView.xib */; };
 		DB38739A21FEDAC200ADF0CB /* Holiday.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB38739921FEDAC200ADF0CB /* Holiday.storyboard */; };
 		DB38739D21FEDB0200ADF0CB /* HolidayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB38739C21FEDB0200ADF0CB /* HolidayViewController.swift */; };
 		DB38739F21FEEE8100ADF0CB /* ThanksFriendViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB38739E21FEEE8100ADF0CB /* ThanksFriendViewCell.xib */; };
@@ -162,7 +161,6 @@
 		DB27263C220A042100F30CBC /* BodabiAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodabiAlertController.swift; sourceTree = "<group>"; };
 		DB272660220A90AE00F30CBC /* ItemCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		DB272662220BCA4200F30CBC /* HolidayInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayInformationView.swift; sourceTree = "<group>"; };
-		DB272664220BCA4F00F30CBC /* HolidayInformationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HolidayInformationView.xib; sourceTree = "<group>"; };
 		DB38739921FEDAC200ADF0CB /* Holiday.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Holiday.storyboard; sourceTree = "<group>"; };
 		DB38739C21FEDB0200ADF0CB /* HolidayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayViewController.swift; sourceTree = "<group>"; };
 		DB38739E21FEEE8100ADF0CB /* ThanksFriendViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThanksFriendViewCell.xib; sourceTree = "<group>"; };
@@ -376,7 +374,6 @@
 				DB3873A021FEEF0D00ADF0CB /* ThanksFriendViewCell.swift */,
 				DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */,
 				DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */,
-				DB272664220BCA4F00F30CBC /* HolidayInformationView.xib */,
 				DB272662220BCA4200F30CBC /* HolidayInformationView.swift */,
 			);
 			path = Holiday;
@@ -589,7 +586,6 @@
 				F80C28AA22031E740032DE3E /* FriendHistoryHeaderView.xib in Resources */,
 				F82BE267221145D500C194F1 /* Assets.xcassets in Resources */,
 				F8367C9C21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib in Resources */,
-				DB272665220BCA4F00F30CBC /* HolidayInformationView.xib in Resources */,
 				4998128C21F9D98A000DB7B2 /* Friends.storyboard in Resources */,
 				49C0850221FADE640060B02C /* MyHolidayInputViewCell.xib in Resources */,
 				49C084FE21FADDBB0060B02C /* HolidayViewCell.xib in Resources */,
