@@ -32,7 +32,11 @@ class HolidayViewController: UIViewController {
     
     private var databaseManager: DatabaseManager!
     private let picker = UIImagePickerController()
-    private var thanksFriends: [ThanksFriend]? = []
+    private var thanksFriends: [ThanksFriend]? = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     private var isFirstScroll: Bool = true
     
     // MARK: - Lifecycle Method
@@ -172,6 +176,9 @@ class HolidayViewController: UIViewController {
     // MARK: - @IBAction
     
     @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
+        informationView.incomeIcon.alpha = 0
+        informationView.incomeLabel.alpha = 0
+        
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
@@ -191,7 +198,7 @@ class HolidayViewController: UIViewController {
         actionSheet.delegate = self
         actionSheet.show()
     }
-    
+
     // MARK: - @objc
     
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
@@ -226,6 +233,7 @@ extension HolidayViewController: UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ThanksFriendHeaderView.reuseIdentifier) as? ThanksFriendHeaderView else { return UIView() }
         
         header.headerTitleLabel.text = "감사한 사람들"
+        header.delegate = self
         
         return header
     }
@@ -264,6 +272,26 @@ extension HolidayViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - ThanksFriendHeaderViewDelegate
+
+extension HolidayViewController: ThanksFriendHeaderViewDelegate {
+    func thanksFriendHeaderView(_ headerView: ThanksFriendHeaderView) {
+        let alert = BodabiAlertController(title: "정렬할 방법을 선택해주세요", message: nil, type: nil, style: .Alert)
+        
+        alert.addButton(title: "이름순") { [weak self] in
+            self?.thanksFriends?.sort { $0.name < $1.name }
+        }
+        
+        alert.addButton(title: "금액순") { [weak self] in
+            self?.thanksFriends?.sort {
+                $0.item.localizedStandardCompare($1.item) == .orderedAscending
+            }
+        }
+        
+        alert.cancelButtonTitle = "취소"
+        alert.show()
+    }
+}
 
 // MARK: - UIImagePickerControllerDelegate
 
