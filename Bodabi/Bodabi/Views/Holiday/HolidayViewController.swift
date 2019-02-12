@@ -122,15 +122,13 @@ class HolidayViewController: UIViewController {
         informationView.incomeLabel.text = String(totallyIncome).insertComma()
     }
     
-    private func shouldAccessPhotoLibrary() -> Bool {
+    private func shouldAccessPhotoLibrary(for source: UIImagePickerController.SourceType) -> Bool {
         let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
         
         switch photoAuthorizationStatus {
         case .authorized:
             return true
-        case .notDetermined,
-             .denied,
-             .restricted:
+        case .notDetermined:
             PHPhotoLibrary.requestAuthorization { (status) in
                 switch status {
                 case .denied:
@@ -140,11 +138,19 @@ class HolidayViewController: UIViewController {
                         alert.cancelButtonTitle = "확인"
                         alert.show()
                     }
+                case .authorized:
+                    self.presentPicker(source: source)
                 default:
                     break
                 }
             }
+            return false
+        case .denied,
+             .restricted:
+            let alert = BodabiAlertController(title: "주의", message: "사진 접근 권한이 허용되지 않았습니다. [설정]으로 이동하여 접근을 허용해주세요.", type: nil, style: .Alert)
             
+            alert.cancelButtonTitle = "확인"
+            alert.show()
             return false
         }
     }
@@ -155,9 +161,7 @@ class HolidayViewController: UIViewController {
         switch cameraAuthorizationStatus {
         case .authorized:
             return true
-        case .denied,
-             .notDetermined,
-             .restricted:
+        case .notDetermined:
             AVCaptureDevice.requestAccess(for: AVMediaType.video) { (granted) in
                 if !granted {
                     DispatchQueue.main.async {
@@ -166,8 +170,17 @@ class HolidayViewController: UIViewController {
                         alert.cancelButtonTitle = "확인"
                         alert.show()
                     }
+                } else {
+                    self.presentPicker(source: .camera)
                 }
             }
+            return false
+        case .denied,
+             .restricted:
+            let alert = BodabiAlertController(title: "주의", message: "카메라 접근 권한이 허용되지 않았습니다. [설정]으로 이동하여 접근을 허용해주세요.", type: nil, style: .Alert)
+            
+            alert.cancelButtonTitle = "확인"
+            alert.show()
             
             return false
         }
@@ -326,8 +339,13 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
             return
         }
         
-        if !shouldAccessPhotoLibrary() { return }
-        if source == .camera, !shouldAccessCamera() { return }
+        switch source {
+        case .camera:
+            if !shouldAccessCamera() { return }
+        case .photoLibrary,
+             .savedPhotosAlbum:
+            if !shouldAccessPhotoLibrary(for: source) { return }
+        }
         
         picker.sourceType = source
         
