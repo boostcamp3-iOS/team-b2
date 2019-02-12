@@ -224,6 +224,10 @@ extension HolidayViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 45
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -241,6 +245,23 @@ extension HolidayViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
             return 60
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            tableView.beginUpdates()
+            
+            thanksFriends?.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            // 실제 CoreData 데이터 삭제
+            tableView.endUpdates()
+        default:
+            break
+        }
+    }
+    
+    
+
 }
 
 extension HolidayViewController: UIScrollViewDelegate {
