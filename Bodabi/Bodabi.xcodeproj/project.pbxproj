@@ -53,9 +53,6 @@
 		DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB147036220D4707000EA1D7 /* CloudManager.swift */; };
 		DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */; };
 		DB2726022209740700F30CBC /* ThanksFriendHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */; };
-		DB27260422097D5000F30CBC /* HolidayInformationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB27260322097D5000F30CBC /* HolidayInformationViewCell.xib */; };
-		DB27260622097D6D00F30CBC /* HolidayInformationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB27260522097D6D00F30CBC /* HolidayInformationViewCell.swift */; };
-		DB27260822099D9400F30CBC /* HolidaySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB27260722099D9400F30CBC /* HolidaySection.swift */; };
 		DB27260A2209AD9700F30CBC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2726092209AD9700F30CBC /* Item.swift */; };
 		DB27263D220A042100F30CBC /* BodabiAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB27263C220A042100F30CBC /* BodabiAlertController.swift */; };
 		DB272661220A90AE00F30CBC /* ItemCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB272660220A90AE00F30CBC /* ItemCollectionViewFlowLayout.swift */; };
@@ -161,9 +158,6 @@
 		DB147036220D4707000EA1D7 /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
 		DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanksFriendHeaderView.swift; sourceTree = "<group>"; };
 		DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThanksFriendHeaderView.xib; sourceTree = "<group>"; };
-		DB27260322097D5000F30CBC /* HolidayInformationViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HolidayInformationViewCell.xib; sourceTree = "<group>"; };
-		DB27260522097D6D00F30CBC /* HolidayInformationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayInformationViewCell.swift; sourceTree = "<group>"; };
-		DB27260722099D9400F30CBC /* HolidaySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidaySection.swift; sourceTree = "<group>"; };
 		DB2726092209AD9700F30CBC /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		DB27263C220A042100F30CBC /* BodabiAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodabiAlertController.swift; sourceTree = "<group>"; };
 		DB272660220A90AE00F30CBC /* ItemCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -382,11 +376,8 @@
 				DB3873A021FEEF0D00ADF0CB /* ThanksFriendViewCell.swift */,
 				DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */,
 				DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */,
-				DB27260322097D5000F30CBC /* HolidayInformationViewCell.xib */,
-				DB27260522097D6D00F30CBC /* HolidayInformationViewCell.swift */,
 				DB272664220BCA4F00F30CBC /* HolidayInformationView.xib */,
 				DB272662220BCA4200F30CBC /* HolidayInformationView.swift */,
-				DB27260722099D9400F30CBC /* HolidaySection.swift */,
 			);
 			path = Holiday;
 			sourceTree = "<group>";
@@ -597,7 +588,6 @@
 				F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */,
 				F80C28AA22031E740032DE3E /* FriendHistoryHeaderView.xib in Resources */,
 				F82BE267221145D500C194F1 /* Assets.xcassets in Resources */,
-				DB27260422097D5000F30CBC /* HolidayInformationViewCell.xib in Resources */,
 				F8367C9C21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib in Resources */,
 				DB272665220BCA4F00F30CBC /* HolidayInformationView.xib in Resources */,
 				4998128C21F9D98A000DB7B2 /* Friends.storyboard in Resources */,
@@ -653,7 +643,6 @@
 				49C084EA21FACE260060B02C /* UITableView+Extensions.swift in Sources */,
 				F80C28A62202C82B0032DE3E /* FriendHistorySection.swift in Sources */,
 				49C0850E21FB10020060B02C /* UIViewController+Storyboard.swift in Sources */,
-				DB27260822099D9400F30CBC /* HolidaySection.swift in Sources */,
 				49C084FD21FADDBB0060B02C /* HolidayViewCell.swift in Sources */,
 				496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */,
 				49C0850721FAF2810060B02C /* UpcomingEventViewCell.swift in Sources */,
@@ -684,7 +673,6 @@
 				49C0851021FD8A7F0060B02C /* FriendsViewController.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
 				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
-				DB27260622097D6D00F30CBC /* HolidayInformationViewCell.swift in Sources */,
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
