@@ -211,6 +211,17 @@ class HolidayViewController: UIViewController {
         actionSheet.delegate = self
         actionSheet.show()
     }
+    
+    @IBAction func touchUpSettingButton(_ sender: UIBarButtonItem) {
+        let alert = BodabiAlertController(title: "정말 삭제하시겠습니까?", message: nil, type: nil, style: .Alert)
+        
+        alert.addButton(title: "확인") {
+            print("증말로다가 삭테한다.")
+        }
+        
+        alert.cancelButtonTitle = "취소"
+        alert.show()
+    }
 
     // MARK: - @objc
     
