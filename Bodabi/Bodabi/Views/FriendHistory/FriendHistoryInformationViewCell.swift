@@ -24,8 +24,8 @@ extension FriendHistoryInformationViewCell: FriendHistoryCellProtocol {
     func bind(item: FriendHistorySectionItem) {
         switch item {
         case let .information(income, expenditure):
-            incomeLabel.text = income
-            expenditureLabel.text = expenditure
+            incomeLabel.text = income.insertComma()
+            expenditureLabel.text = expenditure.insertComma()
         default:
             return
         }
