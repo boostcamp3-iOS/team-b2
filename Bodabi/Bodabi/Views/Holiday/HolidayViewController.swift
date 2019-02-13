@@ -17,6 +17,7 @@ class HolidayViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var floatingButton: UIButton!
     @IBOutlet weak var informationView: HolidayInformationView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     // MARK: - Properties
     
@@ -25,19 +26,25 @@ class HolidayViewController: UIViewController {
     
     private struct Const {
         static let bottomInset: CGFloat = 90.0
+        static let cellHeight: CGFloat = 45.0
+        static let headerHeight: CGFloat = 60.0
+        static let maximumImageHeight: CGFloat = 350.0
+        static var minimumImageHeight: CGFloat = 88.0
     }
     
     private var databaseManager: DatabaseManager!
-    private let picker = UIImagePickerController()
-    private var thanksFriends: [ThanksFriend]? = []
+    private var thanksFriends: [ThanksFriend]? = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    private var isFirstScroll: Bool = true
     
     // MARK: - Lifecycle Method
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        picker.delegate = self
-        picker.allowsEditing = true
-        
+
         initTableView()
         initInformationView()
         initNavigationBar()
@@ -46,6 +53,11 @@ class HolidayViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchHistory()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        heightConstraint.constant = Const.minimumImageHeight
     }
     
     // MARK: - Initialization Methods
@@ -88,6 +100,8 @@ class HolidayViewController: UIViewController {
         guard let holiday = holiday else { return }
         guard let imageData = holiday.image else { return }
         informationView.holidayImageView.image = UIImage(data: imageData)
+        informationView.blurView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        informationView.incomeIcon.image = #imageLiteral(resourceName: "ic_boxIn")
     }
     
     private func initNavigationBar() {
@@ -107,15 +121,13 @@ class HolidayViewController: UIViewController {
         informationView.incomeLabel.text = String(totallyIncome).insertComma()
     }
     
-    private func shouldAccessPhotoLibrary() -> Bool {
+    private func shouldAccessPhotoLibrary(for source: UIImagePickerController.SourceType) -> Bool {
         let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
         
         switch photoAuthorizationStatus {
         case .authorized:
             return true
-        case .notDetermined,
-             .denied,
-             .restricted:
+        case .notDetermined:
             PHPhotoLibrary.requestAuthorization { (status) in
                 switch status {
                 case .denied:
@@ -125,11 +137,19 @@ class HolidayViewController: UIViewController {
                         alert.cancelButtonTitle = "확인"
                         alert.show()
                     }
+                case .authorized:
+                    self.presentPicker(source: source)
                 default:
                     break
                 }
             }
+            return false
+        case .denied,
+             .restricted:
+            let alert = BodabiAlertController(title: "주의", message: "사진 접근 권한이 허용되지 않았습니다. [설정]으로 이동하여 접근을 허용해주세요.", type: nil, style: .Alert)
             
+            alert.cancelButtonTitle = "확인"
+            alert.show()
             return false
         }
     }
@@ -140,9 +160,7 @@ class HolidayViewController: UIViewController {
         switch cameraAuthorizationStatus {
         case .authorized:
             return true
-        case .denied,
-             .notDetermined,
-             .restricted:
+        case .notDetermined:
             AVCaptureDevice.requestAccess(for: AVMediaType.video) { (granted) in
                 if !granted {
                     DispatchQueue.main.async {
@@ -151,8 +169,17 @@ class HolidayViewController: UIViewController {
                         alert.cancelButtonTitle = "확인"
                         alert.show()
                     }
+                } else {
+                    self.presentPicker(source: .camera)
                 }
             }
+            return false
+        case .denied,
+             .restricted:
+            let alert = BodabiAlertController(title: "주의", message: "카메라 접근 권한이 허용되지 않았습니다. [설정]으로 이동하여 접근을 허용해주세요.", type: nil, style: .Alert)
+            
+            alert.cancelButtonTitle = "확인"
+            alert.show()
             
             return false
         }
@@ -161,6 +188,9 @@ class HolidayViewController: UIViewController {
     // MARK: - @IBAction
     
     @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
+        informationView.incomeIcon.alpha = 0
+        informationView.incomeLabel.alpha = 0
+        
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
@@ -181,6 +211,17 @@ class HolidayViewController: UIViewController {
         actionSheet.show()
     }
     
+    @IBAction func touchUpSettingButton(_ sender: UIBarButtonItem) {
+        let alert = BodabiAlertController(title: "정말 삭제하시겠습니까?", message: nil, type: nil, style: .Alert)
+        
+        alert.addButton(title: "확인") {
+            print("증말로다가 삭테한다.")
+        }
+        
+        alert.cancelButtonTitle = "취소"
+        alert.show()
+    }
+
     // MARK: - @objc
     
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
@@ -204,7 +245,11 @@ extension HolidayViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 45
+        return Const.cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
 }
 
@@ -215,12 +260,77 @@ extension HolidayViewController: UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ThanksFriendHeaderView.reuseIdentifier) as? ThanksFriendHeaderView else { return UIView() }
         
         header.headerTitleLabel.text = "감사한 사람들"
+        header.delegate = self
         
         return header
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            return 60
+        return Const.headerHeight
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            tableView.beginUpdates()
+            
+            thanksFriends?.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            // 실제 CoreData 데이터 삭제
+            tableView.endUpdates()
+        default:
+            break
+        }
+    }
+}
+
+extension HolidayViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        Const.minimumImageHeight = view.safeAreaLayoutGuide.layoutFrame.origin.y
+        
+        let offsetY = scrollView.contentOffset.y
+        var height = heightConstraint.constant - offsetY
+        
+        var alpha = (height - Const.minimumImageHeight) / (Const.maximumImageHeight - Const.minimumImageHeight)
+
+        if height < Const.minimumImageHeight {
+            height = Const.minimumImageHeight
+        } else if height > Const.maximumImageHeight {
+            height = Const.maximumImageHeight
+            isFirstScroll = false
+        }
+        
+        if isFirstScroll, offsetY <= 0 {
+            alpha = 1.0
+        } else if isFirstScroll, offsetY >= 0 {
+            isFirstScroll = false
+        }
+
+        informationView.incomeLabel.alpha = alpha
+        informationView.incomeIcon.alpha = alpha
+        
+        heightConstraint.constant = height
+    }
+}
+
+// MARK: - ThanksFriendHeaderViewDelegate
+
+extension HolidayViewController: ThanksFriendHeaderViewDelegate {
+    func thanksFriendHeaderView(_ headerView: ThanksFriendHeaderView) {
+        let alert = BodabiAlertController(title: "정렬할 방법을 선택해주세요", message: nil, type: nil, style: .Alert)
+        
+        alert.addButton(title: "이름순") { [weak self] in
+            self?.thanksFriends?.sort { $0.name < $1.name }
+        }
+        
+        alert.addButton(title: "금액순") { [weak self] in
+            self?.thanksFriends?.sort {
+                $0.item.localizedStandardCompare($1.item) == .orderedAscending
+            }
+        }
+        
+        alert.cancelButtonTitle = "취소"
+        alert.show()
     }
 }
 
@@ -236,9 +346,18 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
             return
         }
         
-        if !shouldAccessPhotoLibrary() { return }
-        if source == .camera, !shouldAccessCamera() { return }
+        switch source {
+        case .camera:
+            if !shouldAccessCamera() { return }
+        case .photoLibrary,
+             .savedPhotosAlbum:
+            if !shouldAccessPhotoLibrary(for: source) { return }
+        }
         
+        let picker = UIImagePickerController()
+        
+        picker.delegate = self
+        picker.allowsEditing = true
         picker.sourceType = source
         
         present(picker, animated: false)
@@ -297,5 +416,3 @@ struct ThanksFriend {
 protocol HolidayCellProtocol {
     func bind(friend: ThanksFriend)
 }
-
-

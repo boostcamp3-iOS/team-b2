@@ -125,12 +125,8 @@ public class BodabiAlertController: UIViewController {
                         self?.delegate?.bodabiAlert(type: element)
                     }
                 }
-            case let .sort(sortTypes):
-                sortTypes.forEach {
-                    addButton(title: $0, action: {
-                        print("sort")
-                    })
-                }
+            default:
+                break
             }
         }
         
@@ -220,6 +216,8 @@ public class BodabiAlertController: UIViewController {
             containerView.addSubview(cancelButton)
             posY += cancelButton.frame.height
         }
+        
+        posY += 15
         
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.frame = CGRect(x: (view.frame.width - viewWidth) / 2, y: view.frame.height , width: viewWidth, height: posY)
