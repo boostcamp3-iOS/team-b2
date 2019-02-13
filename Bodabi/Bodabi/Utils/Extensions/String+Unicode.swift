@@ -22,7 +22,7 @@ extension String {
         }
         
         for (i, compareChar) in compareChars.enumerated() {
-            guard let index = index,(index + compareChars.count) < targetChars.count + 1 else { return false }
+            guard let index = index, (index + compareChars.count) < targetChars.count + 1 else { return false }
             guard targetChars[index + i].contains(syllable: compareChar) else  { return false }
         }
         
