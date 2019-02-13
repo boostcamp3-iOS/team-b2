@@ -9,21 +9,21 @@
 import Foundation
 
 extension String {
-    func isContain(search text: String) -> Bool {
+    func contains(search text: String) -> Bool {
         let compareChars = text.map { $0 }
         let targetChars = self.map { $0 }
         
         var index: Int?
         guard let compareFirstChar = compareChars.first else { return false }
         for (i, targetChar) in targetChars.enumerated()
-            where targetChar.isContainSyllable(compare: compareFirstChar) {
+            where targetChar.contains(syllable: compareFirstChar) {
                 index = i
                 break
         }
         
         for (i, compareChar) in compareChars.enumerated() {
             guard let index = index,(index + compareChars.count) < targetChars.count + 1 else { return false }
-            guard targetChars[index + i].isContainSyllable(compare: compareChar) else  { return false }
+            guard targetChars[index + i].contains(syllable: compareChar) else  { return false }
         }
         
         return true

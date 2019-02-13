@@ -21,8 +21,8 @@ extension Character {
     }
     
     var consonantIndex: Int {
-        let consonantArray: [Character] = [ "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ",
-                                            "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ" ]
+        let consonantArray: [Character] = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ",
+                                           "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"]
         return consonantArray.index(of: self) ?? 0
     }
     
@@ -48,7 +48,7 @@ extension Character {
         return (self.unicode - 0xac00) % 28
     }
     
-    func isContainSyllable(compare character: Character) -> Bool {
+    func contains(syllable character: Character) -> Bool {
         if character.isConsonant {
             return character.consonantIndex == self.choseongCode
         }
@@ -63,6 +63,6 @@ extension Character {
             return character == self
         }
         
-        return false
+        return String(character).lowercased() == String(self).lowercased()
     }
 }

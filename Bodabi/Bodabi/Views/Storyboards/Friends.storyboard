@@ -36,14 +36,32 @@
                                     <action selector="touchUpAddFriendButton:" destination="D7N-ri-hmc" eventType="touchUpInside" id="jbQ-l9-o8E"/>
                                 </connections>
                             </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GfP-dY-fFp">
+                                <rect key="frame" x="335" y="56" width="40" height="585"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="13D-Eu-cXr"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="pmD-yl-vHU">
+                                    <size key="itemSize" width="20" height="20"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="CYP-7a-ICk" firstAttribute="trailing" secondItem="8n0-DD-S3D" secondAttribute="trailing" id="D6Q-uV-IrC"/>
                             <constraint firstItem="CYP-7a-ICk" firstAttribute="bottom" secondItem="8n0-DD-S3D" secondAttribute="bottom" id="NsL-HC-jPk"/>
+                            <constraint firstItem="GfP-dY-fFp" firstAttribute="trailing" secondItem="CYP-7a-ICk" secondAttribute="trailing" priority="900" constant="40" id="Pvr-Ce-gb8"/>
+                            <constraint firstItem="GfP-dY-fFp" firstAttribute="trailing" secondItem="CYP-7a-ICk" secondAttribute="trailing" id="cYY-ZK-Cvo"/>
                             <constraint firstItem="8n0-DD-S3D" firstAttribute="top" secondItem="zdh-xO-tiw" secondAttribute="bottom" id="ggJ-oD-Zmu"/>
                             <constraint firstItem="8n0-DD-S3D" firstAttribute="leading" secondItem="CYP-7a-ICk" secondAttribute="leading" id="ivD-9J-wO2"/>
+                            <constraint firstItem="GfP-dY-fFp" firstAttribute="bottom" secondItem="CYP-7a-ICk" secondAttribute="bottom" id="nIb-zQ-pMf"/>
                             <constraint firstItem="zdh-xO-tiw" firstAttribute="leading" secondItem="2q5-Cn-sT9" secondAttribute="leading" id="nW0-dV-21g"/>
+                            <constraint firstItem="GfP-dY-fFp" firstAttribute="top" secondItem="zdh-xO-tiw" secondAttribute="bottom" id="poa-2K-jqq"/>
                             <constraint firstItem="zdh-xO-tiw" firstAttribute="trailing" secondItem="2q5-Cn-sT9" secondAttribute="trailing" id="pzt-0v-puL"/>
                             <constraint firstItem="f75-ar-m1V" firstAttribute="centerX" secondItem="CYP-7a-ICk" secondAttribute="centerX" id="sbk-d3-2mw"/>
                             <constraint firstItem="zdh-xO-tiw" firstAttribute="top" secondItem="CYP-7a-ICk" secondAttribute="top" id="zEL-u8-DP2"/>
@@ -61,13 +79,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="collectionView" destination="GfP-dY-fFp" id="6le-0R-tdy"/>
+                        <outlet property="indexsVisibleConstraint" destination="cYY-ZK-Cvo" id="xfD-d2-8qR"/>
                         <outlet property="searchBar" destination="zdh-xO-tiw" id="nJA-ft-HFM"/>
                         <outlet property="tableView" destination="8n0-DD-S3D" id="lhx-Ou-RsX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="77k-Ne-Kp5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="789.60000000000002" y="98.50074962518741"/>
+            <point key="canvasLocation" x="789.60000000000002" y="98.275862068965523"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="AkO-Xv-38o">

@@ -11,6 +11,8 @@
 		4910CCA922043EB4004BDBF1 /* CalendarViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910CCA822043EB4004BDBF1 /* CalendarViewStyle.swift */; };
 		49484CF22212613B00C09384 /* String+Unicode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF12212613B00C09384 /* String+Unicode.swift */; };
 		49484CF42212981800C09384 /* Character+Unicode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF32212981800C09384 /* Character+Unicode.swift */; };
+		49484CF72212D70400C09384 /* FriendsIndexViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF52212D70400C09384 /* FriendsIndexViewCell.swift */; };
+		49484CF82212D70400C09384 /* FriendsIndexViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49484CF62212D70400C09384 /* FriendsIndexViewCell.xib */; };
 		496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */; };
 		496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B821FAB294003FBA5B /* UIColor+Extensions.swift */; };
 		496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */; };
@@ -118,6 +120,8 @@
 		4910CCA822043EB4004BDBF1 /* CalendarViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewStyle.swift; sourceTree = "<group>"; };
 		49484CF12212613B00C09384 /* String+Unicode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Unicode.swift"; sourceTree = "<group>"; };
 		49484CF32212981800C09384 /* Character+Unicode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Unicode.swift"; sourceTree = "<group>"; };
+		49484CF52212D70400C09384 /* FriendsIndexViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsIndexViewCell.swift; sourceTree = "<group>"; };
+		49484CF62212D70400C09384 /* FriendsIndexViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendsIndexViewCell.xib; sourceTree = "<group>"; };
 		496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Clear.swift"; sourceTree = "<group>"; };
 		496683B821FAB294003FBA5B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -425,6 +429,8 @@
 				49C0851521FDA8A60060B02C /* FriendsHeaderViewCell.swift */,
 				49C0851221FD979A0060B02C /* FriendViewCell.xib */,
 				49C0851121FD979A0060B02C /* FriendViewCell.swift */,
+				49484CF62212D70400C09384 /* FriendsIndexViewCell.xib */,
+				49484CF52212D70400C09384 /* FriendsIndexViewCell.swift */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -624,6 +630,7 @@
 				4967D6682202C64700223ADF /* CalendarWeekDayViewCell.xib in Resources */,
 				F81452A021FCDDE0004A2CF0 /* NotificationViewCell.xib in Resources */,
 				4967D66C2202C65500223ADF /* CalendarDayViewCell.xib in Resources */,
+				49484CF82212D70400C09384 /* FriendsIndexViewCell.xib in Resources */,
 				F814529821FCCF6B004A2CF0 /* SettingViewCell.xib in Resources */,
 				4998128E21F9D994000DB7B2 /* Notification.storyboard in Resources */,
 				DB38739A21FEDAC200ADF0CB /* Holiday.storyboard in Resources */,
@@ -683,6 +690,7 @@
 				F82BE25B22111D2A00C194F1 /* Bodabi.xcdatamodeld in Sources */,
 				F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */,
 				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,
+				49484CF72212D70400C09384 /* FriendsIndexViewCell.swift in Sources */,
 				49C0850A21FAF6AA0060B02C /* UIView+Animation.swift in Sources */,
 				F80C28A822030D500032DE3E /* FriendHistoryHeaderView.swift in Sources */,
 				DBF4CF2921FC42D7001536A8 /* EntryRoute.swift in Sources */,

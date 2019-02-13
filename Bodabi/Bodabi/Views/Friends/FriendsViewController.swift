@@ -15,12 +15,22 @@ class FriendsViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet var indexsVisibleConstraint: NSLayoutConstraint!
     
     // MARK: - Property
     
     private var databaseManager: DatabaseManager!
     private var friends: [Friend]?
     private var favoriteFriends: [Friend]?
+    private let indexs: [Character] = ["★", "•", "ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ",
+                                       "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ", "A"]
+    private let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    private var cellHeightSize: CGFloat = .init() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     private var searchFriends: [Friend]?
     private var searchFavoriteFriends: [Friend]?
@@ -31,6 +41,8 @@ class FriendsViewController: UIViewController {
         static let bottomInset: CGFloat = 90.0
         static let buttonAnimationScale: CGFloat = 1.3
         static let buttonAnimationDuration: TimeInterval = 0.18
+        
+        static let cellWidthSize: CGFloat = 40.0
     }
     
     enum Section: Int, CaseIterable {
@@ -59,6 +71,7 @@ class FriendsViewController: UIViewController {
         initNavigationBar()
         initSearchBar()
         initTableView()
+        initCollectionView()
         initKeyboard()
     }
     
@@ -66,6 +79,12 @@ class FriendsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         fetchFriend()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        cellHeightSize = collectionView.bounds.size.height / CGFloat(indexs.count)
     }
     
     // MARK: - IBAction
@@ -104,6 +123,12 @@ class FriendsViewController: UIViewController {
         tableView.contentInset.bottom = Const.bottomInset
     }
     
+    private func initCollectionView() {
+        collectionView.delegate = self; collectionView.dataSource = self
+        
+        collectionView.register(FriendsIndexViewCell.self)
+    }
+    
     private func initKeyboard() {
         NotificationCenter.default
             .addObserver(self, selector: #selector(keyboardWillShow(_:)),
@@ -133,6 +158,23 @@ class FriendsViewController: UIViewController {
         }
     }
     
+    private func reloadFriends(friends: [Friend]?,
+                               favoriteFriends: [Friend]?,
+                               completion: (() -> Void)? = nil) {
+        searchFriends = friends
+        searchFavoriteFriends = favoriteFriends
+        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
+        
+        completion?()
+    }
+    
+    private func isVisibleIndexCollection(_ visible: Bool) {
+        UIView.animate(withDuration: 0.3) {
+            self.indexsVisibleConstraint.isActive = visible
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     // MARK: - @objcs
     
     @objc func touchUpFriendFavoriteButton(_ sender: UIButton) {
@@ -145,9 +187,8 @@ class FriendsViewController: UIViewController {
         self.friends = allFriends.filter { $0.favorite == false }
         self.favoriteFriends = allFriends.filter { $0.favorite == true }
         
-        searchFriends = self.friends
-        searchFavoriteFriends = self.favoriteFriends
-        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
+        reloadFriends(friends: self.friends,
+                      favoriteFriends: self.favoriteFriends)
         
         searchBar.text = ""
     }
@@ -239,6 +280,51 @@ extension FriendsViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
+extension FriendsViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        lightImpactFeedbackGenerator.impactOccurred()
+        
+        if case Section.favoriteHeader.rawValue..<Section.friendsHeader.rawValue = indexPath.row {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: indexPath.row * 2),
+                                  at: .top, animated: true)
+        } else {
+            guard let friends = searchFriends else { return }
+            for (i, friend) in friends.enumerated()
+                where (friend.name?.first ?? .init(""))
+                    .contains(syllable: indexs[indexPath.row]) {
+                        tableView.scrollToRow(at: IndexPath(row: i, section: Section.friends.rawValue),
+                                              at: .top, animated: true)
+                        break
+            }
+        }
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension FriendsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return indexs.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeue(FriendsIndexViewCell.self, for: indexPath)
+        cell.indexTitle = indexPath.row % 2 == 1 ? Character("•") : indexs[indexPath.row]
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension FriendsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: Const.cellWidthSize,
+                      height: cellHeightSize)
+    }
+}
+
 // MARK: - DatabaseManagerClient
 
 extension FriendsViewController: DatabaseManagerClient {
@@ -251,15 +337,18 @@ extension FriendsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let searchText = searchBar.text,
             searchText != "" else {
-                searchFriends = friends
-                searchFavoriteFriends = favoriteFriends
-                tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
+                reloadFriends(friends: self.friends,
+                              favoriteFriends: self.favoriteFriends) { [weak self] in
+                                self?.isVisibleIndexCollection(true)
+                }
                 return
         }
         
-        searchFriends = friends?.filter { ($0.name ?? "").isContain(search: searchText) }
-        searchFavoriteFriends = favoriteFriends?.filter { ($0.name ?? "").isContain(search: searchText) }
-        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
-        
+        let friends = self.friends?.filter { ($0.name ?? "").contains(search: searchText) }
+        let favoriteFriends = self.favoriteFriends?.filter { ($0.name ?? "").contains(search: searchText) }
+        reloadFriends(friends: friends,
+                      favoriteFriends: favoriteFriends) { [weak self] in
+                        self?.isVisibleIndexCollection(false)
+        }
     }
 }
