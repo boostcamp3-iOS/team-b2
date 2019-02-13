@@ -89,6 +89,52 @@
             </objects>
             <point key="canvasLocation" x="789.60000000000002" y="98.275862068965523"/>
         </scene>
+        <!--Index Alert View Controller-->
+        <scene sceneID="7CN-GR-6F6">
+            <objects>
+                <viewController storyboardIdentifier="IndexAlertViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="Shu-5G-7h6" customClass="IndexAlertViewController" customModule="Bodabi" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="U0J-hv-28A">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qoM-Nz-LEW">
+                                <rect key="frame" x="147.66666666666666" y="371" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="Qnw-LM-y66"/>
+                                    <constraint firstAttribute="height" constant="80" id="dhR-SJ-ONn"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z4Z-Qw-5jK">
+                                <rect key="frame" x="147.66666666666666" y="371" width="80" height="80"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="50"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Z4Z-Qw-5jK" firstAttribute="top" secondItem="qoM-Nz-LEW" secondAttribute="top" id="Lyp-Fz-gGl"/>
+                            <constraint firstItem="qoM-Nz-LEW" firstAttribute="centerY" secondItem="5ET-Kb-7KU" secondAttribute="centerY" id="Sex-hr-PgV"/>
+                            <constraint firstItem="Z4Z-Qw-5jK" firstAttribute="leading" secondItem="qoM-Nz-LEW" secondAttribute="leading" id="ZIg-5r-KJz"/>
+                            <constraint firstItem="qoM-Nz-LEW" firstAttribute="centerX" secondItem="5ET-Kb-7KU" secondAttribute="centerX" id="Zec-X9-lpv"/>
+                            <constraint firstItem="Z4Z-Qw-5jK" firstAttribute="trailing" secondItem="qoM-Nz-LEW" secondAttribute="trailing" id="cQl-76-yEC"/>
+                            <constraint firstItem="Z4Z-Qw-5jK" firstAttribute="bottom" secondItem="qoM-Nz-LEW" secondAttribute="bottom" id="u9h-Nu-ckd"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="5ET-Kb-7KU"/>
+                    </view>
+                    <connections>
+                        <outlet property="indexLabel" destination="Z4Z-Qw-5jK" id="caX-uW-DxH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L4g-QF-D0f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1591" y="99"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="AkO-Xv-38o">
             <objects>

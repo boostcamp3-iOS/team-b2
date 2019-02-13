@@ -13,6 +13,7 @@
 		49484CF42212981800C09384 /* Character+Unicode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF32212981800C09384 /* Character+Unicode.swift */; };
 		49484CF72212D70400C09384 /* FriendsIndexViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF52212D70400C09384 /* FriendsIndexViewCell.swift */; };
 		49484CF82212D70400C09384 /* FriendsIndexViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49484CF62212D70400C09384 /* FriendsIndexViewCell.xib */; };
+		49484CFA2213AA0800C09384 /* IndexAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF92213AA0800C09384 /* IndexAlertViewController.swift */; };
 		496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */; };
 		496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B821FAB294003FBA5B /* UIColor+Extensions.swift */; };
 		496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */; };
@@ -122,6 +123,7 @@
 		49484CF32212981800C09384 /* Character+Unicode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Unicode.swift"; sourceTree = "<group>"; };
 		49484CF52212D70400C09384 /* FriendsIndexViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsIndexViewCell.swift; sourceTree = "<group>"; };
 		49484CF62212D70400C09384 /* FriendsIndexViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendsIndexViewCell.xib; sourceTree = "<group>"; };
+		49484CF92213AA0800C09384 /* IndexAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexAlertViewController.swift; sourceTree = "<group>"; };
 		496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Clear.swift"; sourceTree = "<group>"; };
 		496683B821FAB294003FBA5B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				49C0851121FD979A0060B02C /* FriendViewCell.swift */,
 				49484CF62212D70400C09384 /* FriendsIndexViewCell.xib */,
 				49484CF52212D70400C09384 /* FriendsIndexViewCell.swift */,
+				49484CF92213AA0800C09384 /* IndexAlertViewController.swift */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -715,6 +718,7 @@
 				DBF4CF3C21FC546B001536A8 /* HolidayInputViewCell.swift in Sources */,
 				4910CCA12202E0C4004BDBF1 /* TestViewController.swift in Sources */,
 				F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */,
+				49484CFA2213AA0800C09384 /* IndexAlertViewController.swift in Sources */,
 				F82BE25F221130B400C194F1 /* Notification+Extensions.swift in Sources */,
 				4978BCCD220D5B230052156E /* CollectionFetchedResultsDelegate.swift in Sources */,
 				49C0851721FDA8A60060B02C /* FriendsHeaderViewCell.swift in Sources */,

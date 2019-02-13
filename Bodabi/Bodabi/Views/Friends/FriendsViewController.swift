@@ -299,6 +299,12 @@ extension FriendsViewController: UICollectionViewDelegate {
                         break
             }
         }
+        
+        let viewController = storyboard(.friends)
+            .instantiateViewController(ofType: IndexAlertViewController.self)
+        viewController.indexTitle = indexs[indexPath.row]
+        print(indexs[indexPath.row])
+        present(viewController, animated: true, completion: nil)
     }
 }
 
