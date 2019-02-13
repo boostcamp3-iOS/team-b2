@@ -13,8 +13,10 @@ extension Event {
     // MARK: - Helper
     
     var dday: Int {
-        if let date = self.date {
-            return date.offsetFrom(date: Date())
+        if let eventDate = self.date {
+            let currentDate: Date = Date()
+            let dday: Int = eventDate.offsetFrom(date: currentDate)
+            return dday
         }
         return 0
     }

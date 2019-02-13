@@ -29,6 +29,7 @@ class FriendHistoryViewController: UIViewController {
     private var databaseManager: DatabaseManager!
     private var isSortDescending: Bool = true
     private var isTableViewLoaded: Bool = false
+    private var isInputStatus: Bool = false
     private var sections: [FriendHistorySection] = []
     private struct Const {
         static let bottomInset: CGFloat = 90.0
@@ -44,10 +45,17 @@ class FriendHistoryViewController: UIViewController {
         initTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        isInputStatus = false
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-    
+        
+        if !isInputStatus {
         navigationController?.popToRootViewController(animated: false)
+        }
     }
     
     // MARK: - Initialization
@@ -108,7 +116,8 @@ class FriendHistoryViewController: UIViewController {
     
     // MARK: - IBAction
     
-    @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
+    @IBAction func touchUpFloatingButton(_ sender: UIButton) {
+        isInputStatus = true
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: HolidayInputViewController.self)
         let navigationController = UINavigationController(rootViewController: viewController)

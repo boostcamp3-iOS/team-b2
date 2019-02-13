@@ -58,7 +58,7 @@ class UpcomingEventViewCell: UITableViewCell {
 
         nameLabel.text = event.friend?.name
         holidayLabel.text = event.title
-        dDayLabel.text = "D-\(event.dday)"
+        dDayLabel.text = event.dday == 0 ? "Today" : "D-\(event.dday)"
         favoriteButton.isSelected = event.favorite
         
         let friendHistories = event.friend?.histories

@@ -52,7 +52,9 @@ class NotificationViewController: UIViewController {
     private func initFetchedResultsController() {
         let fetchResult: NSFetchRequest<Notification> = Notification.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
+        let predicate = NSPredicate(format: "isHandled = %@", NSNumber(value: true))
         fetchResult.sortDescriptors = [sortDescriptor]
+        fetchResult.predicate = predicate
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchResult, managedObjectContext: (databaseManager?.viewContext)!, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController?.delegate = self
@@ -67,7 +69,7 @@ class NotificationViewController: UIViewController {
     
     func updateNotificationRead(indexPath: IndexPath) {
         if let notification = fetchedResultsController?.object(at: indexPath) {
-            notification.read = true
+            notification.isRead = true
         }
         do {
             try databaseManager?.viewContext.save()

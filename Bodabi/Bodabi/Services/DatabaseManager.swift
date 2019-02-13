@@ -49,24 +49,9 @@ class DatabaseManager {
         } catch {
             fatalError("The fetch could not be performed: \(error.localizedDescription)")
         }
-
-//        let friendList = friendFetchedResultsController?.sections?[0]
-//        for i in 0..<(friendList?.numberOfObjects)! {
-//            let afriend = friendFetchedResultsController?.object(at: IndexPath(row: i, section: 0)) as! Friend
-//            print("\(afriend.name)|\(afriend.id)|\(afriend.phoneNumber)|\(afriend.tags)|\(afriend.favorite)")
-//        }
     }
 
     func insert() {
-        /*
-        let objectToInsert = Friend(context: viewContext)
-        objectToInsert.id = Int32(0)
-        objectToInsert.favorite = false
-        objectToInsert.name = "김철수"
-        objectToInsert.phoneNumber = "01012345678"
-        objectToInsert.tags = "회사"
-        */
-        
         if viewContext.hasChanges == true {
             do {
                 try viewContext.save()
@@ -120,7 +105,6 @@ class DatabaseManager {
         insertHolidays()
         insertHistoies()
         insertEvents()
-        insertNotifications()
     }
     
     func insertFriends() {
@@ -135,7 +119,7 @@ class DatabaseManager {
             friend.favorite = favoriteList[i]
             friend.name = nameList[i]
             friend.phoneNumber = phoneNumberList[i]
-            friend.tags = tagsList[i]
+            friend.tags = [tagsList[i]]
             do {
                 try viewContext.save()
             } catch {
@@ -200,34 +184,16 @@ class DatabaseManager {
         
         for i in 0..<numberOfRows {
             let event = Event(context: viewContext)
+            let notification = Notification(context: viewContext)
             event.title = titleList[i]
             event.date = Date(stringLiteral: dateList[i])
             event.favorite = favoriteList[i]
+            notification.event = event
+            notification.date = event.date?.addingTimeInterval(TimeInterval(exactly: -60*60*24*7) ?? 0)
             
             let request: NSFetchRequest<Friend> = Friend.fetchRequest()
             if let friends = try? viewContext.fetch(request) {
                 event.friend = friends[friendIdList[i]]
-            }
-            
-            do {
-                try viewContext.save()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    func insertNotifications() {
-        let dateList = ["20181203", "20171228", "20180717", "20170127", "20190114", "20190118", "20190213", "20190308", "20190428", "20190703"]
-        let numberOfRows: Int = dateList.count
-        
-        for i in 0..<numberOfRows {
-            let notification = Notification(context: viewContext)
-            notification.date = Date(stringLiteral: dateList[i])
-            
-            let request: NSFetchRequest<Event> = Event.fetchRequest()
-            if let events = try? viewContext.fetch(request) {
-                notification.event = events[i]
             }
             
             do {

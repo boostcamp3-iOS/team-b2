@@ -23,7 +23,7 @@
                         <rect key="frame" x="26" y="5" width="323" height="75.5"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="oval" translatesAutoresizingMaskIntoConstraints="NO" id="gZp-cM-PwI">
-                                <rect key="frame" x="202" y="-19" width="196" height="203"/>
+                                <rect key="frame" x="172" y="-19" width="196" height="203"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cc-qc-23U">
                                 <rect key="frame" x="15" y="13" width="5" height="22"/>
@@ -87,7 +87,7 @@
                             <constraint firstAttribute="height" priority="999" constant="75.5" id="R87-Se-sX7"/>
                             <constraint firstItem="0cc-qc-23U" firstAttribute="leading" secondItem="f11-bA-pMX" secondAttribute="leading" constant="15" id="XVh-Mg-BYh"/>
                             <constraint firstAttribute="bottom" secondItem="W5N-Ui-hl5" secondAttribute="bottom" constant="6" id="ai2-n1-Mon"/>
-                            <constraint firstAttribute="trailing" secondItem="gZp-cM-PwI" secondAttribute="trailing" constant="-75" id="bIF-5G-x7N"/>
+                            <constraint firstAttribute="trailing" secondItem="gZp-cM-PwI" secondAttribute="trailing" constant="-45" id="bIF-5G-x7N"/>
                             <constraint firstAttribute="trailing" secondItem="AbE-yz-HBP" secondAttribute="trailing" id="m9i-De-iOu"/>
                             <constraint firstAttribute="bottom" secondItem="5jR-ny-vpi" secondAttribute="bottom" constant="13" id="mHL-xI-yQt"/>
                             <constraint firstItem="oit-aY-vGK" firstAttribute="centerY" secondItem="0cc-qc-23U" secondAttribute="centerY" id="o4n-48-eKJ"/>

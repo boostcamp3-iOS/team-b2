@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Apy-Es-PEy">
-                        <rect key="frame" x="72" y="15.5" width="250" height="40"/>
+                        <rect key="frame" x="72" y="15.5" width="295" height="40"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2019.01.26" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgs-QS-Y1i">
                                 <rect key="frame" x="0.0" y="0.0" width="70" height="20"/>
@@ -45,7 +45,6 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="8XG-mJ-Dom"/>
-                            <constraint firstAttribute="width" constant="250" id="Osk-Si-r8x"/>
                         </constraints>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1일 전" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KP1-8F-L3c">
@@ -89,6 +88,7 @@
                 <constraints>
                     <constraint firstItem="gt6-1m-bG7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="1hs-gw-lXJ"/>
                     <constraint firstItem="Apy-Es-PEy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="4TC-yp-TxN"/>
+                    <constraint firstAttribute="trailing" secondItem="Apy-Es-PEy" secondAttribute="trailing" constant="8" id="9hb-Io-pWk"/>
                     <constraint firstAttribute="trailing" secondItem="KP1-8F-L3c" secondAttribute="trailing" constant="12" id="HZQ-oc-0u7"/>
                     <constraint firstItem="gt6-1m-bG7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="T1a-fD-VKx"/>
                     <constraint firstItem="KP1-8F-L3c" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="d8O-Ke-Dl4"/>
