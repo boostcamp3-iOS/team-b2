@@ -37,10 +37,10 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GfP-dY-fFp">
-                                <rect key="frame" x="335" y="56" width="40" height="585"/>
+                                <rect key="frame" x="340" y="56" width="35" height="585"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="13D-Eu-cXr"/>
+                                    <constraint firstAttribute="width" constant="35" id="13D-Eu-cXr"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="pmD-yl-vHU">
                                     <size key="itemSize" width="20" height="20"/>
