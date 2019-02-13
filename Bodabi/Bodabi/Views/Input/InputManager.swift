@@ -42,6 +42,7 @@ struct InputManager {
             event.friend?.name = data.name
             event.title = data.holiday
             event.date = data.date
+            generateNotifications(of: event, type: .normal, context: context)
         case .addHistoryAtHoliday,
              .addHistoryAtFriendHistory:
             let history: History = History(context: context)
@@ -97,6 +98,28 @@ struct InputManager {
                 return nil
             }
             
+        }
+    }
+    
+    static private func generateNotifications(of event: Event, type: NotificationType, context: NSManagedObjectContext){
+        switch type {
+        case .normal:
+            guard let interval: Int = type.dateIntervals.first else { return }
+            let notification: Notification = Notification(context: context)
+            notification.id = UUID().uuidString
+            notification.event = event
+            notification.date = event.date?.addingTimeInterval(TimeInterval(exactly: interval * 60 * 60 * 24 * -1) ?? 0)
+            NotificationSchedular.createNotification(notification: notification, notificationType: .normal, hour: 16, minute: 1)
+            
+        case .favorite:
+            let intervals: [Int] = type.dateIntervals
+            for interval in intervals {
+                let notification: Notification = Notification(context: context)
+                notification.id = UUID().uuidString
+                notification.event = event
+                notification.date = event.date?.addingTimeInterval(TimeInterval(exactly: interval * 60 * 60 * 24 * -1) ?? 0)
+                NotificationSchedular.createNotification(notification: notification, notificationType: .favorite, hour: 9, minute: 0)
+            }
         }
     }
 }

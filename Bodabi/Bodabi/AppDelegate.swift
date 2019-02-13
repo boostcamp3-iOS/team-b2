@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 import CoreData
 
 @UIApplicationMain
@@ -17,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let databaseManager = DatabaseManager(modelName: "Bodabi")
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        UIApplication.shared.applicationIconBadgeNumber = 0
         
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
         
@@ -26,8 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         databaseManager.load()
-//        databaseManager.deleteAll()
-//        databaseManager.insertDummies()
+        registerForLocalNotifications(application: application)
         
         let tabBarController = window?.rootViewController
         for navigationController in tabBarController?.children ?? [] {
@@ -37,53 +38,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-    }
-
     func applicationDidEnterBackground(_ application: UIApplication) {
         saveContext()
     }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         saveContext()
     }
-
-    // MARK: - Core Data stack
-
-    lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-        */
-        let container = NSPersistentContainer(name: "Bodabi")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
 
     // MARK: - Core Data Saving support
 
@@ -97,6 +58,95 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    // MARK: - Request Notification Authorization
+    
+    func registerForLocalNotifications(application: UIApplication) {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(
+        options: [.badge, .sound, .alert]) {
+            [weak center, weak self] granted, _ in
+            guard granted, let center = center, let `self` = self
+                else { return }
+            if granted {
+                center.delegate = self
+            }
+        }
+    }
+}
 
+// MARK: - Handling Notifications
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler(.alert)
+        
+        let content = notification.request.content
+        guard let notificationID = content.userInfo["id"] as? String else { return }
+
+        let request: NSFetchRequest<Notification> = Notification.fetchRequest()
+        let predicate: NSPredicate = NSPredicate(format: "id = %@", notificationID)
+        request.predicate = predicate
+        
+        if let result = try? databaseManager.viewContext.fetch(request) {
+            let notification = result.first
+            notification?.isHandled = true
+            do {
+                try databaseManager.viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        renumberBadgesOfPendingNotifications()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+
+        let content = response.notification.request.content
+        guard let notificationID = content.userInfo["id"] as? String else { return }
+        
+        let request: NSFetchRequest<Notification> = Notification.fetchRequest()
+        let predicate: NSPredicate = NSPredicate(format: "id = %@", notificationID)
+        request.predicate = predicate
+        
+        if let result = try? databaseManager.viewContext.fetch(request) {
+            let notification = result.first
+            notification?.isHandled = true
+            do {
+                try databaseManager.viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        renumberBadgesOfPendingNotifications()
+    }
+    
+    func renumberBadgesOfPendingNotifications() {
+        let center = UNUserNotificationCenter.current()
+        var sortedNotifications: [UNNotificationRequest]?
+        center.getPendingNotificationRequests { (pendingNotifications) in
+            sortedNotifications = pendingNotifications.sorted(by: { ($0.trigger as! UNCalendarNotificationTrigger).nextTriggerDate()! < ($1.trigger as! UNCalendarNotificationTrigger).nextTriggerDate()! })
+        }
+
+        center.removeAllPendingNotificationRequests()
+        var badgeNumber: Int = 1
+        
+        guard let notifications = sortedNotifications else { return }
+        for notification in notifications {
+            let content = UNMutableNotificationContent()
+            
+            content.title = notification.content.title
+            content.body = notification.content.body
+            content.sound = notification.content.sound
+            content.badge = badgeNumber as NSNumber
+            
+            badgeNumber += 1
+            
+            let request = UNNotificationRequest(identifier: notification.identifier,
+                                                content: content,
+                                                trigger: notification.trigger)
+            center.add(request, withCompletionHandler: nil)
+        }
+    }
 }
 
