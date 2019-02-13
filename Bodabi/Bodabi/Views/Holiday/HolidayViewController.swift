@@ -26,12 +26,13 @@ class HolidayViewController: UIViewController {
     
     private struct Const {
         static let bottomInset: CGFloat = 90.0
+        static let cellHeight: CGFloat = 45.0
+        static let headerHeight: CGFloat = 60.0
         static let maximumImageHeight: CGFloat = 350.0
         static var minimumImageHeight: CGFloat = 88.0
     }
     
     private var databaseManager: DatabaseManager!
-    private let picker = UIImagePickerController()
     private var thanksFriends: [ThanksFriend]? = [] {
         didSet {
             tableView.reloadData()
@@ -43,8 +44,6 @@ class HolidayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        picker.delegate = self
-        picker.allowsEditing = true
 
         initTableView()
         initInformationView()
@@ -246,7 +245,7 @@ extension HolidayViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 45
+        return Const.cellHeight
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -267,7 +266,7 @@ extension HolidayViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            return 60
+        return Const.headerHeight
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -283,9 +282,6 @@ extension HolidayViewController: UITableViewDelegate {
             break
         }
     }
-    
-    
-
 }
 
 extension HolidayViewController: UIScrollViewDelegate {
@@ -358,6 +354,10 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
             if !shouldAccessPhotoLibrary(for: source) { return }
         }
         
+        let picker = UIImagePickerController()
+        
+        picker.delegate = self
+        picker.allowsEditing = true
         picker.sourceType = source
         
         present(picker, animated: false)
