@@ -98,7 +98,6 @@
 		F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529D21FCDDE0004A2CF0 /* NotificationViewCell.swift */; };
 		F81452A021FCDDE0004A2CF0 /* NotificationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F814529E21FCDDE0004A2CF0 /* NotificationViewCell.xib */; };
 		F81452A421FD8C1B004A2CF0 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81452A321FD8C1B004A2CF0 /* String+Extensions.swift */; };
-		F82BE25B22111D2A00C194F1 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F82BE25922111D2A00C194F1 /* Bodabi.xcdatamodeld */; };
 		F82BE25D2211309B00C194F1 /* History+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82BE25C2211309B00C194F1 /* History+Extensions.swift */; };
 		F82BE25F221130B400C194F1 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82BE25E221130B400C194F1 /* Notification+Extensions.swift */; };
 		F82BE261221130D000C194F1 /* Event+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82BE260221130D000C194F1 /* Event+Extensions.swift */; };
@@ -110,6 +109,8 @@
 		F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8485CF621FA11BB003C935C /* FriendHistory.storyboard */; };
 		F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */; };
 		F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */; };
+		F89ED960221294F2006588E1 /* NotificationSchedular.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED95F221294F2006588E1 /* NotificationSchedular.swift */; };
+		F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -207,7 +208,6 @@
 		F814529D21FCDDE0004A2CF0 /* NotificationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewCell.swift; sourceTree = "<group>"; };
 		F814529E21FCDDE0004A2CF0 /* NotificationViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationViewCell.xib; sourceTree = "<group>"; };
 		F81452A321FD8C1B004A2CF0 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		F82BE25A22111D2A00C194F1 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 		F82BE25C2211309B00C194F1 /* History+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+Extensions.swift"; sourceTree = "<group>"; };
 		F82BE25E221130B400C194F1 /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
 		F82BE260221130D000C194F1 /* Event+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+Extensions.swift"; sourceTree = "<group>"; };
@@ -219,6 +219,8 @@
 		F8485CF621FA11BB003C935C /* FriendHistory.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FriendHistory.storyboard; sourceTree = "<group>"; };
 		F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryViewController.swift; path = Bodabi/Views/FriendHistory/FriendHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryReceiveViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistoryReceiveViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F89ED95F221294F2006588E1 /* NotificationSchedular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedular.swift; sourceTree = "<group>"; };
+		F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,10 +295,10 @@
 			isa = PBXGroup;
 			children = (
 				F814529921FCD4BC004A2CF0 /* SettingOptions.swift */,
-				F82BE25922111D2A00C194F1 /* Bodabi.xcdatamodeld */,
 				F82BE25C2211309B00C194F1 /* History+Extensions.swift */,
 				F82BE25E221130B400C194F1 /* Notification+Extensions.swift */,
 				F82BE260221130D000C194F1 /* Event+Extensions.swift */,
+				F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -324,6 +326,7 @@
 				DB27263C220A042100F30CBC /* BodabiAlertController.swift */,
 				4978BCCA220D5A6F0052156E /* TableFetchedResultsDelegate.swift */,
 				4978BCCC220D5B230052156E /* CollectionFetchedResultsDelegate.swift */,
+				F89ED95F221294F2006588E1 /* NotificationSchedular.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -515,18 +518,10 @@
 		F80C28AB22040EDB0032DE3E /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				F80C28AC22040FA00032DE3E /* Database */,
+				F80C28AD22040FDB0032DE3E /* DatabaseManager.swift */,
 				DB147036220D4707000EA1D7 /* CloudManager.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		F80C28AC22040FA00032DE3E /* Database */ = {
-			isa = PBXGroup;
-			children = (
-				F80C28AD22040FDB0032DE3E /* DatabaseManager.swift */,
-			);
-			path = Database;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -657,6 +652,7 @@
 				49C0850E21FB10020060B02C /* UIViewController+Storyboard.swift in Sources */,
 				49C084FD21FADDBB0060B02C /* HolidayViewCell.swift in Sources */,
 				496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */,
+				F89ED960221294F2006588E1 /* NotificationSchedular.swift in Sources */,
 				49C0850721FAF2810060B02C /* UpcomingEventViewCell.swift in Sources */,
 				4967D66022028D0300223ADF /* CalendarView.swift in Sources */,
 				4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */,
@@ -675,7 +671,6 @@
 				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,
 				49484CF22212613B00C09384 /* String+Unicode.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
-				F82BE25B22111D2A00C194F1 /* Bodabi.xcdatamodeld in Sources */,
 				F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */,
 				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,
 				49484CF72212D70400C09384 /* FriendsIndexViewCell.swift in Sources */,
@@ -688,6 +683,8 @@
 				49C0851021FD8A7F0060B02C /* FriendsViewController.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
 				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
+				F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */,
+				DB27260622097D6D00F30CBC /* HolidayInformationViewCell.swift in Sources */,
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
@@ -912,12 +909,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		F82BE25922111D2A00C194F1 /* Bodabi.xcdatamodeld */ = {
+		F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				F82BE25A22111D2A00C194F1 /* Bodabi.xcdatamodel */,
+				F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */,
 			);
-			currentVersion = F82BE25A22111D2A00C194F1 /* Bodabi.xcdatamodel */;
+			currentVersion = F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */;
 			path = Bodabi.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
