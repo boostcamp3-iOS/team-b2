@@ -13,6 +13,7 @@ extension Date {
         case year
         case none
         case noDay
+        case time
         
         var description: String {
             switch self {
@@ -22,6 +23,8 @@ extension Date {
                 return "MM.dd"
             case .noDay:
                 return "yyyy.MM"
+            case .time:
+                return "yyyy.MM.dd hh:mm"
             }
         }
     }
@@ -34,9 +37,13 @@ extension Date {
     }
     
     func offsetFrom(date : Date) -> Int {
-        let difference = NSCalendar.current.dateComponents([.day], from: date, to: self);
-        if let day = difference.day, day > 0 {
-            return day
+        let calendar: Calendar = Calendar.current
+        let eventDateComponents = calendar.dateComponents([.era, .year, .month, .day], from: self)
+        let todayDateComponents = calendar.dateComponents(
+            [.era, .year, .month, .day], from: date)
+        let difference = calendar.dateComponents([.day], from: todayDateComponents, to: eventDateComponents)
+        if let dday = difference.day {
+            return dday
         }
         return 0
     }

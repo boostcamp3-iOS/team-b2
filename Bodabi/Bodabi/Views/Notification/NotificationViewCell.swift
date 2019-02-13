@@ -30,13 +30,24 @@ class NotificationViewCell: UITableViewCell {
                 return
             }
             
-            backgroundColor = notification.read ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) : #colorLiteral(red: 0.9764705896, green: 0.9394879168, blue: 0.8803283655, alpha: 1)
+            backgroundColor = notification.isRead ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) : #colorLiteral(red: 0.9764705896, green: 0.9394879168, blue: 0.8803283655, alpha: 1)
             imageContainerView.makeRound(with: .heightRound)
             // TODO: - Image Setup for each holiday
             iconImageView.image = UIImage(named: "ic_fullStar")
-            eventDateLabel.text = notification.date?.toString(of: .year)
+            eventDateLabel.text = notification.event?.date?.toString(of: .year)
             notificationLabel.text = notification.sentence
-            notificationDateLabel.text = "1일 전"
+            let notificationText: String
+            let today: Date = Date()
+            let yesterday: Date = today.addingTimeInterval(60 * 60 * 24 * -1)
+            switch Calendar.current.dateComponents([.day], from: notification.date ?? today) {
+            case Calendar.current.dateComponents([.day], from: today):
+                notificationText = "오늘"
+            case Calendar.current.dateComponents([.day], from: yesterday):
+                notificationText = "어제"
+            default:
+                notificationText = notification.date?.toString(of: .none) ?? ""
+            }
+            notificationDateLabel.text = notificationText
         }
     }
     
