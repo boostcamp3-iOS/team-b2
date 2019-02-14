@@ -9,7 +9,8 @@
 import UIKit
 
 protocol ThanksFriendHeaderViewDelegate: class {
-    func thanksFriendHeaderView(_ headerView: ThanksFriendHeaderView)
+    func didTapSortButton(_ headerView: ThanksFriendHeaderView)
+    func didTapSearchButton(_ headerView: ThanksFriendHeaderView)
 }
 
 class ThanksFriendHeaderView: UITableViewHeaderFooterView {
@@ -18,9 +19,10 @@ class ThanksFriendHeaderView: UITableViewHeaderFooterView {
     weak var delegate: ThanksFriendHeaderViewDelegate?
     
     @IBAction func touchUpSortButton(_ sender: UIButton) {
-        delegate?.thanksFriendHeaderView(self)
+        delegate?.didTapSortButton(self)
     }
     
     @IBAction func touchUpSearchButton(_ sender: UIButton) {
+         delegate?.didTapSearchButton(self)
     }
 }

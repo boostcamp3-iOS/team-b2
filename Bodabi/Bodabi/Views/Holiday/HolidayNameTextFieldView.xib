@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HolidayNameTextFieldView" customModule="Bodabi" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="새로운 경조사 이름을 입력하세요" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="xbb-Tm-9OV">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <action selector="touchUpDoneButton:" destination="iN0-l3-epB" eventType="editingDidEnd" id="wMS-y0-JCQ"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="xbb-Tm-9OV" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="CT1-pa-Kud"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="xbb-Tm-9OV" secondAttribute="bottom" id="HoG-MV-WLC"/>
+                <constraint firstItem="xbb-Tm-9OV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="a6R-9U-3UO"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="xbb-Tm-9OV" secondAttribute="trailing" id="l85-Rl-jsh"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="textField" destination="xbb-Tm-9OV" id="sT9-mS-stW"/>
+            </connections>
+            <point key="canvasLocation" x="138.40000000000001" y="-116.04197901049476"/>
+        </view>
+    </objects>
+</document>

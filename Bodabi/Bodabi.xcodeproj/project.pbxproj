@@ -56,6 +56,8 @@
 		49C0851821FDA8A60060B02C /* FriendsHeaderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C0851621FDA8A60060B02C /* FriendsHeaderViewCell.xib */; };
 		DB147035220D4363000EA1D7 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB147034220D4363000EA1D7 /* CloudKit.framework */; };
 		DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB147036220D4707000EA1D7 /* CloudManager.swift */; };
+		DB18F2EB22140F8400B9782F /* HolidayNameTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB18F2EA22140F8400B9782F /* HolidayNameTextFieldView.xib */; };
+		DB18F2ED2214120500B9782F /* HolidayNameTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB18F2EC2214120500B9782F /* HolidayNameTextFieldView.swift */; };
 		DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */; };
 		DB2726022209740700F30CBC /* ThanksFriendHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */; };
 		DB27260A2209AD9700F30CBC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2726092209AD9700F30CBC /* Item.swift */; };
@@ -166,6 +168,8 @@
 		DB147032220D426A000EA1D7 /* Bodabi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bodabi.entitlements; sourceTree = "<group>"; };
 		DB147034220D4363000EA1D7 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		DB147036220D4707000EA1D7 /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
+		DB18F2EA22140F8400B9782F /* HolidayNameTextFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HolidayNameTextFieldView.xib; sourceTree = "<group>"; };
+		DB18F2EC2214120500B9782F /* HolidayNameTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayNameTextFieldView.swift; sourceTree = "<group>"; };
 		DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanksFriendHeaderView.swift; sourceTree = "<group>"; };
 		DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThanksFriendHeaderView.xib; sourceTree = "<group>"; };
 		DB2726092209AD9700F30CBC /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -390,6 +394,8 @@
 				DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */,
 				DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */,
 				DB272662220BCA4200F30CBC /* HolidayInformationView.swift */,
+				DB18F2EA22140F8400B9782F /* HolidayNameTextFieldView.xib */,
+				DB18F2EC2214120500B9782F /* HolidayNameTextFieldView.swift */,
 			);
 			path = Holiday;
 			sourceTree = "<group>";
@@ -592,6 +598,7 @@
 			files = (
 				F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib in Resources */,
 				4998127B21F9D7B6000DB7B2 /* LaunchScreen.storyboard in Resources */,
+				DB18F2EB22140F8400B9782F /* HolidayNameTextFieldView.xib in Resources */,
 				F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */,
 				F80C28AA22031E740032DE3E /* FriendHistoryHeaderView.xib in Resources */,
 				F82BE267221145D500C194F1 /* Assets.xcassets in Resources */,
@@ -683,8 +690,11 @@
 				49C0851021FD8A7F0060B02C /* FriendsViewController.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
 				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
+
 				F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */,
 				DB27260622097D6D00F30CBC /* HolidayInformationViewCell.swift in Sources */,
+				DB18F2ED2214120500B9782F /* HolidayNameTextFieldView.swift in Sources */,
+
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
