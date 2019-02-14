@@ -268,6 +268,7 @@ class NameInputViewController: UIViewController {
             viewController.entryRoute = entryRoute
             inputData?.name = newFriendName
             viewController.inputData = inputData
+            viewController.isRelationInput = false
             viewController.setDatabaseManager(databaseManager)
             navigationController?.pushViewController(viewController, animated: true)
         case .addHistoryAtHoliday:
