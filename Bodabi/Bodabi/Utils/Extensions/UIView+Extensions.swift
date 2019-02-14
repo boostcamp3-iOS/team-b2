@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-@IBDesignable
 extension UIView {
     public enum RoundType {
         case widthRound
