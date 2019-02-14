@@ -272,6 +272,12 @@ class NameInputViewController: UIViewController {
         moveToNextInputView()
     }
     
+    @IBAction func touchUpTagButton(_ sender: UIButton) {
+        let viewController = storyboard(.tag)
+            .instantiateViewController(ofType: TagViewController.self)
+        present(viewController, animated: true, completion: nil)
+    }
+    
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
