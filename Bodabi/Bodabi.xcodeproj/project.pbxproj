@@ -58,6 +58,7 @@
 		DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB147036220D4707000EA1D7 /* CloudManager.swift */; };
 		DB18F2EB22140F8400B9782F /* HolidayNameTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB18F2EA22140F8400B9782F /* HolidayNameTextFieldView.xib */; };
 		DB18F2ED2214120500B9782F /* HolidayNameTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB18F2EC2214120500B9782F /* HolidayNameTextFieldView.swift */; };
+		DB18F2EE2214F75000B9782F /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */; };
 		DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */; };
 		DB2726022209740700F30CBC /* ThanksFriendHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */; };
 		DB27260A2209AD9700F30CBC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2726092209AD9700F30CBC /* Item.swift */; };
@@ -112,7 +113,6 @@
 		F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */; };
 		F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */; };
 		F89ED960221294F2006588E1 /* NotificationSchedular.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED95F221294F2006588E1 /* NotificationSchedular.swift */; };
-		F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -676,6 +676,7 @@
 				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
 				F80C28A122026F0D0032DE3E /* FriendHistoryInformationViewCell.swift in Sources */,
 				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,
+				DB18F2EE2214F75000B9782F /* Bodabi.xcdatamodeld in Sources */,
 				49484CF22212613B00C09384 /* String+Unicode.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
 				F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */,
@@ -690,11 +691,7 @@
 				49C0851021FD8A7F0060B02C /* FriendsViewController.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
 				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
-
-				F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */,
-				DB27260622097D6D00F30CBC /* HolidayInformationViewCell.swift in Sources */,
 				DB18F2ED2214120500B9782F /* HolidayNameTextFieldView.swift in Sources */,
-
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
