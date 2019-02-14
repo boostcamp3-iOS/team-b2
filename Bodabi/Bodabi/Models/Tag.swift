@@ -58,4 +58,8 @@ struct Tag: Hashable {
                      Tag(type: .description, title: "조용한")]
         return items
     }
+    
+    static func type(of title: String) -> TagType? {
+        return items.filter { $0.title == title }.first?.type
+    }
 }

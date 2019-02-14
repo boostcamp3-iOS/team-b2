@@ -69,7 +69,12 @@ class NameInputViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print(inputData?.tags)
         initData()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print(222, inputData?.tags)
     }
     
     deinit {
@@ -275,6 +280,7 @@ class NameInputViewController: UIViewController {
     @IBAction func touchUpTagButton(_ sender: UIButton) {
         let viewController = storyboard(.tag)
             .instantiateViewController(ofType: TagViewController.self)
+        viewController.delegate = self
         present(viewController, animated: true, completion: nil)
     }
     
@@ -434,5 +440,11 @@ extension NameInputViewController: UIGestureRecognizerDelegate {
 extension NameInputViewController: DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager
+    }
+}
+
+extension NameInputViewController: BindDataDelegate {
+    func bind(_ data: [String]) {
+        inputData?.tags = data
     }
 }

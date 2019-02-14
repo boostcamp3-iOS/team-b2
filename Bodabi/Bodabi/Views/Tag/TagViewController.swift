@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol BindDataDelegate: class {
+    func bind(_ data: [String])
+}
+
 class TagViewController: UIViewController {
 
     @IBOutlet weak var tagView: UIView!
@@ -16,6 +20,7 @@ class TagViewController: UIViewController {
     
     // MARK: - Property
 
+    public weak var delegate: BindDataDelegate?
     private var selectedTags: Set<Tag> = [] {
         didSet {
             selectedSortedTags = selectedTags
@@ -35,7 +40,7 @@ class TagViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         initTableView()
         initCollectionView()
     }
@@ -61,9 +66,9 @@ class TagViewController: UIViewController {
     
     
     @IBAction func touchUpDoneButton(_ sender: UIButton) {
+        delegate?.bind(selectedSortedTags.map { $0.title })
         dismiss(animated: true, completion: nil)
     }
-    
 }
 
 extension TagViewController: UITableViewDataSource {
@@ -96,8 +101,7 @@ extension TagViewController: UITableViewDelegate {
         let tags = Tag.items.filter { $0.type == tagType }
         
         guard selectedTags.count < Const.maxSelectedTagCount else {
-            let cell = tableView.cellForRow(at: indexPath) as? TagViewCell
-            cell?.setSelected(false, animated: false)
+            tableView.deselectRow(at: indexPath, animated: false)
             return
         }
         selectedTags.insert(tags[indexPath.row - 1])

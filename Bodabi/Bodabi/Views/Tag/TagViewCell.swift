@@ -23,6 +23,14 @@ class TagViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        selectedView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        selectedView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
