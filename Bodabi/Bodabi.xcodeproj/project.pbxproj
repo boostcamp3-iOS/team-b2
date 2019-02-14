@@ -9,11 +9,18 @@
 /* Begin PBXBuildFile section */
 		4910CCA12202E0C4004BDBF1 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910CCA02202E0C4004BDBF1 /* TestViewController.swift */; };
 		4910CCA922043EB4004BDBF1 /* CalendarViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910CCA822043EB4004BDBF1 /* CalendarViewStyle.swift */; };
+		491DD81E221505340093720A /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491DD81D221505340093720A /* Tag.swift */; };
+		491DD820221532290093720A /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491DD81F221532290093720A /* UIView+Shadow.swift */; };
 		49484CF22212613B00C09384 /* String+Unicode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF12212613B00C09384 /* String+Unicode.swift */; };
 		49484CF42212981800C09384 /* Character+Unicode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF32212981800C09384 /* Character+Unicode.swift */; };
 		49484CF72212D70400C09384 /* FriendsIndexViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF52212D70400C09384 /* FriendsIndexViewCell.swift */; };
 		49484CF82212D70400C09384 /* FriendsIndexViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49484CF62212D70400C09384 /* FriendsIndexViewCell.xib */; };
 		49484CFA2213AA0800C09384 /* IndexAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484CF92213AA0800C09384 /* IndexAlertViewController.swift */; };
+		49484CFE221405B000C09384 /* Tag.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49484CFD221405B000C09384 /* Tag.storyboard */; };
+		49484D012214060E00C09384 /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484D002214060E00C09384 /* TagViewController.swift */; };
+		49484D0322140B8A00C09384 /* TagViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484D0222140B8A00C09384 /* TagViewCell.swift */; };
+		49484D0522140F3800C09384 /* SelectedTagViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484D0422140F3800C09384 /* SelectedTagViewCell.swift */; };
+		49484D072214F9A700C09384 /* TagHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49484D062214F9A700C09384 /* TagHeaderViewCell.swift */; };
 		496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */; };
 		496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683B821FAB294003FBA5B /* UIColor+Extensions.swift */; };
 		496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */; };
@@ -118,11 +125,18 @@
 /* Begin PBXFileReference section */
 		4910CCA02202E0C4004BDBF1 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		4910CCA822043EB4004BDBF1 /* CalendarViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewStyle.swift; sourceTree = "<group>"; };
+		491DD81D221505340093720A /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		491DD81F221532290093720A /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		49484CF12212613B00C09384 /* String+Unicode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Unicode.swift"; sourceTree = "<group>"; };
 		49484CF32212981800C09384 /* Character+Unicode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Unicode.swift"; sourceTree = "<group>"; };
 		49484CF52212D70400C09384 /* FriendsIndexViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsIndexViewCell.swift; sourceTree = "<group>"; };
 		49484CF62212D70400C09384 /* FriendsIndexViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendsIndexViewCell.xib; sourceTree = "<group>"; };
 		49484CF92213AA0800C09384 /* IndexAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexAlertViewController.swift; sourceTree = "<group>"; };
+		49484CFD221405B000C09384 /* Tag.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tag.storyboard; sourceTree = "<group>"; };
+		49484D002214060E00C09384 /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
+		49484D0222140B8A00C09384 /* TagViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewCell.swift; sourceTree = "<group>"; };
+		49484D0422140F3800C09384 /* SelectedTagViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTagViewCell.swift; sourceTree = "<group>"; };
+		49484D062214F9A700C09384 /* TagHeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagHeaderViewCell.swift; sourceTree = "<group>"; };
 		496683B421FAADAE003FBA5B /* UINavigationBar+Clear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Clear.swift"; sourceTree = "<group>"; };
 		496683B821FAB294003FBA5B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -239,6 +253,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49484CFF221405FE00C09384 /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				49484D002214060E00C09384 /* TagViewController.swift */,
+				49484D062214F9A700C09384 /* TagHeaderViewCell.swift */,
+				49484D0222140B8A00C09384 /* TagViewCell.swift */,
+				49484D0422140F3800C09384 /* SelectedTagViewCell.swift */,
+			);
+			path = Tag;
+			sourceTree = "<group>";
+		};
 		4967D65E22028C4600223ADF /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +328,7 @@
 				F82BE25E221130B400C194F1 /* Notification+Extensions.swift */,
 				F82BE260221130D000C194F1 /* Event+Extensions.swift */,
 				F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */,
+				491DD81D221505340093720A /* Tag.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -318,6 +344,7 @@
 				DBF4CF0521FB0B30001536A8 /* Friends */,
 				DBF4CF0421FB0B2F001536A8 /* Notification */,
 				DBF4CF0321FB0B2D001536A8 /* Setting */,
+				49484CFF221405FE00C09384 /* Tag */,
 				4967D65E22028C4600223ADF /* Calendar */,
 			);
 			path = Views;
@@ -346,6 +373,7 @@
 				F8485CF621FA11BB003C935C /* FriendHistory.storyboard */,
 				DBF4CF1821FBE843001536A8 /* Input.storyboard */,
 				DB38739921FEDAC200ADF0CB /* Holiday.storyboard */,
+				49484CFD221405B000C09384 /* Tag.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -373,6 +401,7 @@
 				4967D6612202C1B000223ADF /* UIView+ParentViewController.swift */,
 				49484CF12212613B00C09384 /* String+Unicode.swift */,
 				49484CF32212981800C09384 /* Character+Unicode.swift */,
+				491DD81F221532290093720A /* UIView+Shadow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -610,6 +639,7 @@
 				DBF4CF1921FBE843001536A8 /* Input.storyboard in Resources */,
 				4998129021F9D99C000DB7B2 /* Setting.storyboard in Resources */,
 				DB3873CB22017DC100ADF0CB /* ItemViewCell.xib in Resources */,
+				49484CFE221405B000C09384 /* Tag.storyboard in Resources */,
 				49C0851821FDA8A60060B02C /* FriendsHeaderViewCell.xib in Resources */,
 				DB38739F21FEEE8100ADF0CB /* ThanksFriendViewCell.xib in Resources */,
 				DB2726022209740700F30CBC /* ThanksFriendHeaderView.xib in Resources */,
@@ -643,11 +673,13 @@
 				49C0851321FD979A0060B02C /* FriendViewCell.swift in Sources */,
 				DB3873A121FEEF0D00ADF0CB /* ThanksFriendViewCell.swift in Sources */,
 				DBF4CF4421FCE4F7001536A8 /* UIButton+Animation.swift in Sources */,
+				49484D0322140B8A00C09384 /* TagViewCell.swift in Sources */,
 				DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */,
 				DBF4CF3A21FC5436001536A8 /* DateInputViewController.swift in Sources */,
 				F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */,
 				DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */,
 				496683C021FAC662003FBA5B /* HomeTitleViewCell.swift in Sources */,
+				49484D012214060E00C09384 /* TagViewController.swift in Sources */,
 				DBABB192220C49EF00B808F6 /* InputData.swift in Sources */,
 				4910CCA922043EB4004BDBF1 /* CalendarViewStyle.swift in Sources */,
 				4967D6642202C31300223ADF /* CalendarMonthViewController.swift in Sources */,
@@ -668,6 +700,7 @@
 				F814529721FCCF6B004A2CF0 /* SettingViewCell.swift in Sources */,
 				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,
 				DB3873CD22017E5300ADF0CB /* ItemViewCell.swift in Sources */,
+				49484D072214F9A700C09384 /* TagHeaderViewCell.swift in Sources */,
 				DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */,
 				DB272663220BCA4200F30CBC /* HolidayInformationView.swift in Sources */,
 				DB3873C922006D3900ADF0CB /* UITextField+BottomLine.swift in Sources */,
@@ -690,8 +723,11 @@
 				DBABB194220C4DE000B808F6 /* InputManager.swift in Sources */,
 				49C0851021FD8A7F0060B02C /* FriendsViewController.swift in Sources */,
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
+				491DD820221532290093720A /* UIView+Shadow.swift in Sources */,
 				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
 				DB18F2ED2214120500B9782F /* HolidayNameTextFieldView.swift in Sources */,
+				49484D0522140F3800C09384 /* SelectedTagViewCell.swift in Sources */,
+				F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */,
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
@@ -704,6 +740,7 @@
 				DB27263D220A042100F30CBC /* BodabiAlertController.swift in Sources */,
 				F82BE25D2211309B00C194F1 /* History+Extensions.swift in Sources */,
 				DBF4CF3C21FC546B001536A8 /* HolidayInputViewCell.swift in Sources */,
+				491DD81E221505340093720A /* Tag.swift in Sources */,
 				4910CCA12202E0C4004BDBF1 /* TestViewController.swift in Sources */,
 				F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */,
 				49484CFA2213AA0800C09384 /* IndexAlertViewController.swift in Sources */,

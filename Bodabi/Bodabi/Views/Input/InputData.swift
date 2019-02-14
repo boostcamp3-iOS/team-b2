@@ -14,6 +14,7 @@ struct InputData {
     var holiday: String?
     var item: Item?
     var date: Date?
+    var tags: [String]?
     
     init() {
         self.name = nil
@@ -21,5 +22,6 @@ struct InputData {
         self.holiday = nil
         self.item = nil
         self.date = nil
+        self.tags = nil
     }
 }
