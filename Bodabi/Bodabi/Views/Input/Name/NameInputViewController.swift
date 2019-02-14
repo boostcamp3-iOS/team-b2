@@ -14,6 +14,7 @@ class NameInputViewController: UIViewController {
     // MARK: - @IBOutlets
     
     @IBOutlet weak var guideLabel: UILabel!
+    @IBOutlet weak var semiGuideLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var textField: UITextField!
@@ -26,8 +27,8 @@ class NameInputViewController: UIViewController {
     
     public weak var delegate: HolidayInputViewController?
     public var entryRoute: EntryRoute!
-    public var inputData: InputData?
-    
+    public var inputData: InputData!
+    public var isRelationInput: Bool?
     private var databaseManager: DatabaseManager!
     private var friends: [Friend]?
     private var searchedFriends: [Friend]? {
@@ -61,6 +62,7 @@ class NameInputViewController: UIViewController {
         initTableView()
         initKeyboard()
         initGuideLabelText()
+        initSemiGuideLabelText()
         initNavigationBar()
         initTextField()
         initNextButton()
@@ -136,11 +138,36 @@ class NameInputViewController: UIViewController {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            guideLabel.text = "새로운 경조사의\n이름을 입력해주세요"
+            guard let isRelationInput = isRelationInput else { return }
+            if isRelationInput {
+                guideLabel.text = "새로운 관계 또는\n이름을 입력해주세요"
+            } else {
+                guideLabel.text = "새로운 경조사의\n이름을 입력해주세요"
+            }
         case .addUpcomingEventAtHome,
              .addHistoryAtHoliday,
              .addFriendAtFriends:
             guideLabel.text = "친구의 이름이\n무엇인가요?"
+        default:
+            break
+        }
+    }
+    
+    private func initSemiGuideLabelText() {
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            guard let isRelationInput = isRelationInput else { return }
+            if isRelationInput {
+                semiGuideLabel.text = "해당하는 관계 또는 이름이 이미 있다면 아래에서 선택해주세요"
+            } else {
+                semiGuideLabel.text = "해당하는 경조사가 이미 있다면 아래에서 선택해주세요"
+            }
+        case .addUpcomingEventAtHome,
+             .addHistoryAtHoliday,
+             .addFriendAtFriends:
+            semiGuideLabel.text = "해당하는 분이 이미 있다면 아래에서 선택해주세요"
         default:
             break
         }
@@ -225,9 +252,15 @@ class NameInputViewController: UIViewController {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            guard let newHolidayName = newHolidayName else { return }
-            delegate?.myHolidaies?.insert(newHolidayName, at: 1)
-            dismiss(animated: true, completion: nil)
+            if let isRelationInput = isRelationInput, isRelationInput {
+                guard let newHolidayName = newHolidayName else { return }
+                delegate?.myRelations?.insert(newHolidayName, at: 1)
+                dismiss(animated: true, completion: nil)
+            } else {
+                guard let newHolidayName = newHolidayName else { return }
+                delegate?.myHolidaies?.insert(newHolidayName, at: 1)
+                dismiss(animated: true, completion: nil)
+            }
         case .addUpcomingEventAtHome:
             let viewController = storyboard(.input)
                 .instantiateViewController(ofType: HolidayInputViewController.self)
@@ -394,7 +427,13 @@ extension NameInputViewController: UITextFieldDelegate {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            textField.placeholder = "졸업식"
+            guard let isRelationInput = isRelationInput else { return }
+            
+            if isRelationInput {
+                textField.placeholder = "동생"
+            } else {
+                textField.placeholder = "졸업식"
+            }
         case .addUpcomingEventAtHome,
              .addHistoryAtHoliday,
              .addFriendAtFriends:

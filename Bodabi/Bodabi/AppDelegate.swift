@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !launchedBefore  {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             UserDefaults.standard.set(["+", "결혼", "생일", "돌잔치", "장례", "출산", "개업"], forKey: "defaultHoliday")
+            UserDefaults.standard.set(["+", "나", "아내", "어머니", "아버지", "아들", "딸"], forKey: "defaultRelation")
         }
         
         databaseManager.load()

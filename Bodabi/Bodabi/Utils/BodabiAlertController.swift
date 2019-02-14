@@ -16,7 +16,7 @@ public class BodabiAlertController: UIViewController {
     
     // MARK: - Property
     
-    private var tag: Int
+    private let tag: Int
     private static var tagFactory = 0
     
     public var overlayColor = UIColor(white: 0, alpha: 0.2)
@@ -222,6 +222,7 @@ public class BodabiAlertController: UIViewController {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.frame = CGRect(x: (view.frame.width - viewWidth) / 2, y: view.frame.height , width: viewWidth, height: posY)
         containerView.backgroundColor = UIColor.white
+        containerView.cornerRadius = 15
         view.addSubview(containerView)
         
         switch style {
@@ -242,6 +243,7 @@ public class BodabiAlertController: UIViewController {
         }
         
         if let window = UIApplication.shared.keyWindow, window.viewWithTag(tag) == nil {
+            print("tag: ", tag)
             view.tag = tag
             window.addSubview(view)
         }

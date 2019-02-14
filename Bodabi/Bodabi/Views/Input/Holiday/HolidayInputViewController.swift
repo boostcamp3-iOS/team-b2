@@ -17,33 +17,49 @@ class HolidayInputViewController: UIViewController {
     
     // MARK: - Property
     
-    public var inputData: InputData?
+    private var databaseManager: DatabaseManager!
+    public var inputData: InputData!
     public var entryRoute: EntryRoute!
+    public var isRelationInput: Bool = true
     public var myHolidaies: [String]? {
         didSet {
             tableView.reloadData()
             UserDefaults.standard.set(myHolidaies, forKey: "defaultHoliday")
         }
     }
-    
+    public var myRelations: [String]? {
+        didSet {
+            tableView.reloadData()
+            UserDefaults.standard.set(myRelations, forKey: "defaultRelation")
+        }
+    }
     private var selectedHoliday: String?
-    private var databaseManager: DatabaseManager!
+    private var selectedRelation: String?
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initDefaultData()
         initTableView()
         initGuideLabel()
         initNavigationBar()
-        
-        if let defaultHoliday = UserDefaults.standard.array(forKey: "defaultHoliday") as? [String] {
-            myHolidaies = defaultHoliday
-        }
     }
     
     // MARK: - Initialization
+    
+    private func initDefaultData() {
+        if isRelationInput {
+            if let defaultRelation = UserDefaults.standard.array(forKey: "defaultRelation") as? [String] {
+                myRelations = defaultRelation
+            }
+        } else {
+            if let defaultHoliday = UserDefaults.standard.array(forKey: "defaultHoliday") as? [String] {
+                myHolidaies = defaultHoliday
+            }
+        }
+    }
     
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
@@ -54,7 +70,11 @@ class HolidayInputViewController: UIViewController {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            guideLabel.text = "어떤 경조사를\n추가하시겠어요?"
+            if isRelationInput {
+                guideLabel.text = "누구의 경조사를\n추가하시겠어요?"
+            } else {
+                guideLabel.text = "어떤 경조사를\n추가하시겠어요?"
+            }
         case .addUpcomingEventAtHome,
              .addHistoryAtFriendHistory:
             guideLabel.text = "친구의 경조사는\n무엇입니까?"
@@ -67,6 +87,12 @@ class HolidayInputViewController: UIViewController {
         guard let entryRoute = entryRoute else { return }
         
         switch entryRoute {
+        case .addHolidayAtHome:
+            if !isRelationInput {
+                let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
+                backButton.tintColor = UIColor.mainColor
+                navigationItem.leftBarButtonItem = backButton
+            }
         case .addUpcomingEventAtHome:
             let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
             backButton.tintColor = UIColor.mainColor
@@ -87,22 +113,47 @@ class HolidayInputViewController: UIViewController {
     // MARK: - Objc
     
     @objc func touchUpHoildayButton(_ sender: UIButton) {
-        selectedHoliday = sender.titleLabel?.text
-
+        if isRelationInput {
+            selectedRelation = sender.titleLabel?.text
+        } else {
+            selectedHoliday = sender.titleLabel?.text
+        }
+        
         guard let entryRoute = entryRoute else { return }
         
-        if selectedHoliday == "+" {
+        if selectedHoliday == "+" || selectedRelation == "+" {
             let viewController = storyboard(.input)
                 .instantiateViewController(ofType: NameInputViewController.self)
             
             viewController.entryRoute = .addHolidayAtHome
             viewController.delegate = self
+            viewController.isRelationInput = isRelationInput
             let navController = UINavigationController(rootViewController: viewController)
             present(navController, animated: true, completion: nil)
         } else {
             switch entryRoute {
-            case .addHolidayAtHome,
-                 .addUpcomingEventAtHome:
+            case .addHolidayAtHome:
+                if isRelationInput {
+                    let viewController = storyboard(.input)
+                        .instantiateViewController(ofType: HolidayInputViewController.self)
+                    
+                    viewController.entryRoute = entryRoute
+                    viewController.setDatabaseManager(databaseManager)
+                    inputData?.relation = selectedRelation
+                    viewController.inputData = inputData
+                    viewController.isRelationInput = false
+                    navigationController?.pushViewController(viewController, animated: true)
+                } else {
+                    let viewController = storyboard(.input)
+                        .instantiateViewController(ofType: DateInputViewController.self)
+                    
+                    viewController.entryRoute = entryRoute
+                    viewController.setDatabaseManager(databaseManager)
+                    inputData?.holiday = selectedHoliday
+                    viewController.inputData = inputData
+                    navigationController?.pushViewController(viewController, animated: true)
+                }
+            case .addUpcomingEventAtHome:
                 let viewController = storyboard(.input)
                     .instantiateViewController(ofType: DateInputViewController.self)
                 
@@ -135,7 +186,11 @@ class HolidayInputViewController: UIViewController {
 
 extension HolidayInputViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myHolidaies?.count ?? 1
+        if isRelationInput {
+            return myRelations?.count ?? 1
+        } else {
+            return myHolidaies?.count ?? 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -145,8 +200,8 @@ extension HolidayInputViewController: UITableViewDataSource {
 
         if let myHolidaies = myHolidaies {
             cell.holidaybutton.setTitle(myHolidaies[indexPath.row], for: .normal)
-        } else {
-            cell.holidaybutton.setTitle("+", for: .normal)
+        } else if let myRelations = myRelations {
+            cell.holidaybutton.setTitle(myRelations[indexPath.row], for: .normal)
         }
         
         cell.holidaybutton.addTarget(self, action: #selector(touchUpHoildayButton(_:)), for: .touchUpInside)

@@ -10,6 +10,7 @@ import Foundation
 
 struct InputData {
     var name: String?
+    var relation: String?
     var holiday: String?
     var item: Item?
     var date: Date?
@@ -17,6 +18,7 @@ struct InputData {
     
     init() {
         self.name = nil
+        self.relation = nil
         self.holiday = nil
         self.item = nil
         self.date = nil
