@@ -235,7 +235,7 @@ extension FriendsViewController: UITableViewDelegate {
         
         let friend = section == .favorite ? searchFavoriteFriends?[indexPath.row] : searchFriends?[indexPath.row]
         
-        viewController.friend = friend
+        viewController.friendID = friend?.objectID
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

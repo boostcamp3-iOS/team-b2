@@ -23,7 +23,7 @@ class HomeViewController: UIViewController {
     
     struct Const {
         static let bottomInset: CGFloat = 60.0
-        
+        static let dayHours: Int = 24 * 3600
         static let buttonAnimationScale: CGFloat = 1.35
         static let buttonAnimationDuration: TimeInterval = 0.12
     }
@@ -148,9 +148,32 @@ class HomeViewController: UIViewController {
     @objc func touchUpUpcomingEventFavoriteButton(_ sender: UIButton) {
         sender.setScaleAnimation(scale: Const.buttonAnimationScale,
                                  duration: Const.buttonAnimationDuration)
-        
         sender.isSelected = !sender.isSelected
-        events?[sender.tag].favorite = sender.isSelected
+        guard let event: Event = events?[sender.tag] else { return }
+        guard let notifications: Set<Notification> = event.notifications as? Set<Notification> else { return }
+        event.favorite = sender.isSelected
+        
+        if sender.isSelected {
+            for days in [NotificationType.today.rawValue, NotificationType.week.rawValue] {
+                let notification = Notification(context: databaseManager.viewContext)
+                guard let interval: TimeInterval = TimeInterval(exactly: days * Const.dayHours * -1) else { return }
+                notification.id = UUID().uuidString
+                notification.date = event.date?.addingTimeInterval(interval)
+                notification.event = event
+                
+                if let type = NotificationType(rawValue: days) {
+                    NotificationSchedular.createNotification(notification: notification, notificationType: type, hour: 9, minute: 0)
+                }
+            }
+        } else {
+            notifications.forEach { notificaion in
+                if let notificationDate = notificaion.date,
+                    event.date?.offsetFrom(date: notificationDate) != NotificationType.normal.rawValue {
+                    self.databaseManager.viewContext.delete(notificaion)
+                    NotificationSchedular.deleteNotification(notification: notificaion)
+                }
+            }
+        }
         try? databaseManager?.viewContext.save()
     }
 }
@@ -168,7 +191,7 @@ extension HomeViewController: UITableViewDelegate {
             let viewController = storyboard(.friendHistory)
                 .instantiateViewController(ofType: FriendHistoryViewController.self)
             viewController.setDatabaseManager(databaseManager)
-            viewController.friend = friend
+            viewController.friendID = friend?.objectID
             
             navigationController?.pushViewController(viewController, animated: true)
         default:
