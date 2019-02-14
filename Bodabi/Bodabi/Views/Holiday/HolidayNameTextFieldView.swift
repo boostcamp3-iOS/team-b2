@@ -13,12 +13,28 @@ protocol HolidayNameTextFieldViewDelegate: class {
 }
 
 class HolidayNameTextFieldView: UIView {
-    @IBOutlet weak var textField: UITextField!
+    lazy var textField: UITextField! = {
+        let textField = UITextField(frame: frame)
+        textField.placeholder = "새로운 경조사 이름을 입력해주세요"
+        textField.borderStyle = UITextField.BorderStyle.roundedRect
+        textField.clearButtonMode = UITextField.ViewMode.always
+        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        textField.addTarget(self, action: #selector(touchUpDoneButton(_:)), for: .touchUpInside)
+        addSubview(textField)
+        return textField
+    }()
     
     weak var delegate: HolidayNameTextFieldViewDelegate?
     
-    @IBAction func touchUpDoneButton(_ sender: UITextField) {
-        delegate?.didTapDoneButton(sender)
-        print("did end editing")
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func touchUpDoneButton(_ sender: UITextField) {
+        print("touched")
     }
 }

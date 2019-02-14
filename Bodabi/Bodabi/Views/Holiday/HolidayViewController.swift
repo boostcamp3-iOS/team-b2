@@ -17,7 +17,9 @@ class HolidayViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var floatingButton: UIButton!
     @IBOutlet weak var informationView: HolidayInformationView!
+    private weak var textField: UITextField!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    private var keyboardDismissGesture: UITapGestureRecognizer?
     
     // MARK: - Properties
     
@@ -29,10 +31,7 @@ class HolidayViewController: UIViewController {
         }
     }
     private var databaseManager: DatabaseManager!
-    private var textField: HolidayNameTextFieldView?
-    
     private var isFirstScroll: Bool = true
-    private var textFieldBottomConstraint: NSLayoutConstraint!
     private var originalBottomConstraint: CGFloat = 0.0
     private struct Const {
         static let bottomInset: CGFloat = 90.0
@@ -46,8 +45,9 @@ class HolidayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         initKeyboard()
+        initTextField()
         initTableView()
         initInformationView()
         initNavigationBar()
@@ -55,12 +55,14 @@ class HolidayViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         fetchHistory()
         setIncomeLabel()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         heightConstraint.constant = Const.minimumImageHeight
     }
     
@@ -90,11 +92,22 @@ class HolidayViewController: UIViewController {
     }
     
     private func initKeyboard() {
-//        originalBottomConstraint = textFieldBottomConstraint.constant
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    private func initTextField() {
+        guard let tabbarFrame = tabBarController?.tabBar.frame else { return }
+        let newNameInputFrame = CGRect(x: tabbarFrame.origin.x, y: tabbarFrame.origin.y, width: tabbarFrame.width, height: tabbarFrame.height / 2)
+        let newNameInputTextField = UITextField(frame: newNameInputFrame)
+        newNameInputTextField.placeholder = holiday?.title
+        newNameInputTextField.borderStyle = .roundedRect
+        newNameInputTextField.clearButtonMode = .always
+        newNameInputTextField.contentVerticalAlignment = .center
+        newNameInputTextField.delegate = self
+        textField = newNameInputTextField
+        view.addSubview(newNameInputTextField)
     }
     
     private func initTableView() {
@@ -110,9 +123,14 @@ class HolidayViewController: UIViewController {
     
     private func initInformationView() {
         guard let holiday = holiday else { return }
-        guard let imageData = holiday.image else { return }
-        informationView.holidayImageView.image = UIImage(data: imageData)
-        informationView.blurView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+    
+        if let imageData = holiday.image {
+            informationView.holidayImageView.image = UIImage(data: imageData)
+            informationView.blurView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        } else {
+            informationView.blurView.backgroundColor = UIColor.mainColor
+        }
+        
         informationView.incomeIcon.image = #imageLiteral(resourceName: "ic_boxIn")
     }
     
@@ -227,11 +245,11 @@ class HolidayViewController: UIViewController {
         alert.cancelButtonTitle = "취소"
         alert.show()
     }
-
+    
     // MARK: - @objc
     
     @objc func showKeyboard() {
-        print("asdf")
+        textField.becomeFirstResponder()
     }
     
     @objc func showCameraActionSheet() {
@@ -259,28 +277,6 @@ class HolidayViewController: UIViewController {
         
         alert.cancelButtonTitle = "취소"
         alert.show()
-    }
-    
-    @objc func keyboardWillChange(_ notification: Foundation.Notification) {
-        if notification.name == UIWindow.keyboardWillChangeFrameNotification ||
-            notification.name == UIWindow.keyboardWillShowNotification {
-            let userInfo:NSDictionary = notification.userInfo! as NSDictionary
-            let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            
-            textFieldBottomConstraint.constant = -keyboardHeight
-            
-            UIView.animate(withDuration: 1.0) {
-                self.view.layoutIfNeeded()
-            }
-        } else {
-            textFieldBottomConstraint.constant = originalBottomConstraint
-            
-            UIView.animate(withDuration: 1.0) {
-                self.view.layoutIfNeeded()
-            }
-        }
     }
     
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
@@ -386,19 +382,19 @@ extension HolidayViewController: UIScrollViewDelegate {
 extension HolidayViewController: ThanksFriendHeaderViewDelegate {
     func didTapSortButton(_ headerView: ThanksFriendHeaderView) {
         let alert = BodabiAlertController(title: "정렬할 방법을 선택해주세요", message: nil, type: nil, style: .Alert)
-//        guard let histories = histories else { return }
-//
-//        alert.addButton(title: "이름순") { [weak self] in
-//            self?.histories = histories.sorted { (a, b) in
-//                
-//            }
-//        }
-//
-//        alert.addButton(title: "금액순") { [weak self] in
-//            self?.histories?.sort {
-//                $0.item?.localizedStandardCompare($1.item?) == .orderedAscending
-//            }
-//        }
+        guard let histories = histories else { return }
+
+        alert.addButton(title: "이름순") { [weak self] in
+            self?.histories = histories.sorted { (a, b) in
+                a.friend?.name ?? "" < b.friend?.name ?? ""
+            }
+        }
+
+        alert.addButton(title: "금액순") { [weak self] in
+            self?.histories = histories.sorted { (a, b) in
+                a.item?.localizedStandardCompare(b.item ?? "") == .orderedAscending
+            }
+        }
         
         alert.cancelButtonTitle = "취소"
         alert.show()
@@ -469,6 +465,24 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
     }
 }
 
+// MARK: - UITextFieldDelegate
+
+extension HolidayViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        navigationItem.title = textField.text
+        holiday?.title = textField.text
+        
+        do {
+            try databaseManager.viewContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        view.endEditing(true)
+        return true
+    }
+}
+
 // MARK: - BodabiAlertControllerDelegate
 
 extension HolidayViewController: BodabiAlertControllerDelegate {
@@ -483,12 +497,54 @@ extension HolidayViewController: DatabaseManagerClient {
     }
 }
 
-// MARK: - Type
+// MARK: - Keyboard
 
-//struct ThanksFriend {
-//    var name: String
-//    var item: String
-//}
+extension HolidayViewController {
+    @objc func keyboardWillChange(_ notification: Foundation.Notification) {
+        animateKeyboard(notification)
+        adjustKeyboardDismisTapGesture(notification)
+    }
+    
+    @objc func tapBackground(_ sender: UITapGestureRecognizer?) {
+        textField.resignFirstResponder()
+    }
+    
+    private func adjustKeyboardDismisTapGesture(_ notification: Foundation.Notification) {
+        if notification.name == UIWindow.keyboardDidHideNotification {
+            guard let gesture = keyboardDismissGesture else { return }
+            view.removeGestureRecognizer(gesture)
+            keyboardDismissGesture = nil
+        } else if notification.name == UIWindow.keyboardWillShowNotification {
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
+            keyboardDismissGesture = gesture
+            view.addGestureRecognizer(gesture)
+        }
+    }
+    
+    private func animateKeyboard(_ notification: Foundation.Notification) {
+        if notification.name == UIWindow.keyboardWillChangeFrameNotification ||
+            notification.name == UIWindow.keyboardWillShowNotification {
+            let userInfo:NSDictionary = notification.userInfo! as NSDictionary
+            let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            textField.frame.origin.y = view.frame.height - keyboardHeight - textField.frame.height
+            
+            UIView.animate(withDuration: 1.0) {
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            textField.frame.origin.y = view.frame.height
+            textField.text = ""
+            textField.placeholder = navigationItem.title
+            
+            UIView.animate(withDuration: 1.0) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+}
 
 // MARK: - Cell Protocol
 
