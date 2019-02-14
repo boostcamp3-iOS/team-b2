@@ -18,7 +18,7 @@ class SettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
+        tableView.dataSource = self; tableView.delegate = self
         initTableView()
         initDummyUserDefaults()
     }
@@ -62,5 +62,26 @@ extension SettingViewController: UITableViewDataSource {
         
         cell.setting = setting
         return cell
+    }
+}
+
+extension SettingViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let setting = SettingOptions(rawValue: indexPath.row) else {
+            return
+        }
+        switch setting {
+        case .question:
+            let email = "knca2@naver.com"
+            if let url = URL(string: "mailto:\(email)") {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        default:
+            break
+        }
     }
 }

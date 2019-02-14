@@ -108,7 +108,7 @@ extension NotificationViewController: UITableViewDelegate {
         if let notification = fetchedResultsController?.object(at: indexPath) {
             updateNotificationRead(indexPath: indexPath)
             viewController.setDatabaseManager(databaseManager)
-            viewController.friend = notification.event?.friend
+            viewController.friendID = notification.event?.friend?.objectID
             navigationController?.pushViewController(viewController, animated: true)
         }
     }

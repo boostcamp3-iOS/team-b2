@@ -20,11 +20,12 @@ class FriendHistoryViewController: UIViewController {
     
     // MARK: - Property
     
-    internal var friend: Friend? {
+    internal var friendID: NSManagedObjectID? {
         didSet {
-            histories = (friend?.histories as? Set<History>)?.sorted(by: { $0.date! < $1.date! }) ?? []
+            fetchHistory()
         }
     }
+    private var friend: Friend?
     private var histories: [History]?
     private var databaseManager: DatabaseManager!
     private var isSortDescending: Bool = true
@@ -33,20 +34,24 @@ class FriendHistoryViewController: UIViewController {
     private var sections: [FriendHistorySection] = []
     private struct Const {
         static let bottomInset: CGFloat = 90.0
+        static let buttonAnimationScale: CGFloat = 1.35
+        static let buttonAnimationDuration: TimeInterval = 0.12
     }
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        initSection()
+
         initNavigationBar()
         initTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        fetchHistory()
+        reloadSection()
         isInputStatus = false
     }
     
@@ -59,6 +64,21 @@ class FriendHistoryViewController: UIViewController {
     }
     
     // MARK: - Initialization
+    
+    private func fetchHistory() {
+        guard let id = friendID else { return }
+        friend = databaseManager.viewContext.object(with: id) as? Friend
+        guard let friendToFetch: Friend = friend else { return }
+        let request: NSFetchRequest<History> = History.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+        let predicate: NSPredicate = NSPredicate(format: "friend = %@", friendToFetch)
+        request.predicate = predicate
+        
+        if let result = try? databaseManager.viewContext.fetch(request) {
+            histories = result
+        }
+    }
     
     private func initNavigationBar() {
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -77,7 +97,7 @@ class FriendHistoryViewController: UIViewController {
         tableView.reloadData()
     }
     
-    private func initSection() {
+    private func reloadSection() {
         guard let histories = histories else {
             return
         }
@@ -102,6 +122,7 @@ class FriendHistoryViewController: UIViewController {
         }
         sections.append(.information(items: [.information(income: String(income), expenditure: String(expenditure))]))
         sections.append(.history(items: historyItems))
+        tableView.reloadData()
     }
     
     // MARK: - Method
@@ -140,6 +161,17 @@ class FriendHistoryViewController: UIViewController {
             friend?.favorite = true
             favoriteButton.image = #imageLiteral(resourceName: "ic_emptyStar")
             try? databaseManager?.viewContext.save()
+        }
+        
+        let pulse = CASpringAnimation(keyPath: "transform.scale")
+        pulse.duration = Const.buttonAnimationDuration
+        pulse.fromValue = 1.0
+        pulse.toValue = Const.buttonAnimationScale
+        pulse.autoreverses = true
+        pulse.repeatCount = 1
+        
+        if let view: UIView = favoriteButton.value(forKey: "view") as? UIView {
+            view.layer.add(pulse, forKey: nil)
         }
     }
 }
@@ -222,8 +254,9 @@ extension FriendHistoryViewController: UITableViewDelegate {
 extension FriendHistoryViewController: FriendHistoryHeaderViewDelegate {
     func friendHistoryHeaderView(_ headerView: FriendHistoryHeaderView, didTapSortButtonWith descending: Bool) {
         sortHistories(descending: isSortDescending)
-        isTableViewLoaded = false
+        reloadSection()
         tableView.reloadData()
+        isTableViewLoaded = false
         isSortDescending = !isSortDescending
     }
 }
