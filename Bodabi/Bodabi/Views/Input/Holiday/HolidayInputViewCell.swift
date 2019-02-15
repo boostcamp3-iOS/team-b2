@@ -11,15 +11,23 @@ import UIKit
 class HolidayInputViewCell: UITableViewCell {
 
     @IBOutlet weak var holidaybutton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         initHolidayButton()
+        initDeleteButton()
     }
     
     private func initHolidayButton() {
         holidaybutton.layer.cornerRadius = 10
         holidaybutton.backgroundColor = UIColor.starColor
+    }
+    
+    private func initDeleteButton() {
+        deleteButton.backgroundColor = .blue
+        deleteButton.layer.cornerRadius = 25/2
+        deleteButton.isHidden = true
     }
 
     @IBAction func touchUpHoildayButton(_ sender: UIButton) {

@@ -23,9 +23,13 @@ struct InputManager {
         switch entryRoute {
         case .addHolidayAtHome:
             let holiday: Holiday = Holiday(context: context)
-            holiday.createdDate = Date()
-            holiday.title = data.holiday
+            if let relationText = data.relation, let holidayText = data.holiday {
+                holiday.title = relationText + "의 " + holidayText
+            }
+        
             holiday.date = data.date
+            holiday.createdDate = Date()
+            
             imageOfHoliday.forEach {
                 if holiday.title?.contains($0.holiday) ?? true {
                     guard let image = $0.image.jpegData(compressionQuality: 1.0) else { return }
