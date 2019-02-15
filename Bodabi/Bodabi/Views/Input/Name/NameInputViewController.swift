@@ -97,8 +97,6 @@ class NameInputViewController: UIViewController {
         guard let entryRoute = entryRoute else { return }
         
         switch entryRoute {
-        case .addHolidayAtHome:
-            print("addFriendAtHoliday")
         case .addUpcomingEventAtHome,
              .addHistoryAtHoliday,
              .addFriendAtFriends:

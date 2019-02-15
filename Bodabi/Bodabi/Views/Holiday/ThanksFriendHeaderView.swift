@@ -12,6 +12,7 @@ protocol ThanksFriendHeaderViewDelegate: class {
     func didTapSortButton(_ headerView: ThanksFriendHeaderView)
     func didTapCancelButton(_ searchBar: UISearchBar)
     func searchBar(_ searchBar: UISearchBar, searchBarTextDidChange searchText: String)
+    func didBeginEditing(_ searchBar: UISearchBar)
 }
 
 class ThanksFriendHeaderView: UITableViewHeaderFooterView {
@@ -47,8 +48,10 @@ extension ThanksFriendHeaderView: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
         searchBar.cancelButton?.tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        
         searchBar.cancelButton?.setTitle("취소  ", for: .normal)
+        
+        delegate?.didBeginEditing(searchBar)
+        
         UIView.animate(withDuration: 0.2) {
             self.layoutIfNeeded()
         }
