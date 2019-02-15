@@ -17,7 +17,7 @@ class HolidayViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var floatingButton: UIButton!
     @IBOutlet weak var informationView: HolidayInformationView!
-    private weak var textField: UITextField!
+    private weak var textField: UITextField?
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     private var keyboardDismissGesture: UITapGestureRecognizer?
     
@@ -30,13 +30,18 @@ class HolidayViewController: UIViewController {
             tableView.reloadData()
         }
     }
+    private var searchedHistories: [History]? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     private var databaseManager: DatabaseManager!
     private var isFirstScroll: Bool = true
     private var originalBottomConstraint: CGFloat = 0.0
     private struct Const {
         static let bottomInset: CGFloat = 90.0
         static let cellHeight: CGFloat = 45.0
-        static let headerHeight: CGFloat = 60.0
+        static let headerHeight: CGFloat = 114.0
         static let maximumImageHeight: CGFloat = 350.0
         static var minimumImageHeight: CGFloat = 88.0
     }
@@ -47,7 +52,6 @@ class HolidayViewController: UIViewController {
         super.viewDidLoad()
         
         initKeyboard()
-        initTextField()
         initTableView()
         initInformationView()
         initNavigationBar()
@@ -215,6 +219,14 @@ class HolidayViewController: UIViewController {
         }
     }
     
+    private func reloadFriends(histories: [History],
+                               completion: (() -> Void)? = nil) {
+        searchedHistories = histories
+        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
+        
+        completion?()
+    }
+    
     // MARK: - @IBAction
     
     @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
@@ -249,7 +261,10 @@ class HolidayViewController: UIViewController {
     // MARK: - @objc
     
     @objc func showKeyboard() {
-        textField.becomeFirstResponder()
+        initTextField()
+        if let textField = textField {
+            textField.becomeFirstResponder()
+        }
     }
     
     @objc func showCameraActionSheet() {
@@ -265,9 +280,12 @@ class HolidayViewController: UIViewController {
             if let holiday = self?.holiday {
                 self?.databaseManager?.viewContext.delete(holiday)
             }
+        
+            let historyfetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "History")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: historyfetchRequest)
             
             do {
-                try self?.databaseManager?.viewContext.save()
+                try self?.databaseManager.viewContext.execute(deleteRequest)
             } catch {
                 print(error.localizedDescription)
             }
@@ -288,13 +306,23 @@ class HolidayViewController: UIViewController {
 
 extension HolidayViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return histories?.count ?? 0
+        if let searchedHistories = searchedHistories {
+            return searchedHistories.count
+        } else if let histories = histories {
+            return histories.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let history = histories?[indexPath.row] else { return UITableViewCell() }
         let cell = tableView.dequeue(ThanksFriendViewCell.self, for: indexPath)
-        cell.bind(history: history)
+        
+        if let searchedHistories = searchedHistories {
+            cell.bind(history: searchedHistories[indexPath.row])
+        } else if let histories = histories {
+            cell.bind(history: histories[indexPath.row])
+        }
         
         return cell
     }
@@ -312,11 +340,12 @@ extension HolidayViewController: UITableViewDataSource {
 
 extension HolidayViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ThanksFriendHeaderView.reuseIdentifier) as? ThanksFriendHeaderView else { return UIView() }
-        
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ThanksFriendHeaderView.reuseIdentifier) as? ThanksFriendHeaderView else {
+            return UIView()
+        }
+
         header.headerTitleLabel.text = "감사한 사람들"
         header.delegate = self
-        
         return header
     }
     
@@ -400,12 +429,22 @@ extension HolidayViewController: ThanksFriendHeaderViewDelegate {
         alert.show()
     }
     
-    func didTapSearchButton(_ headerView: ThanksFriendHeaderView) {
-        heightConstraint.constant = 0
-        
-        UIView.animate(withDuration: 0.5) {
-            self.view.layoutIfNeeded()
+    func searchBar(_ searchBar: UISearchBar, searchBarTextDidChange searchText: String) {
+        guard searchText != "" else {
+            searchedHistories = nil
+            return
         }
+        
+        let histories = self.histories?.filter {
+            $0.friend?.name?.contains(search: searchText) ?? false
+        }
+
+        searchedHistories = histories
+    }
+    
+    func didTapCancelButton(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
     }
 }
 
@@ -468,16 +507,28 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
 // MARK: - UITextFieldDelegate
 
 extension HolidayViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        navigationItem.title = textField.text
-        holiday?.title = textField.text
-        
-        do {
-            try databaseManager.viewContext.save()
-        } catch {
-            print(error.localizedDescription)
+    private func updateHolidayName(to newName: String) {
+        if newName != "" {
+            navigationItem.title = newName
+            holiday?.title = newName
+            
+            let updateRequest = NSBatchUpdateRequest(entityName: "History")
+            
+            updateRequest.propertiesToUpdate = ["holiday": newName]
+            updateRequest.resultType = .updatedObjectsCountResultType
+            
+            do {
+                try databaseManager.viewContext.execute(updateRequest)
+                try databaseManager.viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
         }
-        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let newHolidayName = textField.text else { return true }
+        updateHolidayName(to: newHolidayName)
         view.endEditing(true)
         return true
     }
@@ -506,15 +557,22 @@ extension HolidayViewController {
     }
     
     @objc func tapBackground(_ sender: UITapGestureRecognizer?) {
-        textField.resignFirstResponder()
+        if let textField = textField {
+            textField.resignFirstResponder()
+        }
+        
+        
     }
     
     private func adjustKeyboardDismisTapGesture(_ notification: Foundation.Notification) {
         if notification.name == UIWindow.keyboardDidHideNotification {
             guard let gesture = keyboardDismissGesture else { return }
+            guard let textField = textField else { return }
+            textField.removeFromSuperview()
             view.removeGestureRecognizer(gesture)
             keyboardDismissGesture = nil
         } else if notification.name == UIWindow.keyboardWillShowNotification {
+            if keyboardDismissGesture != nil { return }
             let gesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
             keyboardDismissGesture = gesture
             view.addGestureRecognizer(gesture)
@@ -522,6 +580,7 @@ extension HolidayViewController {
     }
     
     private func animateKeyboard(_ notification: Foundation.Notification) {
+        guard let textField = textField else { return }
         if notification.name == UIWindow.keyboardWillChangeFrameNotification ||
             notification.name == UIWindow.keyboardWillShowNotification {
             let userInfo:NSDictionary = notification.userInfo! as NSDictionary

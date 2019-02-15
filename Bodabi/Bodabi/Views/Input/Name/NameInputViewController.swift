@@ -198,8 +198,9 @@ class NameInputViewController: UIViewController {
     // MARK: - Setup Method
     
     private func setTableView() {
+        guard let newFriendName = newFriendName else { return }
         let searchedFriends = friends?.filter { friend in
-            friend.name?.hasPrefix(newFriendName ?? "") ?? false
+            friend.name?.contains(search: newFriendName) ?? false
         }
         
         self.searchedFriends = searchedFriends
