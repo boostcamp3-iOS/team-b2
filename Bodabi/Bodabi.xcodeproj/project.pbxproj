@@ -119,6 +119,7 @@
 		F89ED960221294F2006588E1 /* NotificationSchedular.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED95F221294F2006588E1 /* NotificationSchedular.swift */; };
 		F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */; };
 		F89ED96B22151D2F006588E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F89ED96A22151D2F006588E1 /* Assets.xcassets */; };
+		F89ED97722163A34006588E1 /* InputFriendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED97622163A34006588E1 /* InputFriendViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -236,6 +237,7 @@
 		F89ED95F221294F2006588E1 /* NotificationSchedular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedular.swift; sourceTree = "<group>"; };
 		F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 		F89ED96A22151D2F006588E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F89ED97622163A34006588E1 /* InputFriendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFriendViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -532,6 +534,7 @@
 			isa = PBXGroup;
 			children = (
 				DBF4CF3521FC5418001536A8 /* NameInputViewController.swift */,
+				F89ED97622163A34006588E1 /* InputFriendViewCell.swift */,
 			);
 			path = Name;
 			sourceTree = "<group>";
@@ -705,6 +708,7 @@
 				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,
 				DB18F2EE2214F75000B9782F /* Bodabi.xcdatamodeld in Sources */,
 				49484CF22212613B00C09384 /* String+Unicode.swift in Sources */,
+				F89ED97722163A34006588E1 /* InputFriendViewCell.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
 				F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */,
 				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,

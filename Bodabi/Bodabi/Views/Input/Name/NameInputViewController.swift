@@ -22,6 +22,12 @@ class NameInputViewController: UIViewController {
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var bottomConstriant: NSLayoutConstraint!
     @IBOutlet weak var heightConstriant: NSLayoutConstraint!
+    @IBOutlet weak var firstTagLabel: UILabel!
+    @IBOutlet weak var secondTagLabel: UILabel!
+    @IBOutlet weak var thirdTagLabel: UILabel!
+    @IBOutlet weak var firstTagIcon: UIView!
+    @IBOutlet weak var secondTagIcon: UIView!
+    @IBOutlet weak var thirdTagIcon: UIView!
 
     // MARK: - Properties
     
@@ -71,12 +77,12 @@ class NameInputViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(inputData?.tags)
+        
         initData()
+        initTagView()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print(222, inputData?.tags)
     }
     
     deinit {
@@ -293,6 +299,15 @@ class NameInputViewController: UIViewController {
         }
     }
     
+    private func initTagView() {
+        firstTagIcon.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        secondTagIcon.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        thirdTagIcon.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        firstTagLabel.text = ""
+        secondTagLabel.text = ""
+        thirdTagLabel.text = ""
+    }
+    
     // MARK: - @IBActions
     
     @IBAction func textFieldDidChanging(_ sender: UITextField) {
@@ -380,7 +395,7 @@ extension NameInputViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "InputFriendViewCell", for: indexPath) as? InputFriendViewCell
         
         guard let entryRoute = entryRoute else { return UITableViewCell() }
         
@@ -390,18 +405,17 @@ extension NameInputViewController: UITableViewDataSource {
              .addFriendAtFriends:
             if newFriendName == nil || newFriendName == "" {
                 let friend = friends?[indexPath.row]
-                
-                cell.textLabel?.text = friend?.name
+                cell?.friend = friend
             } else {
                 let friend = searchedFriends?[indexPath.row]
-                cell.textLabel?.text = friend?.name
+                cell?.friend = friend
             }
             
         default:
             break
         }
         
-        return cell
+        return cell ?? UITableViewCell()
     }
 }
 
@@ -409,10 +423,10 @@ extension NameInputViewController: UITableViewDataSource {
 
 extension NameInputViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
+        let cell = tableView.cellForRow(at: indexPath) as? InputFriendViewCell
         
-        textField.text = cell?.textLabel?.text
-        newFriendName = cell?.textLabel?.text
+        textField.text = cell?.nameLabel.text
+        newFriendName = cell?.nameLabel.text
         
         moveToNextInputView()
         view.endEditing(true)
@@ -487,5 +501,19 @@ extension NameInputViewController: DatabaseManagerClient {
 extension NameInputViewController: BindDataDelegate {
     func bind(_ data: [String]) {
         inputData?.tags = data
+        initTagView()
+        let tags = Array(data.reversed())
+        if tags.count >= 1 {
+            thirdTagLabel.text = tags[0]
+            thirdTagIcon.backgroundColor = Tag.type(of: tags[0])?.color
+        }
+        if tags.count >= 2 {
+            secondTagLabel.text = tags[1]
+            secondTagIcon.backgroundColor = Tag.type(of: tags[1])?.color
+        }
+        if tags.count == 3 {
+            firstTagLabel.text = tags[2]
+            firstTagIcon.backgroundColor = Tag.type(of: tags[2])?.color
+        }
     }
 }
