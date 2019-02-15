@@ -212,11 +212,10 @@ extension HolidayInputViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension HolidayInputViewController: UITableViewDelegate {
-    
-}
+extension HolidayInputViewController: UITableViewDelegate {}
 
-// MARK: -
+// MARK: - DatabaseManagerClient
+
 extension HolidayInputViewController: DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager

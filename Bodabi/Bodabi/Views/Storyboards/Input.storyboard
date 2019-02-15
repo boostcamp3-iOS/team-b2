@@ -209,15 +209,29 @@
                                                         <action selector="touchUpHoildayButton:" destination="D66-ib-WLs" eventType="touchUpInside" id="JSE-iF-QPz"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJp-Kz-KMW">
+                                                    <rect key="frame" x="308" y="6" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="Ge7-7S-gwP"/>
+                                                        <constraint firstAttribute="width" secondItem="rJp-Kz-KMW" secondAttribute="height" multiplier="1:1" id="Qoq-OF-cWi"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <state key="normal" title="X">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="rJp-Kz-KMW" firstAttribute="top" secondItem="apA-rj-2Rm" secondAttribute="topMargin" constant="-5" id="9x0-y6-DGP"/>
                                                 <constraint firstItem="REl-35-fwO" firstAttribute="top" secondItem="apA-rj-2Rm" secondAttribute="topMargin" id="HcB-eE-HB0"/>
                                                 <constraint firstItem="REl-35-fwO" firstAttribute="bottom" secondItem="apA-rj-2Rm" secondAttribute="bottomMargin" id="PmV-sL-ezE"/>
                                                 <constraint firstItem="REl-35-fwO" firstAttribute="trailing" secondItem="apA-rj-2Rm" secondAttribute="trailingMargin" id="SjH-iP-o1A"/>
                                                 <constraint firstItem="REl-35-fwO" firstAttribute="leading" secondItem="apA-rj-2Rm" secondAttribute="leadingMargin" id="YRM-xm-YFJ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="rJp-Kz-KMW" secondAttribute="trailing" constant="-5" id="fgo-Iu-mpk"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="deleteButton" destination="rJp-Kz-KMW" id="qkP-Xx-UIN"/>
                                             <outlet property="holidaybutton" destination="REl-35-fwO" id="Cca-hk-4Ly"/>
                                         </connections>
                                     </tableViewCell>
