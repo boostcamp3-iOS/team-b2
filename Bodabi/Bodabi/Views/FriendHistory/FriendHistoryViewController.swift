@@ -148,6 +148,7 @@ class FriendHistoryViewController: UIViewController {
         
         viewController.inputData = inputData
         viewController.entryRoute = .addHistoryAtFriendHistory
+        viewController.isRelationInput = false
         viewController.setDatabaseManager(databaseManager)
         present(navigationController, animated: true, completion: nil)
     }

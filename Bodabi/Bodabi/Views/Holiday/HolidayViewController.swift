@@ -37,7 +37,7 @@ class HolidayViewController: UIViewController {
     }
     private var databaseManager: DatabaseManager!
     private var isFirstScroll: Bool = true
-    private var originalBottomConstraint: CGFloat = 0.0
+    
     private struct Const {
         static let bottomInset: CGFloat = 90.0
         static let cellHeight: CGFloat = 45.0
@@ -62,6 +62,7 @@ class HolidayViewController: UIViewController {
         
         fetchHistory()
         setIncomeLabel()
+        heightConstraint.constant = Const.maximumImageHeight
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -219,14 +220,6 @@ class HolidayViewController: UIViewController {
         }
     }
     
-    private func reloadFriends(histories: [History],
-                               completion: (() -> Void)? = nil) {
-        searchedHistories = histories
-        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
-        
-        completion?()
-    }
-    
     // MARK: - @IBAction
     
     @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
@@ -343,7 +336,7 @@ extension HolidayViewController: UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ThanksFriendHeaderView.reuseIdentifier) as? ThanksFriendHeaderView else {
             return UIView()
         }
-
+        
         header.headerTitleLabel.text = "감사한 사람들"
         header.delegate = self
         return header
@@ -409,6 +402,16 @@ extension HolidayViewController: UIScrollViewDelegate {
 // MARK: - ThanksFriendHeaderViewDelegate
 
 extension HolidayViewController: ThanksFriendHeaderViewDelegate {
+    func didBeginEditing(_ searchBar: UISearchBar) {
+        heightConstraint.constant = Const.minimumImageHeight
+        informationView.incomeLabel.alpha = 0
+        informationView.incomeIcon.alpha = 0
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     func didTapSortButton(_ headerView: ThanksFriendHeaderView) {
         let alert = BodabiAlertController(title: "정렬할 방법을 선택해주세요", message: nil, type: nil, style: .Alert)
         guard let histories = histories else { return }
@@ -445,6 +448,11 @@ extension HolidayViewController: ThanksFriendHeaderViewDelegate {
     func didTapCancelButton(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
+        heightConstraint.constant = Const.maximumImageHeight
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
 }
 
@@ -488,6 +496,7 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
         guard let holidayImage = image else { return }
         
         informationView.holidayImageView.image = holidayImage
+        informationView.blurView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
         guard let imageData = holidayImage.jpegData(compressionQuality: 1.0) else { return }
         
@@ -498,7 +507,6 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
         } catch {
             print(error.localizedDescription)
         }
-        
         
         picker.dismiss(animated: true, completion: nil)
     }
@@ -560,8 +568,6 @@ extension HolidayViewController {
         if let textField = textField {
             textField.resignFirstResponder()
         }
-        
-        
     }
     
     private func adjustKeyboardDismisTapGesture(_ notification: Foundation.Notification) {
@@ -583,8 +589,8 @@ extension HolidayViewController {
         guard let textField = textField else { return }
         if notification.name == UIWindow.keyboardWillChangeFrameNotification ||
             notification.name == UIWindow.keyboardWillShowNotification {
-            let userInfo:NSDictionary = notification.userInfo! as NSDictionary
-            let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+            let userInfo: NSDictionary = notification.userInfo! as NSDictionary
+            let keyboardFrame: NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             

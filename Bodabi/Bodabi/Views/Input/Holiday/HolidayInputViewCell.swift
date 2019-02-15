@@ -13,6 +13,12 @@ class HolidayInputViewCell: UITableViewCell {
     @IBOutlet weak var holidaybutton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
+    public var isDeleting: Bool = false {
+        didSet {
+            setDeleteButton()
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         initHolidayButton()
@@ -29,8 +35,21 @@ class HolidayInputViewCell: UITableViewCell {
         deleteButton.layer.cornerRadius = 25/2
         deleteButton.isHidden = true
     }
-
+    
+    private func setDeleteButton() {
+        if isDeleting {
+            deleteButton.isHidden = false
+        } else {
+            deleteButton.isHidden = true
+        }
+    }
+    
     @IBAction func touchUpHoildayButton(_ sender: UIButton) {
         sender.pulsate()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+//        deleteButton.isHidden = isDeleting ? false : true
     }
 }
