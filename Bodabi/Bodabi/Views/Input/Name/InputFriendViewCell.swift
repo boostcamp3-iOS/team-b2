@@ -1,20 +1,18 @@
 //
-//  FriendViewCell.swift
+//  InputFriendViewCell.swift
 //  Bodabi
 //
-//  Created by 이혜진 on 2019. 1. 27..
-//  Copyright © 2019년 LeeHyeJin. All rights reserved.
+//  Created by jaehyeon lee on 15/02/2019.
+//  Copyright © 2019 LeeHyeJin. All rights reserved.
 //
 
 import UIKit
 
-class FriendViewCell: UITableViewCell {
-
+class InputFriendViewCell: UITableViewCell {
+    
     // MARK: - IBOutlet
     
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var favoriteButton: UIButton!
-    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var firstTagLabel: UILabel!
     @IBOutlet weak var secondTagLabel: UILabel!
     @IBOutlet weak var thirdTagLabel: UILabel!
@@ -28,11 +26,6 @@ class FriendViewCell: UITableViewCell {
         didSet {
             configure()
         }
-    }
-    
-    struct Const {
-        static let buttonAnimationScale: CGFloat = 1.3
-        static let buttonAnimationDuration: TimeInterval = 0.18
     }
     
     override func awakeFromNib() {
@@ -57,20 +50,9 @@ class FriendViewCell: UITableViewCell {
         secondTagLabel.text = ""
         thirdTagLabel.text = ""
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
-    // MARK: - Method
-    
-    public func setLastLine(line hidden: Bool) {
-        bottomView.isHidden = hidden
-    }
     
     private func configure() {
         nameLabel.text = friend?.name
-        favoriteButton.isSelected = friend?.favorite ?? true
         guard let tags = friend?.tags else { return }
         if tags.count >= 1 {
             firstTagLabel.text = tags[0]
@@ -86,3 +68,4 @@ class FriendViewCell: UITableViewCell {
         }
     }
 }
+

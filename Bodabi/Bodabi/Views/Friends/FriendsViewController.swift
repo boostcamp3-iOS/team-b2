@@ -147,15 +147,19 @@ class FriendsViewController: UIViewController {
         request.sortDescriptors = [sortDescriptor]
         
         if let result = try? databaseManager.viewContext.fetch(request) {
-            friends = result.filter { $0.favorite == false }
-            favoriteFriends = result.filter { $0.favorite == true }
-            
-            searchFriends = friends
-            searchFavoriteFriends = favoriteFriends
+            friends = result
+            sortFriend()
             tableView.reloadData()
-            
             searchBar.text = ""
         }
+    }
+    
+    private func sortFriend() {
+        favoriteFriends = friends?.filter { $0.favorite == true }
+        friends = friends?.filter { $0.favorite == false }
+        
+        searchFriends = friends
+        searchFavoriteFriends = favoriteFriends
     }
     
     private func reloadFriends(friends: [Friend]?,
@@ -237,6 +241,21 @@ extension FriendsViewController: UITableViewDelegate {
         
         viewController.friendID = friend?.objectID
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func tableView (_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard let section = Section(rawValue: indexPath.section),
+            (section == .favorite || section == .friends) else { return }
+        if editingStyle == .delete,
+            let friend = section == .favorite ? searchFavoriteFriends?[indexPath.row] : searchFriends?[indexPath.row] {
+                databaseManager?.viewContext.delete(friend)
+            }
+            do {
+                try databaseManager?.viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        fetchFriend()
     }
 }
 

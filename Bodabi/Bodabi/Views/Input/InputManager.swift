@@ -44,6 +44,7 @@ struct InputManager {
             }
             event.favorite = false
             event.friend?.name = data.name
+            event.friend?.tags = data.tags != nil ? data.tags : event.friend?.tags
             event.title = data.holiday
             event.date = data.date
             generateNotifications(of: event, context: context)
@@ -53,6 +54,7 @@ struct InputManager {
             if let friend = getFriend(context: context, name: data.name ?? "") {
                 history.friend = friend
             }
+            history.friend?.tags = data.tags != nil ? data.tags : history.friend?.tags
             history.item = data.item?.value
             history.holiday = data.holiday
             history.date = data.date
@@ -60,6 +62,7 @@ struct InputManager {
         case .addFriendAtFriends:
             let friend: Friend = Friend(context: context)
             friend.name = data.name
+            friend.tags = data.tags != nil ? data.tags : friend.tags
             friend.favorite = false
         }
         

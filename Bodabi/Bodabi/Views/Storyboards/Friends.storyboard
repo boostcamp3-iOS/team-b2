@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="search" translatesAutoresizingMaskIntoConstraints="NO" id="zdh-xO-tiw">
+                            <searchBar contentMode="redraw" placeholder="검색" translatesAutoresizingMaskIntoConstraints="NO" id="zdh-xO-tiw">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="barTintColor" red="0.8666666666666667" green="0.45098039215686275" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
