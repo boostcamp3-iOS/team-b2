@@ -38,7 +38,6 @@ class HolidayViewController: UIViewController {
     private var databaseManager: DatabaseManager!
     private var isFirstScroll: Bool = true
     private var isHolidayEmpty: Bool = true
-
     private struct Const {
         static let bottomInset: CGFloat = 90.0
         static let cellHeight: CGFloat = 45.0
