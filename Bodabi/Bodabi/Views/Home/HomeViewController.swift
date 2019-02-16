@@ -111,7 +111,9 @@ class HomeViewController: UIViewController {
         request.sortDescriptors = [sortDescriptor]
         
         if let result = try? databaseManager.viewContext.fetch(request) {
-//            guard holidays != result else { return }
+            result.forEach {
+                $0.image = UIImage(data: $0.image ?? .init())?.resize(scale: 0.1)
+            }
             holidays = result
             tableView.reloadSections(
                 IndexSet(integer: Section.holidays.rawValue),

@@ -33,6 +33,7 @@
 		4967D6682202C64700223ADF /* CalendarWeekDayViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4967D6662202C64700223ADF /* CalendarWeekDayViewCell.xib */; };
 		4967D66B2202C65500223ADF /* CalendarDayViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4967D6692202C65500223ADF /* CalendarDayViewCell.swift */; };
 		4967D66C2202C65500223ADF /* CalendarDayViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4967D66A2202C65500223ADF /* CalendarDayViewCell.xib */; };
+		497882572217BFCB00ED64A7 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497882562217BFCB00ED64A7 /* UIImage+Resize.swift */; };
 		4978BCCB220D5A6F0052156E /* TableFetchedResultsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4978BCCA220D5A6F0052156E /* TableFetchedResultsDelegate.swift */; };
 		4978BCCD220D5B230052156E /* CollectionFetchedResultsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4978BCCC220D5B230052156E /* CollectionFetchedResultsDelegate.swift */; };
 		4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4998126D21F9D7B4000DB7B2 /* AppDelegate.swift */; };
@@ -149,6 +150,7 @@
 		4967D6662202C64700223ADF /* CalendarWeekDayViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarWeekDayViewCell.xib; sourceTree = "<group>"; };
 		4967D6692202C65500223ADF /* CalendarDayViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayViewCell.swift; sourceTree = "<group>"; };
 		4967D66A2202C65500223ADF /* CalendarDayViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarDayViewCell.xib; sourceTree = "<group>"; };
+		497882562217BFCB00ED64A7 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		4978BCCA220D5A6F0052156E /* TableFetchedResultsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableFetchedResultsDelegate.swift; sourceTree = "<group>"; };
 		4978BCCC220D5B230052156E /* CollectionFetchedResultsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionFetchedResultsDelegate.swift; sourceTree = "<group>"; };
 		4998126A21F9D7B4000DB7B2 /* Bodabi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bodabi.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -401,6 +403,7 @@
 				49484CF12212613B00C09384 /* String+Unicode.swift */,
 				49484CF32212981800C09384 /* Character+Unicode.swift */,
 				491DD81F221532290093720A /* UIView+Shadow.swift */,
+				497882562217BFCB00ED64A7 /* UIImage+Resize.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -674,6 +677,7 @@
 				DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */,
 				DBF4CF3A21FC5436001536A8 /* DateInputViewController.swift in Sources */,
 				F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */,
+				497882572217BFCB00ED64A7 /* UIImage+Resize.swift in Sources */,
 				DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */,
 				496683C021FAC662003FBA5B /* HomeTitleViewCell.swift in Sources */,
 				49484D012214060E00C09384 /* TagViewController.swift in Sources */,
