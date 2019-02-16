@@ -25,6 +25,11 @@ class HolidayInputViewCell: UITableViewCell {
         initDeleteButton()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isDeleting = false
+    }
+    
     private func initHolidayButton() {
         holidaybutton.layer.cornerRadius = 10
         holidaybutton.backgroundColor = UIColor.starColor
@@ -32,7 +37,7 @@ class HolidayInputViewCell: UITableViewCell {
     
     private func initDeleteButton() {
         deleteButton.backgroundColor = .blue
-        deleteButton.layer.cornerRadius = 25/2
+        deleteButton.layer.cornerRadius = 25 / 2
         deleteButton.isHidden = true
     }
     
@@ -46,10 +51,5 @@ class HolidayInputViewCell: UITableViewCell {
     
     @IBAction func touchUpHoildayButton(_ sender: UIButton) {
         sender.pulsate()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-//        deleteButton.isHidden = isDeleting ? false : true
     }
 }

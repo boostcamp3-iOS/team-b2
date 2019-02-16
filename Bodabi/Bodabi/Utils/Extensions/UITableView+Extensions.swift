@@ -41,3 +41,19 @@ extension UITableView {
     }
 }
 
+extension UITableView {
+    func indexPathForView(_ view: UIView) -> IndexPath? {
+        let center = view.center
+        let viewCenter = self.convert(center, from: view.superview)
+        let indexPath = self.indexPathForRow(at: viewCenter)
+        return indexPath
+    }
+    
+    func getAllIndexPathsInSection(section : Int) -> [IndexPath] {
+        let count = self.numberOfRows(inSection: section)
+        let indexPaths = (0..<count).map {
+            IndexPath(row: $0, section: section)
+        }
+        return indexPaths
+    }
+}
