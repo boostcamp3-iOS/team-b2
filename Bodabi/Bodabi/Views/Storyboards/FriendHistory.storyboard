@@ -25,6 +25,48 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pab-Qj-5Nt">
                                 <rect key="frame" x="0.0" y="64" width="375" height="602"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="emptyHistoryCell" id="9ZG-e9-u1c">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9ZG-e9-u1c" id="L9U-61-q3R">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_history" translatesAutoresizingMaskIntoConstraints="NO" id="Ei2-DE-CR0">
+                                                    <rect key="frame" x="59.5" y="35" width="256" height="256"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="Ei2-DE-CR0" secondAttribute="height" multiplier="1:1" id="mmv-IJ-177"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="현재 주고받은 내역이 없습니다" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zSW-UR-tjy">
+                                                    <rect key="frame" x="30" y="309" width="315" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="지인과 주고받은 내역을 기록해보세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nQw-Ep-Xk1">
+                                                    <rect key="frame" x="30" y="339" width="315" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="nQw-Ep-Xk1" firstAttribute="top" secondItem="zSW-UR-tjy" secondAttribute="bottom" constant="12" id="6hD-q4-RGK"/>
+                                                <constraint firstItem="Ei2-DE-CR0" firstAttribute="centerX" secondItem="L9U-61-q3R" secondAttribute="centerX" id="Ufp-X6-wKS"/>
+                                                <constraint firstAttribute="trailing" secondItem="zSW-UR-tjy" secondAttribute="trailing" constant="30" id="Yqc-nZ-gs4"/>
+                                                <constraint firstAttribute="trailing" secondItem="nQw-Ep-Xk1" secondAttribute="trailing" constant="30" id="aa8-pM-xC8"/>
+                                                <constraint firstItem="zSW-UR-tjy" firstAttribute="top" secondItem="Ei2-DE-CR0" secondAttribute="bottom" constant="18" id="cQr-bu-3wj"/>
+                                                <constraint firstItem="nQw-Ep-Xk1" firstAttribute="leading" secondItem="L9U-61-q3R" secondAttribute="leading" constant="30" id="e6Q-je-M3T"/>
+                                                <constraint firstItem="Ei2-DE-CR0" firstAttribute="top" secondItem="L9U-61-q3R" secondAttribute="topMargin" constant="24" id="nGm-xc-aQP"/>
+                                                <constraint firstItem="zSW-UR-tjy" firstAttribute="leading" secondItem="L9U-61-q3R" secondAttribute="leading" constant="30" id="v8U-qb-NW7"/>
+                                                <constraint firstAttribute="bottom" secondItem="nQw-Ep-Xk1" secondAttribute="bottom" constant="24" id="w5r-5E-a0q"/>
+                                                <constraint firstItem="Ei2-DE-CR0" firstAttribute="width" secondItem="L9U-61-q3R" secondAttribute="width" multiplier="0.5" id="xEs-XR-RY1"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="VZi-B7-pNK" id="uyX-bo-8Nd"/>
                                     <outlet property="delegate" destination="VZi-B7-pNK" id="adT-0l-gXm"/>
@@ -74,7 +116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EmS-Or-jdY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1052" y="85.714285714285722"/>
+            <point key="canvasLocation" x="1052" y="85.007496251874073"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vBh-zP-NGE">
@@ -107,5 +149,6 @@
     <resources>
         <image name="WhiteStar" width="24" height="24"/>
         <image name="ic_floatingButton" width="64" height="65"/>
+        <image name="ic_history" width="256" height="201.5"/>
     </resources>
 </document>

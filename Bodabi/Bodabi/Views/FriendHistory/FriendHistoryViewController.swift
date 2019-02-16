@@ -31,6 +31,7 @@ class FriendHistoryViewController: UIViewController {
     private var isSortDescending: Bool = true
     private var isTableViewLoaded: Bool = false
     private var isInputStatus: Bool = false
+    private var isHolidayEmpty: Bool = true
     private var sections: [FriendHistorySection] = []
     private struct Const {
         static let bottomInset: CGFloat = 90.0
@@ -190,11 +191,20 @@ extension FriendHistoryViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let count = histories?.count, count != 0 else {
+            isHolidayEmpty = true
+            return 1
+        }
+        isHolidayEmpty = false
         return sections[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
+        if isHolidayEmpty, indexPath.section != 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "emptyHistoryCell", for: indexPath)
+            return cell
+        }
         let item = section.items[indexPath.row]
         let cell = tableView.dequeue(section.cellType(item), for: indexPath)
         (cell as? FriendHistoryCellProtocol)?.bind(item: item)
