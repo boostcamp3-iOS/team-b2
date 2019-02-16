@@ -553,19 +553,25 @@ extension NameInputViewController: UITableViewDataSource {
 
 extension NameInputViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? InputFriendViewCell
-        
-        textField.text = cell?.nameLabel.text
-        newFriendName = cell?.nameLabel.text
-        inputData.tags = cell?.friend?.tags
-
-        if let tags = cell?.friend?.tags {
-            bind(tags)
-        } else {
-            initTagView()
+        guard let entryRoute = entryRoute else { return }
+        switch entryRoute {
+        case .addHolidayAtHome:
+            dismiss(animated: true, completion: nil)
+        default:
+            let cell = tableView.cellForRow(at: indexPath) as? InputFriendViewCell
+            
+            textField.text = cell?.nameLabel.text
+            newFriendName = cell?.nameLabel.text
+            inputData.tags = cell?.friend?.tags
+            
+            if let tags = cell?.friend?.tags {
+                bind(tags)
+            } else {
+                initTagView()
+            }
+            moveToNextInputView(isNewData: false)
+            view.endEditing(true)
         }
-        moveToNextInputView(isNewData: false)
-        view.endEditing(true)
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class HolidayInputViewController: UIViewController {
     
@@ -127,6 +128,25 @@ class HolidayInputViewController: UIViewController {
         isDeleting = state
     }
     
+    private func isUniqueName() -> Bool {
+        
+        guard let holiday = selectedHoliday, let relation = selectedRelation else { return false }
+        
+        var isUnique: Bool = true
+        let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
+        let currentName: String = relation + "의 " + holiday
+        if let fetchResult = try? databaseManager.viewContext.fetch(request) {
+            fetchResult.forEach {
+                if $0.title == currentName {
+                    isUnique = false
+                    return
+                }
+            }
+        }
+        
+        return isUnique
+    }
+    
     // MARK: - IBAction
     
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
@@ -160,13 +180,15 @@ class HolidayInputViewController: UIViewController {
                     let viewController = storyboard(.input)
                         .instantiateViewController(ofType: HolidayInputViewController.self)
                     
+                    inputData?.relation = selectedRelation
+                    
                     viewController.entryRoute = entryRoute
                     viewController.setDatabaseManager(databaseManager)
-                    inputData?.relation = selectedRelation
+                    viewController.selectedRelation = selectedRelation
                     viewController.inputData = inputData
                     viewController.isRelationInput = false
                     navigationController?.pushViewController(viewController, animated: true)
-                } else {
+                } else if !isRelationInput, isUniqueName() {
                     let viewController = storyboard(.input)
                         .instantiateViewController(ofType: DateInputViewController.self)
                     
@@ -175,6 +197,11 @@ class HolidayInputViewController: UIViewController {
                     inputData?.holiday = selectedHoliday
                     viewController.inputData = inputData
                     navigationController?.pushViewController(viewController, animated: true)
+                } else {
+                    let alert = BodabiAlertController(title: "주의", message: "중복된 이름입니다. 이름을 다시 입력해주세요.", type: nil, style: .Alert)
+                    
+                    alert.cancelButtonTitle = "확인"
+                    alert.show()
                 }
             case .addUpcomingEventAtHome:
                 let viewController = storyboard(.input)
