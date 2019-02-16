@@ -150,7 +150,7 @@ class FriendHistoryViewController: UIViewController {
         
         var inputData = InputData()
         inputData.name = friend?.name
-        
+        inputData.isNewData = false
         viewController.inputData = inputData
         viewController.entryRoute = .addHistoryAtFriendHistory
         viewController.isRelationInput = false
