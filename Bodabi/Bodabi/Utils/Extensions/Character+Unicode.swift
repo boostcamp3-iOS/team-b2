@@ -49,7 +49,10 @@ extension Character {
     }
     
     func contains(syllable character: Character) -> Bool {
-        if character.isConsonant {
+        if character.isConsonant && (self.isConsonant || self.isHangul) {
+            if self.isConsonant {
+                return character == self
+            }
             return character.consonantIndex == self.choseongCode
         }
         
