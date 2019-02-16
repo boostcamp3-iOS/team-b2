@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIImage {
-    func resize(scale: CGFloat) -> Data? {
+    func resize(scale: CGFloat) -> UIImage? {
         let newSize = CGSize(width: size.width * scale,
                              height: size.height * scale)
         
@@ -17,7 +17,7 @@ extension UIImage {
         self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return newImage?.jpegData(compressionQuality: 1.0)
+        return newImage
     }
     
     func jpeg(_ jpegQuality: CGFloat) -> Data? {
