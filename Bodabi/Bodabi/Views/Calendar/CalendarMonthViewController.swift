@@ -62,9 +62,7 @@ class CalendarMonthViewController: UICollectionViewController {
     // MARK: - Initialization
     
     init() {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = superFrame.size
-        super.init(collectionViewLayout: layout)
+        super.init(collectionViewLayout: UICollectionViewFlowLayout())
         setUpUI()
     }
     
@@ -83,7 +81,6 @@ class CalendarMonthViewController: UICollectionViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets.zero
-        layout.itemSize = cellSize(in: superFrame)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
@@ -207,6 +204,12 @@ extension CalendarMonthViewController {
             }
             return cell
         }
+    }
+}
+
+extension CalendarMonthViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return cellSize(in: superFrame)
     }
 }
 
