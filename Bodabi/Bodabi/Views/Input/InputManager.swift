@@ -32,7 +32,8 @@ struct InputManager {
             
             imageOfHoliday.forEach {
                 if holiday.title?.contains($0.holiday) ?? true {
-                    guard let image = $0.image.jpegData(compressionQuality: 1.0) else { return }
+                    guard let image = $0.image
+                        .resize(scale: 0.1)?.jpegData(compressionQuality: 1.0) else { return }
                     holiday.image = image
                     return
                 }

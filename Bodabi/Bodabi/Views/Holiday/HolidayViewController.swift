@@ -511,6 +511,7 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
         } else if let originalImage = info[.originalImage] as? UIImage {
             image = originalImage
         }
+        image = image?.resize(scale: 0.2)
         
         guard let holidayImage = image else { return }
         
