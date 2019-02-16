@@ -37,7 +37,7 @@ class SettingViewController: UIViewController {
     }
     
     private func initNavigationBar(){
-        navigationController?.navigationBar.clear()
+        //navigationController?.navigationBar.clear()
     }
     
     private func initDummyUserDefaults() {
@@ -80,6 +80,20 @@ extension SettingViewController: UITableViewDelegate {
                     UIApplication.shared.openURL(url)
                 }
             }
+        case .facebook:
+            let app = "fb://profile/548962302252309"
+            let web = "https://www.facebook.com/548962302252309"
+            let application = UIApplication.shared
+            if application.canOpenURL(URL(string: app)!) {
+                application.open(URL(string: app)!, options: [:], completionHandler: nil)
+                application.open(URL(string: web)!, options: [:], completionHandler: nil)
+            } else {
+                application.open(URL(string: web)!, options: [:], completionHandler: nil)
+            }
+        case .notification:
+            let viewController = storyboard(.setting)
+                .instantiateViewController(ofType: SettingAlarmViewController.self)
+            navigationController?.pushViewController(viewController, animated: true)
         default:
             break
         }

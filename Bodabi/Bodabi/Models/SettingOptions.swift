@@ -9,18 +9,21 @@
 import Foundation
 
 enum SettingOptions: Int, CaseIterable {
-    case backup
-    case review
     case question
+    case notification
+    case description
+    case facebook
     
     func description() -> String {
         switch self {
-        case .backup:
-            return "백업"
-        case .review:
-            return "리뷰 남기기"
         case .question:
             return "문의하기"
+        case .notification:
+            return "알림"
+        case .description:
+            return "개발자 정보"
+        case .facebook:
+            return "페이스북 페이지"
         }
     }
 }

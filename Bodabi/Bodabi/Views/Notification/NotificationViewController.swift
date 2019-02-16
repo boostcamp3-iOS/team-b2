@@ -14,6 +14,7 @@ class NotificationViewController: UIViewController {
     // MARK: - IBOutlet
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyView: UIView!
     
     // MARK: - Property
     
@@ -77,6 +78,10 @@ class NotificationViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
+    
+    private func setEmptyView() {
+        emptyView.isHidden = tableView.numberOfRows(inSection: 0) == 0  ? false : true
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -88,6 +93,7 @@ extension NotificationViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        setEmptyView()
         let cell = tableView.dequeue(NotificationViewCell.self, for: indexPath)
         
         guard let notification = fetchedResultsController?.object(at: indexPath) else {
@@ -122,6 +128,7 @@ extension NotificationViewController: UITableViewDelegate {
                 } catch {
                     print(error.localizedDescription)
                 }
+                setEmptyView()
             }
         }
     }

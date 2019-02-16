@@ -153,8 +153,8 @@ struct InputManager {
             let notification: Notification = Notification(context: context)
             notification.id = UUID().uuidString
             notification.event = event
-            notification.date = event.date?.addingTimeInterval(TimeInterval(exactly: oneDayInterval * -1) ?? 0)
-            NotificationSchedular.createNotification(notification: notification, notificationType: .normal, hour: 9, minute: 0)
+            notification.date = event.date?.addingTimeInterval(TimeInterval(exactly: UserDefaults.standard.integer(forKey: "defaultAlarmDday") * oneDayInterval * -1) ?? 0)
+            NotificationSchedular.createNotification(notification: notification, notificationType: .normal, hour: UserDefaults.standard.integer(forKey: "defaultAlarmHour"), minute: UserDefaults.standard.integer(forKey: "defaultAlarmMinutes"))
     }
 }
 
