@@ -92,6 +92,7 @@ class FriendsViewController: UIViewController {
     @IBAction func touchUpAddFriendButton(_ sender: UIButton) {
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: NameInputViewController.self)
+        viewController.isRelationInput = false
         viewController.entryRoute = .addFriendAtFriends
         viewController.setDatabaseManager(databaseManager)
         viewController.inputData = InputData()
