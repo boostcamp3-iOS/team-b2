@@ -151,6 +151,7 @@ class FriendHistoryViewController: UIViewController {
         
         var inputData = InputData()
         inputData.name = friend?.name
+        inputData.tags = friend?.tags
         inputData.isNewData = false
         viewController.inputData = inputData
         viewController.entryRoute = .addHistoryAtFriendHistory

@@ -116,6 +116,22 @@ struct InputManager {
         }
     }
     
+    static private func getFriend(context: NSManagedObjectContext, data: InputData) -> Friend? {
+        if data.isNewData {
+            let friend: Friend = Friend(context: context)
+            friend.name = data.name
+            friend.tags = data.tags != nil ? data.tags : friend.tags
+            friend.favorite = false
+            return friend
+        }
+        
+        if let friend: Friend = getFriend(context: context, name: data.name ?? "", tags: data.tags ?? []) {
+            return friend
+        } else {
+            return nil
+        }
+    }
+    
     static private func isSame(_ newTags: [String], with friendTags: [String]) -> Bool {
         guard newTags.count == friendTags.count else {
             return false
@@ -131,22 +147,6 @@ struct InputManager {
         }
         
         return true
-    }
-    
-    static private func getFriend(context: NSManagedObjectContext, data: InputData) -> Friend? {
-        if data.isNewData {
-            let friend: Friend = Friend(context: context)
-            friend.name = data.name
-            friend.tags = data.tags != nil ? data.tags : friend.tags
-            friend.favorite = false
-            return friend
-        }
-        
-        if let friend: Friend = getFriend(context: context, name: data.name ?? "", tags: data.tags ?? []) {
-            return friend
-        } else {
-            return nil
-        }
     }
     
     static private func generateNotifications(of event: Event, context: NSManagedObjectContext){

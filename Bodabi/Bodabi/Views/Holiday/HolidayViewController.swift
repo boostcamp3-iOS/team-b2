@@ -28,6 +28,7 @@ class HolidayViewController: UIViewController {
     private var histories: [History]? {
         didSet {
             tableView.reloadData()
+            setIncomeLabel()
         }
     }
     private var searchedHistories: [History]? {
@@ -275,14 +276,9 @@ class HolidayViewController: UIViewController {
             if let holiday = self?.holiday {
                 self?.databaseManager?.viewContext.delete(holiday)
             }
-        
-            let historyfetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "History")
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: historyfetchRequest)
             
-            do {
-                try self?.databaseManager.viewContext.execute(deleteRequest)
-            } catch {
-                print(error.localizedDescription)
+            self?.histories?.forEach {
+                self?.databaseManager.viewContext.delete($0)
             }
             
             self?.navigationController?.popViewController(animated: true)
@@ -309,7 +305,8 @@ extension HolidayViewController: UITableViewDataSource {
             return histories.count
         } else {
             isHolidayEmpty = true
-            return 1
+            return 0
+//            return 1
         }
     }
     
@@ -351,9 +348,6 @@ extension HolidayViewController: UITableViewDelegate {
             return UIView()
         }
 
-        let backgroundView = UIView(frame: header.bounds)
-        backgroundView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-        header.backgroundView = backgroundView
         header.headerTitleLabel.text = "감사한 사람들"
         header.delegate = self
         return header
@@ -535,9 +529,6 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
 // MARK: - UITextFieldDelegate
 
 extension HolidayViewController: UITextFieldDelegate {
-    
-    
-    
     private func isUniqueName(with name: String) -> Bool {
         var isUnique: Bool = true
         let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
