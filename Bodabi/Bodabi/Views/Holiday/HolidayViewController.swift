@@ -234,7 +234,7 @@ class HolidayViewController: UIViewController {
         
         inputData.date = holiday?.date
         inputData.holiday = holiday?.title
-        
+        viewController.isRelationInput = false
         viewController.inputData = inputData
         viewController.entryRoute = .addHistoryAtHoliday
         viewController.setDatabaseManager(databaseManager)

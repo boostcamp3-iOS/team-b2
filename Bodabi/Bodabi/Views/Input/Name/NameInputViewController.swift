@@ -304,13 +304,13 @@ class NameInputViewController: UIViewController {
         guard let searchedFriends = searchedFriends else { return true }
         
         var isUnique: Bool = true
-        
+        if searchedFriends.count == 0 { isUnique = false }
         searchedFriends.forEach { (friend) in
             if friend.name == newName, let friendTags = friend.tags {
                 if isSame(newTags, with: friendTags) {
                     isUnique = false
                 }
-            } else if friend.tags == nil, newTags.count == 0 {
+            } else if friend.tags == nil, newTags.count == 0{
                 isUnique = false
             }
         }
@@ -391,7 +391,8 @@ class NameInputViewController: UIViewController {
             
             viewController.setDatabaseManager(databaseManager)
             viewController.entryRoute = entryRoute
-
+            
+            inputData?.isNewData = isNewData
             inputData?.name = newFriendName
             viewController.inputData = inputData
             navigationController?.pushViewController(viewController, animated: true)
