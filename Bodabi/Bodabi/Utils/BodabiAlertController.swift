@@ -243,7 +243,6 @@ public class BodabiAlertController: UIViewController {
         }
         
         if let window = UIApplication.shared.keyWindow, window.viewWithTag(tag) == nil {
-            print("tag: ", tag)
             view.tag = tag
             window.addSubview(view)
         }
