@@ -82,7 +82,12 @@ class FriendHistoryViewController: UIViewController {
     
     private func initNavigationBar() {
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationItem.title = friend?.name ?? ""
+        
+        if let friendTags = friend?.tags {
+            navigationItem.title = friendTags.reduce("", { $0 + " \($1)" }) + " " + (friend?.name ?? "")
+        } else {
+            navigationItem.title = friend?.name ?? ""
+        }
         favoriteButton.image = friend?.favorite == true ? #imageLiteral(resourceName: "ic_emptyStar") : #imageLiteral(resourceName: "WhiteStar")
     }
     
@@ -221,6 +226,7 @@ extension FriendHistoryViewController: UITableViewDelegate {
         if section == 1 {
             let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: FriendHistoryHeaderView.reuseIdentifier)
             let header = cell as! FriendHistoryHeaderView
+            header.backgroundView = UIView()
             header.headerTitleLabel.text = "주고받은 내역"
             header.delegate = self
             return header

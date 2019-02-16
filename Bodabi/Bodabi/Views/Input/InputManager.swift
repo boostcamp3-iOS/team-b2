@@ -39,9 +39,9 @@ struct InputManager {
             }
         case .addUpcomingEventAtHome:
             let event: Event = Event(context: context)
-            if let friend = getFriend(context: context, name: data.name ?? "") {
-                event.friend = friend
-            }
+            let friend = getFriend(context: context, data: data)
+            
+            event.friend = friend
             event.favorite = false
             event.friend?.name = data.name
             event.friend?.tags = data.tags != nil ? data.tags : event.friend?.tags
@@ -51,7 +51,7 @@ struct InputManager {
         case .addHistoryAtHoliday,
              .addHistoryAtFriendHistory:
             let history: History = History(context: context)
-            if let friend = getFriend(context: context, name: data.name ?? "") {
+            if let friend = getFriend(context: context, name: data.name ?? "", tags: data.tags ?? []) {
                 history.friend = friend
             }
             history.friend?.tags = data.tags != nil ? data.tags : history.friend?.tags
@@ -60,10 +60,12 @@ struct InputManager {
             history.date = data.date
             history.isTaken = entryRoute == .addHistoryAtHoliday ? true : false
         case .addFriendAtFriends:
-            let friend: Friend = Friend(context: context)
-            friend.name = data.name
-            friend.tags = data.tags != nil ? data.tags : friend.tags
-            friend.favorite = false
+            if data.isNewData {
+                let friend: Friend = Friend(context: context)
+                friend.name = data.name
+                friend.tags = data.tags != nil ? data.tags : friend.tags
+                friend.favorite = false
+            }
         }
         
         do {
@@ -74,7 +76,7 @@ struct InputManager {
     }
     
     // 추후에 tags 적용
-    static private func checkDuplication(context: NSManagedObjectContext, name: String) -> Bool {
+    static private func checkDuplication(context: NSManagedObjectContext, name: String, tags: [String]) -> Bool {
         let request: NSFetchRequest<Friend> = Friend.fetchRequest()
         if let result = try? context.fetch(request) {
             for friend in result {
@@ -88,23 +90,78 @@ struct InputManager {
     }
     
     // friend를 가져오는 메소드
-    static private func getFriend(context: NSManagedObjectContext, name: String) -> Friend? {
-        // 새로운 friend를 만들어야 하는지 기존의 friend를 fetch해오는지 중복체크를 해서
-        if !checkDuplication(context: context, name: name) {
-            let friend: Friend = Friend(context: context)
-            friend.name = name
-            return friend
-        } else {
-            let request: NSFetchRequest<Friend> = Friend.fetchRequest()
-            let predicate = NSPredicate(format: "name = %@", name)
-            request.predicate = predicate
-            
-            if let result = try? context.fetch(request) {
-                return result.first
-            } else {
-                return nil
+    static private func getFriend(context: NSManagedObjectContext, name: String, tags: [String]) -> Friend? {
+//        // 새로운 friend를 만들어야 하는지 기존의 friend를 fetch해오는지 중복체크를 해서
+//        if !checkDuplication(context: context, name: name, tags: tags) {
+//            let friend: Friend = Friend(context: context)
+//            friend.name = name
+//            return friend
+//        } else {
+//            let request: NSFetchRequest<Friend> = Friend.fetchRequest()
+//            let predicate = NSPredicate(format: "name = %@", name)
+//            request.predicate = predicate
+//
+//            if let result = try? context.fetch(request) {
+//                // Fix tags 식별해서 하나의 친구만 가져오기
+//                return result.first
+//            } else {
+//                return nil
+//            }
+//
+//        }
+        
+        let request: NSFetchRequest<Friend> = Friend.fetchRequest()
+        let predicate = NSPredicate(format: "name = %@", name)
+        request.predicate = predicate
+        
+        var searchedFriend: Friend?
+        
+        if let result = try? context.fetch(request) {
+            // Fix tags 식별해서 하나의 친구만 가져오기
+            result.forEach { (friend) in
+                if let friendTags = friend.tags {
+                    if isSame(tags, with: friendTags) {
+                        searchedFriend = friend
+                        return
+                    }
+                }
             }
             
+            return searchedFriend
+        } else {
+            return nil
+        }
+    }
+    
+    static private func isSame(_ newTags: [String], with friendTags: [String]) -> Bool {
+        guard newTags.count == friendTags.count else {
+            return false
+        }
+        
+        let sortNewTags = newTags.sorted()
+        let sortFriendTags = friendTags.sorted()
+        
+        for i in 0..<sortNewTags.count {
+            if sortNewTags[i] != sortFriendTags[i] {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    static private func getFriend(context: NSManagedObjectContext, data: InputData) -> Friend? {
+        if data.isNewData {
+            let friend: Friend = Friend(context: context)
+            friend.name = data.name
+            friend.tags = data.tags != nil ? data.tags : friend.tags
+            friend.favorite = false
+        }
+        
+        if let friend: Friend = getFriend(context: context, name: data.name ?? "", tags: data.tags ?? []) {
+            return friend
+        } else {
+            return nil
         }
     }
     

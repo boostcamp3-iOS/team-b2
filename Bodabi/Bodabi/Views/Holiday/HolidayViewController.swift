@@ -154,6 +154,8 @@ class HolidayViewController: UIViewController {
         }
         
         informationView.incomeLabel.text = String(totallyIncome).insertComma()
+        informationView.incomeLabel.alpha = 1.0
+        informationView.incomeIcon.alpha = 1.0
     }
     
     private func shouldAccessPhotoLibrary(for source: UIImagePickerController.SourceType) -> Bool {
@@ -336,7 +338,10 @@ extension HolidayViewController: UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ThanksFriendHeaderView.reuseIdentifier) as? ThanksFriendHeaderView else {
             return UIView()
         }
-        
+
+        let backgroundView = UIView(frame: header.bounds)
+        backgroundView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+        header.backgroundView = backgroundView
         header.headerTitleLabel.text = "감사한 사람들"
         header.delegate = self
         return header
@@ -448,8 +453,10 @@ extension HolidayViewController: ThanksFriendHeaderViewDelegate {
     func didTapCancelButton(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
+        searchedHistories = nil
         heightConstraint.constant = Const.maximumImageHeight
-        
+        informationView.incomeIcon.alpha = 1.0
+        informationView.incomeLabel.alpha = 1.0
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -515,8 +522,27 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
 // MARK: - UITextFieldDelegate
 
 extension HolidayViewController: UITextFieldDelegate {
+    
+    
+    
+    private func isUniqueName(with name: String) -> Bool {
+        var isUnique: Bool = true
+        let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
+        
+        if let fetchResult = try? databaseManager.viewContext.fetch(request) {
+            fetchResult.forEach {
+                if $0.title == name {
+                    isUnique = false
+                    return
+                }
+            }
+        }
+        
+        return isUnique
+    }
+    
     private func updateHolidayName(to newName: String) {
-        if newName != "" {
+        if newName != "", isUniqueName(with: newName) {
             navigationItem.title = newName
             holiday?.title = newName
             
@@ -531,6 +557,11 @@ extension HolidayViewController: UITextFieldDelegate {
             } catch {
                 print(error.localizedDescription)
             }
+        } else {
+            let alert = BodabiAlertController(title: "주의", message: "중복된 이름입니다. 이름을 다시 입력해주세요.", type: nil, style: .Alert)
+            
+            alert.cancelButtonTitle = "확인"
+            alert.show()
         }
     }
     
