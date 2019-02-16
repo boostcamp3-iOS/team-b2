@@ -51,10 +51,8 @@ struct InputManager {
         case .addHistoryAtHoliday,
              .addHistoryAtFriendHistory:
             let history: History = History(context: context)
-            if let friend = getFriend(context: context, name: data.name ?? "", tags: data.tags ?? []) {
-                history.friend = friend
-            }
-            history.friend?.tags = data.tags != nil ? data.tags : history.friend?.tags
+            let friend = getFriend(context: context, data: data)
+            history.friend = friend
             history.item = data.item?.value
             history.holiday = data.holiday
             history.date = data.date
@@ -91,25 +89,6 @@ struct InputManager {
     
     // friend를 가져오는 메소드
     static private func getFriend(context: NSManagedObjectContext, name: String, tags: [String]) -> Friend? {
-//        // 새로운 friend를 만들어야 하는지 기존의 friend를 fetch해오는지 중복체크를 해서
-//        if !checkDuplication(context: context, name: name, tags: tags) {
-//            let friend: Friend = Friend(context: context)
-//            friend.name = name
-//            return friend
-//        } else {
-//            let request: NSFetchRequest<Friend> = Friend.fetchRequest()
-//            let predicate = NSPredicate(format: "name = %@", name)
-//            request.predicate = predicate
-//
-//            if let result = try? context.fetch(request) {
-//                // Fix tags 식별해서 하나의 친구만 가져오기
-//                return result.first
-//            } else {
-//                return nil
-//            }
-//
-//        }
-        
         let request: NSFetchRequest<Friend> = Friend.fetchRequest()
         let predicate = NSPredicate(format: "name = %@", name)
         request.predicate = predicate
@@ -156,6 +135,7 @@ struct InputManager {
             friend.name = data.name
             friend.tags = data.tags != nil ? data.tags : friend.tags
             friend.favorite = false
+            return friend
         }
         
         if let friend: Friend = getFriend(context: context, name: data.name ?? "", tags: data.tags ?? []) {
