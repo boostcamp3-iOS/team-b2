@@ -96,17 +96,14 @@ class DateInputViewController: UIViewController {
     private func initDatePickerTextField() {
         let bar = UIToolbar()
         bar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "완료",
-                                         style: .done,
-                                         target: self,
+        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self,
                                          action: #selector(touchUpPickerDoneButton))
-        let cancelButton = UIBarButtonItem(title: "취소",
-                                           style: .done,
-                                           target: self,
+        doneButton.tintColor = .mainColor
+        let cancelButton = UIBarButtonItem(title: "취소", style: .done, target: self,
                                            action: #selector(tapBackground(_:)))
+        cancelButton.tintColor = .mainColor
         let flextbleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                                            target: self,
-                                            action: nil)
+                                            target: self, action: nil)
         bar.setItems([cancelButton, flextbleSpace, doneButton], animated: true)
         datePickerTextField.inputAccessoryView = bar
         datePickerTextField.inputView = pickerView

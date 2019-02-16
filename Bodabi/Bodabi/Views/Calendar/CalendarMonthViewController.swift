@@ -62,7 +62,9 @@ class CalendarMonthViewController: UICollectionViewController {
     // MARK: - Initialization
     
     init() {
-        super.init(collectionViewLayout: UICollectionViewFlowLayout())
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = superFrame.size
+        super.init(collectionViewLayout: layout)
         setUpUI()
     }
     

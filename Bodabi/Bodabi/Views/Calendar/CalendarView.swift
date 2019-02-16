@@ -91,8 +91,8 @@ class CalendarView: UIView {
     }
     
     public func movePage(to date: Date?) {
-        if let viewController =
-            pageController?.viewControllers?.first as? CalendarMonthViewController {
+        if let viewController = pageController?
+            .viewControllers?.first as? CalendarMonthViewController {
             guard let toDate = date,
                 let fromDate = viewController.visibleMonthFirstDay else { return }
             let visibleDateString = fromDate.toString(of: .noDay)
@@ -104,8 +104,8 @@ class CalendarView: UIView {
     }
     
     public func movePage(addMonth count: Int) {
-        if let viewController =
-            pageController?.viewControllers?.first as? CalendarMonthViewController {
+        if let viewController = pageController?
+            .viewControllers?.first as? CalendarMonthViewController {
             guard let toDate = viewController.getDate(addMonth: count),
                 let fromDate = viewController.visibleMonthFirstDay else { return }
             setNextPageView(fromDate: fromDate, toDate: toDate)
