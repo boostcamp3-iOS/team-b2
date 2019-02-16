@@ -16,6 +16,7 @@ class FriendsViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var emptyView: UIView!
     @IBOutlet var indexsVisibleConstraint: NSLayoutConstraint!
     
     // MARK: - Property
@@ -77,7 +78,6 @@ class FriendsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         fetchFriend()
     }
     
@@ -141,6 +141,10 @@ class FriendsViewController: UIViewController {
     }
     
     // MARK: - Method
+    
+    private func setEmptyView() {
+        emptyView.isHidden = tableView.numberOfRows(inSection: Section.friends.rawValue) == 0 && tableView.numberOfRows(inSection:Section.favorite.rawValue) == 0 ? false : true
+    }
     
     private func fetchFriend() {
         let request: NSFetchRequest<Friend> = Friend.fetchRequest()
@@ -257,6 +261,7 @@ extension FriendsViewController: UITableViewDelegate {
                 print(error.localizedDescription)
             }
         fetchFriend()
+        setEmptyView()
     }
 }
 
@@ -295,6 +300,7 @@ extension FriendsViewController: UITableViewDataSource {
             guard let friends = section == .friends ? searchFriends : searchFavoriteFriends else { return cell }
             cell.friend = friends[indexPath.row]
             cell.setLastLine(line: indexPath.row == (friends.count - 1))
+            setEmptyView()
             return cell
         }
     }

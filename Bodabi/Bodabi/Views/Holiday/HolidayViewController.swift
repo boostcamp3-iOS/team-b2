@@ -37,7 +37,8 @@ class HolidayViewController: UIViewController {
     }
     private var databaseManager: DatabaseManager!
     private var isFirstScroll: Bool = true
-    
+    private var isHolidayEmpty: Bool = true
+
     private struct Const {
         static let bottomInset: CGFloat = 90.0
         static let cellHeight: CGFloat = 45.0
@@ -301,29 +302,41 @@ class HolidayViewController: UIViewController {
 
 extension HolidayViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let searchedHistories = searchedHistories {
+        if let searchedHistories = searchedHistories, searchedHistories.count != 0 {
+            isHolidayEmpty = false
             return searchedHistories.count
-        } else if let histories = histories {
+        } else if let histories = histories, histories.count != 0 {
+            isHolidayEmpty = false
             return histories.count
         } else {
-            return 0
+            isHolidayEmpty = true
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeue(ThanksFriendViewCell.self, for: indexPath)
-        
-        if let searchedHistories = searchedHistories {
-            cell.bind(history: searchedHistories[indexPath.row])
-        } else if let histories = histories {
-            cell.bind(history: histories[indexPath.row])
+        print(isHolidayEmpty)
+        if isHolidayEmpty {
+            let emptyCell = tableView.dequeueReusableCell(withIdentifier: "emptyHolidayCell", for: indexPath)
+            return emptyCell
+        } else {
+            let cell = tableView.dequeue(ThanksFriendViewCell.self, for: indexPath)
+            
+            if let searchedHistories = searchedHistories {
+                cell.bind(history: searchedHistories[indexPath.row])
+            } else if let histories = histories {
+                cell.bind(history: histories[indexPath.row])
+            }
+            return cell
         }
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Const.cellHeight
+        if isHolidayEmpty {
+            return tableView.rowHeight
+        } else {
+            return Const.cellHeight
+        }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

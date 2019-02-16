@@ -29,6 +29,36 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="25" minY="0.0" maxX="25" maxY="0.0"/>
                             </tableView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LKf-iQ-Umb" userLabel="Empty View">
+                                <rect key="frame" x="0.0" y="56" width="375" height="585"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_emptyFriend" translatesAutoresizingMaskIntoConstraints="NO" id="AID-sq-pNH">
+                                        <rect key="frame" x="93.666666666666671" y="125.33333333333333" width="187.66666666666663" height="217.33333333333337"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아직 추가된 친구가 없습니다" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qfi-Hb-Lhh">
+                                        <rect key="frame" x="104.00000000000001" y="358.66666666666669" width="167.33333333333337" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="감사한 마음을 나눌 친구를 추가해보세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4V-Lr-6LC">
+                                        <rect key="frame" x="69" y="388.66666666666663" width="237" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.97645872831344604" green="0.97646445035934448" blue="0.97647935152053833" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="Qfi-Hb-Lhh" firstAttribute="top" secondItem="AID-sq-pNH" secondAttribute="bottom" constant="16" id="1e4-Oi-oh4"/>
+                                    <constraint firstItem="AID-sq-pNH" firstAttribute="centerX" secondItem="LKf-iQ-Umb" secondAttribute="centerX" id="EB8-xi-WLk"/>
+                                    <constraint firstItem="AID-sq-pNH" firstAttribute="width" secondItem="LKf-iQ-Umb" secondAttribute="width" multiplier="0.5" id="KRh-NT-gy5"/>
+                                    <constraint firstItem="Qfi-Hb-Lhh" firstAttribute="centerX" secondItem="LKf-iQ-Umb" secondAttribute="centerX" id="Mu9-qT-neS"/>
+                                    <constraint firstItem="E4V-Lr-6LC" firstAttribute="centerX" secondItem="LKf-iQ-Umb" secondAttribute="centerX" id="dxE-MY-F7B"/>
+                                    <constraint firstItem="E4V-Lr-6LC" firstAttribute="top" secondItem="Qfi-Hb-Lhh" secondAttribute="bottom" constant="12" id="fGb-YP-qC7"/>
+                                    <constraint firstItem="AID-sq-pNH" firstAttribute="centerY" secondItem="LKf-iQ-Umb" secondAttribute="centerY" multiplier="0.8" id="r7r-Bj-164"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f75-ar-m1V">
                                 <rect key="frame" x="155.66666666666666" y="560" width="64" height="65"/>
                                 <state key="normal" image="ic_floatingButton"/>
@@ -53,10 +83,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="LKf-iQ-Umb" firstAttribute="trailing" secondItem="CYP-7a-ICk" secondAttribute="trailing" id="2lK-Jo-ybs"/>
                             <constraint firstItem="CYP-7a-ICk" firstAttribute="trailing" secondItem="8n0-DD-S3D" secondAttribute="trailing" id="D6Q-uV-IrC"/>
+                            <constraint firstItem="CYP-7a-ICk" firstAttribute="bottom" secondItem="LKf-iQ-Umb" secondAttribute="bottom" id="GCz-Ld-Nig"/>
                             <constraint firstItem="CYP-7a-ICk" firstAttribute="bottom" secondItem="8n0-DD-S3D" secondAttribute="bottom" id="NsL-HC-jPk"/>
                             <constraint firstItem="GfP-dY-fFp" firstAttribute="trailing" secondItem="CYP-7a-ICk" secondAttribute="trailing" priority="900" constant="40" id="Pvr-Ce-gb8"/>
+                            <constraint firstItem="LKf-iQ-Umb" firstAttribute="top" secondItem="zdh-xO-tiw" secondAttribute="bottom" id="YIe-o8-LRl"/>
                             <constraint firstItem="GfP-dY-fFp" firstAttribute="trailing" secondItem="CYP-7a-ICk" secondAttribute="trailing" id="cYY-ZK-Cvo"/>
+                            <constraint firstItem="LKf-iQ-Umb" firstAttribute="leading" secondItem="CYP-7a-ICk" secondAttribute="leading" id="fY5-UH-xua"/>
                             <constraint firstItem="8n0-DD-S3D" firstAttribute="top" secondItem="zdh-xO-tiw" secondAttribute="bottom" id="ggJ-oD-Zmu"/>
                             <constraint firstItem="8n0-DD-S3D" firstAttribute="leading" secondItem="CYP-7a-ICk" secondAttribute="leading" id="ivD-9J-wO2"/>
                             <constraint firstItem="GfP-dY-fFp" firstAttribute="bottom" secondItem="CYP-7a-ICk" secondAttribute="bottom" id="nIb-zQ-pMf"/>
@@ -64,6 +98,7 @@
                             <constraint firstItem="GfP-dY-fFp" firstAttribute="top" secondItem="zdh-xO-tiw" secondAttribute="bottom" id="poa-2K-jqq"/>
                             <constraint firstItem="zdh-xO-tiw" firstAttribute="trailing" secondItem="2q5-Cn-sT9" secondAttribute="trailing" id="pzt-0v-puL"/>
                             <constraint firstItem="f75-ar-m1V" firstAttribute="centerX" secondItem="CYP-7a-ICk" secondAttribute="centerX" id="sbk-d3-2mw"/>
+                            <constraint firstItem="AID-sq-pNH" firstAttribute="height" secondItem="2q5-Cn-sT9" secondAttribute="height" multiplier="0.3" id="ybG-ot-cpy"/>
                             <constraint firstItem="zdh-xO-tiw" firstAttribute="top" secondItem="CYP-7a-ICk" secondAttribute="top" id="zEL-u8-DP2"/>
                             <constraint firstItem="CYP-7a-ICk" firstAttribute="bottom" secondItem="f75-ar-m1V" secondAttribute="bottom" constant="16" id="zuh-Fd-cbN"/>
                         </constraints>
@@ -71,15 +106,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="친구 목록" id="04i-rE-MVZ">
                         <barButtonItem key="backBarButtonItem" title=" " id="TJh-w5-Vus"/>
-                        <barButtonItem key="leftBarButtonItem" title="편집" id="DeX-15-GCt">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="ic_sort" id="L04-zp-veJ">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="GfP-dY-fFp" id="6le-0R-tdy"/>
+                        <outlet property="emptyView" destination="LKf-iQ-Umb" id="B9v-fq-L9V"/>
                         <outlet property="indexsVisibleConstraint" destination="cYY-ZK-Cvo" id="xfD-d2-8qR"/>
                         <outlet property="searchBar" destination="zdh-xO-tiw" id="nJA-ft-HFM"/>
                         <outlet property="tableView" destination="8n0-DD-S3D" id="lhx-Ou-RsX"/>
@@ -87,7 +117,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="77k-Ne-Kp5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="789.60000000000002" y="98.275862068965523"/>
+            <point key="canvasLocation" x="839" y="98"/>
         </scene>
         <!--Index Alert View Controller-->
         <scene sceneID="7CN-GR-6F6">
@@ -164,8 +194,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic_emptyFriend" width="346" height="298.33334350585938"/>
         <image name="ic_floatingButton" width="64" height="65"/>
         <image name="ic_person" width="25" height="25"/>
-        <image name="ic_sort" width="18" height="21"/>
     </resources>
 </document>

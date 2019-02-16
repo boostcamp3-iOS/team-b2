@@ -20,6 +20,8 @@ class HomeViewController: UIViewController {
     private var databaseManager: DatabaseManager!
     private var events: [Event]?
     private var holidays: [Holiday]?
+    private var isEventEmpty: Bool = true
+    private var isHolidayEmpty: Bool = true
     
     struct Const {
         static let bottomInset: CGFloat = 60.0
@@ -213,7 +215,19 @@ extension HomeViewController: UITableViewDataSource {
             return 1
         }
         
-        return events?.count ?? 0
+        if let holidayCount = holidays?.count, holidayCount != 0 {
+            isHolidayEmpty = false
+        } else {
+            isHolidayEmpty = true
+        }
+        
+        if let count = events?.count, count != 0 {
+            isEventEmpty = false
+            return count
+        } else {
+            isEventEmpty = true
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -235,18 +249,28 @@ extension HomeViewController: UITableViewDataSource {
             cell.type = section
             return cell
         case .holidays:
-            let cell = tableView.dequeue(MyHolidaysViewCell.self, for: indexPath)
-            cell.collectionView.delegate = self
-            cell.holidays = holidays
-            return cell
+            if isHolidayEmpty {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "emptyHolidayCell", for: indexPath)
+                return cell
+            } else {
+                let cell = tableView.dequeue(MyHolidaysViewCell.self, for: indexPath)
+                cell.collectionView.delegate = self
+                cell.holidays = holidays
+                return cell
+            }
         case .friendEvents:
-            let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
-            cell.favoriteButton.tag = indexPath.row
-            cell.favoriteButton.addTarget(self,
-                                          action: #selector(touchUpUpcomingEventFavoriteButton(_:)),
-                                          for: .touchUpInside)
-            cell.event = events?[indexPath.row]
-            return cell
+            if isEventEmpty {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "emptyViewCell", for: indexPath)
+                return cell
+            } else {
+                let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
+                cell.favoriteButton.tag = indexPath.row
+                cell.favoriteButton.addTarget(self,
+                                              action: #selector(touchUpUpcomingEventFavoriteButton(_:)),
+                                              for: .touchUpInside)
+                cell.event = events?[indexPath.row]
+                return cell
+            }
         }
     }
 }

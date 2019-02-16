@@ -110,6 +110,7 @@
 		F82BE25D2211309B00C194F1 /* History+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82BE25C2211309B00C194F1 /* History+Extensions.swift */; };
 		F82BE25F221130B400C194F1 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82BE25E221130B400C194F1 /* Notification+Extensions.swift */; };
 		F82BE261221130D000C194F1 /* Event+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82BE260221130D000C194F1 /* Event+Extensions.swift */; };
+		F82C68D42217B579000FFE7E /* SettingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82C68D32217B579000FFE7E /* SettingAlarmViewController.swift */; };
 		F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */; };
 		F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */; };
 		F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */; };
@@ -229,6 +230,7 @@
 		F82BE25C2211309B00C194F1 /* History+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+Extensions.swift"; sourceTree = "<group>"; };
 		F82BE25E221130B400C194F1 /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
 		F82BE260221130D000C194F1 /* Event+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+Extensions.swift"; sourceTree = "<group>"; };
+		F82C68D32217B579000FFE7E /* SettingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewController.swift; sourceTree = "<group>"; };
 		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
 		F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistorySendViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistorySendViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendHistoryReceiveViewCell.xib; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 				F814529321FCC909004A2CF0 /* SettingViewController.swift */,
 				F814529521FCCF6B004A2CF0 /* SettingViewCell.swift */,
 				F814529621FCCF6B004A2CF0 /* SettingViewCell.xib */,
+				F82C68D32217B579000FFE7E /* SettingAlarmViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -697,6 +700,7 @@
 				4967D66022028D0300223ADF /* CalendarView.swift in Sources */,
 				4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */,
 				49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */,
+				F82C68D42217B579000FFE7E /* SettingAlarmViewController.swift in Sources */,
 				DB272661220A90AE00F30CBC /* ItemCollectionViewFlowLayout.swift in Sources */,
 				F814529721FCCF6B004A2CF0 /* SettingViewCell.swift in Sources */,
 				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,

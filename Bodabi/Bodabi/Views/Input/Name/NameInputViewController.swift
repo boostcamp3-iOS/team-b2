@@ -64,6 +64,7 @@ class NameInputViewController: UIViewController {
             setGuideLabel()
             setNextButton()
             setTableView()
+            initTagView()
         }
     }
     
@@ -80,13 +81,13 @@ class NameInputViewController: UIViewController {
         initTextField()
         initNextButton()
         initTapGesture()
+        initTagView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         initData()
-        initTagView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -557,7 +558,12 @@ extension NameInputViewController: UITableViewDelegate {
         textField.text = cell?.nameLabel.text
         newFriendName = cell?.nameLabel.text
         inputData.tags = cell?.friend?.tags
-        
+
+        if let tags = cell?.friend?.tags {
+            bind(tags)
+        } else {
+            initTagView()
+        }
         moveToNextInputView(isNewData: false)
         view.endEditing(true)
     }
@@ -600,7 +606,6 @@ extension NameInputViewController: UITextFieldDelegate {
         default:
             newHolidayName = textField.text
         }
-        
         view.endEditing(true)
         return true
     }
