@@ -20,14 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UIApplication.shared.applicationIconBadgeNumber = 0
         
-        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-        
-        if !launchedBefore  {
-            UserDefaults.standard.set(true, forKey: "launchedBefore")
-            UserDefaults.standard.set(["+", "결혼", "생일", "돌잔치", "장례", "출산", "개업"], forKey: "defaultHoliday")
-            UserDefaults.standard.set(["+", "나", "아내", "어머니", "아버지", "아들", "딸"], forKey: "defaultRelation")
-        }
-        
+        setUserDefaults()
         databaseManager.load()
         registerForLocalNotifications(application: application)
         
@@ -40,16 +33,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        renumberBadgesOfPendingNotifications()
         saveContext()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
+        renumberBadgesOfPendingNotifications()
         saveContext()
+    }
+    
+    // MARK: - User Defaults setting
+    
+    private func setUserDefaults() {
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        
+        if !launchedBefore  {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            UserDefaults.standard.set(["+", "결혼", "생일", "돌잔치", "장례", "출산", "개업"], forKey: "defaultHoliday")
+            UserDefaults.standard.set(["+", "나", "아내", "어머니", "아버지", "아들", "딸"], forKey: "defaultRelation")
+            UserDefaults.standard.set(9, forKey: "defaultAlarmHour")
+            UserDefaults.standard.set(0, forKey: "defaultAlarmMinutes")
+            UserDefaults.standard.set(1, forKey: "defaultAlarmDday")
+            UserDefaults.standard.set(0, forKey: "favoriteFirstAlarmDday")
+            UserDefaults.standard.set(7, forKey: "favoriteSecondAlarmDday")
+        }
     }
 
     // MARK: - Core Data Saving support
 
-    func saveContext () {
+    private func saveContext () {
         let context = databaseManager.viewContext
         if context.hasChanges {
             do {
@@ -62,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Request Notification Authorization
     
-    func registerForLocalNotifications(application: UIApplication) {
+    private func registerForLocalNotifications(application: UIApplication) {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(
         options: [.badge, .sound, .alert]) {
