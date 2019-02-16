@@ -19,5 +19,6 @@ class HolidayInformationView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
     }
 }

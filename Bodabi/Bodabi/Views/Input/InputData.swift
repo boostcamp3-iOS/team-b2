@@ -15,6 +15,7 @@ struct InputData {
     var item: Item?
     var date: Date?
     var tags: [String]?
+    var isNewData: Bool = true
     
     init() {
         self.name = nil
