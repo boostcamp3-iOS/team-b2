@@ -36,7 +36,7 @@ class HolidayViewCell: UICollectionViewCell {
     
     // MARK: - Configure
 
-    private func configure() {
+    public func configure() {
         titleLabel.text = holiday?.title
         dateLabel.text = holiday?.date?.toString(of: .year)
 
