@@ -130,8 +130,15 @@ class CalendarView: UIView {
 
 extension CalendarView: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if let viewController =
-            pageViewController.viewControllers?.first as? CalendarMonthViewController {
+        if let viewController = previousViewControllers
+            .first as? CalendarMonthViewController {
+            viewController.isVisible = false
+        }
+        
+        if let viewController = pageViewController
+            .viewControllers?.first as? CalendarMonthViewController {
+            viewController.isVisible = true
+            
             guard let date = viewController.visibleMonthFirstDay else { return }
             delegate?.calendar?(self, currentVisibleItem: date)
         }

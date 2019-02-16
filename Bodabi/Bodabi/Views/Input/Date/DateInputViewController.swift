@@ -15,6 +15,7 @@ class DateInputViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var calendarView: CalendarView!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var datePickerTextField: UITextField!
     
     // MARK: - Property
     
@@ -22,9 +23,16 @@ class DateInputViewController: UIViewController {
         let formatter: DateFormatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.dateFormat = "MMMM dd, yyyy"
-        formatter.locale = Locale(identifier: "en_US")
+        formatter.locale = Locale.current
         return formatter
     }()
+    private let pickerView: UIDatePicker = {
+        let pickerView = UIDatePicker()
+        pickerView.datePickerMode = .date
+        pickerView.locale = Locale(identifier: "ko_KR")
+        return pickerView
+    }()
+    private var keyboardDismissGesture: UITapGestureRecognizer?
     
     public var inputData: InputData?
     public var entryRoute: EntryRoute!
@@ -35,6 +43,11 @@ class DateInputViewController: UIViewController {
         }
     }
     
+    struct Const {
+        static let buttonAnimationScale: CGFloat = 1.35
+        static let buttonAnimationDuration: TimeInterval = 0.12
+    }
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -43,6 +56,8 @@ class DateInputViewController: UIViewController {
         initCalendar()
         initNavigationBar()
         initNextButton()
+        initDatePickerTextField()
+        initKeyboard()
     }
     
     // MARK: - Initialization
@@ -55,9 +70,9 @@ class DateInputViewController: UIViewController {
         calendarStyle.todayColor = .calendarTodayColor
         calendarStyle.dayColor = .black
         calendarStyle.weekColor = .calendarWeekColor
-        calendarStyle.weekendColor = .red
+        calendarStyle.weekendColor = .calendarPointColor
         calendarStyle.eventColor = .mainColor
-        calendarStyle.selectedColor = .calendarSelectedColor
+        calendarStyle.selectedColor = #colorLiteral(red: 0.8745098039, green: 0.9058823529, blue: 0.9764705882, alpha: 1)
         
         calendarView.style = calendarStyle
         calendarView.style.weekType = .normal // long short normal
@@ -76,6 +91,35 @@ class DateInputViewController: UIViewController {
         nextButton.setTitle("완료", for: .normal)
         nextButton.backgroundColor = UIColor.offColor
         nextButton.isEnabled = false
+    }
+    
+    private func initDatePickerTextField() {
+        let bar = UIToolbar()
+        bar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "완료",
+                                         style: .done,
+                                         target: self,
+                                         action: #selector(touchUpPickerDoneButton))
+        let cancelButton = UIBarButtonItem(title: "취소",
+                                           style: .done,
+                                           target: self,
+                                           action: #selector(tapBackground(_:)))
+        let flextbleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                            target: self,
+                                            action: nil)
+        bar.setItems([cancelButton, flextbleSpace, doneButton], animated: true)
+        datePickerTextField.inputAccessoryView = bar
+        datePickerTextField.inputView = pickerView
+    }
+    
+    private func initKeyboard() {
+        NotificationCenter.default
+            .addObserver(self, selector: #selector(keyboardWillShow(_:)),
+                         name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default
+            .addObserver(self, selector: #selector(keyboardWillHide(_:)),
+                         name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // MARK: - Setup
@@ -99,6 +143,12 @@ class DateInputViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func touchUpMoveToDateButton(_ sender: UIButton) {
+        sender.setScaleAnimation(scale: Const.buttonAnimationScale,
+                                 duration: Const.buttonAnimationDuration)
+        calendarView.movePage(addMonth: sender.tag)
+    }
+    
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -107,6 +157,39 @@ class DateInputViewController: UIViewController {
     
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func touchUpPickerDoneButton() {
+        calendarView.movePage(to: pickerView.date)
+        view.endEditing(true)
+    }
+}
+
+// MARK: - Keyboard will change
+
+extension DateInputViewController {
+    private func adjustKeyboardDismisTapGesture(isKeyboardVisible: Bool) {
+        guard isKeyboardVisible else {
+            guard let gesture = keyboardDismissGesture else { return }
+            view.removeGestureRecognizer(gesture)
+            keyboardDismissGesture = nil
+            return
+        }
+        keyboardDismissGesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
+        guard let gesture = keyboardDismissGesture else { return }
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc func tapBackground(_ sender: UITapGestureRecognizer?) {
+        datePickerTextField.resignFirstResponder()
+    }
+    
+    @objc func keyboardWillShow(_ notification: Foundation.Notification) {
+        adjustKeyboardDismisTapGesture(isKeyboardVisible: true)
+    }
+    
+    @objc func keyboardWillHide(_ notification: Foundation.Notification) {
+        adjustKeyboardDismisTapGesture(isKeyboardVisible: false)
     }
 }
 

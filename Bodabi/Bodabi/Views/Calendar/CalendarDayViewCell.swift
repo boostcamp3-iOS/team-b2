@@ -42,6 +42,12 @@ class CalendarDayViewCell: UICollectionViewCell {
         setUpUI()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        backgroundColor = .clear
+    }
+    
     private func setUpUI() {
         eventView.isHidden = true
     }

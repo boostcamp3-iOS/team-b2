@@ -14,11 +14,20 @@ class CalendarMonthViewController: UICollectionViewController {
     
     public lazy var calendar : Calendar = {
         var gregorian = Calendar(identifier: .gregorian)
-        gregorian.timeZone = TimeZone(abbreviation: "UTC")!
+        gregorian.timeZone = TimeZone.current
         return gregorian
     }()
     
     public weak var delegate: CalendarViewDelegate?
+    public var isVisible: Bool = true {
+        didSet {
+            (collectionView.indexPathsForSelectedItems ?? .init()).forEach { [weak self] (indexPath) in
+                self?.collectionView.deselectItem(at: indexPath, animated: false)
+                let cell = self?.collectionView.cellForItem(at: indexPath)
+                cell?.backgroundColor = .clear
+            }
+        }
+    }
     
     public var style: CalendarViewStyle = .init()
     public var superFrame: CGRect = .init() {
