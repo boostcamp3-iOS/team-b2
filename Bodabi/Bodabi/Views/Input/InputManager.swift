@@ -104,6 +104,9 @@ struct InputManager {
                         searchedFriend = friend
                         return
                     }
+                } else if friend.tags == nil, tags.count == 0 {
+                    searchedFriend = friend
+                    return
                 }
             }
             
