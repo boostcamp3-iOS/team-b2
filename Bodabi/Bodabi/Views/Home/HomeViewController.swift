@@ -122,6 +122,9 @@ class HomeViewController: UIViewController {
     }
     
     private func setShowTableViewCellDeleteButton(isShow: Bool) {
+        let cancelDeleteModeGesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
+        isShow ? view.addGestureRecognizer(cancelDeleteModeGesture) : view.removeGestureRecognizer(cancelDeleteModeGesture)
+        
         tableView.getAllIndexPathsInSection(section: Section.friendEvents.rawValue).forEach { (indexPath) in
             let cell = tableView.cellForRow(at: indexPath) as? UpcomingEventViewCell
             isShow ? cell?.showDeleteButton() : cell?.hideDeleteButton()
@@ -171,7 +174,6 @@ class HomeViewController: UIViewController {
         present(navController, animated: true, completion: nil)
     }
     
-    // FIXME: there's not event favorite
     @objc func touchUpUpcomingEventFavoriteButton(_ sender: UIButton) {
         sender.setScaleAnimation(scale: Const.buttonAnimationScale,
                                  duration: Const.buttonAnimationDuration)
@@ -222,6 +224,10 @@ class HomeViewController: UIViewController {
             self?.setShowTableViewCellDeleteButton(isShow: false)
         }
         alert.show()
+    }
+    
+    @objc func tapBackground(_ sender: UITapGestureRecognizer?) {
+        setShowTableViewCellDeleteButton(isShow: false)
     }
 }
 
