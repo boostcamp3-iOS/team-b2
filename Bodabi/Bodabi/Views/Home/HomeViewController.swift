@@ -98,11 +98,11 @@ class HomeViewController: UIViewController {
         request.predicate = predicate
 
         if let result = try? databaseManager.viewContext.fetch(request) {
-            guard events != result else { return }
+//            guard events != result else { return }
             events = result
             tableView.reloadSections(
                 IndexSet(integer: Section.friendEvents.rawValue),
-                with: .fade
+                with: .none
             )
         }
     }
@@ -119,6 +119,34 @@ class HomeViewController: UIViewController {
                 with: .none
             )
         }
+    }
+    
+    private func setShowTableViewCellDeleteButton(isShow: Bool) {
+        let cancelDeleteModeGesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
+        isShow ? view.addGestureRecognizer(cancelDeleteModeGesture) : view.removeGestureRecognizer(cancelDeleteModeGesture)
+        
+        tableView.getAllIndexPathsInSection(section: Section.friendEvents.rawValue).forEach { (indexPath) in
+            let cell = tableView.cellForRow(at: indexPath) as? UpcomingEventViewCell
+            isShow ? cell?.showDeleteButton() : cell?.hideDeleteButton()
+        }
+    }
+    
+    private func deleteUpcomingEvent(at indexPath: IndexPath) {
+        guard let event = events?[indexPath.row] else { return }
+        databaseManager?.viewContext.delete(event)
+        do {
+            try databaseManager?.viewContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+        events?.remove(at: indexPath.row)
+        setShowTableViewCellDeleteButton(isShow: false)
+        guard (events?.count ?? 0) > 0 else {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            return
+        }
+        tableView.deleteRows(at: [indexPath],
+                             with: .automatic)
     }
     
     // MARK: - @objcs
@@ -146,7 +174,6 @@ class HomeViewController: UIViewController {
         present(navController, animated: true, completion: nil)
     }
     
-    // FIXME: there's not event favorite
     @objc func touchUpUpcomingEventFavoriteButton(_ sender: UIButton) {
         sender.setScaleAnimation(scale: Const.buttonAnimationScale,
                                  duration: Const.buttonAnimationDuration)
@@ -177,6 +204,30 @@ class HomeViewController: UIViewController {
             }
         }
         try? databaseManager?.viewContext.save()
+    }
+    
+    @objc func longPressUpcomingEvent(_ gesture: UILongPressGestureRecognizer) {
+        setShowTableViewCellDeleteButton(isShow: true)
+    }
+    
+    @objc func touchUpUpcomingEventDeleteButton(_ sender: UIButton) {
+        guard let cell = sender.superview?.superview as? UpcomingEventViewCell,
+            let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        let alert = BodabiAlertController(title: "이벤트 삭제",
+                                          message: "정말 친구의 이벤트를 삭제하시겠습니까?",
+                                          type: nil, style: .Alert)
+        alert.addButton(title: "확인") { [weak self] in
+            self?.deleteUpcomingEvent(at: indexPath)
+        }
+        alert.addButton(title: "취소") { [weak self] in
+            self?.setShowTableViewCellDeleteButton(isShow: false)
+        }
+        alert.show()
+    }
+    
+    @objc func tapBackground(_ sender: UITapGestureRecognizer?) {
+        setShowTableViewCellDeleteButton(isShow: false)
     }
 }
 
@@ -265,10 +316,17 @@ extension HomeViewController: UITableViewDataSource {
             } else {
                 let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
                 cell.favoriteButton.tag = indexPath.row
-                cell.favoriteButton.addTarget(self,
-                                              action: #selector(touchUpUpcomingEventFavoriteButton(_:)),
-                                              for: .touchUpInside)
+                cell.favoriteButton
+                    .addTarget(self, action: #selector(touchUpUpcomingEventFavoriteButton(_:)),  for: .touchUpInside)
+                cell.deleteButton
+                    .addTarget(self, action: #selector(touchUpUpcomingEventDeleteButton(_:)),
+                               for: .touchUpInside)
+                
                 cell.event = events?[indexPath.row]
+                
+                let gesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressUpcomingEvent(_:)))
+                cell.addGestureRecognizer(gesture)
+                
                 return cell
             }
         }
