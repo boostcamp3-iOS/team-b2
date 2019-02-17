@@ -135,12 +135,13 @@ class HolidayInputViewController: UIViewController {
         var isUnique: Bool = true
         let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
         let currentName: String = relation + "의 " + holiday
+        let predicate = NSPredicate(format:"title = %@", currentName)
+        
+        request.predicate = predicate
+        
         if let fetchResult = try? databaseManager.viewContext.fetch(request) {
-            fetchResult.forEach {
-                if $0.title == currentName {
-                    isUnique = false
-                    return
-                }
+            if let _ = fetchResult.first {
+                isUnique = false
             }
         }
         
@@ -292,14 +293,7 @@ extension HolidayInputViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension HolidayInputViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        guard let cell = tableView.cellForRow(at: indexPath) as? HolidayInputViewCell,
-//            indexPath.row != 0 else { return }
-//
-//        cell.isDeleting = isDeleting
-//    }
-}
+extension HolidayInputViewController: UITableViewDelegate {}
 
 // MARK: - DatabaseManagerClient
 

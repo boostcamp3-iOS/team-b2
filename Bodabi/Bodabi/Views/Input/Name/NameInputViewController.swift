@@ -320,7 +320,10 @@ class NameInputViewController: UIViewController {
     }
     
     private func isUniqueName(with name: String) -> Bool {
-        guard name != "" else { return false }
+        guard name != "" else {
+            inputData.tags = nil
+            return false
+        }
         guard let isRelationInput = isRelationInput else { return false }
         guard let entryRoute = entryRoute else { return false }
         var isUnique: Bool = true
