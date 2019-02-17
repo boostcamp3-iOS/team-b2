@@ -98,11 +98,11 @@ class HomeViewController: UIViewController {
         request.predicate = predicate
 
         if let result = try? databaseManager.viewContext.fetch(request) {
-            guard events != result else { return }
+//            guard events != result else { return }
             events = result
             tableView.reloadSections(
                 IndexSet(integer: Section.friendEvents.rawValue),
-                with: .fade
+                with: .none
             )
         }
     }
