@@ -21,6 +21,9 @@ class UpcomingEventViewCell: UITableViewCell {
     @IBOutlet weak var lastHistoryImageView: UIImageView!
     @IBOutlet weak var dDayLabel: UILabel!
     
+    @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet var deleteActionConstraint: NSLayoutConstraint!
+    
     // MARK: - Property
     
     public var event: Event? {
@@ -38,6 +41,7 @@ class UpcomingEventViewCell: UITableViewCell {
         super.awakeFromNib()
         
         initLastHistory()
+        initDeleteButton()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -49,6 +53,10 @@ class UpcomingEventViewCell: UITableViewCell {
     
     private func initLastHistory() {
         lastHistoryView.isHidden = true
+    }
+    
+    private func initDeleteButton() {
+        deleteButton.isHidden = true
     }
     
     // MARK: - Configure
@@ -73,5 +81,25 @@ class UpcomingEventViewCell: UITableViewCell {
         lastHistoryLabel.text = String(format: "%@ %@",
                                        lastHistory.holiday ?? "",
                                        lastHistory.item?.insertComma() ?? "")
+    }
+    
+    // MARK: - Method
+    
+    public func showDeleteButton() {
+        deleteButton.isHidden = false
+        UIView.animate(withDuration: 0.3, animations: {
+            self.deleteActionConstraint.isActive = false
+            self.layoutIfNeeded()
+        }) { (_) in
+            self.deleteButton.setScaleAnimation(scale: 1.12, duration: 0.12)
+        }
+    }
+    
+    public func hideDeleteButton() {
+        deleteButton.isHidden = true
+        UIView.animate(withDuration: 0.3) {
+            self.deleteActionConstraint.isActive = true
+            self.layoutIfNeeded()
+        }
     }
 }
