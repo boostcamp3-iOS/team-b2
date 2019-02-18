@@ -14,6 +14,9 @@ extension Date {
         case none
         case noDay
         case time
+        case hour
+        case minutes
+        case koreanTime
         
         var description: String {
             switch self {
@@ -25,6 +28,12 @@ extension Date {
                 return "yyyy.MM"
             case .time:
                 return "yyyy.MM.dd hh:mm"
+            case .hour:
+                return "H"
+            case .minutes:
+                return "m"
+            case .koreanTime:
+                return "h시 m분"
             }
         }
     }
