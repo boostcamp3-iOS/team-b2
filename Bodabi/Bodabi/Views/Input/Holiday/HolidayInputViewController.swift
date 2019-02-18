@@ -24,13 +24,13 @@ class HolidayInputViewController: UIViewController {
     public var myHolidays: [String]? {
         didSet {
             tableView.reloadData()
-            UserDefaults.standard.set(myHolidays, forKey: "defaultHoliday")
+            UserDefaults.standard.set(myHolidays, forKey: DefaultsKey.defaultHoliday)
         }
     }
     public var myRelations: [String]? {
         didSet {
             tableView.reloadData()
-            UserDefaults.standard.set(myRelations, forKey: "defaultRelation")
+            UserDefaults.standard.set(myRelations, forKey: DefaultsKey.defaultRelation)
         }
     }
     private var databaseManager: DatabaseManager!
@@ -58,11 +58,11 @@ class HolidayInputViewController: UIViewController {
     
     private func initDefaultData() {
         if isRelationInput {
-            if let defaultRelation = UserDefaults.standard.array(forKey: "defaultRelation") as? [String] {
+            if let defaultRelation = UserDefaults.standard.array(forKey: DefaultsKey.defaultRelation) as? [String] {
                 myRelations = defaultRelation
             }
         } else {
-            if let defaultHoliday = UserDefaults.standard.array(forKey: "defaultHoliday") as? [String] {
+            if let defaultHoliday = UserDefaults.standard.array(forKey: DefaultsKey.defaultHoliday) as? [String] {
                 myHolidays = defaultHoliday
             }
         }
