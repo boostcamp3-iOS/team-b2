@@ -23,9 +23,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="321" height="100.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100,000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="532-X1-AmF">
-                                <rect key="frame" x="205" y="12.5" width="100" height="32"/>
+                                <rect key="frame" x="211" y="12.5" width="94" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="OIv-xN-hFa"/>
                                     <constraint firstAttribute="height" constant="32" id="U4I-gr-79z"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
@@ -33,7 +32,7 @@
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_boxOut" translatesAutoresizingMaskIntoConstraints="NO" id="XH6-Nr-NWi">
-                                <rect key="frame" x="156" y="16" width="25" height="25"/>
+                                <rect key="frame" x="162" y="16" width="25" height="25"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="BJS-py-6Qd"/>
@@ -41,17 +40,16 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100,000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6O-0v-VTB">
-                                <rect key="frame" x="205" y="50.5" width="100" height="32"/>
+                                <rect key="frame" x="211" y="50.5" width="94" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="5nc-jM-ZTI"/>
-                                    <constraint firstAttribute="width" constant="100" id="8Bq-qA-apE"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_boxIn" translatesAutoresizingMaskIntoConstraints="NO" id="BQW-kh-j3H">
-                                <rect key="frame" x="156" y="54" width="25" height="25"/>
+                                <rect key="frame" x="162" y="54" width="25" height="25"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="YcY-uR-ZzY"/>
@@ -65,6 +63,7 @@
                             <constraint firstItem="BQW-kh-j3H" firstAttribute="centerY" secondItem="I6O-0v-VTB" secondAttribute="centerY" id="Cj0-Jr-VKw"/>
                             <constraint firstItem="I6O-0v-VTB" firstAttribute="leading" secondItem="BQW-kh-j3H" secondAttribute="trailing" constant="24" id="Djs-aO-qrC"/>
                             <constraint firstItem="XH6-Nr-NWi" firstAttribute="centerX" secondItem="BQW-kh-j3H" secondAttribute="centerX" id="L3D-Qa-VXK"/>
+                            <constraint firstAttribute="trailing" secondItem="532-X1-AmF" secondAttribute="trailing" constant="16" id="O0M-2L-eEF"/>
                             <constraint firstAttribute="bottom" secondItem="I6O-0v-VTB" secondAttribute="bottom" constant="18" id="RAj-HU-6kr"/>
                             <constraint firstItem="I6O-0v-VTB" firstAttribute="top" secondItem="532-X1-AmF" secondAttribute="bottom" constant="6" id="YMl-f2-pJP"/>
                             <constraint firstAttribute="height" constant="100" id="gsp-N9-8qa"/>

@@ -30,33 +30,23 @@
                         <inset key="contentEdgeInsets" minX="5" minY="10" maxX="10" maxY="10"/>
                         <state key="normal" image="ic_add"/>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWd-Nu-3QW">
-                        <rect key="frame" x="276" y="27.5" width="33" height="42"/>
-                        <color key="tintColor" red="0.92638254170000001" green="0.42560976740000001" blue="0.30080345269999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="5" maxY="10"/>
-                        <state key="normal" image="ic_sort"/>
-                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="egE-lw-Oc6" firstAttribute="centerY" secondItem="wSl-vC-a21" secondAttribute="centerY" id="GJN-fc-zJ7"/>
                     <constraint firstItem="wSl-vC-a21" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="31" id="LXf-42-2se"/>
-                    <constraint firstItem="egE-lw-Oc6" firstAttribute="leading" secondItem="AWd-Nu-3QW" secondAttribute="trailing" constant="5" id="fMz-Q7-M6l"/>
                     <constraint firstItem="wSl-vC-a21" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="i4M-I3-pzs"/>
                     <constraint firstAttribute="bottom" secondItem="wSl-vC-a21" secondAttribute="bottom" constant="17" id="o3K-4t-wmB"/>
-                    <constraint firstItem="AWd-Nu-3QW" firstAttribute="centerY" secondItem="egE-lw-Oc6" secondAttribute="centerY" id="vwx-8b-CmW"/>
                     <constraint firstAttribute="trailing" secondItem="egE-lw-Oc6" secondAttribute="trailing" constant="25" id="xyG-zK-mr2"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="addHolidayButton" destination="egE-lw-Oc6" id="0mm-rn-Vbr"/>
-                <outlet property="sortingButton" destination="AWd-Nu-3QW" id="qyq-aI-xuP"/>
                 <outlet property="titleLabel" destination="wSl-vC-a21" id="TD4-Nn-5Xe"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
         <image name="ic_add" width="21" height="20"/>
-        <image name="ic_sort" width="18" height="21"/>
     </resources>
 </document>

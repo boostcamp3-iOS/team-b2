@@ -125,12 +125,8 @@ public class BodabiAlertController: UIViewController {
                         self?.delegate?.bodabiAlert(type: element)
                     }
                 }
-            case let .sort(sortTypes):
-                sortTypes.forEach {
-                    addButton(title: $0, action: {
-                        print("sort")
-                    })
-                }
+            default:
+                break
             }
         }
         
@@ -221,9 +217,12 @@ public class BodabiAlertController: UIViewController {
             posY += cancelButton.frame.height
         }
         
+        posY += 15
+        
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.frame = CGRect(x: (view.frame.width - viewWidth) / 2, y: view.frame.height , width: viewWidth, height: posY)
         containerView.backgroundColor = UIColor.white
+        containerView.cornerRadius = 15
         view.addSubview(containerView)
         
         switch style {
@@ -243,7 +242,16 @@ public class BodabiAlertController: UIViewController {
                 ])
         }
         
-        if let window = UIApplication.shared.keyWindow, window.viewWithTag(tag) == nil {
+        if let window = UIApplication.shared.keyWindow {
+            while(true) {
+                if window.viewWithTag(tag) == nil {
+                    break
+                } else {
+                    tag += 1
+                    BodabiAlertController.tagFactory = tag
+                }
+            }
+            
             view.tag = tag
             window.addSubview(view)
         }

@@ -13,7 +13,6 @@ class HomeTitleViewCell: UITableViewCell {
     // MARK: - IBOutlet
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var sortingButton: UIButton!
     @IBOutlet weak var addHolidayButton: UIButton!
     
     // MARK: - Property
@@ -36,7 +35,5 @@ class HomeTitleViewCell: UITableViewCell {
     
     private func initTitle(_ type: HomeViewController.Section) {
         titleLabel.text = type.title
-        
-        sortingButton.isHidden = type == .holidaysHeader ? true : false
     }
 }

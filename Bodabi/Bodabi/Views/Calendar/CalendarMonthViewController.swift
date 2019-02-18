@@ -12,13 +12,22 @@ class CalendarMonthViewController: UICollectionViewController {
     
     // MARK: - Property
     
-    public lazy var calendar : Calendar = {
+    public lazy var calendar: Calendar = {
         var gregorian = Calendar(identifier: .gregorian)
-        gregorian.timeZone = TimeZone(abbreviation: "UTC")!
+        gregorian.timeZone = .current
         return gregorian
     }()
     
     public weak var delegate: CalendarViewDelegate?
+    public var isVisible: Bool = true {
+        didSet {
+            (collectionView.indexPathsForSelectedItems ?? .init()).forEach { [weak self] (indexPath) in
+                self?.collectionView.deselectItem(at: indexPath, animated: false)
+                let cell = self?.collectionView.cellForItem(at: indexPath)
+                cell?.backgroundColor = .clear
+            }
+        }
+    }
     
     public var style: CalendarViewStyle = .init()
     public var superFrame: CGRect = .init() {
@@ -72,7 +81,6 @@ class CalendarMonthViewController: UICollectionViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets.zero
-        layout.itemSize = cellSize(in: superFrame)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
@@ -128,8 +136,8 @@ extension CalendarMonthViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section),
             section == .day else { return }
-        guard let cell =
-            collectionView.cellForItem(at: indexPath) as? CalendarDayViewCell else {
+        guard let cell = collectionView
+            .cellForItem(at: indexPath) as? CalendarDayViewCell else {
                 return
         }
         cell.backgroundColor = style.selectedColor
@@ -137,9 +145,12 @@ extension CalendarMonthViewController {
         guard let visibleMonth = visibleMonthFirstDay else { return }
         var dateComponents = calendar.dateComponents([.era, .year, .month], from: visibleMonth)
         dateComponents.day = cell.day
+        dateComponents.hour = 23
+        dateComponents.minute = 59
         
         guard let calendarView = view.superview?.superview?.superview?.superview as? CalendarView,
             let selectedDate = calendar.date(from: dateComponents) else { return }
+        print(selectedDate)
         delegate?.calendar?(calendarView, didSelectedItem: selectedDate)
     }
     
@@ -196,6 +207,12 @@ extension CalendarMonthViewController {
             }
             return cell
         }
+    }
+}
+
+extension CalendarMonthViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return cellSize(in: superFrame)
     }
 }
 

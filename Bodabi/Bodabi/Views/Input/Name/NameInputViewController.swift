@@ -14,6 +14,7 @@ class NameInputViewController: UIViewController {
     // MARK: - @IBOutlets
     
     @IBOutlet weak var guideLabel: UILabel!
+    @IBOutlet weak var semiGuideLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var textField: UITextField!
@@ -21,21 +22,35 @@ class NameInputViewController: UIViewController {
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var bottomConstriant: NSLayoutConstraint!
     @IBOutlet weak var heightConstriant: NSLayoutConstraint!
-
+    @IBOutlet weak var firstTagLabel: UILabel!
+    @IBOutlet weak var secondTagLabel: UILabel!
+    @IBOutlet weak var thirdTagLabel: UILabel!
+    @IBOutlet weak var firstTagIcon: UIView!
+    @IBOutlet weak var secondTagIcon: UIView!
+    @IBOutlet weak var thirdTagIcon: UIView!
+    @IBOutlet weak var tagImageView: UIImageView!
+    @IBOutlet weak var tagButton: UIButton!
+    
     // MARK: - Properties
     
     public weak var delegate: HolidayInputViewController?
     public var entryRoute: EntryRoute!
-    public var inputData: InputData?
-    
+    public var inputData: InputData! {
+        didSet {
+            guard nextButton != nil else { return }
+            setNextButton()
+        }
+    }
+    public var isRelationInput: Bool?
     private var databaseManager: DatabaseManager!
     private var friends: [Friend]?
+    private var myRelations: [String]?
+    private var myHolidays: [String]?
     private var searchedFriends: [Friend]? {
         didSet {
             tableView.reloadData()
         }
     }
-    
     private var originalBottomConstraint: CGFloat = 0.0
     private var originalHeightConstraint: CGFloat = 0.0
     
@@ -50,6 +65,7 @@ class NameInputViewController: UIViewController {
             setGuideLabel()
             setNextButton()
             setTableView()
+            initTagView()
         }
     }
     
@@ -61,15 +77,23 @@ class NameInputViewController: UIViewController {
         initTableView()
         initKeyboard()
         initGuideLabelText()
+        initSemiGuideLabelText()
         initNavigationBar()
         initTextField()
         initNextButton()
         initTapGesture()
+        initTagView()
+        initTagImageView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         initData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     deinit {
@@ -85,13 +109,26 @@ class NameInputViewController: UIViewController {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            print("addFriendAtHoliday")
+            fetchDefaultData()
         case .addUpcomingEventAtHome,
              .addHistoryAtHoliday,
              .addFriendAtFriends:
             fetchFriend()
         default:
             break
+        }
+    }
+    
+    private func fetchDefaultData() {
+        guard let isRelationInput = isRelationInput else { return }
+        if isRelationInput {
+            if let defaultRelation = UserDefaults.standard.array(forKey: DefaultsKey.defaultRelation) as? [String] {
+                myRelations = defaultRelation
+            }
+        } else {
+            if let defaultHoliday = UserDefaults.standard.array(forKey: DefaultsKey.defaultHoliday) as? [String] {
+                myHolidays = defaultHoliday
+            }
         }
     }
     
@@ -113,6 +150,19 @@ class NameInputViewController: UIViewController {
     
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "defaultCell")
+    }
+    
+    private func initTagImageView() {
+        guard let entryRoute = entryRoute else { return }
+        switch entryRoute {
+        case .addHolidayAtHome:
+            tagButton.isHidden = true
+            tagImageView.isHidden = true
+        default:
+            tagButton.isHidden = false
+            tagImageView.isHidden = false
+        }
     }
     
     private func initKeyboard() {
@@ -131,11 +181,36 @@ class NameInputViewController: UIViewController {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            guideLabel.text = "새로운 경조사의\n이름을 입력해주세요"
+            guard let isRelationInput = isRelationInput else { return }
+            if isRelationInput {
+                guideLabel.text = "새로운 관계 또는\n이름을 입력해주세요"
+            } else {
+                guideLabel.text = "새로운 경조사의\n이름을 입력해주세요"
+            }
         case .addUpcomingEventAtHome,
              .addHistoryAtHoliday,
              .addFriendAtFriends:
             guideLabel.text = "친구의 이름이\n무엇인가요?"
+        default:
+            break
+        }
+    }
+    
+    private func initSemiGuideLabelText() {
+        guard let entryRoute = entryRoute else { return }
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            guard let isRelationInput = isRelationInput else { return }
+            if isRelationInput {
+                semiGuideLabel.text = "해당하는 관계 또는 이름이 이미 있다면 아래에서 선택해주세요"
+            } else {
+                semiGuideLabel.text = "해당하는 경조사가 이미 있다면 아래에서 선택해주세요"
+            }
+        case .addUpcomingEventAtHome,
+             .addHistoryAtHoliday,
+             .addFriendAtFriends:
+            semiGuideLabel.text = "해당하는 분이 이미 있다면 아래에서 선택해주세요"
         default:
             break
         }
@@ -166,8 +241,9 @@ class NameInputViewController: UIViewController {
     // MARK: - Setup Method
     
     private func setTableView() {
+        guard let newFriendName = newFriendName else { return }
         let searchedFriends = friends?.filter { friend in
-            friend.name?.hasPrefix(newFriendName ?? "") ?? false
+            friend.name?.contains(search: newFriendName) ?? false
         }
         
         self.searchedFriends = searchedFriends
@@ -207,29 +283,122 @@ class NameInputViewController: UIViewController {
     }
     
     private func setNextButton() {
-        if newHolidayName == "" || newFriendName == "" {
-            initNextButton()
-        } else {
+        if let newHolidayName = newHolidayName, isUniqueName(with: newHolidayName) {
             nextButton.isEnabled = true
             nextButton.backgroundColor = UIColor.mainColor
+        } else if let newFriendName = newFriendName, isUniqueName(with: newFriendName) {
+            nextButton.isEnabled = true
+            nextButton.backgroundColor = UIColor.mainColor
+        } else if let newFriendName = newFriendName, !isUniqueName(with: newFriendName), isUniqueTags(from: newFriendName) {
+            nextButton.isEnabled = true
+            nextButton.backgroundColor = UIColor.mainColor
+        } else {
+            initNextButton()
         }
     }
     
-    private func moveToNextInputView() {
+    private func isSame(_ newTags: [String], with friendTags: [String]) -> Bool {
+        guard newTags.count == friendTags.count else {
+            return false
+        }
+        
+        let sortNewTags = newTags.sorted()
+        let sortFriendTags = friendTags.sorted()
+        
+        for i in 0..<sortNewTags.count {
+            if sortNewTags[i] != sortFriendTags[i] {
+                return false
+            }
+        }
+
+        return true
+    }
+    
+    private func isUniqueTags(from newName: String) -> Bool {
+        guard newName != "" else { return false }
+        guard let newTags = inputData.tags else { return false }
+        guard let searchedFriends = searchedFriends else { return true }
+        
+        var isUnique: Bool = true
+        if searchedFriends.count == 0 { isUnique = false }
+        searchedFriends.forEach { (friend) in
+            if friend.name == newName, let friendTags = friend.tags {
+                if isSame(newTags, with: friendTags) {
+                    isUnique = false
+                }
+            } else if friend.tags == nil, newTags.count == 0{
+                isUnique = false
+            }
+        }
+
+        return isUnique
+    }
+    
+    private func isUniqueName(with name: String) -> Bool {
+        guard name != "" else { return false }
+        guard let isRelationInput = isRelationInput else { return false }
+        guard let entryRoute = entryRoute else { return false }
+        var isUnique: Bool = true
+        
+        switch entryRoute {
+        case .addHolidayAtHome:
+            if isRelationInput {
+                myRelations?.forEach {
+                    if $0 == name {
+                        isUnique = false
+                    }
+                }
+            } else {
+                myHolidays?.forEach {
+                    if $0 == name {
+                        isUnique = false
+                    }
+                }
+            }
+        case .addFriendAtFriends,
+             .addHistoryAtHoliday,
+             .addUpcomingEventAtHome:
+            friends?.forEach {
+                if $0.name == name {
+                   isUnique = false
+                }
+            }
+        default:
+            break
+        }
+        
+        return isUnique
+    }
+    
+    private func moveToNextInputView(isNewData: Bool) {
         guard let entryRoute = entryRoute else { return }
         
         switch entryRoute {
         case .addHolidayAtHome:
-            guard let newHolidayName = newHolidayName else { return }
-            delegate?.myHolidaies?.insert(newHolidayName, at: 1)
-            dismiss(animated: true, completion: nil)
+            if isNewData {
+                if let isRelationInput = isRelationInput, isRelationInput {
+                    guard let newHolidayName = newHolidayName else { return }
+                    delegate?.myRelations?.insert(newHolidayName, at: 1)
+                    dismiss(animated: true, completion: nil)
+                } else {
+                    guard let newHolidayName = newHolidayName else { return }
+                    delegate?.myHolidays?.insert(newHolidayName, at: 1)
+                    dismiss(animated: true, completion: nil)
+                }
+            } else {
+                dismiss(animated: true, completion: nil)
+            }
         case .addUpcomingEventAtHome:
+            // Fix write 중복 데이터
             let viewController = storyboard(.input)
                 .instantiateViewController(ofType: HolidayInputViewController.self)
             
-            viewController.entryRoute = entryRoute
             inputData?.name = newFriendName
+            inputData?.isNewData = isNewData
+            
+            viewController.entryRoute = entryRoute
             viewController.inputData = inputData
+            viewController.isRelationInput = false
             viewController.setDatabaseManager(databaseManager)
             navigationController?.pushViewController(viewController, animated: true)
         case .addHistoryAtHoliday:
@@ -238,12 +407,15 @@ class NameInputViewController: UIViewController {
             
             viewController.setDatabaseManager(databaseManager)
             viewController.entryRoute = entryRoute
-
+            
+            inputData?.isNewData = isNewData
             inputData?.name = newFriendName
             viewController.inputData = inputData
             navigationController?.pushViewController(viewController, animated: true)
         case .addFriendAtFriends:
+            // Fix write 중복 데이터
             inputData?.name = newFriendName
+            inputData?.isNewData = isNewData
             
             guard let inputData = inputData else { return }
             InputManager.write(context: databaseManager.viewContext, entryRoute: entryRoute, data: inputData)
@@ -251,6 +423,16 @@ class NameInputViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    private func initTagView() {
+        firstTagIcon.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        secondTagIcon.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        thirdTagIcon.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        firstTagLabel.text = ""
+        secondTagLabel.text = ""
+        thirdTagLabel.text = ""
+        inputData.tags = nil
     }
     
     // MARK: - @IBActions
@@ -269,7 +451,14 @@ class NameInputViewController: UIViewController {
     }
     
     @IBAction func touchUpNextButton(_ sender: UIButton) {
-        moveToNextInputView()
+        moveToNextInputView(isNewData: true)
+    }
+    
+    @IBAction func touchUpTagButton(_ sender: UIButton) {
+        let viewController = storyboard(.tag)
+            .instantiateViewController(ofType: TagViewController.self)
+        viewController.delegate = self
+        present(viewController, animated: true, completion: nil)
     }
     
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
@@ -317,6 +506,16 @@ extension NameInputViewController: UITableViewDataSource {
         
         switch entryRoute {
         case .addHolidayAtHome:
+            guard let isRelationInput = isRelationInput else { return 0 }
+            if isRelationInput {
+                if let myRelations = myRelations {
+                    return myRelations.count - 1
+                }
+            } else {
+                if let myHolidays = myHolidays {
+                    return myHolidays.count - 1
+                }
+            }
             return 0
         case .addUpcomingEventAtHome,
              .addHistoryAtHoliday,
@@ -333,28 +532,36 @@ extension NameInputViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "InputFriendViewCell", for: indexPath) as? InputFriendViewCell
         
         guard let entryRoute = entryRoute else { return UITableViewCell() }
         
         switch entryRoute {
+        case .addHolidayAtHome:
+            guard let isRelationInput = isRelationInput else { return UITableViewCell() }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "defaultCell", for: indexPath)
+            if isRelationInput {
+                cell.textLabel?.text = myRelations?[indexPath.row + 1]
+            } else {
+                cell.textLabel?.text = myHolidays?[indexPath.row + 1]
+            }
+            return cell
         case .addUpcomingEventAtHome,
              .addHistoryAtHoliday,
              .addFriendAtFriends:
             if newFriendName == nil || newFriendName == "" {
                 let friend = friends?[indexPath.row]
-                
-                cell.textLabel?.text = friend?.name
+                cell?.friend = friend
             } else {
                 let friend = searchedFriends?[indexPath.row]
-                cell.textLabel?.text = friend?.name
+                cell?.friend = friend
             }
             
         default:
             break
         }
         
-        return cell
+        return cell ?? UITableViewCell()
     }
 }
 
@@ -362,13 +569,25 @@ extension NameInputViewController: UITableViewDataSource {
 
 extension NameInputViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        
-        textField.text = cell?.textLabel?.text
-        newFriendName = cell?.textLabel?.text
-        
-        moveToNextInputView()
-        view.endEditing(true)
+        guard let entryRoute = entryRoute else { return }
+        switch entryRoute {
+        case .addHolidayAtHome:
+            dismiss(animated: true, completion: nil)
+        default:
+            let cell = tableView.cellForRow(at: indexPath) as? InputFriendViewCell
+            
+            textField.text = cell?.nameLabel.text
+            newFriendName = cell?.nameLabel.text
+            inputData.tags = cell?.friend?.tags
+            
+            if let tags = cell?.friend?.tags {
+                bind(tags)
+            } else {
+                initTagView()
+            }
+            moveToNextInputView(isNewData: false)
+            view.endEditing(true)
+        }
     }
 }
 
@@ -382,7 +601,13 @@ extension NameInputViewController: UITextFieldDelegate {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            textField.placeholder = "졸업식"
+            guard let isRelationInput = isRelationInput else { return }
+            
+            if isRelationInput {
+                textField.placeholder = "동생"
+            } else {
+                textField.placeholder = "졸업식"
+            }
         case .addUpcomingEventAtHome,
              .addHistoryAtHoliday,
              .addFriendAtFriends:
@@ -403,7 +628,6 @@ extension NameInputViewController: UITextFieldDelegate {
         default:
             newHolidayName = textField.text
         }
-        
         view.endEditing(true)
         return true
     }
@@ -428,5 +652,29 @@ extension NameInputViewController: UIGestureRecognizerDelegate {
 extension NameInputViewController: DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager
+    }
+}
+
+extension NameInputViewController: BindDataDelegate {
+    func bind(_ data: [String]) {
+        initTagView()
+        
+        guard data.count != 0 else { return }
+        
+        inputData?.tags = data
+        
+        let tags = Array(data.reversed())
+        if tags.count >= 1 {
+            thirdTagLabel.text = tags[0]
+            thirdTagIcon.backgroundColor = Tag.type(of: tags[0])?.color
+        }
+        if tags.count >= 2 {
+            secondTagLabel.text = tags[1]
+            secondTagIcon.backgroundColor = Tag.type(of: tags[1])?.color
+        }
+        if tags.count == 3 {
+            firstTagLabel.text = tags[2]
+            firstTagIcon.backgroundColor = Tag.type(of: tags[2])?.color
+        }
     }
 }

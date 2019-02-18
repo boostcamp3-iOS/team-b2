@@ -23,7 +23,7 @@
                         <rect key="frame" x="26" y="5" width="323" height="75.5"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="oval" translatesAutoresizingMaskIntoConstraints="NO" id="gZp-cM-PwI">
-                                <rect key="frame" x="202" y="-19" width="196" height="203"/>
+                                <rect key="frame" x="172" y="-19" width="196" height="203"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cc-qc-23U">
                                 <rect key="frame" x="15" y="13" width="5" height="22"/>
@@ -87,7 +87,7 @@
                             <constraint firstAttribute="height" priority="999" constant="75.5" id="R87-Se-sX7"/>
                             <constraint firstItem="0cc-qc-23U" firstAttribute="leading" secondItem="f11-bA-pMX" secondAttribute="leading" constant="15" id="XVh-Mg-BYh"/>
                             <constraint firstAttribute="bottom" secondItem="W5N-Ui-hl5" secondAttribute="bottom" constant="6" id="ai2-n1-Mon"/>
-                            <constraint firstAttribute="trailing" secondItem="gZp-cM-PwI" secondAttribute="trailing" constant="-75" id="bIF-5G-x7N"/>
+                            <constraint firstAttribute="trailing" secondItem="gZp-cM-PwI" secondAttribute="trailing" constant="-45" id="bIF-5G-x7N"/>
                             <constraint firstAttribute="trailing" secondItem="AbE-yz-HBP" secondAttribute="trailing" id="m9i-De-iOu"/>
                             <constraint firstAttribute="bottom" secondItem="5jR-ny-vpi" secondAttribute="bottom" constant="13" id="mHL-xI-yQt"/>
                             <constraint firstItem="oit-aY-vGK" firstAttribute="centerY" secondItem="0cc-qc-23U" secondAttribute="centerY" id="o4n-48-eKJ"/>
@@ -100,17 +100,30 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cp4-Es-cSp">
+                        <rect key="frame" x="-46" y="11" width="64" height="64"/>
+                        <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                        <state key="normal" image="ic_delete"/>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="f11-bA-pMX" firstAttribute="top" secondItem="VD8-EK-cTK" secondAttribute="top" constant="5" id="D7M-xE-aYH"/>
-                    <constraint firstItem="f11-bA-pMX" firstAttribute="leading" secondItem="VD8-EK-cTK" secondAttribute="leading" constant="26" id="Dth-OZ-bP1"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="f11-bA-pMX" secondAttribute="trailing" priority="400" constant="6" id="Fdo-hf-4py"/>
+                    <constraint firstItem="f11-bA-pMX" firstAttribute="width" secondItem="VD8-EK-cTK" secondAttribute="width" multiplier="323:375" id="LQf-xc-Pvx"/>
                     <constraint firstAttribute="bottom" secondItem="f11-bA-pMX" secondAttribute="bottom" constant="5" id="NNm-ca-FEb"/>
-                    <constraint firstAttribute="trailing" secondItem="f11-bA-pMX" secondAttribute="trailing" constant="26" id="kqj-xB-8DI"/>
+                    <constraint firstItem="Cp4-Es-cSp" firstAttribute="leading" secondItem="VD8-EK-cTK" secondAttribute="leading" priority="500" constant="-10" id="OsK-pr-bqw"/>
+                    <constraint firstItem="f11-bA-pMX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Cp4-Es-cSp" secondAttribute="trailing" priority="350" constant="-10" id="QQD-aB-on6"/>
+                    <constraint firstItem="Cp4-Es-cSp" firstAttribute="centerY" secondItem="f11-bA-pMX" secondAttribute="centerY" id="daK-f5-sCp"/>
+                    <constraint firstItem="Cp4-Es-cSp" firstAttribute="leading" secondItem="VD8-EK-cTK" secondAttribute="leading" constant="-46" id="gBn-i6-TRR"/>
+                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="f11-bA-pMX" secondAttribute="trailing" constant="26" id="kqj-xB-8DI"/>
+                    <constraint firstItem="f11-bA-pMX" firstAttribute="leading" secondItem="Cp4-Es-cSp" secondAttribute="trailing" priority="300" constant="8" id="pIo-hf-1Qa"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="i3e-Vw-Sse"/>
             <connections>
                 <outlet property="dDayLabel" destination="W5N-Ui-hl5" id="a3k-n3-hbo"/>
+                <outlet property="deleteActionConstraint" destination="gBn-i6-TRR" id="7sS-fj-t1F"/>
+                <outlet property="deleteButton" destination="Cp4-Es-cSp" id="key-FJ-OcV"/>
                 <outlet property="favoriteButton" destination="AbE-yz-HBP" id="wce-gH-QlY"/>
                 <outlet property="holidayLabel" destination="oit-aY-vGK" id="iS8-cp-VhW"/>
                 <outlet property="lastHistoryImageView" destination="t2a-Ww-mKU" id="mbI-Ot-tZq"/>
@@ -118,11 +131,12 @@
                 <outlet property="lastHistoryView" destination="5jR-ny-vpi" id="Le9-9U-aNC"/>
                 <outlet property="nameLabel" destination="0cc-qc-23U" id="SBh-Sm-q38"/>
             </connections>
-            <point key="canvasLocation" x="208" y="161.91904047976013"/>
+            <point key="canvasLocation" x="207.19999999999999" y="161.91904047976013"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="ic_boxIn" width="25" height="25"/>
+        <image name="ic_delete" width="64" height="64"/>
         <image name="ic_emptyStar" width="25" height="25"/>
         <image name="ic_fullLineStar" width="27" height="27"/>
         <image name="oval" width="196" height="203"/>

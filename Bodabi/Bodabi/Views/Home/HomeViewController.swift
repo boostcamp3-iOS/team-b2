@@ -20,10 +20,14 @@ class HomeViewController: UIViewController {
     private var databaseManager: DatabaseManager!
     private var events: [Event]?
     private var holidays: [Holiday]?
+    private var isEventEmpty: Bool = true
+    private var isHolidayEmpty: Bool = true
+    
+    private var cancelDeleteModeGesture: UITapGestureRecognizer?
     
     struct Const {
         static let bottomInset: CGFloat = 60.0
-        
+        static let dayHours: Int = 24 * 3600
         static let buttonAnimationScale: CGFloat = 1.35
         static let buttonAnimationDuration: TimeInterval = 0.12
     }
@@ -96,11 +100,10 @@ class HomeViewController: UIViewController {
         request.predicate = predicate
 
         if let result = try? databaseManager.viewContext.fetch(request) {
-            guard events != result else { return }
             events = result
             tableView.reloadSections(
                 IndexSet(integer: Section.friendEvents.rawValue),
-                with: .fade
+                with: .none
             )
         }
     }
@@ -111,13 +114,51 @@ class HomeViewController: UIViewController {
         request.sortDescriptors = [sortDescriptor]
         
         if let result = try? databaseManager.viewContext.fetch(request) {
-//            guard holidays != result else { return }
             holidays = result
             tableView.reloadSections(
                 IndexSet(integer: Section.holidays.rawValue),
                 with: .none
             )
         }
+    }
+    
+    private func setShowTableViewCellDeleteButton(isShow: Bool) {
+        setDeleteModeTapGesture(isDeleteMode: isShow)
+        
+        tableView.getAllIndexPathsInSection(section: Section.friendEvents.rawValue).forEach { (indexPath) in
+            let cell = tableView.cellForRow(at: indexPath) as? UpcomingEventViewCell
+            isShow ? cell?.showDeleteButton() : cell?.hideDeleteButton()
+        }
+    }
+    
+    private func setDeleteModeTapGesture(isDeleteMode: Bool) {
+        guard isDeleteMode else {
+            guard let gesture = cancelDeleteModeGesture else { return }
+            view.removeGestureRecognizer(gesture)
+            cancelDeleteModeGesture = nil
+            return
+        }
+        cancelDeleteModeGesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
+        guard let gesture = cancelDeleteModeGesture else { return }
+        view.addGestureRecognizer(gesture)
+    }
+    
+    private func deleteUpcomingEvent(at indexPath: IndexPath) {
+        guard let event = events?[indexPath.row] else { return }
+        databaseManager?.viewContext.delete(event)
+        do {
+            try databaseManager?.viewContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+        events?.remove(at: indexPath.row)
+        setShowTableViewCellDeleteButton(isShow: false)
+        guard (events?.count ?? 0) > 0 else {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            return
+        }
+        tableView.deleteRows(at: [indexPath],
+                             with: .automatic)
     }
     
     // MARK: - @objcs
@@ -138,20 +179,78 @@ class HomeViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
         
+        viewController.isRelationInput = false
         viewController.entryRoute = .addUpcomingEventAtHome
         viewController.setDatabaseManager(databaseManager)
         viewController.inputData = InputData()
         present(navController, animated: true, completion: nil)
     }
     
-    // FIXME: there's not event favorite
     @objc func touchUpUpcomingEventFavoriteButton(_ sender: UIButton) {
         sender.setScaleAnimation(scale: Const.buttonAnimationScale,
                                  duration: Const.buttonAnimationDuration)
-        
         sender.isSelected = !sender.isSelected
-        events?[sender.tag].favorite = sender.isSelected
+        guard let event: Event = events?[sender.tag] else { return }
+        guard let notifications: Set<Notification> = event.notifications as? Set<Notification> else { return }
+        event.favorite = sender.isSelected
+        
+        let defaultHour = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmHour)
+        let defaultMinutes = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmMinutes)
+        let defaultDday = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmDday)
+        let favortieFirstDday = UserDefaults.standard.integer(forKey: DefaultsKey.favoriteFirstAlarmDday)
+        let favoriteSecondDday = UserDefaults.standard.integer(forKey: DefaultsKey.favoriteSecondAlarmDday)
+        
+        if sender.isSelected {
+            for dDay in [favortieFirstDday, favoriteSecondDday] {
+                let notification = Notification(context: databaseManager.viewContext)
+                guard let interval: TimeInterval = TimeInterval(exactly: dDay * Const.dayHours * -1) else { return }
+                notification.id = UUID().uuidString
+                notification.date = event.date?.addingTimeInterval(interval)
+                notification.event = event
+                NotificationSchedular.create(notification: notification,
+                                             hour: defaultHour,
+                                             minute: defaultMinutes)
+            }
+        } else {
+            notifications.forEach { notificaion in
+                    self.databaseManager.viewContext.delete(notificaion)
+                    NotificationSchedular.delete(notification: notificaion)
+            }
+            let notification = Notification(context: databaseManager.viewContext)
+            guard let interval: TimeInterval = TimeInterval(exactly: defaultDday * Const.dayHours * -1) else { return }
+            notification.id = UUID().uuidString
+            notification.date = event.date?.addingTimeInterval(interval)
+            notification.event = event
+            NotificationSchedular.create(notification: notification,
+                                         hour: defaultHour,
+                                         minute: defaultMinutes)
+        }
         try? databaseManager?.viewContext.save()
+    }
+    
+    @objc func longPressUpcomingEvent(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
+        setShowTableViewCellDeleteButton(isShow: true)
+    }
+    
+    @objc func touchUpUpcomingEventDeleteButton(_ sender: UIButton) {
+        guard let cell = sender.superview?.superview as? UpcomingEventViewCell,
+            let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        let alert = BodabiAlertController(title: "이벤트 삭제",
+                                          message: "정말 친구의 이벤트를 삭제하시겠습니까?",
+                                          type: nil, style: .Alert)
+        alert.addButton(title: "확인") { [weak self] in
+            self?.deleteUpcomingEvent(at: indexPath)
+        }
+        alert.addButton(title: "취소") { [weak self] in
+            self?.setShowTableViewCellDeleteButton(isShow: false)
+        }
+        alert.show()
+    }
+    
+    @objc func tapBackground(_ sender: UITapGestureRecognizer?) {
+        setShowTableViewCellDeleteButton(isShow: false)
     }
 }
 
@@ -168,7 +267,7 @@ extension HomeViewController: UITableViewDelegate {
             let viewController = storyboard(.friendHistory)
                 .instantiateViewController(ofType: FriendHistoryViewController.self)
             viewController.setDatabaseManager(databaseManager)
-            viewController.friend = friend
+            viewController.friendID = friend?.objectID
             
             navigationController?.pushViewController(viewController, animated: true)
         default:
@@ -190,7 +289,19 @@ extension HomeViewController: UITableViewDataSource {
             return 1
         }
         
-        return events?.count ?? 0
+        if let holidayCount = holidays?.count, holidayCount != 0 {
+            isHolidayEmpty = false
+        } else {
+            isHolidayEmpty = true
+        }
+        
+        if let count = events?.count, count != 0 {
+            isEventEmpty = false
+            return count
+        } else {
+            isEventEmpty = true
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -212,18 +323,35 @@ extension HomeViewController: UITableViewDataSource {
             cell.type = section
             return cell
         case .holidays:
-            let cell = tableView.dequeue(MyHolidaysViewCell.self, for: indexPath)
-            cell.collectionView.delegate = self
-            cell.holidays = holidays
-            return cell
+            if isHolidayEmpty {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "emptyHolidayCell", for: indexPath)
+                return cell
+            } else {
+                let cell = tableView.dequeue(MyHolidaysViewCell.self, for: indexPath)
+                cell.collectionView.delegate = self
+                cell.holidays = holidays
+                return cell
+            }
         case .friendEvents:
-            let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
-            cell.favoriteButton.tag = indexPath.row
-            cell.favoriteButton.addTarget(self,
-                                          action: #selector(touchUpUpcomingEventFavoriteButton(_:)),
-                                          for: .touchUpInside)
-            cell.event = events?[indexPath.row]
-            return cell
+            if isEventEmpty {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "emptyViewCell", for: indexPath)
+                return cell
+            } else {
+                let cell = tableView.dequeue(UpcomingEventViewCell.self, for: indexPath)
+                cell.favoriteButton.tag = indexPath.row
+                cell.favoriteButton
+                    .addTarget(self, action: #selector(touchUpUpcomingEventFavoriteButton(_:)),  for: .touchUpInside)
+                cell.deleteButton
+                    .addTarget(self, action: #selector(touchUpUpcomingEventDeleteButton(_:)),
+                               for: .touchUpInside)
+                
+                cell.event = events?[indexPath.row]
+                
+                let gesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressUpcomingEvent(_:)))
+                cell.addGestureRecognizer(gesture)
+                
+                return cell
+            }
         }
     }
 }

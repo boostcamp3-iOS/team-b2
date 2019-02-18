@@ -16,18 +16,28 @@ extension Notification {
         if let name = self.event?.friend?.name,
             let title = self.event?.title?.addObjectSuffix(),
             let dday = self.event?.dday {
-            switch dday {
-            case 0:
-                return "\(name)님의 지난 \(title) 축하해주셨나요?"
-            default:
+            if dday == 0 {
+                return "오늘 \(name)님의 \(title) 축하해주세요!"
+            } else if dday == 1 {
+                return "내일 \(name)님의 \(title) 축하해주세요!"
+            } else if dday > 0 {
                 return "\(dday)일 뒤 \(name)님의 \(title) 축하해주세요!"
+            } else {
+                return "\(name)님의 \(title) 축하해주셨나요?"
             }
         }
         return "알림 정보를 불러올 수 없습니다"
     }
     
+    var difference: Int {
+        if let eventDate = self.event?.date {
+            return self.date?.offsetFrom(date: eventDate) ?? UserDefaults.standard.integer(forKey: "defaultAlarmDday")
+        }
+        return UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmDday)
+    }
+    
     public override func awakeFromInsert() {
         super.awakeFromInsert()
-        self.read = false
+        self.isRead = false
     }
 }

@@ -23,39 +23,48 @@ struct InputManager {
         switch entryRoute {
         case .addHolidayAtHome:
             let holiday: Holiday = Holiday(context: context)
-            holiday.createdDate = Date()
-            holiday.title = data.holiday
+            if let relationText = data.relation, let holidayText = data.holiday {
+                holiday.title = relationText + "의 " + holidayText
+            }
+        
             holiday.date = data.date
+            holiday.createdDate = Date()
+            
             imageOfHoliday.forEach {
                 if holiday.title?.contains($0.holiday) ?? true {
-                    guard let image = $0.image.jpegData(compressionQuality: 1.0) else { return }
+                    guard let image = $0.image
+                        .resize(scale: 0.1)?.jpegData(compressionQuality: 1.0) else { return }
                     holiday.image = image
                     return
                 }
             }
         case .addUpcomingEventAtHome:
             let event: Event = Event(context: context)
-            if let friend = getFriend(context: context, name: data.name ?? "") {
-                event.friend = friend
-            }
+            let friend = getFriend(context: context, data: data)
+            
+            event.friend = friend
             event.favorite = false
             event.friend?.name = data.name
+            event.friend?.tags = data.tags != nil ? data.tags : event.friend?.tags
             event.title = data.holiday
             event.date = data.date
+            generateNotifications(of: event, context: context)
         case .addHistoryAtHoliday,
              .addHistoryAtFriendHistory:
             let history: History = History(context: context)
-            if let friend = getFriend(context: context, name: data.name ?? "") {
-                history.friend = friend
-            }
+            let friend = getFriend(context: context, data: data)
+            history.friend = friend
             history.item = data.item?.value
             history.holiday = data.holiday
             history.date = data.date
             history.isTaken = entryRoute == .addHistoryAtHoliday ? true : false
         case .addFriendAtFriends:
-            let friend: Friend = Friend(context: context)
-            friend.name = data.name
-            friend.favorite = false
+            if data.isNewData {
+                let friend: Friend = Friend(context: context)
+                friend.name = data.name
+                friend.tags = data.tags != nil ? data.tags : friend.tags
+                friend.favorite = false
+            }
         }
         
         do {
@@ -66,7 +75,7 @@ struct InputManager {
     }
     
     // 추후에 tags 적용
-    static private func checkDuplication(context: NSManagedObjectContext, name: String) -> Bool {
+    static private func checkDuplication(context: NSManagedObjectContext, name: String, tags: [String]) -> Bool {
         let request: NSFetchRequest<Friend> = Friend.fetchRequest()
         if let result = try? context.fetch(request) {
             for friend in result {
@@ -80,24 +89,76 @@ struct InputManager {
     }
     
     // friend를 가져오는 메소드
-    static private func getFriend(context: NSManagedObjectContext, name: String) -> Friend? {
-        // 새로운 friend를 만들어야 하는지 기존의 friend를 fetch해오는지 중복체크를 해서
-        if !checkDuplication(context: context, name: name) {
-            let friend: Friend = Friend(context: context)
-            friend.name = name
-            return friend
-        } else {
-            let request: NSFetchRequest<Friend> = Friend.fetchRequest()
-            let predicate = NSPredicate(format: "name = %@", name)
-            request.predicate = predicate
-            
-            if let result = try? context.fetch(request) {
-                return result.first
-            } else {
-                return nil
+    static private func getFriend(context: NSManagedObjectContext, name: String, tags: [String]) -> Friend? {
+        let request: NSFetchRequest<Friend> = Friend.fetchRequest()
+        let predicate = NSPredicate(format: "name = %@", name)
+        request.predicate = predicate
+        
+        var searchedFriend: Friend?
+        
+        if let result = try? context.fetch(request) {
+            // Fix tags 식별해서 하나의 친구만 가져오기
+            result.forEach { (friend) in
+                if let friendTags = friend.tags {
+                    if isSame(tags, with: friendTags) {
+                        searchedFriend = friend
+                        return
+                    }
+                } else if friend.tags == nil, tags.count == 0 {
+                    searchedFriend = friend
+                    return
+                }
             }
             
+            return searchedFriend
+        } else {
+            return nil
         }
+    }
+    
+    static private func getFriend(context: NSManagedObjectContext, data: InputData) -> Friend? {
+        if data.isNewData {
+            let friend: Friend = Friend(context: context)
+            friend.name = data.name
+            friend.tags = data.tags != nil ? data.tags : friend.tags
+            friend.favorite = false
+            return friend
+        }
+        
+        if let friend: Friend = getFriend(context: context, name: data.name ?? "", tags: data.tags ?? []) {
+            return friend
+        } else {
+            return nil
+        }
+    }
+    
+    static private func isSame(_ newTags: [String], with friendTags: [String]) -> Bool {
+        guard newTags.count == friendTags.count else {
+            return false
+        }
+        
+        let sortNewTags = newTags.sorted()
+        let sortFriendTags = friendTags.sorted()
+        
+        for i in 0..<sortNewTags.count {
+            if sortNewTags[i] != sortFriendTags[i] {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    static private func generateNotifications(of event: Event, context: NSManagedObjectContext){
+            let oneDayInterval: Int = 3600 * 24
+        
+            let notification: Notification = Notification(context: context)
+            notification.id = UUID().uuidString
+            notification.event = event
+            notification.date = event.date?.addingTimeInterval(TimeInterval(exactly: UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmDday) * oneDayInterval * -1) ?? 0)
+            NotificationSchedular.create(notification: notification,
+                                         hour: UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmHour),
+                                         minute: UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmMinutes))
     }
 }
 

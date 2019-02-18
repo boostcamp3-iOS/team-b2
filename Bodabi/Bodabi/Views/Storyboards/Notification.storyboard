@@ -22,6 +22,36 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="641"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KVK-Fz-UGf" userLabel="Empty View">
+                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_bell" translatesAutoresizingMaskIntoConstraints="NO" id="39P-rF-tee">
+                                        <rect key="frame" x="112.66666666666669" y="134.66666666666669" width="150" height="243.66666666666669"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="등록된 알림이 없습니다" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fG-XC-FgR">
+                                        <rect key="frame" x="118.66666666666667" y="394.33333333333331" width="137.66666666666663" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="알림을 받기 원하는 지인의 경조사를 등록해보세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfO-bf-ZR5">
+                                        <rect key="frame" x="41.666666666666657" y="424.33333333333337" width="292" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.97645872830000002" green="0.97646445039999996" blue="0.97647935149999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="9fG-XC-FgR" firstAttribute="top" secondItem="39P-rF-tee" secondAttribute="bottom" constant="16" id="90q-OM-bfd"/>
+                                    <constraint firstItem="vfO-bf-ZR5" firstAttribute="top" secondItem="9fG-XC-FgR" secondAttribute="bottom" constant="12" id="9O7-Z4-0Dc"/>
+                                    <constraint firstItem="39P-rF-tee" firstAttribute="centerY" secondItem="KVK-Fz-UGf" secondAttribute="centerY" multiplier="0.8" id="jMD-jL-XxT"/>
+                                    <constraint firstItem="9fG-XC-FgR" firstAttribute="centerX" secondItem="KVK-Fz-UGf" secondAttribute="centerX" id="sxg-6n-9gV"/>
+                                    <constraint firstItem="39P-rF-tee" firstAttribute="centerX" secondItem="KVK-Fz-UGf" secondAttribute="centerX" id="tjE-Bj-XXO"/>
+                                    <constraint firstItem="vfO-bf-ZR5" firstAttribute="centerX" secondItem="KVK-Fz-UGf" secondAttribute="centerX" id="whH-BC-k5R"/>
+                                    <constraint firstItem="39P-rF-tee" firstAttribute="width" secondItem="KVK-Fz-UGf" secondAttribute="width" multiplier="0.4" id="z3U-nt-T2t"/>
+                                </constraints>
+                            </view>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="axT-ae-811">
                                 <rect key="frame" x="-2" y="-2" width="379" height="90"/>
                                 <color key="backgroundColor" red="0.86488586664199829" green="0.4526216983795166" blue="0.32937854528427124" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -33,10 +63,15 @@
                             <constraint firstItem="jCK-Nj-a0q" firstAttribute="trailing" secondItem="8u9-aj-jee" secondAttribute="trailing" id="1d8-XS-c66"/>
                             <constraint firstItem="axT-ae-811" firstAttribute="leading" secondItem="iwm-8g-HqH" secondAttribute="leading" constant="-2" id="48A-tT-gfJ"/>
                             <constraint firstItem="8u9-aj-jee" firstAttribute="leading" secondItem="jCK-Nj-a0q" secondAttribute="leading" id="CEF-Oi-CDg"/>
+                            <constraint firstItem="KVK-Fz-UGf" firstAttribute="trailing" secondItem="jCK-Nj-a0q" secondAttribute="trailing" id="FL5-9U-H42"/>
                             <constraint firstAttribute="trailing" secondItem="axT-ae-811" secondAttribute="trailing" constant="-2" id="JNI-df-OKJ"/>
+                            <constraint firstItem="KVK-Fz-UGf" firstAttribute="top" secondItem="jCK-Nj-a0q" secondAttribute="top" id="RlA-Wp-GYK"/>
+                            <constraint firstItem="39P-rF-tee" firstAttribute="height" secondItem="iwm-8g-HqH" secondAttribute="height" multiplier="0.3" id="TvB-4n-wSh"/>
                             <constraint firstItem="axT-ae-811" firstAttribute="top" secondItem="iwm-8g-HqH" secondAttribute="top" constant="-2" id="fcM-R2-eOT"/>
                             <constraint firstItem="jCK-Nj-a0q" firstAttribute="bottom" secondItem="8u9-aj-jee" secondAttribute="bottom" id="kCG-GP-po1"/>
+                            <constraint firstItem="jCK-Nj-a0q" firstAttribute="bottom" secondItem="KVK-Fz-UGf" secondAttribute="bottom" id="s0g-iX-fs9"/>
                             <constraint firstItem="jCK-Nj-a0q" firstAttribute="top" secondItem="axT-ae-811" secondAttribute="bottom" id="ugB-M0-hgv"/>
+                            <constraint firstItem="KVK-Fz-UGf" firstAttribute="leading" secondItem="jCK-Nj-a0q" secondAttribute="leading" id="vtI-KV-pya"/>
                             <constraint firstItem="8u9-aj-jee" firstAttribute="top" secondItem="axT-ae-811" secondAttribute="bottom" id="yFg-TP-XWh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jCK-Nj-a0q"/>
@@ -45,6 +80,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="qOM-Al-yoE"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="emptyView" destination="KVK-Fz-UGf" id="ZuE-cu-6YH"/>
                         <outlet property="tableView" destination="8u9-aj-jee" id="FuK-Ef-brS"/>
                     </connections>
                 </viewController>
@@ -82,5 +118,6 @@
     </scenes>
     <resources>
         <image name="ic_alarm" width="22" height="25"/>
+        <image name="ic_bell" width="187.66667175292969" height="220.33332824707031"/>
     </resources>
 </document>

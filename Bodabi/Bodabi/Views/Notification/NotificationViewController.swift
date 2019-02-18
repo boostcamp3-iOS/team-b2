@@ -14,6 +14,7 @@ class NotificationViewController: UIViewController {
     // MARK: - IBOutlet
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyView: UIView!
     
     // MARK: - Property
     
@@ -52,7 +53,9 @@ class NotificationViewController: UIViewController {
     private func initFetchedResultsController() {
         let fetchResult: NSFetchRequest<Notification> = Notification.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
+        let predicate = NSPredicate(format: "isHandled = %@", NSNumber(value: true))
         fetchResult.sortDescriptors = [sortDescriptor]
+        fetchResult.predicate = predicate
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchResult, managedObjectContext: (databaseManager?.viewContext)!, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController?.delegate = self
@@ -67,13 +70,17 @@ class NotificationViewController: UIViewController {
     
     func updateNotificationRead(indexPath: IndexPath) {
         if let notification = fetchedResultsController?.object(at: indexPath) {
-            notification.read = true
+            notification.isRead = true
         }
         do {
             try databaseManager?.viewContext.save()
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    private func setEmptyView() {
+        emptyView.isHidden = tableView.numberOfRows(inSection: 0) == 0  ? false : true
     }
 }
 
@@ -86,6 +93,7 @@ extension NotificationViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        setEmptyView()
         let cell = tableView.dequeue(NotificationViewCell.self, for: indexPath)
         
         guard let notification = fetchedResultsController?.object(at: indexPath) else {
@@ -106,7 +114,7 @@ extension NotificationViewController: UITableViewDelegate {
         if let notification = fetchedResultsController?.object(at: indexPath) {
             updateNotificationRead(indexPath: indexPath)
             viewController.setDatabaseManager(databaseManager)
-            viewController.friend = notification.event?.friend
+            viewController.friendID = notification.event?.friend?.objectID
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -120,6 +128,7 @@ extension NotificationViewController: UITableViewDelegate {
                 } catch {
                     print(error.localizedDescription)
                 }
+                setEmptyView()
             }
         }
     }

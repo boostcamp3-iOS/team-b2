@@ -20,41 +20,75 @@ class FriendHistoryViewController: UIViewController {
     
     // MARK: - Property
     
-    internal var friend: Friend? {
+    internal var friendID: NSManagedObjectID? {
         didSet {
-            histories = (friend?.histories as? Set<History>)?.sorted(by: { $0.date! < $1.date! }) ?? []
+            fetchHistory()
         }
     }
+    private var friend: Friend?
     private var histories: [History]?
     private var databaseManager: DatabaseManager!
     private var isSortDescending: Bool = true
     private var isTableViewLoaded: Bool = false
+    private var isInputStatus: Bool = false
+    private var isHolidayEmpty: Bool = true
     private var sections: [FriendHistorySection] = []
     private struct Const {
         static let bottomInset: CGFloat = 90.0
+        static let buttonAnimationScale: CGFloat = 1.35
+        static let buttonAnimationDuration: TimeInterval = 0.12
     }
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        initSection()
+
         initNavigationBar()
         initTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        fetchHistory()
+        reloadSection()
+        isInputStatus = false
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-    
+        
+        if !isInputStatus {
         navigationController?.popToRootViewController(animated: false)
+        }
     }
     
     // MARK: - Initialization
     
+    private func fetchHistory() {
+        guard let id = friendID else { return }
+        friend = databaseManager.viewContext.object(with: id) as? Friend
+        guard let friendToFetch: Friend = friend else { return }
+        let request: NSFetchRequest<History> = History.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+        let predicate: NSPredicate = NSPredicate(format: "friend = %@", friendToFetch)
+        request.predicate = predicate
+        
+        if let result = try? databaseManager.viewContext.fetch(request) {
+            histories = result
+        }
+    }
+    
     private func initNavigationBar() {
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationItem.title = friend?.name ?? ""
+        
+        if let friendTags = friend?.tags {
+            navigationItem.title = friendTags.reduce("", { $0 + " \($1)" }) + " " + (friend?.name ?? "")
+        } else {
+            navigationItem.title = friend?.name ?? ""
+        }
         favoriteButton.image = friend?.favorite == true ? #imageLiteral(resourceName: "ic_emptyStar") : #imageLiteral(resourceName: "WhiteStar")
     }
     
@@ -69,7 +103,7 @@ class FriendHistoryViewController: UIViewController {
         tableView.reloadData()
     }
     
-    private func initSection() {
+    private func reloadSection() {
         guard let histories = histories else {
             return
         }
@@ -94,6 +128,7 @@ class FriendHistoryViewController: UIViewController {
         }
         sections.append(.information(items: [.information(income: String(income), expenditure: String(expenditure))]))
         sections.append(.history(items: historyItems))
+        tableView.reloadData()
     }
     
     // MARK: - Method
@@ -108,16 +143,19 @@ class FriendHistoryViewController: UIViewController {
     
     // MARK: - IBAction
     
-    @IBAction func touchUpFloatingButotn(_ sender: UIButton) {
+    @IBAction func touchUpFloatingButton(_ sender: UIButton) {
+        isInputStatus = true
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: HolidayInputViewController.self)
         let navigationController = UINavigationController(rootViewController: viewController)
         
         var inputData = InputData()
         inputData.name = friend?.name
-        
+        inputData.tags = friend?.tags
+        inputData.isNewData = false
         viewController.inputData = inputData
         viewController.entryRoute = .addHistoryAtFriendHistory
+        viewController.isRelationInput = false
         viewController.setDatabaseManager(databaseManager)
         present(navigationController, animated: true, completion: nil)
     }
@@ -132,6 +170,17 @@ class FriendHistoryViewController: UIViewController {
             favoriteButton.image = #imageLiteral(resourceName: "ic_emptyStar")
             try? databaseManager?.viewContext.save()
         }
+        
+        let pulse = CASpringAnimation(keyPath: "transform.scale")
+        pulse.duration = Const.buttonAnimationDuration
+        pulse.fromValue = 1.0
+        pulse.toValue = Const.buttonAnimationScale
+        pulse.autoreverses = true
+        pulse.repeatCount = 1
+        
+        if let view: UIView = favoriteButton.value(forKey: "view") as? UIView {
+            view.layer.add(pulse, forKey: nil)
+        }
     }
 }
 
@@ -143,11 +192,20 @@ extension FriendHistoryViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let count = histories?.count, count != 0 else {
+            isHolidayEmpty = true
+            return 1
+        }
+        isHolidayEmpty = false
         return sections[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
+        if isHolidayEmpty, indexPath.section != 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "emptyHistoryCell", for: indexPath)
+            return cell
+        }
         let item = section.items[indexPath.row]
         let cell = tableView.dequeue(section.cellType(item), for: indexPath)
         (cell as? FriendHistoryCellProtocol)?.bind(item: item)
@@ -177,8 +235,8 @@ extension FriendHistoryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 1 {
-            let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: FriendHistoryHeaderView.reuseIdentifier)
-            let header = cell as! FriendHistoryHeaderView
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: FriendHistoryHeaderView.reuseIdentifier) as? FriendHistoryHeaderView else { return UIView() }
+            
             header.headerTitleLabel.text = "주고받은 내역"
             header.delegate = self
             return header
@@ -213,8 +271,9 @@ extension FriendHistoryViewController: UITableViewDelegate {
 extension FriendHistoryViewController: FriendHistoryHeaderViewDelegate {
     func friendHistoryHeaderView(_ headerView: FriendHistoryHeaderView, didTapSortButtonWith descending: Bool) {
         sortHistories(descending: isSortDescending)
-        isTableViewLoaded = false
+        reloadSection()
         tableView.reloadData()
+        isTableViewLoaded = false
         isSortDescending = !isSortDescending
     }
 }
