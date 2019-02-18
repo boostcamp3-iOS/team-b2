@@ -27,12 +27,12 @@ class CloudManager {
 //
 //    }
     
-    func uploadFriend() {
-        guard let friends: [Friend] = friends else { return }
-        friends.forEach { friend in
-            let record = CKRecord(recordType: "Friend")
-        }
-    }
+//    func uploadFriend() {
+//        guard let friends: [Friend] = friends else { return }
+//        friends.forEach { friend in
+//            let record = CKRecord(recordType: "Friend")
+//        }
+//    }
     
     func fetchAll() {
         fetchFriend()
