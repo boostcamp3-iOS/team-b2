@@ -73,7 +73,7 @@ extension String {
         let deletedString = self.filter {
             $0 != ","
         }
-        print(deletedString)
+        
         return deletedString
     }
     
