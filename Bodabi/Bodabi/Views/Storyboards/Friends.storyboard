@@ -128,11 +128,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qoM-Nz-LEW">
-                                <rect key="frame" x="147.66666666666666" y="371" width="80" height="80"/>
-                                <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <rect key="frame" x="151.66666666666666" y="375" width="72" height="72"/>
+                                <color key="backgroundColor" red="0.91737132352941175" green="0.91737132352941175" blue="0.91737132352941175" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="Qnw-LM-y66"/>
-                                    <constraint firstAttribute="height" constant="80" id="dhR-SJ-ONn"/>
+                                    <constraint firstAttribute="width" constant="72" id="Qnw-LM-y66"/>
+                                    <constraint firstAttribute="height" constant="72" id="dhR-SJ-ONn"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -141,8 +141,8 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z4Z-Qw-5jK">
-                                <rect key="frame" x="147.66666666666666" y="371" width="80" height="80"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="50"/>
+                                <rect key="frame" x="151.66666666666666" y="375" width="72" height="72"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="47"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -194,7 +194,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_emptyFriend" width="346" height="298.33334350585938"/>
+        <image name="ic_emptyFriend" width="346" height="298"/>
         <image name="ic_floatingButton" width="64" height="65"/>
         <image name="ic_person" width="25" height="25"/>
     </resources>
