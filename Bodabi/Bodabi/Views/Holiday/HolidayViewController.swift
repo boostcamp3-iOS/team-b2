@@ -305,13 +305,12 @@ extension HolidayViewController: UITableViewDataSource {
             return histories.count
         } else {
             isHolidayEmpty = true
-            return 0
-//            return 1
+//            return 0
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(isHolidayEmpty)
         if isHolidayEmpty {
             let emptyCell = tableView.dequeueReusableCell(withIdentifier: "emptyHolidayCell", for: indexPath)
             return emptyCell
@@ -360,21 +359,18 @@ extension HolidayViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            tableView.beginUpdates()
+            guard let removedHistory = histories?[indexPath.row] else { return }
             
-            guard let removedHistories = histories?.remove(at: indexPath.row) else { return }
-            
-            databaseManager.viewContext.delete(removedHistories)
+            databaseManager.viewContext.delete(removedHistory)
             
             do {
-                try databaseManager?.viewContext.save()
+                try databaseManager.viewContext.save()
             } catch {
                 print(error.localizedDescription)
             }
             
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            fetchHistory()
             
-            tableView.endUpdates()
         default:
             break
         }
