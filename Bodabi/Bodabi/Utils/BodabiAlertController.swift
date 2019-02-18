@@ -16,8 +16,8 @@ public class BodabiAlertController: UIViewController {
     
     // MARK: - Property
     
-    private let tag: Int
-    private static var tagFactory = 0
+    private var tag: Int
+    private static var tagFactory = 3
     
     public var overlayColor = UIColor(white: 0, alpha: 0.2)
     public weak var delegate: BodabiAlertControllerDelegate?

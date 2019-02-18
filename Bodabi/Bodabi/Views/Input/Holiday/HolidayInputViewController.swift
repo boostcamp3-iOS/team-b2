@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class HolidayInputViewController: UIViewController {
     
@@ -16,12 +17,10 @@ class HolidayInputViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Property
-    
-    private var databaseManager: DatabaseManager!
+
     public var inputData: InputData!
     public var entryRoute: EntryRoute!
     public var isRelationInput: Bool = true
-    private var isDeleting: Bool = false
     public var myHolidays: [String]? {
         didSet {
             tableView.reloadData()
@@ -34,6 +33,8 @@ class HolidayInputViewController: UIViewController {
             UserDefaults.standard.set(myRelations, forKey: "defaultRelation")
         }
     }
+    private var databaseManager: DatabaseManager!
+    private var isDeleting: Bool = false
     private var selectedHoliday: String?
     private var selectedRelation: String?
     
@@ -127,6 +128,26 @@ class HolidayInputViewController: UIViewController {
         isDeleting = state
     }
     
+    private func isUniqueName() -> Bool {
+        
+        guard let holiday = selectedHoliday, let relation = selectedRelation else { return false }
+        
+        var isUnique: Bool = true
+        let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
+        let currentName: String = relation + "의 " + holiday
+        let predicate = NSPredicate(format:"title = %@", currentName)
+        
+        request.predicate = predicate
+        
+        if let fetchResult = try? databaseManager.viewContext.fetch(request) {
+            if let _ = fetchResult.first {
+                isUnique = false
+            }
+        }
+        
+        return isUnique
+    }
+    
     // MARK: - IBAction
     
     @IBAction func dismissInputView(_ sender: UIBarButtonItem) {
@@ -150,6 +171,7 @@ class HolidayInputViewController: UIViewController {
             
             viewController.entryRoute = .addHolidayAtHome
             viewController.delegate = self
+            viewController.inputData = InputData()
             viewController.isRelationInput = isRelationInput
             let navController = UINavigationController(rootViewController: viewController)
             present(navController, animated: true, completion: nil)
@@ -160,13 +182,15 @@ class HolidayInputViewController: UIViewController {
                     let viewController = storyboard(.input)
                         .instantiateViewController(ofType: HolidayInputViewController.self)
                     
+                    inputData?.relation = selectedRelation
+                    
                     viewController.entryRoute = entryRoute
                     viewController.setDatabaseManager(databaseManager)
-                    inputData?.relation = selectedRelation
+                    viewController.selectedRelation = selectedRelation
                     viewController.inputData = inputData
                     viewController.isRelationInput = false
                     navigationController?.pushViewController(viewController, animated: true)
-                } else {
+                } else if !isRelationInput, isUniqueName() {
                     let viewController = storyboard(.input)
                         .instantiateViewController(ofType: DateInputViewController.self)
                     
@@ -175,6 +199,11 @@ class HolidayInputViewController: UIViewController {
                     inputData?.holiday = selectedHoliday
                     viewController.inputData = inputData
                     navigationController?.pushViewController(viewController, animated: true)
+                } else {
+                    let alert = BodabiAlertController(title: "주의", message: "중복된 이름입니다. 이름을 다시 입력해주세요.", type: nil, style: .Alert)
+                    
+                    alert.cancelButtonTitle = "확인"
+                    alert.show()
                 }
             case .addUpcomingEventAtHome:
                 let viewController = storyboard(.input)
@@ -265,14 +294,7 @@ extension HolidayInputViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension HolidayInputViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        guard let cell = tableView.cellForRow(at: indexPath) as? HolidayInputViewCell,
-//            indexPath.row != 0 else { return }
-//
-//        cell.isDeleting = isDeleting
-//    }
-}
+extension HolidayInputViewController: UITableViewDelegate {}
 
 // MARK: - DatabaseManagerClient
 
