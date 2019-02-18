@@ -96,10 +96,11 @@ class UpcomingEventViewCell: UITableViewCell {
     }
     
     public func hideDeleteButton() {
-        deleteButton.isHidden = true
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             self.deleteActionConstraint.isActive = true
             self.layoutIfNeeded()
+        }) { (_) in
+            self.deleteButton.isHidden = true
         }
     }
 }

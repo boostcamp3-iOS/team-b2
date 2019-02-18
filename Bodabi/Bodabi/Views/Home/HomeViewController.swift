@@ -23,6 +23,8 @@ class HomeViewController: UIViewController {
     private var isEventEmpty: Bool = true
     private var isHolidayEmpty: Bool = true
     
+    private var cancelDeleteModeGesture: UITapGestureRecognizer?
+    
     struct Const {
         static let bottomInset: CGFloat = 60.0
         static let dayHours: Int = 24 * 3600
@@ -98,7 +100,6 @@ class HomeViewController: UIViewController {
         request.predicate = predicate
 
         if let result = try? databaseManager.viewContext.fetch(request) {
-//            guard events != result else { return }
             events = result
             tableView.reloadSections(
                 IndexSet(integer: Section.friendEvents.rawValue),
@@ -122,13 +123,24 @@ class HomeViewController: UIViewController {
     }
     
     private func setShowTableViewCellDeleteButton(isShow: Bool) {
-        let cancelDeleteModeGesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
-        isShow ? view.addGestureRecognizer(cancelDeleteModeGesture) : view.removeGestureRecognizer(cancelDeleteModeGesture)
+        setDeleteModeTapGesture(isDeleteMode: isShow)
         
         tableView.getAllIndexPathsInSection(section: Section.friendEvents.rawValue).forEach { (indexPath) in
             let cell = tableView.cellForRow(at: indexPath) as? UpcomingEventViewCell
             isShow ? cell?.showDeleteButton() : cell?.hideDeleteButton()
         }
+    }
+    
+    private func setDeleteModeTapGesture(isDeleteMode: Bool) {
+        guard isDeleteMode else {
+            guard let gesture = cancelDeleteModeGesture else { return }
+            view.removeGestureRecognizer(gesture)
+            cancelDeleteModeGesture = nil
+            return
+        }
+        cancelDeleteModeGesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
+        guard let gesture = cancelDeleteModeGesture else { return }
+        view.addGestureRecognizer(gesture)
     }
     
     private func deleteUpcomingEvent(at indexPath: IndexPath) {
@@ -207,6 +219,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func longPressUpcomingEvent(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
         setShowTableViewCellDeleteButton(isShow: true)
     }
     
