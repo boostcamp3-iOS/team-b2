@@ -78,6 +78,7 @@ class FriendsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         fetchFriend()
     }
     
@@ -235,6 +236,10 @@ extension FriendsViewController {
 // MARK: - UITableViewDelegate
 
 extension FriendsViewController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section),
             (section == .favorite || section == .friends) else { return }
