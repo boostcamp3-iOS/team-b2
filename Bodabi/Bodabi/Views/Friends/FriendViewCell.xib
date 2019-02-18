@@ -98,7 +98,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4h-hK-mVf">
-                        <rect key="frame" x="316" y="4.5" width="40" height="48"/>
+                        <rect key="frame" x="314" y="4.5" width="40" height="48"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="48" id="fVz-qk-LOa"/>
                         </constraints>
@@ -129,7 +129,7 @@
                     <constraint firstItem="JvF-lb-1Tc" firstAttribute="centerY" secondItem="ZNp-B7-pWi" secondAttribute="centerY" id="Ub6-CM-Svg"/>
                     <constraint firstAttribute="bottom" secondItem="FvJ-eL-3yG" secondAttribute="bottom" constant="10" id="UzE-FZ-ina"/>
                     <constraint firstItem="Ywj-9L-dHo" firstAttribute="top" relation="lessThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14.5" id="Vy3-xG-xy8"/>
-                    <constraint firstAttribute="trailing" secondItem="T4h-hK-mVf" secondAttribute="trailing" constant="19" id="XkD-eR-r93"/>
+                    <constraint firstAttribute="trailing" secondItem="T4h-hK-mVf" secondAttribute="trailing" constant="21" id="XkD-eR-r93"/>
                     <constraint firstItem="Ywj-9L-dHo" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" priority="900" constant="10" id="ZCu-0Z-lwp"/>
                     <constraint firstItem="Ywj-9L-dHo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="a3p-kr-6bo"/>
                     <constraint firstItem="VtX-ZD-RBi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="bvd-J9-wDI"/>

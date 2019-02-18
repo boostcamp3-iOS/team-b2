@@ -43,7 +43,7 @@ class FriendsViewController: UIViewController {
         static let buttonAnimationScale: CGFloat = 1.3
         static let buttonAnimationDuration: TimeInterval = 0.18
         
-        static let cellWidthSize: CGFloat = 35.0
+        static let cellWidthSize: CGFloat = 30.0
     }
     
     enum Section: Int, CaseIterable {
@@ -188,6 +188,8 @@ class FriendsViewController: UIViewController {
     }
     
     private func sortFriend() {
+        friends?.sort(by: { ($0.name ?? "") < ($1.name ?? "")})
+        
         favoriteFriends = friends?.filter { $0.favorite == true }
         friends = friends?.filter { $0.favorite == false }
         
