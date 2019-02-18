@@ -173,7 +173,7 @@ class FriendsViewController: UIViewController {
                     !friendsPhones.contains(phone) else { return }
                 
                 let friend = Friend(context: context)
-                friend.name = contact.givenName + contact.familyName
+                friend.name = contact.familyName + contact.givenName
                 friend.phoneNumber = contact.phoneNumbers.first?.value.stringValue
                 friend.tags = ["연락처"]
                 friend.favorite = false
