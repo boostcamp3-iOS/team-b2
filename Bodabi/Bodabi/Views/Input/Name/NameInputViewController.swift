@@ -122,11 +122,11 @@ class NameInputViewController: UIViewController {
     private func fetchDefaultData() {
         guard let isRelationInput = isRelationInput else { return }
         if isRelationInput {
-            if let defaultRelation = UserDefaults.standard.array(forKey: "defaultRelation") as? [String] {
+            if let defaultRelation = UserDefaults.standard.array(forKey: DefaultsKey.defaultRelation) as? [String] {
                 myRelations = defaultRelation
             }
         } else {
-            if let defaultHoliday = UserDefaults.standard.array(forKey: "defaultHoliday") as? [String] {
+            if let defaultHoliday = UserDefaults.standard.array(forKey: DefaultsKey.defaultHoliday) as? [String] {
                 myHolidays = defaultHoliday
             }
         }

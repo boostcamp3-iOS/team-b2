@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setUserDefaults()
         databaseManager.load()
         registerForLocalNotifications(application: application)
+        updateDeliveredNotification()
         
         let tabBarController = window?.rootViewController
         for navigationController in tabBarController?.children ?? [] {
@@ -38,24 +39,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        renumberBadgesOfPendingNotifications()
         saveContext()
     }
     
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        updateDeliveredNotification()
+    }
     // MARK: - User Defaults setting
     
     private func setUserDefaults() {
-        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        let launchedBefore = UserDefaults.standard.bool(forKey: DefaultsKey.launchedBefore)
         
         if !launchedBefore  {
-            UserDefaults.standard.set(true, forKey: "launchedBefore")
-            UserDefaults.standard.set(["+", "결혼", "생일", "돌잔치", "장례", "출산", "개업"], forKey: "defaultHoliday")
-            UserDefaults.standard.set(["+", "나", "아내", "어머니", "아버지", "아들", "딸"], forKey: "defaultRelation")
-            UserDefaults.standard.set(9, forKey: "defaultAlarmHour")
-            UserDefaults.standard.set(0, forKey: "defaultAlarmMinutes")
-            UserDefaults.standard.set(1, forKey: "defaultAlarmDday")
-            UserDefaults.standard.set(0, forKey: "favoriteFirstAlarmDday")
-            UserDefaults.standard.set(7, forKey: "favoriteSecondAlarmDday")
+            UserDefaults.standard.set(true, forKey: DefaultsKey.launchedBefore)
+            UserDefaults.standard.set(["+", "결혼", "생일", "돌잔치", "장례", "출산", "개업"], forKey: DefaultsKey.defaultHoliday)
+            UserDefaults.standard.set(["+", "나", "아내", "어머니", "아버지", "아들", "딸"], forKey: DefaultsKey.defaultRelation)
+            UserDefaults.standard.set(9, forKey: DefaultsKey.defaultAlarmHour)
+            UserDefaults.standard.set(0, forKey: DefaultsKey.defaultAlarmMinutes)
+            UserDefaults.standard.set(1, forKey: DefaultsKey.defaultAlarmDday)
+            UserDefaults.standard.set(0, forKey: DefaultsKey.favoriteFirstAlarmDday)
+            UserDefaults.standard.set(7, forKey: DefaultsKey.favoriteSecondAlarmDday)
         }
     }
 
@@ -94,71 +97,67 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler(.alert)
         
-        let content = notification.request.content
-        guard let notificationID = content.userInfo["id"] as? String else { return }
-
-        let request: NSFetchRequest<Notification> = Notification.fetchRequest()
-        let predicate: NSPredicate = NSPredicate(format: "id = %@", notificationID)
-        request.predicate = predicate
-        
-        if let result = try? databaseManager.viewContext.fetch(request) {
-            let notification = result.first
-            notification?.isHandled = true
-            do {
-                try databaseManager.viewContext.save()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
+        updateDeliveredNotification()
         renumberBadgesOfPendingNotifications()
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
 
-        let content = response.notification.request.content
-        guard let notificationID = content.userInfo["id"] as? String else { return }
+        updateDeliveredNotification()
+        renumberBadgesOfPendingNotifications()
+    }
+    
+    func updateDeliveredNotification() {
+        let predicate = NSPredicate(format: "date > %@", NSDate())
+        let anotherPredicate = NSPredicate(format: "isRead = %@", NSNumber(value: false))
+
+        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicate, anotherPredicate])
         
         let request: NSFetchRequest<Notification> = Notification.fetchRequest()
-        let predicate: NSPredicate = NSPredicate(format: "id = %@", notificationID)
-        request.predicate = predicate
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+        request.predicate = andPredicate
         
         if let result = try? databaseManager.viewContext.fetch(request) {
-            let notification = result.first
-            notification?.isHandled = true
-            do {
-                try databaseManager.viewContext.save()
-            } catch {
-                print(error.localizedDescription)
+            for notification in result {
+                notification.isHandled = true
             }
         }
-        renumberBadgesOfPendingNotifications()
     }
     
     func renumberBadgesOfPendingNotifications() {
         let center = UNUserNotificationCenter.current()
-        var sortedNotifications: [UNNotificationRequest]?
-        center.getPendingNotificationRequests { (pendingNotifications) in
-            sortedNotifications = pendingNotifications.sorted(by: { ($0.trigger as! UNCalendarNotificationTrigger).nextTriggerDate()! < ($1.trigger as! UNCalendarNotificationTrigger).nextTriggerDate()! })
-        }
 
-        center.removeAllPendingNotificationRequests()
-        var badgeNumber: Int = 1
-        
-        guard let notifications = sortedNotifications else { return }
-        for notification in notifications {
-            let content = UNMutableNotificationContent()
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            var pendingNotifications: [UNNotificationRequest] = []
+            for request in requests {
+                pendingNotifications.append(request)
+                }
+            pendingNotifications.sort(by: { (request, anotherRequest) -> Bool in
+                if let date = request.content.userInfo["date"] as? Date,
+                    let anotherDate = anotherRequest.content.userInfo["date"] as? Date {
+                    return date < anotherDate
+                } else {
+                    return true
+                }
+            })
+            var badgeNumber: Int = 1
             
-            content.title = notification.content.title
-            content.body = notification.content.body
-            content.sound = notification.content.sound
-            content.badge = badgeNumber as NSNumber
-            
-            badgeNumber += 1
-            
-            let request = UNNotificationRequest(identifier: notification.identifier,
-                                                content: content,
-                                                trigger: notification.trigger)
-            center.add(request, withCompletionHandler: nil)
+            for notification in pendingNotifications {
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notification.identifier])
+                let content = UNMutableNotificationContent()
+                
+                content.title = notification.content.title
+                content.body = notification.content.body
+                content.sound = notification.content.sound
+                content.badge = badgeNumber as NSNumber
+                badgeNumber += 1
+                
+                let request = UNNotificationRequest(identifier: notification.identifier,
+                                                    content: content,
+                                                    trigger: notification.trigger)
+                center.add(request, withCompletionHandler: nil)
+            }
         }
     }
 }

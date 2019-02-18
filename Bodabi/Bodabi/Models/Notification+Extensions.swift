@@ -29,6 +29,13 @@ extension Notification {
         return "알림 정보를 불러올 수 없습니다"
     }
     
+    var difference: Int {
+        if let eventDate = self.event?.date {
+            return self.date?.offsetFrom(date: eventDate) ?? UserDefaults.standard.integer(forKey: "defaultAlarmDday")
+        }
+        return UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmDday)
+    }
+    
     public override func awakeFromInsert() {
         super.awakeFromInsert()
         self.isRead = false
