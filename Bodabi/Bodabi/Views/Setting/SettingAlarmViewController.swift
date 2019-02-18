@@ -54,7 +54,7 @@ class SettingAlarmViewController: UIViewController {
         let favoriteSecondDday = UserDefaults.standard.integer(forKey: "favoriteSecondAlarmDday")
         let defaultHour = UserDefaults.standard.integer(forKey: "defaultAlarmHour")
         let defaultMinutes = UserDefaults.standard.integer(forKey: "defaultAlarmMinutes")
-        print("\(favoriteFirstDday)")
+    
         defaultAlarmTimeLabel.text = "\(defaultHour)시 \(defaultMinutes)분"
         defaultAlarmDdayLabel.text = dDayData.filter({$0.value ==  defaultDday}).keys.first ?? "하루 전"
         favoriteFirstAlarmDdayLabel.text = dDayData.filter({$0.value ==  favoriteFirstDday}).keys.first ?? "당일"
@@ -130,7 +130,6 @@ extension SettingAlarmViewController: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(dDayOptions[row])
         editingText?.text = dDayOptions[row]
         guard let editingType = editingText else { return }
         if let value = dDayData[editingType.text ?? ""] {
@@ -145,8 +144,6 @@ extension SettingAlarmViewController: UIPickerViewDelegate {
                 break
             }
         }
-
-        print(dDayData[editingText?.text ?? ""] ?? "not found")
     }
 }
 //

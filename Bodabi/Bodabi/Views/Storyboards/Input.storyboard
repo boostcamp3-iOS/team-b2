@@ -373,7 +373,7 @@
                                                         <constraint firstAttribute="width" secondItem="rJp-Kz-KMW" secondAttribute="height" multiplier="1:1" id="Qoq-OF-cWi"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <state key="normal" title="X">
+                                                    <state key="normal">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                 </button>

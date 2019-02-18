@@ -17,7 +17,7 @@ public class BodabiAlertController: UIViewController {
     // MARK: - Property
     
     private var tag: Int
-    private static var tagFactory = 3
+    private static var tagFactory = 0
     
     public var overlayColor = UIColor(white: 0, alpha: 0.2)
     public weak var delegate: BodabiAlertControllerDelegate?
@@ -242,7 +242,16 @@ public class BodabiAlertController: UIViewController {
                 ])
         }
         
-        if let window = UIApplication.shared.keyWindow, window.viewWithTag(tag) == nil {
+        if let window = UIApplication.shared.keyWindow {
+            while(true) {
+                if window.viewWithTag(tag) == nil {
+                    break
+                } else {
+                    tag += 1
+                    BodabiAlertController.tagFactory = tag
+                }
+            }
+            
             view.tag = tag
             window.addSubview(view)
         }

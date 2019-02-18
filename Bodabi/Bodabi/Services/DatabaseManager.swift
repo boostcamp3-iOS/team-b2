@@ -32,8 +32,10 @@ class DatabaseManager {
             guard error == nil else {
                 fatalError(error!.localizedDescription)
             }
+            
             completion?()
         }
+
         print("Library Path: ", FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).last ?? "Not Found!")
     }
     
