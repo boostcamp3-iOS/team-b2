@@ -78,6 +78,7 @@ class FriendsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         fetchFriend()
     }
     
@@ -153,9 +154,36 @@ class FriendsViewController: UIViewController {
         
         if let result = try? databaseManager.viewContext.fetch(request) {
             friends = result
+            fetchContacts()
             sortFriend()
-            tableView.reloadData()
             searchBar.text = ""
+        }
+    }
+    
+    private func fetchContacts(completion: (() -> Void)? = nil) {
+        ContactManager.shared.accessContacts { [weak self] (granted) in
+            guard granted, !UserDefaults.standard.bool(forKey: "firstAccessContacts") else { return }
+            
+            UserDefaults.standard.set(true, forKey: "firstAccessContacts")
+            let friendsPhones = self?.friends?.map { $0.phoneNumber } ?? []
+            
+            ContactManager.shared.fetchAllContacts().forEach { (contact) in
+                guard let phone = contact.phoneNumbers.first?.value.stringValue,
+                    let context = self?.databaseManager.viewContext,
+                    !friendsPhones.contains(phone) else { return }
+                
+                let friend = Friend(context: context)
+                friend.name = contact.givenName + contact.familyName
+                friend.phoneNumber = contact.phoneNumbers.first?.value.stringValue
+                friend.tags = ["연락처"]
+                friend.favorite = false
+                self?.friends?.append(friend)
+                self?.sortFriend()
+                
+                try? self?.databaseManager.viewContext.save()
+                
+                completion?()
+            }
         }
     }
     
@@ -165,6 +193,7 @@ class FriendsViewController: UIViewController {
         
         searchFriends = friends
         searchFavoriteFriends = favoriteFriends
+        tableView.reloadData()
     }
     
     private func reloadFriends(friends: [Friend]?,
@@ -235,6 +264,10 @@ extension FriendsViewController {
 // MARK: - UITableViewDelegate
 
 extension FriendsViewController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section),
             (section == .favorite || section == .friends) else { return }

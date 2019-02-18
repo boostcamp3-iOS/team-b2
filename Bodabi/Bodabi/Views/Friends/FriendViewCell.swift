@@ -13,6 +13,7 @@ class FriendViewCell: UITableViewCell {
     // MARK: - IBOutlet
     
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet var phoneLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var firstTagLabel: UILabel!
@@ -70,6 +71,7 @@ class FriendViewCell: UITableViewCell {
     
     private func configure() {
         nameLabel.text = friend?.name
+        phoneLabel.text = friend?.phoneNumber
         favoriteButton.isSelected = friend?.favorite ?? true
         guard let tags = friend?.tags else { return }
         if tags.count >= 1 {
