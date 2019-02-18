@@ -36,8 +36,7 @@ class HolidayInputViewCell: UITableViewCell {
     }
     
     private func initDeleteButton() {
-        deleteButton.backgroundColor = .blue
-        deleteButton.layer.cornerRadius = 25 / 2
+        deleteButton.setImage(#imageLiteral(resourceName: "ic_delete"), for: .normal)
         deleteButton.isHidden = true
     }
     
