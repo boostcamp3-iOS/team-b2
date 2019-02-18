@@ -188,6 +188,8 @@ class FriendsViewController: UIViewController {
     }
     
     private func sortFriend() {
+        friends?.sort(by: { ($0.name ?? "") < ($1.name ?? "")})
+        
         favoriteFriends = friends?.filter { $0.favorite == true }
         friends = friends?.filter { $0.favorite == false }
         
