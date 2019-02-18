@@ -54,6 +54,7 @@ class SettingAlarmViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         updateNotification()
+        navigationController?.popToRootViewController(animated: false)
     }
     
     private func initLabel() {

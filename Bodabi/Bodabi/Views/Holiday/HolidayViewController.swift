@@ -63,7 +63,6 @@ class HolidayViewController: UIViewController {
         
         fetchHistory()
         setIncomeLabel()
-        heightConstraint.constant = Const.maximumImageHeight
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -510,7 +509,7 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
         guard let imageData = holidayImage.jpegData(compressionQuality: 1.0) else { return }
         
         holiday?.image = imageData
-        
+        heightConstraint.constant = Const.maximumImageHeight
         do {
             try databaseManager.viewContext.save()
         } catch {
