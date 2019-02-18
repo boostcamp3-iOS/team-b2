@@ -37,9 +37,9 @@ Boostcamp iOS 희노애락팀 프로젝트
 ##### 스크린샷
 
 <div align="middle">
-<img src="https://user-images.githubusercontent.com/45443336/52952017-ab2e7300-33c6-11e9-9a58-9d1ce3df6ea2.jpg" width="180px" >
-<img src="https://user-images.githubusercontent.com/45443336/52952422-cf3e8400-33c7-11e9-8bc9-be33396799bc.jpg" width="180px" >
-<img src="https://user-images.githubusercontent.com/45443336/52952544-34927500-33c8-11e9-9cd2-fb690f44480d.jpg" width="180px" >
-<img src="https://user-images.githubusercontent.com/45443336/52952575-4ffd8000-33c8-11e9-825c-2694e349a2c9.jpg" width="180px" >
-<img src="https://user-images.githubusercontent.com/45443336/52952648-8dfaa400-33c8-11e9-997f-66a6c2491f35.jpg" width="180px" >
+<img src="https://user-images.githubusercontent.com/45443336/52952017-ab2e7300-33c6-11e9-9a58-9d1ce3df6ea2.jpg" width="170px" >
+<img src="https://user-images.githubusercontent.com/45443336/52952422-cf3e8400-33c7-11e9-8bc9-be33396799bc.jpg" width="170px" >
+<img src="https://user-images.githubusercontent.com/45443336/52952544-34927500-33c8-11e9-9cd2-fb690f44480d.jpg" width="170px" >
+<img src="https://user-images.githubusercontent.com/45443336/52952575-4ffd8000-33c8-11e9-825c-2694e349a2c9.jpg" width="170px" >
+<img src="https://user-images.githubusercontent.com/45443336/52952648-8dfaa400-33c8-11e9-997f-66a6c2491f35.jpg" width="170px" >
 </div>
