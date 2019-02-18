@@ -63,7 +63,6 @@
 		49C0851821FDA8A60060B02C /* FriendsHeaderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C0851621FDA8A60060B02C /* FriendsHeaderViewCell.xib */; };
 		DB147035220D4363000EA1D7 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB147034220D4363000EA1D7 /* CloudKit.framework */; };
 		DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB147036220D4707000EA1D7 /* CloudManager.swift */; };
-		
 		DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */; };
 		DB2726022209740700F30CBC /* ThanksFriendHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */; };
 		DB27260A2209AD9700F30CBC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2726092209AD9700F30CBC /* Item.swift */; };
@@ -117,6 +116,7 @@
 		F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8485CF621FA11BB003C935C /* FriendHistory.storyboard */; };
 		F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */; };
 		F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */; };
+		F85A8BCD22193111006FB44E /* DefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85A8BCC22193111006FB44E /* DefaultsKey.swift */; };
 		F89ED960221294F2006588E1 /* NotificationSchedular.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED95F221294F2006588E1 /* NotificationSchedular.swift */; };
 		F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */; };
 		F89ED96B22151D2F006588E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F89ED96A22151D2F006588E1 /* Assets.xcassets */; };
@@ -236,6 +236,7 @@
 		F8485CF621FA11BB003C935C /* FriendHistory.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FriendHistory.storyboard; sourceTree = "<group>"; };
 		F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryViewController.swift; path = Bodabi/Views/FriendHistory/FriendHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryReceiveViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistoryReceiveViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F85A8BCC22193111006FB44E /* DefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKey.swift; sourceTree = "<group>"; };
 		F89ED95F221294F2006588E1 /* NotificationSchedular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedular.swift; sourceTree = "<group>"; };
 		F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 		F89ED96A22151D2F006588E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -329,6 +330,7 @@
 				F82BE260221130D000C194F1 /* Event+Extensions.swift */,
 				F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */,
 				491DD81D221505340093720A /* Tag.swift */,
+				F85A8BCC22193111006FB44E /* DefaultsKey.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -710,8 +712,8 @@
 				4978BCCB220D5A6F0052156E /* TableFetchedResultsDelegate.swift in Sources */,
 				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
 				F80C28A122026F0D0032DE3E /* FriendHistoryInformationViewCell.swift in Sources */,
+				F85A8BCD22193111006FB44E /* DefaultsKey.swift in Sources */,
 				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,
-
 				49484CF22212613B00C09384 /* String+Unicode.swift in Sources */,
 				F89ED97722163A34006588E1 /* InputFriendViewCell.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
