@@ -47,7 +47,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="8fw-es-D3F" id="6Ft-zz-2sw"/>
-                        <segue destination="PSa-Er-hFv" kind="show" id="S6U-N6-PAc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XrO-4R-MSN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -59,11 +58,11 @@
             <objects>
                 <viewController storyboardIdentifier="SettingAlarmViewController" title="알림" id="PSa-Er-hFv" customClass="SettingAlarmViewController" customModule="Bodabi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yPL-RM-0LK">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="04B-6p-9ut">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="기본 알림에 추가로 알림을 설정할 수 있습니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9jU-xf-sdA">
                                         <rect key="frame" x="22" y="314" width="236" height="16"/>
@@ -108,7 +107,7 @@
                                         </connections>
                                     </button>
                                     <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="7일 전" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="csT-bP-h4o">
-                                        <rect key="frame" x="163.66666666666666" y="454.66666666666663" width="48" height="21"/>
+                                        <rect key="frame" x="163.66666666666666" y="454.66666666666669" width="48" height="21"/>
                                         <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -162,7 +161,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fwJ-6X-fOx">
-                                        <rect key="frame" x="166.66666666666666" y="206.66666666666669" width="42" height="21"/>
+                                        <rect key="frame" x="166.66666666666666" y="206.66666666666666" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -174,7 +173,7 @@
                                         </connections>
                                     </button>
                                     <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="하루 전" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kG9-ln-IWe">
-                                        <rect key="frame" x="161" y="206.66666666666669" width="53" height="21"/>
+                                        <rect key="frame" x="161" y="206.66666666666666" width="53" height="21"/>
                                         <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -220,7 +219,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gep-Gh-HZt">
-                                        <rect key="frame" x="166.66666666666666" y="454.66666666666663" width="42" height="21"/>
+                                        <rect key="frame" x="166.66666666666666" y="454.66666666666669" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -319,7 +318,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iam-p9-Nz0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1856.8" y="-152.21674876847291"/>
+            <point key="canvasLocation" x="1714" y="98"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="RpB-z2-HoV">
