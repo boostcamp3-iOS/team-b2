@@ -13,19 +13,22 @@ extension String {
         let compareChars = text.map { $0 }
         let targetChars = self.map { $0 }
         
-        var index: Int?
+        var indexes: [Int] = []
         guard let compareFirstChar = compareChars.first else { return false }
         for (i, targetChar) in targetChars.enumerated()
             where targetChar.contains(syllable: compareFirstChar) {
-                index = i
-                break
+                indexes.append(i)
         }
         
-        for (i, compareChar) in compareChars.enumerated() {
-            guard let index = index, (index + compareChars.count) < targetChars.count + 1 else { return false }
-            guard targetChars[index + i].contains(syllable: compareChar) else  { return false }
+        for index in indexes where (index + compareChars.count) < targetChars.count + 1 {
+            for (i, compareChar) in compareChars.enumerated() {
+                guard targetChars[index + i].contains(syllable: compareChar) else  { break }
+                if i == (compareChars.count - 1) {
+                    return true
+                }
+            }
         }
         
-        return true
+        return false
     }
 }
