@@ -41,7 +41,7 @@ struct Tag: Hashable {
     let title: String
     
     public static var items: [Tag] {
-        let items = [ Tag(type: .group, title: "회사"),
+        let items = [Tag(type: .group, title: "회사"),
                      Tag(type: .group, title: "학교"),
                      Tag(type: .group, title: "가족"),
                      Tag(type: .group, title: "친척"),
@@ -60,6 +60,6 @@ struct Tag: Hashable {
     }
     
     static func type(of title: String) -> TagType? {
-        return items.filter { $0.title == title }.first?.type
+        return title == "연락처" ? .contact : items.filter { $0.title == title }.first?.type
     }
 }
