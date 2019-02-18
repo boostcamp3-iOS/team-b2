@@ -317,7 +317,7 @@ extension HolidayViewController: UITableViewDataSource {
         } else {
             let cell = tableView.dequeue(ThanksFriendViewCell.self, for: indexPath)
             
-            if let searchedHistories = searchedHistories {
+            if let searchedHistories = searchedHistories, searchedHistories.count != 0 {
                 cell.bind(history: searchedHistories[indexPath.row])
             } else if let histories = histories {
                 cell.bind(history: histories[indexPath.row])
@@ -528,13 +528,13 @@ extension HolidayViewController: UITextFieldDelegate {
     private func isUniqueName(with name: String) -> Bool {
         var isUnique: Bool = true
         let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
+        let predicate = NSPredicate(format:"title = %@", name)
+        
+        request.predicate = predicate
         
         if let fetchResult = try? databaseManager.viewContext.fetch(request) {
-            fetchResult.forEach {
-                if $0.title == name {
-                    isUnique = false
-                    return
-                }
+            if let _ = fetchResult.first {
+                isUnique = false
             }
         }
         
@@ -545,14 +545,12 @@ extension HolidayViewController: UITextFieldDelegate {
         if newName != "", isUniqueName(with: newName) {
             navigationItem.title = newName
             holiday?.title = newName
-            
-            let updateRequest = NSBatchUpdateRequest(entityName: "History")
-            
-            updateRequest.propertiesToUpdate = ["holiday": newName]
-            updateRequest.resultType = .updatedObjectsCountResultType
+        
+            histories?.forEach {
+                $0.holiday = newName
+            }
             
             do {
-                try databaseManager.viewContext.execute(updateRequest)
                 try databaseManager.viewContext.save()
             } catch {
                 print(error.localizedDescription)
