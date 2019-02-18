@@ -17,12 +17,10 @@ class HolidayInputViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Property
-    
-    private var databaseManager: DatabaseManager!
+
     public var inputData: InputData!
     public var entryRoute: EntryRoute!
     public var isRelationInput: Bool = true
-    private var isDeleting: Bool = false
     public var myHolidays: [String]? {
         didSet {
             tableView.reloadData()
@@ -35,6 +33,8 @@ class HolidayInputViewController: UIViewController {
             UserDefaults.standard.set(myRelations, forKey: "defaultRelation")
         }
     }
+    private var databaseManager: DatabaseManager!
+    private var isDeleting: Bool = false
     private var selectedHoliday: String?
     private var selectedRelation: String?
     
@@ -171,6 +171,7 @@ class HolidayInputViewController: UIViewController {
             
             viewController.entryRoute = .addHolidayAtHome
             viewController.delegate = self
+            viewController.inputData = InputData()
             viewController.isRelationInput = isRelationInput
             let navController = UINavigationController(rootViewController: viewController)
             present(navController, animated: true, completion: nil)

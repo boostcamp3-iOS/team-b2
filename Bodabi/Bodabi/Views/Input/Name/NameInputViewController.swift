@@ -28,7 +28,9 @@ class NameInputViewController: UIViewController {
     @IBOutlet weak var firstTagIcon: UIView!
     @IBOutlet weak var secondTagIcon: UIView!
     @IBOutlet weak var thirdTagIcon: UIView!
-
+    @IBOutlet weak var tagImageView: UIImageView!
+    @IBOutlet weak var tagButton: UIButton!
+    
     // MARK: - Properties
     
     public weak var delegate: HolidayInputViewController?
@@ -49,7 +51,6 @@ class NameInputViewController: UIViewController {
             tableView.reloadData()
         }
     }
-    
     private var originalBottomConstraint: CGFloat = 0.0
     private var originalHeightConstraint: CGFloat = 0.0
     
@@ -82,6 +83,7 @@ class NameInputViewController: UIViewController {
         initNextButton()
         initTapGesture()
         initTagView()
+        initTagImageView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -149,6 +151,18 @@ class NameInputViewController: UIViewController {
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "defaultCell")
+    }
+    
+    private func initTagImageView() {
+        guard let entryRoute = entryRoute else { return }
+        switch entryRoute {
+        case .addHolidayAtHome:
+            tagButton.isHidden = true
+            tagImageView.isHidden = true
+        default:
+            tagButton.isHidden = false
+            tagImageView.isHidden = false
+        }
     }
     
     private func initKeyboard() {
@@ -301,6 +315,7 @@ class NameInputViewController: UIViewController {
     }
     
     private func isUniqueTags(from newName: String) -> Bool {
+        guard newName != "" else { return false }
         guard let newTags = inputData.tags else { return false }
         guard let searchedFriends = searchedFriends else { return true }
         
@@ -320,10 +335,7 @@ class NameInputViewController: UIViewController {
     }
     
     private func isUniqueName(with name: String) -> Bool {
-        guard name != "" else {
-            inputData.tags = nil
-            return false
-        }
+        guard name != "" else { return false }
         guard let isRelationInput = isRelationInput else { return false }
         guard let entryRoute = entryRoute else { return false }
         var isUnique: Bool = true
@@ -420,6 +432,7 @@ class NameInputViewController: UIViewController {
         firstTagLabel.text = ""
         secondTagLabel.text = ""
         thirdTagLabel.text = ""
+        inputData.tags = nil
     }
     
     // MARK: - @IBActions
@@ -644,8 +657,12 @@ extension NameInputViewController: DatabaseManagerClient {
 
 extension NameInputViewController: BindDataDelegate {
     func bind(_ data: [String]) {
-        inputData?.tags = data
         initTagView()
+        
+        guard data.count != 0 else { return }
+        
+        inputData?.tags = data
+        
         let tags = Array(data.reversed())
         if tags.count >= 1 {
             thirdTagLabel.text = tags[0]
