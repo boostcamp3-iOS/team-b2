@@ -194,26 +194,36 @@ class HomeViewController: UIViewController {
         guard let notifications: Set<Notification> = event.notifications as? Set<Notification> else { return }
         event.favorite = sender.isSelected
         
+        let defaultHour = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmHour)
+        let defaultMinutes = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmMinutes)
+        let defaultDday = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmDday)
+        let favortieFirstDday = UserDefaults.standard.integer(forKey: DefaultsKey.favoriteFirstAlarmDday)
+        let favoriteSecondDday = UserDefaults.standard.integer(forKey: DefaultsKey.favoriteSecondAlarmDday)
+        
         if sender.isSelected {
-            for days in [NotificationType.today.rawValue, NotificationType.week.rawValue] {
+            for dDay in [favortieFirstDday, favoriteSecondDday] {
                 let notification = Notification(context: databaseManager.viewContext)
-                guard let interval: TimeInterval = TimeInterval(exactly: days * Const.dayHours * -1) else { return }
+                guard let interval: TimeInterval = TimeInterval(exactly: dDay * Const.dayHours * -1) else { return }
                 notification.id = UUID().uuidString
                 notification.date = event.date?.addingTimeInterval(interval)
                 notification.event = event
-                
-                if let type = NotificationType(rawValue: days) {
-                    NotificationSchedular.createNotification(notification: notification, notificationType: type, hour: 9, minute: 0)
-                }
+                NotificationSchedular.create(notification: notification,
+                                             hour: defaultHour,
+                                             minute: defaultMinutes)
             }
         } else {
             notifications.forEach { notificaion in
-                if let notificationDate = notificaion.date,
-                    event.date?.offsetFrom(date: notificationDate) != NotificationType.normal.rawValue {
                     self.databaseManager.viewContext.delete(notificaion)
-                    NotificationSchedular.deleteNotification(notification: notificaion)
-                }
+                    NotificationSchedular.delete(notification: notificaion)
             }
+            let notification = Notification(context: databaseManager.viewContext)
+            guard let interval: TimeInterval = TimeInterval(exactly: defaultDday * Const.dayHours * -1) else { return }
+            notification.id = UUID().uuidString
+            notification.date = event.date?.addingTimeInterval(interval)
+            notification.event = event
+            NotificationSchedular.create(notification: notification,
+                                         hour: defaultHour,
+                                         minute: defaultMinutes)
         }
         try? databaseManager?.viewContext.save()
     }

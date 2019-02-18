@@ -235,7 +235,7 @@ extension FriendHistoryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 1 {
-            guard let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: FriendHistoryHeaderView.reuseIdentifier) as? FriendHistoryHeaderView else { return }
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: FriendHistoryHeaderView.reuseIdentifier) as? FriendHistoryHeaderView else { return UIView() }
             
             header.headerTitleLabel.text = "주고받은 내역"
             header.delegate = self

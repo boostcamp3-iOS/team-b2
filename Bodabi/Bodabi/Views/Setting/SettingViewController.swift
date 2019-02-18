@@ -13,6 +13,10 @@ class SettingViewController: UIViewController {
     // MARK: - IBOutlet
     
     @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Property
+    
+    private var databaseManager: DatabaseManager!
 
     // MARK: - Life Cycle
     
@@ -20,12 +24,10 @@ class SettingViewController: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self; tableView.delegate = self
         initTableView()
-        initDummyUserDefaults()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        initNavigationBar()
     }
     
     // MARK: - Initialization
@@ -34,14 +36,6 @@ class SettingViewController: UIViewController {
         let cell = SettingViewCell.self
         tableView.register(cell)
         tableView.tableFooterView = UIView()
-    }
-    
-    private func initNavigationBar(){
-        //navigationController?.navigationBar.clear()
-    }
-    
-    private func initDummyUserDefaults() {
-        UserDefaults.standard.set(50,forKey: "UserFontSize")
     }
 }
 
@@ -93,9 +87,14 @@ extension SettingViewController: UITableViewDelegate {
         case .notification:
             let viewController = storyboard(.setting)
                 .instantiateViewController(ofType: SettingAlarmViewController.self)
+            viewController.setDatabaseManager(databaseManager)
             navigationController?.pushViewController(viewController, animated: true)
-        default:
-            break
         }
+    }
+}
+
+extension SettingViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
     }
 }

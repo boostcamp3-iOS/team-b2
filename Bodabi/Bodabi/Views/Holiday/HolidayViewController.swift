@@ -305,7 +305,6 @@ extension HolidayViewController: UITableViewDataSource {
             return histories.count
         } else {
             isHolidayEmpty = true
-//            return 0
             return 1
         }
     }

@@ -28,6 +28,7 @@ class SettingAlarmViewController: UIViewController {
     
     // MARK: - Property
     
+    private var databaseManager: DatabaseManager!
     private let datePickerView = UIDatePicker()
     private let dayPickerView = UIPickerView()
     private let dDayData: [String: Int] = ["당일": 0, "하루 전": 1, "이틀 전": 2, "3일 전": 3, "5일 전": 5, "일주일 전": 7, "10일 전": 10, "2주 전": 14, "한 달 전": 30]
@@ -39,6 +40,7 @@ class SettingAlarmViewController: UIViewController {
         case favoriteSecondDday = 4
     }
     private var editingText: UILabel?
+    private var initialValues: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,21 +50,36 @@ class SettingAlarmViewController: UIViewController {
         initLabel()
     }
     
-    func initLabel() {
-        let defaultDday = UserDefaults.standard.integer(forKey: "defaultAlarmDday")
-        let favoriteFirstDday = UserDefaults.standard.integer(forKey: "favoriteFirstAlarmDday")
-        let favoriteSecondDday = UserDefaults.standard.integer(forKey: "favoriteSecondAlarmDday")
-        let defaultHour = UserDefaults.standard.integer(forKey: "defaultAlarmHour")
-        let defaultMinutes = UserDefaults.standard.integer(forKey: "defaultAlarmMinutes")
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        updateNotification()
+    }
     
-        defaultAlarmTimeLabel.text = "\(defaultHour)시 \(defaultMinutes)분"
+    private func initLabel() {
+        let defaultDday = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmDday)
+        let favoriteFirstDday = UserDefaults.standard.integer(forKey: DefaultsKey.favoriteFirstAlarmDday)
+        let favoriteSecondDday = UserDefaults.standard.integer(forKey: DefaultsKey.favoriteSecondAlarmDday)
+        let defaultHour = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmHour)
+        let defaultMinutes = UserDefaults.standard.integer(forKey:  DefaultsKey.defaultAlarmMinutes)
+        initialValues.append(contentsOf: [defaultHour, defaultMinutes, defaultDday, favoriteFirstDday, favoriteSecondDday])
+        
+        if defaultHour < 12 {
+            let modifiedHour: Int = defaultHour == 0 ? 12 : defaultHour
+            defaultAlarmTimeLabel.text = "오전 " + "\(modifiedHour)시 \(defaultMinutes)분"
+        } else {
+            let modifiedHour: Int = defaultHour == 12 ? 24 : defaultHour
+            defaultAlarmTimeLabel.text = "오후 " + "\(modifiedHour-12)시 \(defaultMinutes)분"
+        }
+        
         defaultAlarmDdayLabel.text = dDayData.filter({$0.value ==  defaultDday}).keys.first ?? "하루 전"
         favoriteFirstAlarmDdayLabel.text = dDayData.filter({$0.value ==  favoriteFirstDday}).keys.first ?? "당일"
         favoriteSecondAlarmDdayLabel.text = dDayData.filter({$0.value ==  favoriteSecondDday}).keys.first ?? "일주일 전"
     }
     
-    func initPickerView() {
+    private func initPickerView() {
         datePickerView.datePickerMode = .time
+        datePickerView.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
         dayPickerView.dataSource = self; dayPickerView.delegate = self
         defaultAlarmTime.inputView = datePickerView
         dafaultAlarmDday.inputView = dayPickerView
@@ -70,11 +87,82 @@ class SettingAlarmViewController: UIViewController {
         favoriteSecondAlarmDday.inputView = dayPickerView
     }
     
-    func initButtonColor() {
+    private func initButtonColor() {
         defaultAlarmTimeView.backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
         defaultAlarmDdayView.backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
         favoriteFirstAlarmDdayView.backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
         favoriteSecondAlarmDdayView.backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
+    }
+    
+    private func setTimeLabel() {
+        guard let currentHour = Int(datePickerView.date.toString(of: .hour)) else { return }
+        if currentHour < 12 {
+            defaultAlarmTimeLabel.text = "오전 " + datePickerView.date.toString(of: .koreanTime)
+        } else {
+            defaultAlarmTimeLabel.text = "오후 " + datePickerView.date.toString(of: .koreanTime)
+        }
+    }
+    
+    func updateNotification() {
+        var hasChanged: Bool = false
+        
+        let defaultDday = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmDday)
+        let favoriteFirstDday = UserDefaults.standard.integer(forKey: DefaultsKey.favoriteFirstAlarmDday)
+        let favoriteSecondDday = UserDefaults.standard.integer(forKey: DefaultsKey.favoriteSecondAlarmDday)
+        let defaultHour = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmHour)
+        let defaultMinutes = UserDefaults.standard.integer(forKey:  DefaultsKey.defaultAlarmMinutes)
+        let currentValues: [Int] = [defaultHour, defaultMinutes, defaultDday, favoriteFirstDday, favoriteSecondDday]
+        
+        for (index, _) in currentValues.enumerated() {
+            if currentValues[index] != initialValues[index] {
+                hasChanged = true
+            }
+        }
+        
+        if hasChanged {
+            NotificationSchedular.deleteAllNotification()
+            let predicate: NSPredicate = NSPredicate(format: "isHandled = %@", NSNumber(value: false))
+            databaseManager.batchDelete(typeString: "Notification", predicate: predicate)
+            databaseManager.fetch(type: Event.self) { result in
+                let events: [Event] = result
+                for event in events {
+                    var currentNotificaion: Notification?
+                    guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * defaultDday + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
+                    self.databaseManager.createNotification(event: event
+                        , date: notificationDate, completion: { result in
+                            currentNotificaion = result
+                            if let notificationToSchedule = currentNotificaion {
+                                NotificationSchedular.create(notification: notificationToSchedule, hour: defaultHour, minute: defaultMinutes)
+                            }
+                    })
+                    
+                    if event.favorite {
+                        let favoriteDdays = [favoriteFirstDday, favoriteSecondDday]
+                        for dDay in favoriteDdays {
+                            var favoriteNotification: Notification?
+                            guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * dDay + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
+                            self.databaseManager.createNotification(event: event
+                                , date: notificationDate, completion: { result in
+                                    favoriteNotification = result
+                                    if let notificationToSchedule = favoriteNotification {
+                                        NotificationSchedular.create(notification: notificationToSchedule, hour: defaultHour, minute: defaultMinutes)
+                                    }
+                            })
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @objc private func datePickerValueChanged() {
+        let hour = datePickerView.date.toString(of: .hour)
+        let minutes = datePickerView.date.toString(of: .minutes)
+        
+        setTimeLabel()
+        UserDefaults.standard.set(Int(hour), forKey: DefaultsKey.defaultAlarmHour)
+        UserDefaults.standard.set(Int(minutes), forKey: DefaultsKey.defaultAlarmMinutes)
     }
     
     @IBAction func touchUpAlarmButton(_ sender: UIButton) {
@@ -112,8 +200,6 @@ class SettingAlarmViewController: UIViewController {
     }
 }
 
-
-
 extension SettingAlarmViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -135,27 +221,17 @@ extension SettingAlarmViewController: UIPickerViewDelegate {
         if let value = dDayData[editingType.text ?? ""] {
             switch editingType {
             case defaultAlarmDdayLabel:
-                UserDefaults.standard.set(value, forKey: "defaultAlarmDday")
+                UserDefaults.standard.set(value, forKey: DefaultsKey.defaultAlarmDday)
             case favoriteFirstAlarmDdayLabel:
-                UserDefaults.standard.set(value, forKey: "favoriteFirstAlarmDday")
+                UserDefaults.standard.set(value, forKey: DefaultsKey.favoriteFirstAlarmDday)
             case favoriteSecondAlarmDdayLabel:
-                UserDefaults.standard.set(value, forKey: "favoriteSecondAlarmDday")
+                UserDefaults.standard.set(value, forKey: DefaultsKey.favoriteSecondAlarmDday)
             default:
                 break
             }
         }
     }
 }
-//
-//class CursorlessTextField: UITextField {
-//    override func caretRect(for position: UITextPosition) -> CGRect {
-//        return CGRect.zero
-//    }
-//
-//    override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
-//        return [UITextSelectionRect.init()]
-//    }
-//}
 
 extension SettingAlarmViewController: UIGestureRecognizerDelegate {
     private func initTapGesture() {
@@ -167,6 +243,13 @@ extension SettingAlarmViewController: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         view.endEditing(true)
+        initButtonColor()
         return true
+    }
+}
+
+extension SettingAlarmViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
+        databaseManager = manager
     }
 }
