@@ -11,6 +11,7 @@ import Foundation
 enum SettingOptions: Int, CaseIterable {
     case question
     case notification
+    case contact
     case facebook
     
     func description() -> String {
@@ -19,6 +20,8 @@ enum SettingOptions: Int, CaseIterable {
             return "문의하기"
         case .notification:
             return "알림"
+        case .contact:
+            return "연락처 연동"
         case .facebook:
             return "페이스북 페이지"
         }

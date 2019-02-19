@@ -89,6 +89,11 @@ extension SettingViewController: UITableViewDelegate {
                 .instantiateViewController(ofType: SettingAlarmViewController.self)
             viewController.setDatabaseManager(databaseManager)
             navigationController?.pushViewController(viewController, animated: true)
+        case .contact:
+            let viewController = storyboard(.setting)
+                .instantiateViewController(ofType: SettingContactsViewController.self)
+            viewController.databaseManager = databaseManager
+            navigationController?.pushViewController(viewController, animated: true)
         }
     }
 }

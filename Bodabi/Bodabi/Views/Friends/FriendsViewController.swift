@@ -74,6 +74,7 @@ class FriendsViewController: UIViewController {
         initTableView()
         initCollectionView()
         initKeyboard()
+        fetchFriend()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,6 +100,13 @@ class FriendsViewController: UIViewController {
         viewController.inputData = InputData()
         let navController = UINavigationController(rootViewController: viewController)
         self.present(navController, animated: true, completion: nil)
+    }
+    
+    @IBAction func touchUpGoFetchContactsButton(_ sender: UIButton) {
+        let viewController = storyboard(.setting)
+            .instantiateViewController(ofType: SettingContactsViewController.self)
+        viewController.databaseManager = databaseManager
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     // MARK: - Initialization
@@ -148,43 +156,42 @@ class FriendsViewController: UIViewController {
     }
     
     private func fetchFriend() {
-        let request: NSFetchRequest<Friend> = Friend.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        
-        if let result = try? databaseManager.viewContext.fetch(request) {
-            friends = result
-            fetchContacts()
-            sortFriend()
-            searchBar.text = ""
+        databaseManager.fetch(type: Friend.self,
+                              sortDescriptor: sortDescriptor) { [weak self] (result) in
+                                self?.friends = result
+//                                self?.fetchContacts()
+                                self?.sortFriend()
+                                self?.searchBar.text = ""
+                                
         }
     }
     
     private func fetchContacts(completion: (() -> Void)? = nil) {
-        ContactManager.shared.accessContacts { [weak self] (granted) in
-            guard granted, !UserDefaults.standard.bool(forKey: "firstAccessContacts") else { return }
-            
-            UserDefaults.standard.set(true, forKey: "firstAccessContacts")
-            let friendsPhones = self?.friends?.map { $0.phoneNumber } ?? []
-            
-            ContactManager.shared.fetchAllContacts().forEach { (contact) in
-                guard let phone = contact.phoneNumbers.first?.value.stringValue,
-                    let context = self?.databaseManager.viewContext,
-                    !friendsPhones.contains(phone) else { return }
-                
-                let friend = Friend(context: context)
-                friend.name = contact.familyName + contact.givenName
-                friend.phoneNumber = contact.phoneNumbers.first?.value.stringValue
-                friend.tags = ["연락처"]
-                friend.favorite = false
-                self?.friends?.append(friend)
-                self?.sortFriend()
-                
-                try? self?.databaseManager.viewContext.save()
-                
-                completion?()
-            }
-        }
+//        ContactManager.shared.accessContacts { [weak self] (granted) in
+//            guard granted, !UserDefaults.standard.bool(forKey: "firstAccessContacts") else { return }
+//
+//            UserDefaults.standard.set(true, forKey: "firstAccessContacts")
+//            let friendsPhones = self?.friends?.map { $0.phoneNumber } ?? []
+//
+//            ContactManager.shared.fetchAllContacts().forEach { (contact) in
+//                guard let phone = contact.phoneNumbers.first?.value.stringValue,
+//                    let context = self?.databaseManager.viewContext,
+//                    !friendsPhones.contains(phone) else { return }
+//
+//                let friend = Friend(context: context)
+//                friend.name = contact.familyName + contact.givenName
+//                friend.phoneNumber = contact.phoneNumbers.first?.value.stringValue
+//                friend.tags = ["연락처"]
+//                friend.favorite = false
+//                self?.friends?.append(friend)
+//                self?.sortFriend()
+//
+//                try? self?.databaseManager.viewContext.save()
+//
+//                completion?()
+//            }
+//        }
     }
     
     private func sortFriend() {
@@ -203,7 +210,7 @@ class FriendsViewController: UIViewController {
                                completion: (() -> Void)? = nil) {
         searchFriends = friends
         searchFavoriteFriends = favoriteFriends
-        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
+        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .none)
         
         completion?()
     }
@@ -218,6 +225,7 @@ class FriendsViewController: UIViewController {
     // MARK: - @objcs
     
     @objc func touchUpFriendFavoriteButton(_ sender: UIButton) {
+        guard sender.isSelected ? (sender.tag < favoriteFriends?.count ?? 0) : (sender.tag < friends?.count ?? 0) else { return }
         (sender.isSelected ? favoriteFriends?[sender.tag] : friends?[sender.tag])?.favorite = !sender.isSelected
         try? databaseManager?.viewContext.save()
         
@@ -398,6 +406,8 @@ extension FriendsViewController: DatabaseManagerClient {
         databaseManager = manager
     }
 }
+
+// MARK: - UISearchBarDelegate
 
 extension FriendsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

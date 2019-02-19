@@ -27,6 +27,7 @@
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egE-lw-Oc6">
                         <rect key="frame" x="314" y="27.5" width="36" height="42"/>
+                        <color key="tintColor" red="0.92549019610000005" green="0.42745098040000001" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="contentEdgeInsets" minX="5" minY="10" maxX="10" maxY="10"/>
                         <state key="normal" image="ic_add"/>
                     </button>

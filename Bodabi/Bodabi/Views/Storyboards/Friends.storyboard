@@ -29,34 +29,61 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="25" minY="0.0" maxX="25" maxY="0.0"/>
                             </tableView>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LKf-iQ-Umb" userLabel="Empty View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LKf-iQ-Umb" userLabel="Empty View">
                                 <rect key="frame" x="0.0" y="56" width="375" height="585"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_emptyFriend" translatesAutoresizingMaskIntoConstraints="NO" id="AID-sq-pNH">
-                                        <rect key="frame" x="93.666666666666671" y="125.33333333333333" width="187.66666666666663" height="217.33333333333337"/>
+                                        <rect key="frame" x="93.666666666666671" y="93.333333333333329" width="187.66666666666663" height="217.33333333333337"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아직 추가된 친구가 없습니다" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qfi-Hb-Lhh">
-                                        <rect key="frame" x="104.00000000000001" y="358.66666666666669" width="167.33333333333337" height="18"/>
+                                        <rect key="frame" x="104.00000000000001" y="310.66666666666669" width="167.33333333333337" height="18"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="감사한 마음을 나눌 친구를 추가해보세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4V-Lr-6LC">
-                                        <rect key="frame" x="69" y="388.66666666666663" width="237" height="18"/>
+                                        <rect key="frame" x="69" y="338.66666666666669" width="237" height="18"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FCy-Qt-ia3">
+                                        <rect key="frame" x="110" y="383.66666666666663" width="155" height="33"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="33" id="Syh-WP-Qqq"/>
+                                            <constraint firstAttribute="width" constant="155" id="nuT-Lf-xYO"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <state key="normal" title="연락처에서 가져오기">
+                                            <color key="titleColor" red="0.92549019607843142" green="0.52549019607843139" blue="0.42352941176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.92549019607843142" green="0.52549019607843139" blue="0.42352941176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="touchUpGoFetchContactsButton:" destination="D7N-ri-hmc" eventType="touchUpInside" id="tv4-zI-YmB"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97645872831344604" green="0.97646445035934448" blue="0.97647935152053833" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="Qfi-Hb-Lhh" firstAttribute="top" secondItem="AID-sq-pNH" secondAttribute="bottom" constant="16" id="1e4-Oi-oh4"/>
+                                    <constraint firstItem="FCy-Qt-ia3" firstAttribute="top" secondItem="E4V-Lr-6LC" secondAttribute="bottom" constant="27" id="1Dn-R3-2E1"/>
+                                    <constraint firstItem="Qfi-Hb-Lhh" firstAttribute="top" secondItem="AID-sq-pNH" secondAttribute="bottom" id="1e4-Oi-oh4"/>
                                     <constraint firstItem="AID-sq-pNH" firstAttribute="centerX" secondItem="LKf-iQ-Umb" secondAttribute="centerX" id="EB8-xi-WLk"/>
                                     <constraint firstItem="AID-sq-pNH" firstAttribute="width" secondItem="LKf-iQ-Umb" secondAttribute="width" multiplier="0.5" id="KRh-NT-gy5"/>
                                     <constraint firstItem="Qfi-Hb-Lhh" firstAttribute="centerX" secondItem="LKf-iQ-Umb" secondAttribute="centerX" id="Mu9-qT-neS"/>
                                     <constraint firstItem="E4V-Lr-6LC" firstAttribute="centerX" secondItem="LKf-iQ-Umb" secondAttribute="centerX" id="dxE-MY-F7B"/>
-                                    <constraint firstItem="E4V-Lr-6LC" firstAttribute="top" secondItem="Qfi-Hb-Lhh" secondAttribute="bottom" constant="12" id="fGb-YP-qC7"/>
-                                    <constraint firstItem="AID-sq-pNH" firstAttribute="centerY" secondItem="LKf-iQ-Umb" secondAttribute="centerY" multiplier="0.8" id="r7r-Bj-164"/>
+                                    <constraint firstItem="E4V-Lr-6LC" firstAttribute="top" secondItem="Qfi-Hb-Lhh" secondAttribute="bottom" constant="10" id="fGb-YP-qC7"/>
+                                    <constraint firstItem="FCy-Qt-ia3" firstAttribute="centerX" secondItem="E4V-Lr-6LC" secondAttribute="centerX" id="gUN-74-gYS"/>
+                                    <constraint firstItem="AID-sq-pNH" firstAttribute="centerY" secondItem="LKf-iQ-Umb" secondAttribute="centerY" multiplier="0.8" constant="-32" id="r7r-Bj-164"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f75-ar-m1V">
