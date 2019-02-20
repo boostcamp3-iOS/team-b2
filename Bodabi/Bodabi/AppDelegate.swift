@@ -22,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setUserDefaults()
         databaseManager.load()
-        registerForLocalNotifications(application: application)
         updateDeliveredNotification()
         
         let tabBarController = window?.rootViewController
@@ -44,7 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         updateDeliveredNotification()
+        resetApplicationIconBadge()
     }
+    
     // MARK: - User Defaults setting
     
     private func setUserDefaults() {
@@ -52,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if !launchedBefore  {
             UserDefaults.standard.set(true, forKey: DefaultsKey.launchedBefore)
+            UserDefaults.standard.set(false, forKey: DefaultsKey.askedAuthorizeNotification)
             UserDefaults.standard.set(["+", "결혼", "생일", "돌잔치", "장례", "출산", "개업"], forKey: DefaultsKey.defaultHoliday)
             UserDefaults.standard.set(["+", "나", "아내", "어머니", "아버지", "아들", "딸"], forKey: DefaultsKey.defaultRelation)
             UserDefaults.standard.set(9, forKey: DefaultsKey.defaultAlarmHour)
@@ -62,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    // MARK: - Core Data Saving support
+    // MARK: - Method
 
     private func saveContext () {
         let context = databaseManager.viewContext
@@ -75,9 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    // MARK: - Request Notification Authorization
-    
-    private func registerForLocalNotifications(application: UIApplication) {
+    func registerForLocalNotifications(application: UIApplication) {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(
         options: [.badge, .sound, .alert]) {
@@ -85,15 +85,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard granted, let center = center, let `self` = self
                 else { return }
             if granted {
+                print("delegate")
                 center.delegate = self
             }
         }
+    }
+    
+    private func resetApplicationIconBadge() {
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 }
 
 // MARK: - Handling Notifications
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler(.alert)
         
@@ -101,26 +107,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         renumberBadgesOfPendingNotifications()
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-
-        updateDeliveredNotification()
-        renumberBadgesOfPendingNotifications()
-    }
-    
     func updateDeliveredNotification() {
         let predicate = NSPredicate(format: "date > %@", NSDate())
         let anotherPredicate = NSPredicate(format: "isRead = %@", NSNumber(value: false))
-
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicate, anotherPredicate])
-        
-        let request: NSFetchRequest<Notification> = Notification.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        request.predicate = andPredicate
         
-        if let result = try? databaseManager.viewContext.fetch(request) {
-            for notification in result {
-                notification.isHandled = true
+        databaseManager.fetch(type: Notification.self, predicate: andPredicate, sortDescriptor: sortDescriptor) { results in
+            for notification in results {
+                self.databaseManager.updateNotification(object: notification, isHandled: true)
             }
         }
     }

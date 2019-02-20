@@ -124,6 +124,7 @@
 		F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */; };
 		F89ED96B22151D2F006588E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F89ED96A22151D2F006588E1 /* Assets.xcassets */; };
 		F89ED97722163A34006588E1 /* InputFriendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED97622163A34006588E1 /* InputFriendViewCell.swift */; };
+		F8CB544A221D069D001693E2 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -247,6 +248,7 @@
 		F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 		F89ED96A22151D2F006588E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F89ED97622163A34006588E1 /* InputFriendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFriendViewCell.swift; sourceTree = "<group>"; };
+		F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -412,6 +414,7 @@
 				491DD81F221532290093720A /* UIView+Shadow.swift */,
 				497882562217BFCB00ED64A7 /* UIImage+Resize.swift */,
 				491B1C4D221BF86B00ECB66F /* String+PhoneFormat.swift */,
+				F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -744,6 +747,7 @@
 				49484D0522140F3800C09384 /* SelectedTagViewCell.swift in Sources */,
 				F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */,
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
+				F8CB544A221D069D001693E2 /* UINavigationController+Extensions.swift in Sources */,
 				4969A58E221A789900E189BD /* ContactManager.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,

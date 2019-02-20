@@ -17,7 +17,9 @@ class DatabaseManager {
     let container: NSPersistentContainer
     
     var viewContext: NSManagedObjectContext {
-        return container.viewContext
+        let context = container.viewContext
+        context.automaticallyMergesChangesFromParent = true
+        return context
     }
     
     init(modelName: String) {
@@ -316,6 +318,8 @@ class DatabaseManager {
             
             do {
                 try backgroundContext.save()
+                
+                
             } catch {
                 print("Notification creation failed: \(error.localizedDescription)")
             }

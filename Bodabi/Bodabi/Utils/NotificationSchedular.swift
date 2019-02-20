@@ -9,7 +9,7 @@
 import UIKit
 import UserNotifications
 
-class NotificationSchedular: NSObject {
+struct NotificationSchedular {
     
     static func create(notification: Notification, hour: Int? = nil, minute: Int? = nil) {
         
@@ -65,5 +65,14 @@ class NotificationSchedular: NSObject {
     static func deleteAllNotification() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+    }
+    
+    static func readAllPendingNotification() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            for request in requests {
+                print("badge: \(String(describing: request.content.badge)) | \(request.content.body)")
+                print("---------------------------")
+            }
+        }
     }
 }

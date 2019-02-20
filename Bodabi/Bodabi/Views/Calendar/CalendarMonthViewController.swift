@@ -150,7 +150,6 @@ extension CalendarMonthViewController {
         
         guard let calendarView = view.superview?.superview?.superview?.superview as? CalendarView,
             let selectedDate = calendar.date(from: dateComponents) else { return }
-        print(selectedDate)
         delegate?.calendar?(calendarView, didSelectedItem: selectedDate)
     }
     
