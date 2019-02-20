@@ -126,6 +126,7 @@ class FriendsViewController: UIViewController {
     
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
+        tableView.keyboardDismissMode = .onDrag
         
         let cells = [FriendsHeaderViewCell.self, FriendViewCell.self]
         tableView.register(cells)
@@ -263,10 +264,6 @@ extension FriendsViewController {
 // MARK: - UITableViewDelegate
 
 extension FriendsViewController: UITableViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section),
             (section == .favorite || section == .friends) else { return }
