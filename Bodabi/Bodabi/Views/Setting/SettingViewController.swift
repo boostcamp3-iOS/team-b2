@@ -17,6 +17,9 @@ class SettingViewController: UIViewController {
     // MARK: - Property
     
     private var databaseManager: DatabaseManager!
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     // MARK: - Life Cycle
     
@@ -80,7 +83,6 @@ extension SettingViewController: UITableViewDelegate {
             let application = UIApplication.shared
             if application.canOpenURL(URL(string: app)!) {
                 application.open(URL(string: app)!, options: [:], completionHandler: nil)
-                application.open(URL(string: web)!, options: [:], completionHandler: nil)
             } else {
                 application.open(URL(string: web)!, options: [:], completionHandler: nil)
             }

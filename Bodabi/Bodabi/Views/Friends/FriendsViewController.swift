@@ -37,6 +37,9 @@ class FriendsViewController: UIViewController {
     private var searchFavoriteFriends: [Friend]?
     
     private var keyboardDismissGesture: UITapGestureRecognizer?
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     struct Const {
         static let bottomInset: CGFloat = 90.0

@@ -20,6 +20,9 @@ class NotificationViewController: UIViewController {
     
     private var databaseManager: DatabaseManager!
     private var fetchedResultsController: NSFetchedResultsController<Notification>?
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     
     // MARK: - Life Cycle

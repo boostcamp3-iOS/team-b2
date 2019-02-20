@@ -50,6 +50,9 @@ class HolidayViewController: UIViewController {
         static let maximumImageHeight: CGFloat = 350.0
         static var minimumImageHeight: CGFloat = 88.0
     }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // MARK: - Lifecycle Method
     
