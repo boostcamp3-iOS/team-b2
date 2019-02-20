@@ -123,14 +123,19 @@ class SettingAlarmViewController: UIViewController {
         if hasChanged {
             NotificationSchedular.deleteAllNotification()
             let predicate: NSPredicate = NSPredicate(format: "isHandled = %@", NSNumber(value: false))
-            databaseManager.batchDelete(typeString: "Notification", predicate: predicate)
-            databaseManager.fetch(type: Event.self) { result in
+            databaseManager.batchDelete(typeString: "Notification", predicate: predicate) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+            }
+            databaseManager.fetch(type: Event.self) { result, error in
+                guard let result = result else { return }
                 let events: [Event] = result
                 for event in events {
                     var currentNotificaion: Notification?
                     guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * defaultDday + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
                     self.databaseManager.createNotification(event: event
-                        , date: notificationDate, completion: { result in
+                        , date: notificationDate, completion: { result, error in
                             currentNotificaion = result
                             if let notificationToSchedule = currentNotificaion {
                                 NotificationSchedular.create(notification: notificationToSchedule, hour: defaultHour, minute: defaultMinutes)
@@ -143,7 +148,7 @@ class SettingAlarmViewController: UIViewController {
                             var favoriteNotification: Notification?
                             guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * dDay + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
                             self.databaseManager.createNotification(event: event
-                                , date: notificationDate, completion: { result in
+                                , date: notificationDate, completion: { result, error in
                                     favoriteNotification = result
                                     if let notificationToSchedule = favoriteNotification {
                                         NotificationSchedular.create(notification: notificationToSchedule, hour: defaultHour, minute: defaultMinutes)

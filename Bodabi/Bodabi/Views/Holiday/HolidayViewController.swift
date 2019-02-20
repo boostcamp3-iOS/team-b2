@@ -27,13 +27,17 @@ class HolidayViewController: UIViewController {
     public var holiday: Holiday?
     private var histories: [History]? {
         didSet {
-            tableView.reloadData()
-            setIncomeLabel()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.setIncomeLabel()
+            }
         }
     }
     private var searchedHistories: [History]? {
         didSet {
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     private var databaseManager: DatabaseManager!
@@ -80,19 +84,17 @@ class HolidayViewController: UIViewController {
     // MARK: - Initialization Methods
 
     private func fetchHistory() {
-        let request: NSFetchRequest<History> = History.fetchRequest()
         let firstPredicate = NSPredicate(format: "holiday = %@", holiday?.title ?? "")
         let secondPredicate = NSPredicate(format: "isTaken = %@", NSNumber(value: true))
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [firstPredicate, secondPredicate])
         
-        request.predicate = andPredicate
-        
-        do {
-            if let result: [History] = try databaseManager?.viewContext.fetch(request) {
-                histories = result
+        databaseManager.fetch(type: History.self, predicate: andPredicate) { [weak self] result, error in
+            guard let result = result else { return }
+            self?.histories = result
+            
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
             }
-        } catch {
-            print(error.localizedDescription)
         }
     }
     
@@ -116,20 +118,16 @@ class HolidayViewController: UIViewController {
     }
     
     private func initTableView() {
-        tableView.delegate = self; tableView.dataSource = self
-        
         let nib = UINib(nibName: "ThanksFriendHeaderView", bundle: nil)
+        
+        tableView.delegate = self; tableView.dataSource = self
         tableView.register(nib, forHeaderFooterViewReuseIdentifier: ThanksFriendHeaderView.reuseIdentifier)
-        
         tableView.contentInset.bottom = Const.bottomInset
-        
         tableView.register(ThanksFriendViewCell.self)
     }
     
     private func initInformationView() {
-        guard let holiday = holiday else { return }
-    
-        if let imageData = holiday.image {
+        if let holiday = holiday, let imageData = holiday.image {
             informationView.holidayImageView.image = UIImage(data: imageData)
             informationView.blurView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         } else {
@@ -272,17 +270,25 @@ class HolidayViewController: UIViewController {
         let alert = BodabiAlertController(title: "정말 삭제하시겠습니까?", message: nil, type: nil, style: .Alert)
         
         alert.addButton(title: "확인") { [weak self] in
-            if let holiday = self?.holiday {
-                self?.databaseManager?.viewContext.delete(holiday)
+            guard let holiday = self?.holiday else { return }
+            self?.databaseManager.delete(object: holiday) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
             }
             
-            self?.histories?.forEach {
-                self?.databaseManager.viewContext.delete($0)
+            guard let currentTitle = holiday.title else { return }
+            let predicate = NSPredicate(format: "holiday = %@", currentTitle)
+            
+            self?.databaseManager.batchDelete(typeString: "History", predicate: predicate) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
             }
             
             self?.navigationController?.popViewController(animated: true)
         }
-        
+
         alert.cancelButtonTitle = "취소"
         alert.show()
     }
@@ -333,7 +339,11 @@ extension HolidayViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        if isHolidayEmpty {
+            return false
+        } else {
+            return true
+        }
     }
 }
 
@@ -358,7 +368,7 @@ extension HolidayViewController: UITableViewDelegate {
         switch editingStyle {
         case .delete:
             guard let removedHistory = histories?[indexPath.row] else { return }
-            
+            // Fix me
             databaseManager.viewContext.delete(removedHistory)
             
             do {
@@ -493,27 +503,30 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let holiday = holiday else { return }
         var image: UIImage?
+        
         if let editedImage = info[.editedImage] as? UIImage {
             image = editedImage
         } else if let originalImage = info[.originalImage] as? UIImage {
             image = originalImage
         }
-        image = image?.resize(scale: 0.2)
         
-        guard let holidayImage = image else { return }
+        if let holidayImage = image,
+            let resizingImage = holidayImage.resize(scale: 0.2),
+            let imageData = resizingImage.jpeg(1.0) {
         
-        informationView.holidayImageView.image = holidayImage
-        informationView.blurView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        
-        guard let imageData = holidayImage.jpegData(compressionQuality: 1.0) else { return }
-        
-        holiday?.image = imageData
-        heightConstraint.constant = Const.maximumImageHeight
-        do {
-            try databaseManager.viewContext.save()
-        } catch {
-            print(error.localizedDescription)
+            databaseManager.updateHoliday(object: holiday, image: imageData) { [weak self] updatedHoliday, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    self?.holiday = updatedHoliday
+                    
+                    DispatchQueue.main.async {
+                        self?.initInformationView()
+                    }
+                }
+            }
         }
         
         picker.dismiss(animated: true, completion: nil)
@@ -528,6 +541,7 @@ extension HolidayViewController: UITextFieldDelegate {
         let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
         let predicate = NSPredicate(format:"title = %@", name)
         
+        // Fix me
         request.predicate = predicate
         
         if let fetchResult = try? databaseManager.viewContext.fetch(request) {
@@ -544,6 +558,7 @@ extension HolidayViewController: UITextFieldDelegate {
             navigationItem.title = newName
             holiday?.title = newName
         
+            // Fix me
             histories?.forEach {
                 $0.holiday = newName
             }

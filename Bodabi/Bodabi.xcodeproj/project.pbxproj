@@ -78,6 +78,9 @@
 		DB3873C922006D3900ADF0CB /* UITextField+BottomLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873C822006D3900ADF0CB /* UITextField+BottomLine.swift */; };
 		DB3873CB22017DC100ADF0CB /* ItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB3873CA22017DC100ADF0CB /* ItemViewCell.xib */; };
 		DB3873CD22017E5300ADF0CB /* ItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873CC22017E5300ADF0CB /* ItemViewCell.swift */; };
+		DB47A573221CF055002A2081 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47A572221CF055002A2081 /* Error.swift */; };
+		DB47A577221CF0B9002A2081 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47A576221CF0B9002A2081 /* BaseViewController.swift */; };
+		DB47A579221CF0C7002A2081 /* InputModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47A578221CF0C7002A2081 /* InputModel.swift */; };
 		DBABB192220C49EF00B808F6 /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABB191220C49EF00B808F6 /* InputData.swift */; };
 		DBABB194220C4DE000B808F6 /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABB193220C4DE000B808F6 /* InputManager.swift */; };
 		DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */; };
@@ -199,6 +202,9 @@
 		DB3873C822006D3900ADF0CB /* UITextField+BottomLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+BottomLine.swift"; sourceTree = "<group>"; };
 		DB3873CA22017DC100ADF0CB /* ItemViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemViewCell.xib; sourceTree = "<group>"; };
 		DB3873CC22017E5300ADF0CB /* ItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewCell.swift; sourceTree = "<group>"; };
+		DB47A572221CF055002A2081 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		DB47A576221CF0B9002A2081 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		DB47A578221CF0C7002A2081 /* InputModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputModel.swift; sourceTree = "<group>"; };
 		DBABB191220C49EF00B808F6 /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
 		DBABB193220C4DE000B808F6 /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputManager.swift; sourceTree = "<group>"; };
 		DBF4CEF921FAE59B001536A8 /* UIViewController+ActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+ActionSheet.swift"; sourceTree = "<group>"; };
@@ -432,6 +438,15 @@
 			path = Holiday;
 			sourceTree = "<group>";
 		};
+		DB47A571221CF03A002A2081 /* InputService */ = {
+			isa = PBXGroup;
+			children = (
+				DB47A576221CF0B9002A2081 /* BaseViewController.swift */,
+				DB47A578221CF0C7002A2081 /* InputModel.swift */,
+			);
+			path = InputService;
+			sourceTree = "<group>";
+		};
 		DBF4CF0321FB0B2D001536A8 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
@@ -558,6 +573,8 @@
 		F80C28AB22040EDB0032DE3E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				DB47A572221CF055002A2081 /* Error.swift */,
+				DB47A571221CF03A002A2081 /* InputService */,
 				F80C28AD22040FDB0032DE3E /* DatabaseManager.swift */,
 				DB147036220D4707000EA1D7 /* CloudManager.swift */,
 				4969A58D221A789900E189BD /* ContactManager.swift */,
@@ -675,6 +692,7 @@
 				F81452A421FD8C1B004A2CF0 /* String+Extensions.swift in Sources */,
 				4967D66B2202C65500223ADF /* CalendarDayViewCell.swift in Sources */,
 				DB38739D21FEDB0200ADF0CB /* HolidayViewController.swift in Sources */,
+				DB47A579221CF0C7002A2081 /* InputModel.swift in Sources */,
 				49C0851321FD979A0060B02C /* FriendViewCell.swift in Sources */,
 				DB3873A121FEEF0D00ADF0CB /* ThanksFriendViewCell.swift in Sources */,
 				DBF4CF4421FCE4F7001536A8 /* UIButton+Animation.swift in Sources */,
@@ -714,6 +732,7 @@
 				F80C28AE22040FDB0032DE3E /* DatabaseManager.swift in Sources */,
 				4978BCCB220D5A6F0052156E /* TableFetchedResultsDelegate.swift in Sources */,
 				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
+				DB47A573221CF055002A2081 /* Error.swift in Sources */,
 				F80C28A122026F0D0032DE3E /* FriendHistoryInformationViewCell.swift in Sources */,
 				F85A8BCD22193111006FB44E /* DefaultsKey.swift in Sources */,
 				DBF4CF3821FC5429001536A8 /* ItemInputViewController.swift in Sources */,
@@ -735,6 +754,7 @@
 				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
 				49484D0522140F3800C09384 /* SelectedTagViewCell.swift in Sources */,
 				F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */,
+				DB47A577221CF0B9002A2081 /* BaseViewController.swift in Sources */,
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
 				4969A58E221A789900E189BD /* ContactManager.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
