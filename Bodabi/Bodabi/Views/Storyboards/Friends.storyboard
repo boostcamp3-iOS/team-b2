@@ -48,7 +48,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FCy-Qt-ia3">
-                                        <rect key="frame" x="110" y="383.66666666666663" width="155" height="33"/>
+                                        <rect key="frame" x="110" y="379.66666666666663" width="155" height="33"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="Syh-WP-Qqq"/>
                                             <constraint firstAttribute="width" constant="155" id="nuT-Lf-xYO"/>
@@ -75,7 +75,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.97645872831344604" green="0.97646445035934448" blue="0.97647935152053833" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="FCy-Qt-ia3" firstAttribute="top" secondItem="E4V-Lr-6LC" secondAttribute="bottom" constant="27" id="1Dn-R3-2E1"/>
+                                    <constraint firstItem="FCy-Qt-ia3" firstAttribute="top" secondItem="E4V-Lr-6LC" secondAttribute="bottom" constant="23" id="1Dn-R3-2E1"/>
                                     <constraint firstItem="Qfi-Hb-Lhh" firstAttribute="top" secondItem="AID-sq-pNH" secondAttribute="bottom" id="1e4-Oi-oh4"/>
                                     <constraint firstItem="AID-sq-pNH" firstAttribute="centerX" secondItem="LKf-iQ-Umb" secondAttribute="centerX" id="EB8-xi-WLk"/>
                                     <constraint firstItem="AID-sq-pNH" firstAttribute="width" secondItem="LKf-iQ-Umb" secondAttribute="width" multiplier="0.5" id="KRh-NT-gy5"/>
