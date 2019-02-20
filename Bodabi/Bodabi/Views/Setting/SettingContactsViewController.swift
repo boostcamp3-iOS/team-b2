@@ -44,34 +44,31 @@ class SettingContactsViewController: UIViewController {
     // MARK: - IBAction
     
     @IBAction func touchUpFetchAllContactsButton(_ sender: UIButton) {
-        contacts?.forEach { [weak self] (contact) in
-            ContactManager.shared
-                .convertAndSaveFriend(from: contact, database: databaseManager) { [weak self] (_) in
-                    self?.navigationController?.popViewController(animated: true)
-            }
-        }
+        guard (contacts?.count ?? 0) > 0 else { return }
+        saveContacts(contacts: contacts)
     }
     
     @IBAction func touchUpFetchSelectedContactsButton(_ sender: Any) {
-        let contacts = tableView.indexPathsForSelectedRows?.map { (indexPath) in
-            return (tableView.cellForRow(at: indexPath) as? FriendViewCell)?.contact ?? CNContact()
+        let contacts = tableView.indexPathsForSelectedRows?
+            .map { (indexPath) in
+                return (tableView.cellForRow(at: indexPath) as? FriendViewCell)?
+                    .contact ?? CNContact()
         }
-        contacts?.forEach { [weak self] (contact) in
-            ContactManager.shared
-                .convertAndSaveFriend(from: contact, database: databaseManager) { [weak self] (_) in
-                    self?.navigationController?.popViewController(animated: true)
-            }
-        }
+        guard (contacts?.count ?? 0) > 0 else { return }
+        saveContacts(contacts: contacts)
     }
     
     // MARK: - Initialization
     
     private func initButton() {
         fetchSelectedContactsButton.imageView?.contentMode = .scaleAspectFit
-        fetchSelectedContactsButton.imageEdgeInsets = UIEdgeInsets(top: Const.buttonInsetSize,
-                                                                   left: -Const.buttonInsetSize,
-                                                                   bottom: Const.buttonInsetSize,
-                                                                   right: Const.buttonInsetSize)
+        fetchSelectedContactsButton
+            .imageEdgeInsets = UIEdgeInsets(
+                top: Const.buttonInsetSize,
+                left: -Const.buttonInsetSize,
+                bottom: Const.buttonInsetSize,
+                right: Const.buttonInsetSize
+        )
     }
     
     private func initTableView() {
@@ -98,6 +95,28 @@ class SettingContactsViewController: UIViewController {
         }
     }
     
+    private func saveContacts(contacts: [CNContact]?) {
+        let alert = BodabiAlertController(
+            title: "연락처 가져오기",
+            message: "총 \(contacts?.count ?? 0)개의 연락처를 가져오시겠습니까?",
+            type: nil,
+            style: .Alert
+        )
+        alert.cancelButtonTitle = "취소"
+        alert.addButton(title: "확인") { [weak self] in
+            contacts?.forEach { [weak self] (contact) in
+                guard let databaseManager = self?.databaseManager else { return }
+                ContactManager.shared.convertAndSaveFriend(
+                    from: contact,
+                    database: databaseManager
+                ) { [weak self] (_) in
+                    self?.tabBarController?.selectedIndex = 1
+                    self?.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
+        alert.show()
+    }
 }
 
 // MARK: - UITableViewDelegate

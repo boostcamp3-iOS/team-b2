@@ -75,10 +75,12 @@ class ContactManager {
         let friendsPhones = existingFriends?.map { $0.phoneNumber } ?? []
         print(friendsPhones)
         fetchAllContacts { (result) in
-            let contacts = result.filter {
-                let phone = $0.phoneNumbers.first?.value.value(forKey: "digits") as? String
-                return !friendsPhones.contains(phone?.toPhoneFormat())
-            }.sorted(by: { $0.familyName+$0.givenName < $1.familyName+$1.givenName })
+            let contacts = result
+                .filter { !(($0.familyName + $0.givenName).isEmpty) }
+                .filter {
+                    let phone = $0.phoneNumbers.first?.value.value(forKey: "digits") as? String
+                    return !friendsPhones.contains(phone?.toPhoneFormat())
+                }.sorted(by: { $0.familyName+$0.givenName < $1.familyName+$1.givenName })
             completion?(contacts)
         }
     }
