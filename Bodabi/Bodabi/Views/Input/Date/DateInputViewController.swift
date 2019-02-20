@@ -75,7 +75,7 @@ class DateInputViewController: UIViewController {
         calendarStyle.selectedColor = #colorLiteral(red: 0.8745098039, green: 0.9058823529, blue: 0.9764705882, alpha: 1)
         
         calendarView.style = calendarStyle
-        calendarView.style.weekType = .normal // long short normal
+        calendarView.style.weekType = .korean // long short normal korean
         calendarView.style.firstWeekType = .sunday
     }
     
@@ -157,7 +157,7 @@ class DateInputViewController: UIViewController {
     }
     
     @objc func touchUpPickerDoneButton() {
-        calendarView.movePage(to: pickerView.date)
+        calendarView.movePage(to: pickerView.date, shouldSelectedDay: true)
         view.endEditing(true)
     }
 }

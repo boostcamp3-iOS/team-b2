@@ -28,6 +28,7 @@ struct CalendarViewStyle {
         case long
         case normal
         case short
+        case korean
         
         var weeksArray: [String] {
             let formatter = DateFormatter()
@@ -35,6 +36,7 @@ struct CalendarViewStyle {
             case .long: return formatter.standaloneWeekdaySymbols
             case .normal: return formatter.shortWeekdaySymbols
             case .short: return formatter.veryShortWeekdaySymbols
+            case .korean: return ["일", "월", "화", "수", "목", "금", "토"]
             }
         }
     }

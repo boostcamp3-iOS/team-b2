@@ -19,6 +19,12 @@ class CalendarDayViewCell: UICollectionViewCell {
     // MARK: - Property
     
     public var style: CalendarViewStyle = .init()
+    public var date: Date? = .init() {
+        didSet {
+            dayLabel.textColor = date?.toString(of: .year) == Date().toString(of: .year) ?
+                style.todayColor : style.dayColor
+        }
+    }
     public var day: Int = 0 {
         didSet {
             dayLabel.text = String(format: "%d", day)
@@ -30,9 +36,10 @@ class CalendarDayViewCell: UICollectionViewCell {
             eventView.backgroundColor = style.eventColor
         }
     }
-    public var isToday: Bool = false {
-        didSet {
-            dayLabel.textColor = isToday ? style.todayColor : style.dayColor
+    
+    override var isSelected: Bool {
+        willSet {
+            backgroundColor = newValue ? style.selectedColor : .clear
         }
     }
     
