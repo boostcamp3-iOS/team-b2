@@ -113,9 +113,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicate, anotherPredicate])
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
         
-        databaseManager.fetch(type: Notification.self, predicate: andPredicate, sortDescriptor: sortDescriptor) { results in
-            for notification in results {
-                self.databaseManager.updateNotification(object: notification, isHandled: true)
+        databaseManager.fetch(type: Notification.self, predicate: andPredicate, sortDescriptor: sortDescriptor) { result in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case let .success(notifications):
+                notifications.forEach {
+                    self.databaseManager.updateNotification(object: $0, isHandled: true)
+                }
             }
         }
     }

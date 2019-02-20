@@ -1,5 +1,5 @@
 //
-//  DatabaseManager.swift
+//  CoreDataManager.swift
 //  Bodabi
 //
 //  Created by jaehyeon lee on 01/02/2019.
@@ -347,23 +347,24 @@ class DatabaseManager {
             }
         }
     }
-    
-    func batchUpdateHistory(typeString: String, predicate: NSPredicate? = nil, completion: @escaping (Result<History>)->()) {
+
+    func batchUpdate(typeString: String, predicate: NSPredicate? = nil, updateDictionary: [AnyHashable: Any], completion: @escaping (Result<History>)->()) {
         container.performBackgroundTask { backgroundContext in
-            let request = NSFetchRequest<NSFetchRequestResult>(entityName: typeString)
-            if let predicate = predicate {
-                request.predicate = predicate
-            }
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-            deleteRequest.resultType = .resultTypeObjectIDs
-            
+            let updateRequest = NSBatchUpdateRequest(entityName: typeString)
+            guard let predicate = predicate else { return }
+            updateRequest.predicate = predicate
+            updateRequest.propertiesToUpdate = updateDictionary
+            updateRequest.resultType = .updatedObjectIDsResultType
+        
             do {
-                let result = try backgroundContext.execute(deleteRequest) as? NSBatchDeleteResult
+                let result = try backgroundContext.execute(updateRequest) as? NSBatchUpdateResult
                 guard let objectIDs = result?.result as? [NSManagedObjectID] else { return }
-                let changes = [NSDeletedObjectsKey: objectIDs]
+                let changes = [NSUpdatedObjectsKey: objectIDs]
                 NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self.viewContext])
             } catch {
-                completion(Result.failure(CoreDataError.batchUpdateFailed))
+                DispatchQueue.main.async{
+                    completion(.failure(CoreDataError.batchUpdateFailed))
+                }
             }
         }
     }
