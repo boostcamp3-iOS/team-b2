@@ -81,16 +81,19 @@ class CalendarView: UIView {
     private func setPageFirstView() {
         guard let pageController = pageController else { return }
         if let firstPageController = pageViewController(date: currentVisibleDate) {
-            pageController.setViewControllers([firstPageController],
-                                              direction: .forward,
-                                              animated: false,
-                                              completion: nil)
+            pageController.setViewControllers(
+                [firstPageController],
+                direction: .forward,
+                animated: false,
+                completion: nil
+            )
             
             delegate?.calendar?(self, currentVisibleItem: currentVisibleDate)
         }
     }
     
-    public func movePage(to date: Date?) {
+    public func movePage(to date: Date?,
+                         shouldSelectedDay: Bool = false) {
         if let viewController = pageController?
             .viewControllers?.first as? CalendarMonthViewController {
             guard let toDate = date,
@@ -99,7 +102,8 @@ class CalendarView: UIView {
             let dateToMoveString = toDate.toString(of: .noDay)
             
             guard visibleDateString != dateToMoveString else { return }
-            setNextPageView(fromDate: fromDate, toDate: toDate)
+            setNextPageView(fromDate: fromDate, toDate: toDate,
+                            shouldSelectedDay: shouldSelectedDay)
         }
     }
     
@@ -112,15 +116,18 @@ class CalendarView: UIView {
         }
     }
     
-    private func setNextPageView(fromDate: Date, toDate: Date) {
-        let direction: UIPageViewController.NavigationDirection =
-            fromDate > toDate ? .reverse : .forward
+    private func setNextPageView(fromDate: Date, toDate: Date,
+                                 shouldSelectedDay: Bool = false) {
+        let direction: UIPageViewController.NavigationDirection = fromDate > toDate ? .reverse : .forward
         
-        if let nextPageController = pageViewController(date: toDate) {
-            pageController?.setViewControllers([nextPageController],
-                                               direction: direction,
-                                               animated: true,
-                                               completion: nil)
+        if let nextPageController = pageViewController(date: toDate,
+                                                       shouldSelectedDay: shouldSelectedDay) {
+            pageController?.setViewControllers(
+                [nextPageController],
+                direction: direction,
+                animated: true,
+                completion: nil
+            )
             delegate?.calendar?(self, currentVisibleItem: toDate)
         }
     }
@@ -160,7 +167,7 @@ extension CalendarView: UIPageViewControllerDataSource {
         return self.pageViewController(date: nextDate)
     }
     
-    private func pageViewController(date: Date?) -> UIViewController? {
+    private func pageViewController(date: Date?, shouldSelectedDay: Bool = false) -> UIViewController? {
         guard let date = date else { return nil }
         
         let viewController = CalendarMonthViewController()
@@ -168,7 +175,7 @@ extension CalendarView: UIPageViewControllerDataSource {
         viewController.superFrame = bounds
         viewController.style = style
         
-        viewController.setCurrentVisibleMonth(date: date)
+        viewController.setCurrentVisibleMonth(date: date, shouldSelectedDay: shouldSelectedDay)
         return viewController
     }
 }

@@ -36,6 +36,11 @@ class CalendarWeekDayViewCell: UICollectionViewCell {
         weekLabel.text = week
         
         guard let weekFirstCharacter = week.first else { return }
-        weekLabel.textColor = String(weekFirstCharacter) == "S" ? style.weekendColor : style.weekColor
+        if style.weekType == .korean {
+            weekLabel.textColor = String(weekFirstCharacter) == "일" || String(weekFirstCharacter) ==  "토" ?
+                style.weekendColor : style.weekColor
+        } else {
+            weekLabel.textColor = String(weekFirstCharacter) == "S" ? style.weekendColor : style.weekColor
+        }
     }
 }

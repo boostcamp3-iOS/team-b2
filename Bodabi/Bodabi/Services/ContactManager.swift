@@ -73,7 +73,6 @@ class ContactManager {
     public func fetchNonexistentContact(existingFriends: [Friend]?,
                                         completion: (([CNContact]?) -> Void)?) {
         let friendsPhones = existingFriends?.map { $0.phoneNumber } ?? []
-        print(friendsPhones)
         fetchAllContacts { (result) in
             let contacts = result
                 .filter { !(($0.familyName + $0.givenName).isEmpty) }
@@ -89,7 +88,11 @@ class ContactManager {
                                      database manager: DatabaseManager,
                                      completion: @escaping (Result<Friend>) -> Void) {
         let phone = contact.phoneNumbers.first?.value .value(forKey: "digits") as? String
-        manager.createFriend(name: contact.familyName + contact.givenName,
-                             tags: ["연락처"], phoneNumber: phone?.toPhoneFormat(), completion: completion)
+        manager.createFriend(
+            name: contact.familyName + contact.givenName,
+            tags: ["연락처"],
+            phoneNumber: phone?.toPhoneFormat(),
+            completion: completion
+        )
     }
 }
