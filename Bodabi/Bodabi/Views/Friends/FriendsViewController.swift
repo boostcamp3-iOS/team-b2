@@ -156,14 +156,15 @@ class FriendsViewController: UIViewController {
         emptyView.isHidden = friends.count == 0 ? false : true
     }
     
+    // MARK: Fix me
     private func fetchFriend() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         databaseManager.fetch(
             type: Friend.self,
             sortDescriptor: sortDescriptor
-        ) { [weak self] (result) in
+        ) { [weak self] (result, error) in
             self?.friends = result
-            self?.setEmptyView(friends: result)
+            self?.setEmptyView(friends: result!)
             self?.sortFriend()
             self?.tableView.reloadData()
             self?.searchBar.text = ""

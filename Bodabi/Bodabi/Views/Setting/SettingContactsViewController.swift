@@ -82,7 +82,7 @@ class SettingContactsViewController: UIViewController {
     private func fetchFriend() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         databaseManager.fetch(type: Friend.self,
-                              sortDescriptor: sortDescriptor) { [weak self] (result) in
+                              sortDescriptor: sortDescriptor) { [weak self] (result, error) in
                                 self?.friends = result
                                 self?.fetchContacts()
         }
@@ -102,6 +102,8 @@ class SettingContactsViewController: UIViewController {
             type: nil,
             style: .Alert
         )
+        
+        // MARK: Fix me
         alert.cancelButtonTitle = "취소"
         alert.addButton(title: "확인") { [weak self] in
             contacts?.forEach { [weak self] (contact) in
@@ -109,7 +111,7 @@ class SettingContactsViewController: UIViewController {
                 ContactManager.shared.convertAndSaveFriend(
                     from: contact,
                     database: databaseManager
-                ) { [weak self] (_) in
+                ) { [weak self] (_, _) in
                     self?.tabBarController?.selectedIndex = 1
                     self?.navigationController?.popViewController(animated: true)
                 }
