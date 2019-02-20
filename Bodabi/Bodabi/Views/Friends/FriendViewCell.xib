@@ -159,15 +159,15 @@
             <connections>
                 <outlet property="bottomView" destination="VtX-ZD-RBi" id="dd7-6H-Xk7"/>
                 <outlet property="favoriteButton" destination="T4h-hK-mVf" id="nIb-ya-C3a"/>
-                <outlet property="firstTagIcon" destination="96d-wl-2BC" id="01b-tb-2iK"/>
-                <outlet property="firstTagLabel" destination="ygX-hv-Bx0" id="aEc-v4-6bA"/>
                 <outlet property="nameLabel" destination="Ywj-9L-dHo" id="ef8-di-zSv"/>
                 <outlet property="phoneLabel" destination="FvJ-eL-3yG" id="Usd-Dm-Hbg"/>
-                <outlet property="secondTagIcon" destination="ZNp-B7-pWi" id="ob7-Kt-wOx"/>
-                <outlet property="secondTagLabel" destination="jeP-T0-IoL" id="KSz-xx-Odi"/>
                 <outlet property="selectedColorView" destination="Lg0-1m-QXY" id="zcY-sh-tjP"/>
-                <outlet property="thirdTagIcon" destination="tKY-aR-Uuy" id="nTb-nS-mXR"/>
-                <outlet property="thirdTagLabel" destination="JvF-lb-1Tc" id="p8t-SS-9go"/>
+                <outletCollection property="tagLabels" destination="ygX-hv-Bx0" collectionClass="NSMutableArray" id="Eao-Ro-ZKy"/>
+                <outletCollection property="tagLabels" destination="jeP-T0-IoL" collectionClass="NSMutableArray" id="XPi-aJ-FZ6"/>
+                <outletCollection property="tagLabels" destination="JvF-lb-1Tc" collectionClass="NSMutableArray" id="287-eS-2iN"/>
+                <outletCollection property="tagIcons" destination="96d-wl-2BC" collectionClass="NSMutableArray" id="wR2-OU-n8s"/>
+                <outletCollection property="tagIcons" destination="ZNp-B7-pWi" collectionClass="NSMutableArray" id="mgt-dz-Yd1"/>
+                <outletCollection property="tagIcons" destination="tKY-aR-Uuy" collectionClass="NSMutableArray" id="0Tl-jo-H7F"/>
             </connections>
             <point key="canvasLocation" x="214" y="107"/>
         </tableViewCell>
