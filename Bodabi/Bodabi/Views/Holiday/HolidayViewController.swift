@@ -88,12 +88,12 @@ class HolidayViewController: UIViewController {
         let secondPredicate = NSPredicate(format: "isTaken = %@", NSNumber(value: true))
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [firstPredicate, secondPredicate])
         
-        databaseManager.fetch(type: History.self, predicate: andPredicate) { [weak self] result, error in
-            guard let result = result else { return }
-            self?.histories = result
-            
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
+        databaseManager.fetch(type: History.self, predicate: andPredicate) { [weak self] (result) in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case let .success(histories):
+                self?.histories = histories
             }
         }
     }
@@ -499,7 +499,10 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
         picker.allowsEditing = true
         picker.sourceType = source
         
-        present(picker, animated: false)
+        DispatchQueue.main.async {
+            self.present(picker, animated: false)
+        }
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -516,15 +519,13 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
             let resizingImage = holidayImage.resize(scale: 0.2),
             let imageData = resizingImage.jpeg(1.0) {
         
-            databaseManager.updateHoliday(object: holiday, image: imageData) { [weak self] updatedHoliday, error in
-                if let error = error {
+            databaseManager.updateHoliday(object: holiday, image: imageData) { [weak self] (result) in
+                switch result {
+                case let .failure(error):
                     print(error.localizedDescription)
-                } else {
+                case let .success(updatedHoliday):
                     self?.holiday = updatedHoliday
-                    
-                    DispatchQueue.main.async {
-                        self?.initInformationView()
-                    }
+                    self?.initInformationView()
                 }
             }
         }
@@ -541,9 +542,9 @@ extension HolidayViewController: UITextFieldDelegate {
         let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
         let predicate = NSPredicate(format:"title = %@", name)
         
-        // Fix me
         request.predicate = predicate
         
+        // 동기적으로 값을 받아와야하기 때문에 databaseManager.fetch를 이용하지 않는다.
         if let fetchResult = try? databaseManager.viewContext.fetch(request) {
             if let _ = fetchResult.first {
                 isUnique = false
@@ -553,12 +554,14 @@ extension HolidayViewController: UITextFieldDelegate {
         return isUnique
     }
     
+    // MARK: Fix mee
+    // databaseMaanger.update 코드를 시리얼하게 실행할 할 수 있어야 한다..?
+    // batchUpdateHistory에 새로운 holiday로 수정할 수 있도록 모델을 수정해야한다.
     private func updateHolidayName(to newName: String) {
         if newName != "", isUniqueName(with: newName) {
             navigationItem.title = newName
             holiday?.title = newName
         
-            // Fix me
             histories?.forEach {
                 $0.holiday = newName
             }

@@ -82,9 +82,14 @@ class SettingContactsViewController: UIViewController {
     private func fetchFriend() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         databaseManager.fetch(type: Friend.self,
-                              sortDescriptor: sortDescriptor) { [weak self] (result, error) in
-                                self?.friends = result
-                                self?.fetchContacts()
+                              sortDescriptor: sortDescriptor) { [weak self] (result) in
+                                switch result {
+                                case let .failure(error):
+                                    print(error.localizedDescription)
+                                case let .success(friends):
+                                    self?.friends = friends
+                                    self?.fetchContacts()
+                                }
         }
     }
     
@@ -111,9 +116,14 @@ class SettingContactsViewController: UIViewController {
                 ContactManager.shared.convertAndSaveFriend(
                     from: contact,
                     database: databaseManager
-                ) { [weak self] (_, _) in
-                    self?.tabBarController?.selectedIndex = 1
-                    self?.navigationController?.popViewController(animated: true)
+                ) { [weak self] (result) in
+                    switch result {
+                    case let .failure(error):
+                        print(error.localizedDescription)
+                    case .success:
+                        self?.tabBarController?.selectedIndex = 1
+                        self?.navigationController?.popViewController(animated: true)
+                    }
                 }
             }
         }

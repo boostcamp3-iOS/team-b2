@@ -87,7 +87,7 @@ class ContactManager {
     
     public func convertAndSaveFriend(from contact: CNContact,
                                      database manager: DatabaseManager,
-                                     completion: @escaping (Friend?, Error?) -> Void) {
+                                     completion: @escaping (Result<Friend>) -> Void) {
         let phone = contact.phoneNumbers.first?.value .value(forKey: "digits") as? String
         manager.createFriend(name: contact.familyName + contact.givenName,
                              tags: ["연락처"], phoneNumber: phone?.toPhoneFormat(), completion: completion)

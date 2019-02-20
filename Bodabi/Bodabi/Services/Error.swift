@@ -25,6 +25,7 @@ enum CoreDataError: Error {
     case deletionFailed
     case batchUpdateFailed
     case batchDeletionFailed
+    case loadFailed
     
     var localizedDescription: String {
         switch self {
@@ -34,6 +35,7 @@ enum CoreDataError: Error {
         case .deletionFailed: return "Core data deletion failed"
         case .batchUpdateFailed: return "Core data batch update failed"
         case .batchDeletionFailed: return "Core data batch deletion failed"
+        case .loadFailed: return "Core data load failed"
         }
     }
 }

@@ -27,13 +27,12 @@ class DatabaseManager {
     }
     
     func load(completion: (() -> Void)? = nil) {
-        container.loadPersistentStores {
-            storeDescription, error in
-            guard error == nil else {
-                fatalError(error!.localizedDescription)
+        container.loadPersistentStores { storeDescription, error in
+            if let _ = error {
+                print(CoreDataError.loadFailed.localizedDescription)
+            } else {
+                completion?()
             }
-            
-            completion?()
         }
 
         print("Library Path: ", FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).last ?? "Not Found!")
@@ -52,12 +51,12 @@ class DatabaseManager {
             do {
                 try viewContext.execute(deleteRequest)
             } catch {
-                print(error.localizedDescription)
+                print(CoreDataError.batchDeletionFailed.localizedDescription)
             }
         }
     }
     
-    func fetch<CoreDataObject: NSManagedObject>(type: CoreDataObject.Type, predicate: NSPredicate? = nil, sortDescriptor: NSSortDescriptor? = nil, completion: @escaping ([CoreDataObject]?, Error?)->()) {
+    func fetch<CoreDataObject: NSManagedObject>(type: CoreDataObject.Type, predicate: NSPredicate? = nil, sortDescriptor: NSSortDescriptor? = nil, completion: @escaping (Result<[CoreDataObject]>)->()) {
         
         let backgroundContext = container.newBackgroundContext()
     
@@ -66,27 +65,33 @@ class DatabaseManager {
         if let predicate: NSPredicate = predicate {
             request.predicate = predicate
         }
+        
         if let sortDescriptor: NSSortDescriptor = sortDescriptor {
             request.sortDescriptors = [sortDescriptor]
         }
         
-        // 재현님과 이야기 해볼 것
+        let complete: (Result) -> Void = { result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
+        
         let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: request) { asyncResult in
             guard let result = asyncResult.finalResult else {
-                completion(nil, CoreDataError.fetchFailed)
+                complete(.failure(CoreDataError.fetchFailed))
                 return
             }
             
             let results: [CoreDataObject] = result.lazy
                 .compactMap { $0.objectID }
                 .compactMap { self.viewContext.object(with: $0) as? CoreDataObject }
-            completion(results, nil)
+            complete(.success(results))
         }
         
         do {
             try backgroundContext.execute(asyncFetchRequest)
         } catch {
-            completion(nil, CoreDataError.fetchFailed)
+            complete(.failure(CoreDataError.fetchFailed))
         }
     }
     
@@ -97,7 +102,9 @@ class DatabaseManager {
                 backgroundContext.delete(object)
                 try backgroundContext.save()
             } catch {
-                completion(CoreDataError.deletionFailed)
+                DispatchQueue.main.async {
+                    completion(CoreDataError.deletionFailed)
+                }
             }
         }
     }
@@ -117,12 +124,14 @@ class DatabaseManager {
                 let changes = [NSDeletedObjectsKey: objectIDs]
                 NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self.viewContext])
             } catch {
-                completion(CoreDataError.batchDeletionFailed)
+                DispatchQueue.main.async {
+                    completion(CoreDataError.batchDeletionFailed)
+                }
             }
         }
     }
     
-    func createFriend(name: String, tags: [String]? = nil, phoneNumber: String? = nil, completion: @escaping (Friend?, Error?) -> ()) {
+    func createFriend(name: String, tags: [String]? = nil, phoneNumber: String? = nil, completion: @escaping (Result<Friend>) -> ()) {
         container.performBackgroundTask { backgroundContext in
             let friend: Friend = Friend(context: backgroundContext)
             friend.name = name
@@ -130,15 +139,21 @@ class DatabaseManager {
             friend.phoneNumber = phoneNumber
             friend.favorite = false
             
+            let complete: (Result) -> Void = { result in
+                DispatchQueue.main.async {
+                    completion(result)
+                }
+            }
+            
             do {
                 try backgroundContext.save()
                 guard let mainQueueFriend = self.viewContext.object(with: friend.objectID) as? Friend else {
-                    completion(nil, CoreDataError.creationFailed)
+                    complete(.failure(CoreDataError.creationFailed))
                     return
                 }
-                completion(mainQueueFriend, nil)
+                complete(.success(mainQueueFriend))
             } catch {
-                completion(nil, CoreDataError.creationFailed)
+                complete(.failure(CoreDataError.creationFailed))
             }
         }
     }
@@ -283,7 +298,7 @@ class DatabaseManager {
         }
     }
     
-    func updateHoliday(object: Holiday, title: String? = nil, date: Date? = nil, createdDate: Date? = nil, image: Data? = nil, completion: @escaping (Holiday?, Error?)->()) {
+    func updateHoliday(object: Holiday, title: String? = nil, date: Date? = nil, createdDate: Date? = nil, image: Data? = nil, completion: @escaping (Result<Holiday>)->()) {
         if title == nil, date == nil, createdDate == nil, image == nil {
             return
         }
@@ -294,13 +309,18 @@ class DatabaseManager {
             if let date = date { holiday.date = date }
             if let createdDate = createdDate { holiday.createdDate = createdDate }
             if let image = image { holiday.image = image }
+            let complete: (Result) -> Void = { result in
+                DispatchQueue.main.async {
+                    completion(result)
+                }
+            }
             
             do {
                 try backgroundContext.save()
                     guard let updatedHoliday = self.viewContext.object(with: holiday.objectID) as? Holiday else { return }
-                    completion(updatedHoliday, nil)
+                    complete(.success(updatedHoliday))
             } catch {
-                completion(nil, CoreDataError.creationFailed)
+                complete(.failure(CoreDataError.creationFailed))
             }
         }
     }
@@ -326,7 +346,7 @@ class DatabaseManager {
         }
     }
     
-    func batchUpdateHistory(typeString: String, predicate: NSPredicate? = nil) {
+    func batchUpdateHistory(typeString: String, predicate: NSPredicate? = nil, completion: @escaping (Result<History>)->()) {
         container.performBackgroundTask { backgroundContext in
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: typeString)
             if let predicate = predicate {
@@ -341,7 +361,7 @@ class DatabaseManager {
                 let changes = [NSDeletedObjectsKey: objectIDs]
                 NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self.viewContext])
             } catch {
-                print("Core data batch deletion failed: \(error.localizedDescription)")
+                completion(Result.failure(CoreDataError.batchUpdateFailed))
             }
         }
     }

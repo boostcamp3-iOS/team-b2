@@ -135,10 +135,12 @@ class NameInputViewController: UIViewController {
     private func fetchFriend() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
 
-        databaseManager.fetch(type: Friend.self, sortDescriptor: sortDescriptor) { [weak self] (result, error) in
-            guard let result = result else { return }
-            self?.friends = result
-            DispatchQueue.main.async {
+        databaseManager.fetch(type: Friend.self, sortDescriptor: sortDescriptor) { [weak self] (result) in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case let .success(friends):
+                self?.friends = friends
                 self?.tableView.reloadData()
             }
         }

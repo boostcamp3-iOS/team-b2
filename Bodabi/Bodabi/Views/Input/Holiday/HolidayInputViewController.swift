@@ -21,6 +21,7 @@ class HolidayInputViewController: UIViewController {
     public var inputData: InputData!
     public var entryRoute: EntryRoute!
     public var isRelationInput: Bool = true
+    
     public var myHolidays: [String]? {
         didSet {
             tableView.reloadData()
@@ -59,9 +60,13 @@ class HolidayInputViewController: UIViewController {
     // MARK: - Initialization
     
     private func fetchHoliday() {
-        databaseManager.fetch(type: Holiday.self) { holidays, error in
-            guard let holidays = holidays else { return }
-            self.holidays = holidays
+        databaseManager.fetch(type: Holiday.self) { result in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case let .success(holidays):
+                self.holidays = holidays
+            }
         }
     }
     

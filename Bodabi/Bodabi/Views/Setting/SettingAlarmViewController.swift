@@ -128,33 +128,36 @@ class SettingAlarmViewController: UIViewController {
                     print(error.localizedDescription)
                 }
             }
-            databaseManager.fetch(type: Event.self) { result, error in
-                guard let result = result else { return }
-                let events: [Event] = result
-                for event in events {
-                    var currentNotificaion: Notification?
-                    guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * defaultDday + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
-                    self.databaseManager.createNotification(event: event
-                        , date: notificationDate, completion: { result, error in
-                            currentNotificaion = result
-                            if let notificationToSchedule = currentNotificaion {
-                                NotificationSchedular.create(notification: notificationToSchedule, hour: defaultHour, minute: defaultMinutes)
+            databaseManager.fetch(type: Event.self) { result in
+                switch result {
+                case let .failure(error):
+                    print(error.localizedDescription)
+                case let .success(events):
+                    for event in events {
+                        var currentNotificaion: Notification?
+                        guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * defaultDday + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
+                        self.databaseManager.createNotification(event: event
+                            , date: notificationDate, completion: { result, error in
+                                currentNotificaion = result
+                                if let notificationToSchedule = currentNotificaion {
+                                    NotificationSchedular.create(notification: notificationToSchedule, hour: defaultHour, minute: defaultMinutes)
+                                }
+                        })
+                        
+                        if event.favorite {
+                            let favoriteDdays = [favoriteFirstDday, favoriteSecondDday]
+                            for dDay in favoriteDdays {
+                                var favoriteNotification: Notification?
+                                guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * dDay + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
+                                self.databaseManager.createNotification(event: event
+                                    , date: notificationDate, completion: { result, error in
+                                        favoriteNotification = result
+                                        if let notificationToSchedule = favoriteNotification {
+                                            NotificationSchedular.create(notification: notificationToSchedule, hour: defaultHour, minute: defaultMinutes)
+                                        }
+                                })
+                                
                             }
-                    })
-                    
-                    if event.favorite {
-                        let favoriteDdays = [favoriteFirstDday, favoriteSecondDday]
-                        for dDay in favoriteDdays {
-                            var favoriteNotification: Notification?
-                            guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * dDay + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
-                            self.databaseManager.createNotification(event: event
-                                , date: notificationDate, completion: { result, error in
-                                    favoriteNotification = result
-                                    if let notificationToSchedule = favoriteNotification {
-                                        NotificationSchedular.create(notification: notificationToSchedule, hour: defaultHour, minute: defaultMinutes)
-                                    }
-                            })
-                            
                         }
                     }
                 }
