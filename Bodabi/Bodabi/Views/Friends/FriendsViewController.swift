@@ -74,6 +74,7 @@ class FriendsViewController: UIViewController {
         initTableView()
         initCollectionView()
         initKeyboard()
+        fetchFriend()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,6 +102,13 @@ class FriendsViewController: UIViewController {
         self.present(navController, animated: true, completion: nil)
     }
     
+    @IBAction func touchUpGoFetchContactsButton(_ sender: UIButton) {
+        let viewController = storyboard(.setting)
+            .instantiateViewController(ofType: SettingContactsViewController.self)
+        viewController.databaseManager = databaseManager
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     // MARK: - Initialization
     
     private func initNavigationBar() {
@@ -118,6 +126,7 @@ class FriendsViewController: UIViewController {
     
     private func initTableView() {
         tableView.delegate = self; tableView.dataSource = self
+        tableView.keyboardDismissMode = .onDrag
         
         let cells = [FriendsHeaderViewCell.self, FriendViewCell.self]
         tableView.register(cells)
@@ -143,59 +152,40 @@ class FriendsViewController: UIViewController {
     
     // MARK: - Method
     
-    private func setEmptyView() {
-        emptyView.isHidden = tableView.numberOfRows(inSection: Section.friends.rawValue) == 0 && tableView.numberOfRows(inSection:Section.favorite.rawValue) == 0 ? false : true
+    private func setEmptyView(friends: [Friend]) {
+        emptyView.isHidden = friends.count == 0 ? false : true
     }
     
     private func fetchFriend() {
-        let request: NSFetchRequest<Friend> = Friend.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        
-        if let result = try? databaseManager.viewContext.fetch(request) {
-            friends = result
-            fetchContacts()
-            sortFriend()
-            searchBar.text = ""
-        }
-    }
-    
-    private func fetchContacts(completion: (() -> Void)? = nil) {
-        ContactManager.shared.accessContacts { [weak self] (granted) in
-            guard granted, !UserDefaults.standard.bool(forKey: "firstAccessContacts") else { return }
-            
-            UserDefaults.standard.set(true, forKey: "firstAccessContacts")
-            let friendsPhones = self?.friends?.map { $0.phoneNumber } ?? []
-            
-            ContactManager.shared.fetchAllContacts().forEach { (contact) in
-                guard let phone = contact.phoneNumbers.first?.value.stringValue,
-                    let context = self?.databaseManager.viewContext,
-                    !friendsPhones.contains(phone) else { return }
-                
-                let friend = Friend(context: context)
-                friend.name = contact.familyName + contact.givenName
-                friend.phoneNumber = contact.phoneNumbers.first?.value.stringValue
-                friend.tags = ["연락처"]
-                friend.favorite = false
-                self?.friends?.append(friend)
-                self?.sortFriend()
-                
-                try? self?.databaseManager.viewContext.save()
-                
-                completion?()
-            }
+        databaseManager.fetch(
+            type: Friend.self,
+            sortDescriptor: sortDescriptor
+        ) { [weak self] (result) in
+            self?.friends = result
+            self?.setEmptyView(friends: result)
+            self?.sortFriend()
+            self?.tableView.reloadData()
+            self?.searchBar.text = ""
         }
     }
     
     private func sortFriend() {
-        friends?.sort(by: { ($0.name ?? "") < ($1.name ?? "")})
+        if let friends = friends?.sorted(by: { ($0.name ?? "") < ($1.name ?? "") }) {
+            let hangulFriends = friends.filter {
+                $0.name?.first?.isHangul ?? true || $0.name?.first?.isConsonant ?? true
+            }
+            let etcFriends = friends.filter {
+                !($0.name?.first?.isHangul ?? true || $0.name?.first?.isConsonant ?? true)
+            }
+            self.friends = (hangulFriends + etcFriends)
+        }
         
         favoriteFriends = friends?.filter { $0.favorite == true }
         friends = friends?.filter { $0.favorite == false }
         
         searchFriends = friends
         searchFavoriteFriends = favoriteFriends
-        tableView.reloadData()
     }
     
     private func reloadFriends(friends: [Friend]?,
@@ -203,7 +193,7 @@ class FriendsViewController: UIViewController {
                                completion: (() -> Void)? = nil) {
         searchFriends = friends
         searchFavoriteFriends = favoriteFriends
-        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .fade)
+        tableView.reloadSections(IndexSet(integersIn: 1...3), with: .none)
         
         completion?()
     }
@@ -218,14 +208,16 @@ class FriendsViewController: UIViewController {
     // MARK: - @objcs
     
     @objc func touchUpFriendFavoriteButton(_ sender: UIButton) {
-        (sender.isSelected ? favoriteFriends?[sender.tag] : friends?[sender.tag])?.favorite = !sender.isSelected
+        guard sender.isSelected ?
+            (sender.tag < favoriteFriends?.count ?? 0) : (sender.tag < friends?.count ?? 0) else { return }
+        (sender.isSelected ? favoriteFriends?[sender.tag] : friends?[sender.tag])?
+            .favorite = !sender.isSelected
         try? databaseManager?.viewContext.save()
         
         guard let friends = friends,
             let favoriteFriends = favoriteFriends else { return }
-        let allFriends = (friends + favoriteFriends).sorted { $0.name ?? "" < $1.name ?? "" }
-        self.friends = allFriends.filter { $0.favorite == false }
-        self.favoriteFriends = allFriends.filter { $0.favorite == true }
+        self.friends = (friends + favoriteFriends)
+        sortFriend()
         
         reloadFriends(friends: self.friends,
                       favoriteFriends: self.favoriteFriends)
@@ -244,7 +236,10 @@ extension FriendsViewController {
             keyboardDismissGesture = nil
             return
         }
-        keyboardDismissGesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
+        keyboardDismissGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(tapBackground(_:))
+        )
         guard let gesture = keyboardDismissGesture else { return }
         view.addGestureRecognizer(gesture)
     }
@@ -266,10 +261,6 @@ extension FriendsViewController {
 // MARK: - UITableViewDelegate
 
 extension FriendsViewController: UITableViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section),
             (section == .favorite || section == .friends) else { return }
@@ -277,7 +268,8 @@ extension FriendsViewController: UITableViewDelegate {
             .instantiateViewController(ofType: FriendHistoryViewController.self)
         viewController.setDatabaseManager(databaseManager)
         
-        let friend = section == .favorite ? searchFavoriteFriends?[indexPath.row] : searchFriends?[indexPath.row]
+        let friend = section == .favorite ?
+            searchFavoriteFriends?[indexPath.row] : searchFriends?[indexPath.row]
         
         viewController.friendID = friend?.objectID
         navigationController?.pushViewController(viewController, animated: true)
@@ -287,16 +279,16 @@ extension FriendsViewController: UITableViewDelegate {
         guard let section = Section(rawValue: indexPath.section),
             (section == .favorite || section == .friends) else { return }
         if editingStyle == .delete,
-            let friend = section == .favorite ? searchFavoriteFriends?[indexPath.row] : searchFriends?[indexPath.row] {
-                databaseManager?.viewContext.delete(friend)
-            }
-            do {
-                try databaseManager?.viewContext.save()
-            } catch {
-                print(error.localizedDescription)
-            }
+            let friend = section == .favorite ?
+                searchFavoriteFriends?[indexPath.row] : searchFriends?[indexPath.row] {
+            databaseManager?.viewContext.delete(friend)
+        }
+        do {
+            try databaseManager?.viewContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
         fetchFriend()
-        setEmptyView()
     }
 }
 
@@ -332,10 +324,10 @@ extension FriendsViewController: UITableViewDataSource {
                 .addTarget(self, action: #selector(touchUpFriendFavoriteButton(_:)),
                            for: .touchUpInside)
             
-            guard let friends = section == .friends ? searchFriends : searchFavoriteFriends else { return cell }
+            guard let friends = section == .friends ?
+                searchFriends : searchFavoriteFriends else { return cell }
             cell.friend = friends[indexPath.row]
             cell.setLastLine(line: indexPath.row == (friends.count - 1))
-            setEmptyView()
             return cell
         }
     }
@@ -355,8 +347,11 @@ extension FriendsViewController: UICollectionViewDelegate {
             for (i, friend) in friends.enumerated()
                 where (friend.name?.first ?? .init(""))
                     .contains(syllable: indexs[indexPath.row]) {
-                        tableView.scrollToRow(at: IndexPath(row: i, section: Section.friends.rawValue),
-                                              at: .top, animated: true)
+                        tableView.scrollToRow(
+                            at: IndexPath(row: i,
+                                          section: Section.friends.rawValue),
+                            at: .top, animated: true
+                        )
                         break
             }
         }
@@ -377,7 +372,8 @@ extension FriendsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeue(FriendsIndexViewCell.self, for: indexPath)
-        cell.indexTitle = indexPath.row % 2 == 1 ? Character("•") : indexs[indexPath.row]
+        cell.indexTitle = indexPath.row % 2 == 1 ?
+            Character("•") : indexs[indexPath.row]
         return cell
     }
 }
@@ -399,22 +395,32 @@ extension FriendsViewController: DatabaseManagerClient {
     }
 }
 
+// MARK: - UISearchBarDelegate
+
 extension FriendsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let searchText = searchBar.text,
             searchText != "" else {
-                reloadFriends(friends: self.friends,
-                              favoriteFriends: self.favoriteFriends) { [weak self] in
-                                self?.isVisibleIndexCollection(true)
+                reloadFriends(
+                    friends: self.friends,
+                    favoriteFriends: self.favoriteFriends
+                ) { [weak self] in
+                    self?.isVisibleIndexCollection(true)
                 }
                 return
         }
         
-        let friends = self.friends?.filter { ($0.name ?? "").contains(search: searchText) }
-        let favoriteFriends = self.favoriteFriends?.filter { ($0.name ?? "").contains(search: searchText) }
-        reloadFriends(friends: friends,
-                      favoriteFriends: favoriteFriends) { [weak self] in
-                        self?.isVisibleIndexCollection(false)
+        let friends = self.friends?.filter {
+            ($0.name ?? "").contains(search: searchText)
+        }
+        let favoriteFriends = self.favoriteFriends?.filter {
+            ($0.name ?? "").contains(search: searchText)
+        }
+        reloadFriends(
+            friends: friends,
+            favoriteFriends: favoriteFriends
+        ) { [weak self] in
+                self?.isVisibleIndexCollection(false)
         }
     }
 }

@@ -6,6 +6,7 @@
 //  Copyright © 2019년 LeeHyeJin. All rights reserved.
 //
 
+import Contacts
 import UIKit
 
 class FriendViewCell: UITableViewCell {
@@ -16,6 +17,7 @@ class FriendViewCell: UITableViewCell {
     @IBOutlet var phoneLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var selectedColorView: UIView!
     @IBOutlet weak var firstTagLabel: UILabel!
     @IBOutlet weak var secondTagLabel: UILabel!
     @IBOutlet weak var thirdTagLabel: UILabel!
@@ -27,7 +29,22 @@ class FriendViewCell: UITableViewCell {
     
     public var friend: Friend? {
         didSet {
-            configure()
+            favoriteButton.isHidden = false
+            configure(name: friend?.name,
+                      phoneNumber: friend?.phoneNumber,
+                      favorite: friend?.favorite,
+                      tags: friend?.tags)
+        }
+    }
+    
+    public var contact: CNContact? {
+        didSet {
+            guard let contact = contact else { return }
+            favoriteButton.isHidden = true
+            let phone = contact.phoneNumbers.first?.value
+                .value(forKey: "digits") as? String
+            configure(name: contact.familyName + contact.givenName,
+                      phoneNumber: phone?.toPhoneFormat())
         }
     }
     
@@ -48,6 +65,13 @@ class FriendViewCell: UITableViewCell {
         clear()
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        guard contact != nil else { return }
+        selectedColorView.backgroundColor = selected ? #colorLiteral(red: 0.9764705896, green: 0.9394879168, blue: 0.8803283655, alpha: 1) : #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    }
+    
     // MARK: - Method
     
     private func clear() {
@@ -58,10 +82,6 @@ class FriendViewCell: UITableViewCell {
         secondTagLabel.text = ""
         thirdTagLabel.text = ""
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     // MARK: - Method
     
@@ -69,11 +89,12 @@ class FriendViewCell: UITableViewCell {
         bottomView.isHidden = hidden
     }
     
-    private func configure() {
-        nameLabel.text = friend?.name
-        phoneLabel.text = friend?.phoneNumber
-        favoriteButton.isSelected = friend?.favorite ?? true
-        guard let tags = friend?.tags else { return }
+    private func configure(name: String?, phoneNumber: String?,
+                           favorite: Bool? = false, tags: [String]? = nil) {
+        nameLabel.text = name
+        phoneLabel.text = phoneNumber
+        favoriteButton.isSelected = favorite ?? true
+        guard let tags = tags else { return }
         if tags.count >= 1 {
             firstTagLabel.text = tags[0]
             firstTagIcon.backgroundColor = Tag.type(of: tags[0])?.color
