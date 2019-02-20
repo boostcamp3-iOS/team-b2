@@ -11,6 +11,7 @@ import Foundation
 struct DefaultsKey {
     
     static let launchedBefore: String = "launchedBefore"
+    static let askedAuthorizeNotification: String = "askedAuthorizeNotification"
     static let defaultHoliday: String = "defaultHoliday"
     static let defaultRelation: String = "defaultRelation"
     static let defaultAlarmHour: String = "defaultAlarmHour"

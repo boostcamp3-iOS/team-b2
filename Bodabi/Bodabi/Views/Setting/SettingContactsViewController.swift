@@ -25,6 +25,9 @@ class SettingContactsViewController: UIViewController {
             tableView.reloadData()
         }
     }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     struct Const {
         static let buttonInsetSize: CGFloat = 3.0

@@ -150,15 +150,17 @@ struct InputManager {
     }
     
     static private func generateNotifications(of event: Event, context: NSManagedObjectContext){
-            let oneDayInterval: Int = 3600 * 24
-        
             let notification: Notification = Notification(context: context)
+            let oneDayInterval: Int = 3600 * 24
+            let defaultDday = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmDday)
+            let defaultHour = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmHour)
+            let defaultMinutes = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmMinutes)
             notification.id = UUID().uuidString
             notification.event = event
-            notification.date = event.date?.addingTimeInterval(TimeInterval(exactly: UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmDday) * oneDayInterval * -1) ?? 0)
+            notification.date =  event.date?.addingTimeInterval(TimeInterval(exactly: defaultDday * oneDayInterval * -1) ?? 0)
             NotificationSchedular.create(notification: notification,
-                                         hour: UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmHour),
-                                         minute: UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmMinutes))
+                                         hour: defaultHour,
+                                         minute: defaultMinutes)
     }
 }
 

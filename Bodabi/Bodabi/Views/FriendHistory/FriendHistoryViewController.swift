@@ -38,6 +38,9 @@ class FriendHistoryViewController: UIViewController {
         static let buttonAnimationScale: CGFloat = 1.35
         static let buttonAnimationDuration: TimeInterval = 0.12
     }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // MARK: - Life Cycle
     

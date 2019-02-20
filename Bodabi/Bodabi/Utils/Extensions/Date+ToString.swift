@@ -40,7 +40,7 @@ extension Date {
     
     func toString(of type: FormatType) -> String {
         let dateFormatter = DateFormatter()
-        
+        dateFormatter.locale = Locale.current
         dateFormatter.dateFormat = type.description
         return dateFormatter.string(from: self)
     }

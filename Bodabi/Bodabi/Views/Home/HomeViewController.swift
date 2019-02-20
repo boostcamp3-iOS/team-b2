@@ -175,6 +175,12 @@ class HomeViewController: UIViewController {
     }
     
     @objc func touchUpAddUpcomingEventButton(_ sender: UIButton) {
+        if UserDefaults.standard.bool(forKey: DefaultsKey.askedAuthorizeNotification) == false {
+            UserDefaults.standard.set(true, forKey: DefaultsKey.askedAuthorizeNotification)
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.registerForLocalNotifications(application: UIApplication.shared)
+        }
+        
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)

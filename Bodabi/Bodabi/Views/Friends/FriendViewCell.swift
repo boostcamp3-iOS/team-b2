@@ -18,12 +18,8 @@ class FriendViewCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var selectedColorView: UIView!
-    @IBOutlet weak var firstTagLabel: UILabel!
-    @IBOutlet weak var secondTagLabel: UILabel!
-    @IBOutlet weak var thirdTagLabel: UILabel!
-    @IBOutlet weak var firstTagIcon: UIView!
-    @IBOutlet weak var secondTagIcon: UIView!
-    @IBOutlet weak var thirdTagIcon: UIView!
+    @IBOutlet var tagLabels: [UILabel]!
+    @IBOutlet var tagIcons: [UIView]!
     
     // MARK: - Property
     
@@ -36,7 +32,6 @@ class FriendViewCell: UITableViewCell {
                       tags: friend?.tags)
         }
     }
-    
     public var contact: CNContact? {
         didSet {
             guard let contact = contact else { return }
@@ -47,12 +42,15 @@ class FriendViewCell: UITableViewCell {
                       phoneNumber: phone?.toPhoneFormat())
         }
     }
-    
     struct Const {
         static let buttonAnimationScale: CGFloat = 1.3
         static let buttonAnimationDuration: TimeInterval = 0.18
     }
-    
+    private enum Sticker: Int {
+        case first = 0
+        case second = 1
+        case third = 2
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -75,12 +73,12 @@ class FriendViewCell: UITableViewCell {
     // MARK: - Method
     
     private func clear() {
-        firstTagIcon.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-        secondTagIcon.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-        thirdTagIcon.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-        firstTagLabel.text = ""
-        secondTagLabel.text = ""
-        thirdTagLabel.text = ""
+        tagIcons[Sticker.first.rawValue].backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        tagIcons[Sticker.second.rawValue].backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        tagIcons[Sticker.third.rawValue].backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        tagLabels[Sticker.first.rawValue].text = ""
+        tagLabels[Sticker.second.rawValue].text = ""
+        tagLabels[Sticker.third.rawValue].text = ""
     }
     
     // MARK: - Method
@@ -96,16 +94,16 @@ class FriendViewCell: UITableViewCell {
         favoriteButton.isSelected = favorite ?? true
         guard let tags = tags else { return }
         if tags.count >= 1 {
-            firstTagLabel.text = tags[0]
-            firstTagIcon.backgroundColor = Tag.type(of: tags[0])?.color
+            tagLabels[Sticker.first.rawValue].text = tags[0]
+            tagIcons[Sticker.first.rawValue].backgroundColor = Tag.type(of: tags[0])?.color
         }
         if tags.count >= 2 {
-            secondTagLabel.text = tags[1]
-            secondTagIcon.backgroundColor = Tag.type(of: tags[1])?.color
+            tagLabels[Sticker.second.rawValue].text = tags[1]
+            tagIcons[Sticker.second.rawValue].backgroundColor = Tag.type(of: tags[1])?.color
         }
         if tags.count == 3 {
-            thirdTagLabel.text = tags[2]
-            thirdTagIcon.backgroundColor = Tag.type(of: tags[2])?.color
+            tagLabels[Sticker.third.rawValue].text = tags[2]
+            tagIcons[Sticker.third.rawValue].backgroundColor = Tag.type(of: tags[2])?.color
         }
     }
 }

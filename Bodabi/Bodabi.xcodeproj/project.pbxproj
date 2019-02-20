@@ -81,8 +81,6 @@
 		DB3873CB22017DC100ADF0CB /* ItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB3873CA22017DC100ADF0CB /* ItemViewCell.xib */; };
 		DB3873CD22017E5300ADF0CB /* ItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3873CC22017E5300ADF0CB /* ItemViewCell.swift */; };
 		DB47A573221CF055002A2081 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47A572221CF055002A2081 /* Error.swift */; };
-		DB47A577221CF0B9002A2081 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47A576221CF0B9002A2081 /* BaseViewController.swift */; };
-		DB47A579221CF0C7002A2081 /* InputModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47A578221CF0C7002A2081 /* InputModel.swift */; };
 		DB47A57C221D0059002A2081 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB47A57B221D0059002A2081 /* CoreDataModel.swift */; };
 		DBABB192220C49EF00B808F6 /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABB191220C49EF00B808F6 /* InputData.swift */; };
 		DBABB194220C4DE000B808F6 /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABB193220C4DE000B808F6 /* InputManager.swift */; };
@@ -103,7 +101,7 @@
 		F80C28A62202C82B0032DE3E /* FriendHistorySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80C28A52202C82B0032DE3E /* FriendHistorySection.swift */; };
 		F80C28A822030D500032DE3E /* FriendHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80C28A722030D500032DE3E /* FriendHistoryHeaderView.swift */; };
 		F80C28AA22031E740032DE3E /* FriendHistoryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F80C28A922031E740032DE3E /* FriendHistoryHeaderView.xib */; };
-		F80C28AE22040FDB0032DE3E /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80C28AD22040FDB0032DE3E /* DatabaseManager.swift */; };
+		F80C28AE22040FDB0032DE3E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80C28AD22040FDB0032DE3E /* CoreDataManager.swift */; };
 		F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529321FCC909004A2CF0 /* SettingViewController.swift */; };
 		F814529721FCCF6B004A2CF0 /* SettingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529521FCCF6B004A2CF0 /* SettingViewCell.swift */; };
 		F814529821FCCF6B004A2CF0 /* SettingViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F814529621FCCF6B004A2CF0 /* SettingViewCell.xib */; };
@@ -128,6 +126,7 @@
 		F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */; };
 		F89ED96B22151D2F006588E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F89ED96A22151D2F006588E1 /* Assets.xcassets */; };
 		F89ED97722163A34006588E1 /* InputFriendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED97622163A34006588E1 /* InputFriendViewCell.swift */; };
+		F8CB544A221D069D001693E2 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -208,8 +207,6 @@
 		DB3873CA22017DC100ADF0CB /* ItemViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemViewCell.xib; sourceTree = "<group>"; };
 		DB3873CC22017E5300ADF0CB /* ItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewCell.swift; sourceTree = "<group>"; };
 		DB47A572221CF055002A2081 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		DB47A576221CF0B9002A2081 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		DB47A578221CF0C7002A2081 /* InputModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputModel.swift; sourceTree = "<group>"; };
 		DB47A57B221D0059002A2081 /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
 		DBABB191220C49EF00B808F6 /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
 		DBABB193220C4DE000B808F6 /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputManager.swift; sourceTree = "<group>"; };
@@ -230,7 +227,7 @@
 		F80C28A52202C82B0032DE3E /* FriendHistorySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistorySection.swift; sourceTree = "<group>"; };
 		F80C28A722030D500032DE3E /* FriendHistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistoryHeaderView.swift; sourceTree = "<group>"; };
 		F80C28A922031E740032DE3E /* FriendHistoryHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendHistoryHeaderView.xib; sourceTree = "<group>"; };
-		F80C28AD22040FDB0032DE3E /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		F80C28AD22040FDB0032DE3E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		F814529321FCC909004A2CF0 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F814529521FCCF6B004A2CF0 /* SettingViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewCell.swift; sourceTree = "<group>"; };
 		F814529621FCCF6B004A2CF0 /* SettingViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingViewCell.xib; sourceTree = "<group>"; };
@@ -255,6 +252,7 @@
 		F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 		F89ED96A22151D2F006588E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F89ED97622163A34006588E1 /* InputFriendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFriendViewCell.swift; sourceTree = "<group>"; };
+		F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -420,6 +418,7 @@
 				491DD81F221532290093720A /* UIView+Shadow.swift */,
 				497882562217BFCB00ED64A7 /* UIImage+Resize.swift */,
 				491B1C4D221BF86B00ECB66F /* String+PhoneFormat.swift */,
+				F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -449,10 +448,8 @@
 			isa = PBXGroup;
 			children = (
 				DBABB191220C49EF00B808F6 /* InputData.swift */,
-				DB47A578221CF0C7002A2081 /* InputModel.swift */,
 				DBABB193220C4DE000B808F6 /* InputManager.swift */,
 				DBF4CF2821FC42D7001536A8 /* EntryRoute.swift */,
-				DB47A576221CF0B9002A2081 /* BaseViewController.swift */,
 			);
 			path = InputService;
 			sourceTree = "<group>";
@@ -460,7 +457,7 @@
 		DB47A57A221D002A002A2081 /* CoreDataService */ = {
 			isa = PBXGroup;
 			children = (
-				F80C28AD22040FDB0032DE3E /* DatabaseManager.swift */,
+				F80C28AD22040FDB0032DE3E /* CoreDataManager.swift */,
 				DB47A57B221D0059002A2081 /* CoreDataModel.swift */,
 			);
 			path = CoreDataService;
@@ -709,7 +706,6 @@
 				F81452A421FD8C1B004A2CF0 /* String+Extensions.swift in Sources */,
 				4967D66B2202C65500223ADF /* CalendarDayViewCell.swift in Sources */,
 				DB38739D21FEDB0200ADF0CB /* HolidayViewController.swift in Sources */,
-				DB47A579221CF0C7002A2081 /* InputModel.swift in Sources */,
 				49C0851321FD979A0060B02C /* FriendViewCell.swift in Sources */,
 				DB3873A121FEEF0D00ADF0CB /* ThanksFriendViewCell.swift in Sources */,
 				DBF4CF4421FCE4F7001536A8 /* UIButton+Animation.swift in Sources */,
@@ -748,7 +744,7 @@
 				DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */,
 				DB272663220BCA4200F30CBC /* HolidayInformationView.swift in Sources */,
 				DB3873C922006D3900ADF0CB /* UITextField+BottomLine.swift in Sources */,
-				F80C28AE22040FDB0032DE3E /* DatabaseManager.swift in Sources */,
+				F80C28AE22040FDB0032DE3E /* CoreDataManager.swift in Sources */,
 				4978BCCB220D5A6F0052156E /* TableFetchedResultsDelegate.swift in Sources */,
 				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
 				DB47A573221CF055002A2081 /* Error.swift in Sources */,
@@ -774,8 +770,8 @@
 				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
 				49484D0522140F3800C09384 /* SelectedTagViewCell.swift in Sources */,
 				F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */,
-				DB47A577221CF0B9002A2081 /* BaseViewController.swift in Sources */,
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
+				F8CB544A221D069D001693E2 /* UINavigationController+Extensions.swift in Sources */,
 				4969A58E221A789900E189BD /* ContactManager.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,

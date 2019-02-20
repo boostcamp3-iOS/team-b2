@@ -36,13 +36,16 @@ class NotificationViewCell: UITableViewCell {
             iconImageView.image = UIImage(named: "ic_fullStar")
             eventDateLabel.text = notification.event?.date?.toString(of: .year)
             notificationLabel.text = notification.sentence
+            
             let notificationText: String
             let today: Date = Date()
             let yesterday: Date = today.addingTimeInterval(60 * 60 * 24 * -1)
-            switch Calendar.current.dateComponents([.day], from: notification.date ?? today) {
-            case Calendar.current.dateComponents([.day], from: today):
+            guard let date = notification.date else { return }
+            
+            switch Calendar.current.dateComponents([.year, .month, .day], from: date) {
+            case Calendar.current.dateComponents([.year, .month, .day], from: today):
                 notificationText = "오늘"
-            case Calendar.current.dateComponents([.day], from: yesterday):
+            case Calendar.current.dateComponents([.year, .month, .day], from: yesterday):
                 notificationText = "어제"
             default:
                 notificationText = notification.date?.toString(of: .none) ?? ""

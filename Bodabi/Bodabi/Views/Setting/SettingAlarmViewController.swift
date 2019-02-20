@@ -13,18 +13,9 @@ class SettingAlarmViewController: UIViewController {
     // MARK: - IBOutlet
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var defaultAlarmTime: UITextField!
-    @IBOutlet weak var dafaultAlarmDday: UITextField!
-    @IBOutlet weak var favoriteFirstAlarmDday: UITextField!
-    @IBOutlet weak var favoriteSecondAlarmDday: UITextField!
-    @IBOutlet weak var defaultAlarmTimeLabel: UILabel!
-    @IBOutlet weak var defaultAlarmDdayLabel: UILabel!
-    @IBOutlet weak var favoriteFirstAlarmDdayLabel: UILabel!
-    @IBOutlet weak var favoriteSecondAlarmDdayLabel: UILabel!
-    @IBOutlet weak var defaultAlarmTimeView: UIView!
-    @IBOutlet weak var defaultAlarmDdayView: UIView!
-    @IBOutlet weak var favoriteFirstAlarmDdayView: UIView!
-    @IBOutlet weak var favoriteSecondAlarmDdayView: UIView!
+    @IBOutlet var fields: [UITextField]!
+    @IBOutlet var labels: [UILabel]!
+    @IBOutlet var views: [UIView]!
     
     // MARK: - Property
     
@@ -33,11 +24,11 @@ class SettingAlarmViewController: UIViewController {
     private let dayPickerView = UIPickerView()
     private let dDayData: [String: Int] = ["당일": 0, "하루 전": 1, "이틀 전": 2, "3일 전": 3, "5일 전": 5, "일주일 전": 7, "10일 전": 10, "2주 전": 14, "한 달 전": 30]
     private let dDayOptions: [String] = ["당일", "하루 전", "이틀 전", "3일 전", "5일 전", "일주일 전", "10일 전", "2주 전", "한 달 전"]
-    private enum button: Int {
-        case defaultTime = 1
-        case defaultDday = 2
-        case favoriteFirstDday = 3
-        case favoriteSecondDday = 4
+    private enum Button: Int {
+        case defaultTime = 0
+        case defaultDday = 1
+        case favoriteFirstDday = 2
+        case favoriteSecondDday = 3
     }
     private var editingText: UILabel?
     private var initialValues: [Int] = []
@@ -67,40 +58,50 @@ class SettingAlarmViewController: UIViewController {
         
         if defaultHour < 12 {
             let modifiedHour: Int = defaultHour == 0 ? 12 : defaultHour
-            defaultAlarmTimeLabel.text = "오전 " + "\(modifiedHour)시 \(defaultMinutes)분"
+            labels[Button.defaultTime.rawValue].text = "오전 " + "\(modifiedHour)시 \(defaultMinutes)분"
         } else {
             let modifiedHour: Int = defaultHour == 12 ? 24 : defaultHour
-            defaultAlarmTimeLabel.text = "오후 " + "\(modifiedHour-12)시 \(defaultMinutes)분"
+            labels[Button.defaultTime.rawValue].text = "오후 " + "\(modifiedHour-12)시 \(defaultMinutes)분"
         }
         
-        defaultAlarmDdayLabel.text = dDayData.filter({$0.value ==  defaultDday}).keys.first ?? "하루 전"
-        favoriteFirstAlarmDdayLabel.text = dDayData.filter({$0.value ==  favoriteFirstDday}).keys.first ?? "당일"
-        favoriteSecondAlarmDdayLabel.text = dDayData.filter({$0.value ==  favoriteSecondDday}).keys.first ?? "일주일 전"
+        labels[Button.defaultDday.rawValue].text = dDayData.filter({$0.value ==  defaultDday}).keys.first ?? "하루 전"
+        labels[Button.favoriteFirstDday.rawValue].text = dDayData.filter({$0.value ==  favoriteFirstDday}).keys.first ?? "당일"
+        labels[Button.favoriteSecondDday.rawValue].text = dDayData.filter({$0.value ==  favoriteSecondDday}).keys.first ?? "일주일 전"
     }
     
     private func initPickerView() {
         datePickerView.datePickerMode = .time
         datePickerView.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
         dayPickerView.dataSource = self; dayPickerView.delegate = self
-        defaultAlarmTime.inputView = datePickerView
-        dafaultAlarmDday.inputView = dayPickerView
-        favoriteFirstAlarmDday.inputView = dayPickerView
-        favoriteSecondAlarmDday.inputView = dayPickerView
+        fields[Button.defaultTime.rawValue].inputView = datePickerView
+        fields[Button.defaultDday.rawValue].inputView = dayPickerView
+        fields[Button.favoriteFirstDday.rawValue].inputView = dayPickerView
+        fields[Button.favoriteSecondDday.rawValue].inputView = dayPickerView
+        
+        let bar = UIToolbar()
+        bar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(touchUpPickerDoneButton))
+        doneButton.tintColor = .mainColor
+        let cancelButton = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(gestureRecognizer(_: shouldReceive:)))
+        cancelButton.tintColor = .mainColor
+        let flextbleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        bar.setItems([cancelButton, flextbleSpace, doneButton], animated: true)
+        fields.forEach({ $0.inputAccessoryView = bar })
     }
     
     private func initButtonColor() {
-        defaultAlarmTimeView.backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
-        defaultAlarmDdayView.backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
-        favoriteFirstAlarmDdayView.backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
-        favoriteSecondAlarmDdayView.backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
+        views[Button.defaultTime.rawValue].backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
+        views[Button.defaultDday.rawValue].backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
+        views[Button.favoriteFirstDday.rawValue].backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
+        views[Button.favoriteSecondDday.rawValue].backgroundColor = #colorLiteral(red: 0.9573978782, green: 0.9517062306, blue: 0.9617727399, alpha: 1)
     }
     
     private func setTimeLabel() {
         guard let currentHour = Int(datePickerView.date.toString(of: .hour)) else { return }
         if currentHour < 12 {
-            defaultAlarmTimeLabel.text = "오전 " + datePickerView.date.toString(of: .koreanTime)
+            labels[Button.defaultTime.rawValue].text = "오전 " + datePickerView.date.toString(of: .koreanTime)
         } else {
-            defaultAlarmTimeLabel.text = "오후 " + datePickerView.date.toString(of: .koreanTime)
+            labels[Button.defaultTime.rawValue].text = "오후 " + datePickerView.date.toString(of: .koreanTime)
         }
     }
     
@@ -165,6 +166,21 @@ class SettingAlarmViewController: UIViewController {
         }
     }
     
+    @objc private func touchUpPickerDoneButton() {
+        switch editingText {
+        case labels[Button.defaultTime.rawValue]:
+            datePickerValueChanged()
+        case labels[Button.defaultDday.rawValue],
+             labels[Button.favoriteFirstDday.rawValue],
+             labels[Button.favoriteSecondDday.rawValue]:
+            self.pickerView(dayPickerView, didSelectRow: dayPickerView.selectedRow(inComponent: 0), inComponent: 0)
+        default:
+            break
+        }
+        view.endEditing(true)
+        initButtonColor()
+    }
+    
     @objc private func datePickerValueChanged() {
         let hour = datePickerView.date.toString(of: .hour)
         let minutes = datePickerView.date.toString(of: .minutes)
@@ -176,33 +192,33 @@ class SettingAlarmViewController: UIViewController {
     
     @IBAction func touchUpAlarmButton(_ sender: UIButton) {
         switch sender.tag {
-        case button.defaultTime.rawValue:
-            if !defaultAlarmTime.isFirstResponder {
-                defaultAlarmTime.becomeFirstResponder()
-                editingText = defaultAlarmTimeLabel
+        case Button.defaultTime.rawValue + 1:
+            if !fields[Button.defaultTime.rawValue].isFirstResponder {
+                fields[Button.defaultTime.rawValue].becomeFirstResponder()
+                editingText = labels[Button.defaultTime.rawValue]
                 initButtonColor()
-                defaultAlarmTimeView.backgroundColor = #colorLiteral(red: 1, green: 0.9482591324, blue: 0.8059717466, alpha: 1)
+                views[Button.defaultTime.rawValue].backgroundColor = #colorLiteral(red: 1, green: 0.9482591324, blue: 0.8059717466, alpha: 1)
             }
-        case button.defaultDday.rawValue:
-            if !dafaultAlarmDday.isFirstResponder {
-                dafaultAlarmDday.becomeFirstResponder()
-                editingText = defaultAlarmDdayLabel
+        case Button.defaultDday.rawValue + 1:
+            if !fields[Button.defaultDday.rawValue].isFirstResponder {
+                fields[Button.defaultDday.rawValue].becomeFirstResponder()
+                editingText = labels[Button.defaultDday.rawValue]
                 initButtonColor()
-                defaultAlarmDdayView.backgroundColor = #colorLiteral(red: 1, green: 0.9482591324, blue: 0.8059717466, alpha: 1)
+                views[Button.defaultDday.rawValue].backgroundColor = #colorLiteral(red: 1, green: 0.9482591324, blue: 0.8059717466, alpha: 1)
             }
-        case button.favoriteFirstDday.rawValue:
-            if !favoriteFirstAlarmDday.isFirstResponder {
-                favoriteFirstAlarmDday.becomeFirstResponder()
-                editingText = favoriteFirstAlarmDdayLabel
+        case Button.favoriteFirstDday.rawValue + 1:
+            if !fields[Button.favoriteFirstDday.rawValue].isFirstResponder {
+                fields[Button.favoriteFirstDday.rawValue].becomeFirstResponder()
+                editingText = labels[Button.favoriteFirstDday.rawValue]
                 initButtonColor()
-                favoriteFirstAlarmDdayView.backgroundColor = #colorLiteral(red: 1, green: 0.9482591324, blue: 0.8059717466, alpha: 1)
+                views[Button.favoriteFirstDday.rawValue].backgroundColor = #colorLiteral(red: 1, green: 0.9482591324, blue: 0.8059717466, alpha: 1)
             }
-        case button.favoriteSecondDday.rawValue:
-            if !favoriteSecondAlarmDday.isFirstResponder {
-                favoriteSecondAlarmDday.becomeFirstResponder()
-                editingText = favoriteSecondAlarmDdayLabel
+        case Button.favoriteSecondDday.rawValue + 1:
+            if !fields[Button.favoriteSecondDday.rawValue].isFirstResponder {
+                fields[Button.favoriteSecondDday.rawValue].becomeFirstResponder()
+                editingText = labels[Button.favoriteSecondDday.rawValue]
                 initButtonColor()
-                favoriteSecondAlarmDdayView.backgroundColor = #colorLiteral(red: 1, green: 0.9482591324, blue: 0.8059717466, alpha: 1)
+                views[Button.favoriteSecondDday.rawValue].backgroundColor = #colorLiteral(red: 1, green: 0.9482591324, blue: 0.8059717466, alpha: 1)
             }
         default: break
         }
@@ -229,11 +245,11 @@ extension SettingAlarmViewController: UIPickerViewDelegate {
         guard let editingType = editingText else { return }
         if let value = dDayData[editingType.text ?? ""] {
             switch editingType {
-            case defaultAlarmDdayLabel:
+            case labels[Button.defaultDday.rawValue]:
                 UserDefaults.standard.set(value, forKey: DefaultsKey.defaultAlarmDday)
-            case favoriteFirstAlarmDdayLabel:
+            case labels[Button.favoriteFirstDday.rawValue]:
                 UserDefaults.standard.set(value, forKey: DefaultsKey.favoriteFirstAlarmDday)
-            case favoriteSecondAlarmDdayLabel:
+            case labels[Button.favoriteSecondDday.rawValue]:
                 UserDefaults.standard.set(value, forKey: DefaultsKey.favoriteSecondAlarmDday)
             default:
                 break
