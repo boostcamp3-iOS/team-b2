@@ -19,6 +19,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lg0-1m-QXY">
+                        <rect key="frame" x="23" y="2" width="325" height="52.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ywj-9L-dHo">
                         <rect key="frame" x="32" y="10.5" width="43.5" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
@@ -121,6 +130,7 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Lg0-1m-QXY" firstAttribute="trailing" secondItem="VtX-ZD-RBi" secondAttribute="trailing" constant="-2" id="0ak-97-7sX"/>
                     <constraint firstItem="FvJ-eL-3yG" firstAttribute="leading" secondItem="Ywj-9L-dHo" secondAttribute="leading" id="0un-nU-hn2"/>
                     <constraint firstItem="T4h-hK-mVf" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" id="CVb-5q-hPq"/>
                     <constraint firstItem="T4h-hK-mVf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Cz0-RV-gcE"/>
@@ -133,8 +143,11 @@
                     <constraint firstItem="Ywj-9L-dHo" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" priority="900" constant="10" id="ZCu-0Z-lwp"/>
                     <constraint firstItem="Ywj-9L-dHo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="a3p-kr-6bo"/>
                     <constraint firstItem="VtX-ZD-RBi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="bvd-J9-wDI"/>
+                    <constraint firstAttribute="bottom" secondItem="Lg0-1m-QXY" secondAttribute="bottom" constant="2" id="e6b-Pv-F3P"/>
                     <constraint firstAttribute="bottom" secondItem="VtX-ZD-RBi" secondAttribute="bottom" id="gAN-qV-Swc"/>
+                    <constraint firstItem="Lg0-1m-QXY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="hEb-MD-0pk"/>
                     <constraint firstItem="FvJ-eL-3yG" firstAttribute="top" secondItem="Ywj-9L-dHo" secondAttribute="bottom" constant="3" id="hFM-1J-gFC"/>
+                    <constraint firstItem="Lg0-1m-QXY" firstAttribute="leading" secondItem="VtX-ZD-RBi" secondAttribute="leading" constant="-2" id="itY-g0-xec"/>
                     <constraint firstItem="tKY-aR-Uuy" firstAttribute="leading" secondItem="ZNp-B7-pWi" secondAttribute="trailing" constant="5" id="rOk-oy-WgS"/>
                     <constraint firstAttribute="trailing" secondItem="VtX-ZD-RBi" secondAttribute="trailing" constant="25" id="rY9-cz-E7b"/>
                     <constraint firstItem="96d-wl-2BC" firstAttribute="centerY" secondItem="Ywj-9L-dHo" secondAttribute="centerY" id="tu4-5r-J9J"/>
@@ -152,6 +165,7 @@
                 <outlet property="phoneLabel" destination="FvJ-eL-3yG" id="Usd-Dm-Hbg"/>
                 <outlet property="secondTagIcon" destination="ZNp-B7-pWi" id="ob7-Kt-wOx"/>
                 <outlet property="secondTagLabel" destination="jeP-T0-IoL" id="KSz-xx-Odi"/>
+                <outlet property="selectedColorView" destination="Lg0-1m-QXY" id="zcY-sh-tjP"/>
                 <outlet property="thirdTagIcon" destination="tKY-aR-Uuy" id="nTb-nS-mXR"/>
                 <outlet property="thirdTagLabel" destination="JvF-lb-1Tc" id="p8t-SS-9go"/>
             </connections>

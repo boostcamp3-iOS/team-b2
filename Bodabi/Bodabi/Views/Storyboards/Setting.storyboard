@@ -320,6 +320,109 @@
             </objects>
             <point key="canvasLocation" x="1714" y="98"/>
         </scene>
+        <!--연락처 연동-->
+        <scene sceneID="p5X-AO-OUi">
+            <objects>
+                <viewController storyboardIdentifier="SettingContactsViewController" id="IQc-Wo-1CA" customClass="SettingContactsViewController" customModule="Bodabi" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2JN-LT-Be3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="연락처 가져오기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZT-gY-8NF">
+                                <rect key="frame" x="18" y="60" width="341" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ff3-cY-9Q8">
+                                <rect key="frame" x="0.0" y="272" width="375" height="506"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="연락처의 모든 항목을 자동으로 친구 목록에 추가합니다" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cyv-0T-3ac">
+                                <rect key="frame" x="24" y="100" width="335" height="15.666666666666671"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJR-zK-6pD">
+                                <rect key="frame" x="22" y="165.66666666666666" width="331" height="50"/>
+                                <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="XRp-tg-KwO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <state key="normal" title="전체 목록 가져오기">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="touchUpAlarmButton:" destination="PSa-Er-hFv" eventType="touchUpInside" id="aAf-k9-Ccp"/>
+                                    <action selector="touchUpFetchAllContactsButton:" destination="IQc-Wo-1CA" eventType="touchUpInside" id="ubd-UX-Y3I"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="선택해서 가져오기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5MY-PL-IPZ">
+                                <rect key="frame" x="22" y="241.66666666666666" width="122" height="19.333333333333343"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUJ-Ro-AEv">
+                                <rect key="frame" x="262" y="235.33333333333334" width="91" height="32.000000000000028"/>
+                                <color key="backgroundColor" red="0.92549019610000005" green="0.42745098040000001" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="6" maxX="10" maxY="6"/>
+                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-3" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="-3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="0개 추가" image="ic_add">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="touchUpFetchSelectedContactsButton:" destination="IQc-Wo-1CA" eventType="touchUpInside" id="vPJ-vT-nKH"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5MY-PL-IPZ" firstAttribute="leading" secondItem="MJR-zK-6pD" secondAttribute="leading" id="0LV-8M-fET"/>
+                            <constraint firstItem="ff3-cY-9Q8" firstAttribute="trailing" secondItem="nra-VL-GVg" secondAttribute="trailing" id="7SK-UG-Mxv"/>
+                            <constraint firstItem="sZT-gY-8NF" firstAttribute="leading" secondItem="nra-VL-GVg" secondAttribute="leading" constant="18" id="913-R4-fUE"/>
+                            <constraint firstItem="nra-VL-GVg" firstAttribute="trailing" secondItem="MJR-zK-6pD" secondAttribute="trailing" constant="22" id="GWF-Ac-cXQ"/>
+                            <constraint firstItem="5MY-PL-IPZ" firstAttribute="top" secondItem="MJR-zK-6pD" secondAttribute="bottom" constant="26" id="S1Q-ry-gSx"/>
+                            <constraint firstItem="sZT-gY-8NF" firstAttribute="top" secondItem="nra-VL-GVg" secondAttribute="top" constant="16" id="Uf9-l7-vNH"/>
+                            <constraint firstItem="Cyv-0T-3ac" firstAttribute="leading" secondItem="sZT-gY-8NF" secondAttribute="leading" constant="6" id="Wu8-UI-LZo"/>
+                            <constraint firstItem="nra-VL-GVg" firstAttribute="trailing" secondItem="sZT-gY-8NF" secondAttribute="trailing" constant="16" id="Y84-Sa-vMw"/>
+                            <constraint firstItem="Cyv-0T-3ac" firstAttribute="trailing" secondItem="sZT-gY-8NF" secondAttribute="trailing" id="YAg-Tr-PFF"/>
+                            <constraint firstItem="Cyv-0T-3ac" firstAttribute="top" secondItem="sZT-gY-8NF" secondAttribute="bottom" constant="8" id="YiQ-cg-nnb"/>
+                            <constraint firstItem="ff3-cY-9Q8" firstAttribute="top" secondItem="5MY-PL-IPZ" secondAttribute="bottom" constant="11" id="ZEL-o5-5qI"/>
+                            <constraint firstItem="ff3-cY-9Q8" firstAttribute="bottom" secondItem="nra-VL-GVg" secondAttribute="bottom" id="csd-Nr-IT2"/>
+                            <constraint firstItem="kUJ-Ro-AEv" firstAttribute="trailing" secondItem="MJR-zK-6pD" secondAttribute="trailing" id="ecM-g8-36H"/>
+                            <constraint firstItem="ff3-cY-9Q8" firstAttribute="leading" secondItem="nra-VL-GVg" secondAttribute="leading" id="fL5-kH-OPf"/>
+                            <constraint firstItem="MJR-zK-6pD" firstAttribute="leading" secondItem="nra-VL-GVg" secondAttribute="leading" constant="22" id="fQz-o3-m2F"/>
+                            <constraint firstItem="kUJ-Ro-AEv" firstAttribute="centerY" secondItem="5MY-PL-IPZ" secondAttribute="centerY" id="kci-Xr-d4K"/>
+                            <constraint firstItem="MJR-zK-6pD" firstAttribute="top" secondItem="Cyv-0T-3ac" secondAttribute="bottom" constant="50" id="onh-QX-fJV"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nra-VL-GVg"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="연락처 연동" id="K0q-ML-d7x"/>
+                    <connections>
+                        <outlet property="fetchSelectedContactsButton" destination="kUJ-Ro-AEv" id="1EE-hR-Btl"/>
+                        <outlet property="tableView" destination="ff3-cY-9Q8" id="ecm-o5-UvX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EKd-iz-7IW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1712.8" y="816.50246305418727"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="RpB-z2-HoV">
             <objects>
@@ -349,6 +452,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic_add" width="21" height="20"/>
         <image name="ic_setting" width="25" height="25"/>
     </resources>
 </document>
