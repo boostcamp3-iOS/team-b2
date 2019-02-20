@@ -133,19 +133,17 @@ class NameInputViewController: UIViewController {
     }
     
     private func fetchFriend() {
-        let request: NSFetchRequest<Friend> = Friend.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        
-        do {
-            if let result: [Friend] = try databaseManager?.viewContext.fetch(request) {
-                friends = result
+
+        databaseManager.fetch(type: Friend.self, sortDescriptor: sortDescriptor) { [weak self] (result) in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case let .success(friends):
+                self?.friends = friends
+                self?.tableView.reloadData()
             }
-        } catch {
-            print(error.localizedDescription)
         }
-        
-        tableView.reloadData()
     }
     
     private func initTableView() {
