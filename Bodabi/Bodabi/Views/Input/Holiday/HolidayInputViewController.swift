@@ -37,6 +37,7 @@ class HolidayInputViewController: UIViewController {
     private var isDeleting: Bool = false
     private var selectedHoliday: String?
     private var selectedRelation: String?
+    private var holidays: [Holiday]?
     
     // MARK: - Life Cycle
     
@@ -47,6 +48,7 @@ class HolidayInputViewController: UIViewController {
         initTableView()
         initGuideLabel()
         initNavigationBar()
+        fetchHoliday()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,6 +57,13 @@ class HolidayInputViewController: UIViewController {
     }
     
     // MARK: - Initialization
+    
+    private func fetchHoliday() {
+        databaseManager.fetch(type: Holiday.self) { holidays, error in
+            guard let holidays = holidays else { return }
+            self.holidays = holidays
+        }
+    }
     
     private func initDefaultData() {
         if isRelationInput {
@@ -129,18 +138,13 @@ class HolidayInputViewController: UIViewController {
     }
     
     private func isUniqueName() -> Bool {
-        
         guard let holiday = selectedHoliday, let relation = selectedRelation else { return false }
         
         var isUnique: Bool = true
-        let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
         let currentName: String = relation + "의 " + holiday
-        let predicate = NSPredicate(format:"title = %@", currentName)
         
-        request.predicate = predicate
-        
-        if let fetchResult = try? databaseManager.viewContext.fetch(request) {
-            if let _ = fetchResult.first {
+        holidays?.forEach {
+            if $0.title == currentName {
                 isUnique = false
             }
         }
