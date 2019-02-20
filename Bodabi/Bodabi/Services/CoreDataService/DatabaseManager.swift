@@ -27,13 +27,12 @@ class DatabaseManager {
     }
     
     func load(completion: (() -> Void)? = nil) {
-        container.loadPersistentStores {
-            storeDescription, error in
-            guard error == nil else {
-                fatalError(error!.localizedDescription)
+        container.loadPersistentStores { storeDescription, error in
+            if let _ = error {
+                print(CoreDataError.loadFailed.localizedDescription)
+            } else {
+                completion?()
             }
-            
-            completion?()
         }
 
         print("Library Path: ", FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).last ?? "Not Found!")
@@ -52,53 +51,65 @@ class DatabaseManager {
             do {
                 try viewContext.execute(deleteRequest)
             } catch {
-                print(error.localizedDescription)
+                print(CoreDataError.batchDeletionFailed.localizedDescription)
             }
         }
     }
     
-    func fetch<CoreDataObject: NSManagedObject>(type: CoreDataObject.Type, predicate: NSPredicate? = nil, sortDescriptor: NSSortDescriptor? = nil, completion: @escaping ([CoreDataObject])->()) {
+    func fetch<CoreDataObject: NSManagedObject>(type: CoreDataObject.Type, predicate: NSPredicate? = nil, sortDescriptor: NSSortDescriptor? = nil, completion: @escaping (Result<[CoreDataObject]>)->()) {
         
         let backgroundContext = container.newBackgroundContext()
-        
+    
         let request: NSFetchRequest<CoreDataObject> = CoreDataObject.fetchRequest() as! NSFetchRequest<CoreDataObject>
+        
         if let predicate: NSPredicate = predicate {
             request.predicate = predicate
         }
+        
         if let sortDescriptor: NSSortDescriptor = sortDescriptor {
             request.sortDescriptors = [sortDescriptor]
         }
         
-        let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: request) { asyncResult in
-            guard let result = asyncResult.finalResult else { return }
+        let complete: (Result) -> Void = { result in
             DispatchQueue.main.async {
-                let results: [CoreDataObject] = result.lazy
-                    .compactMap { $0.objectID }
-                    .compactMap { self.viewContext.object(with: $0) as? CoreDataObject }
-                completion(results)
+                completion(result)
             }
+        }
+        
+        let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: request) { asyncResult in
+            guard let result = asyncResult.finalResult else {
+                complete(.failure(CoreDataError.fetchFailed))
+                return
+            }
+            
+            let results: [CoreDataObject] = result.lazy
+                .compactMap { $0.objectID }
+                .compactMap { self.viewContext.object(with: $0) as? CoreDataObject }
+            complete(.success(results))
         }
         
         do {
             try backgroundContext.execute(asyncFetchRequest)
         } catch {
-            print("Core data fetch failed: \(error.localizedDescription)")
+            complete(.failure(CoreDataError.fetchFailed))
         }
     }
     
-    func delete<CoreDataObject: NSManagedObject>(object: CoreDataObject) {
+    func delete<CoreDataObject: NSManagedObject>(object: CoreDataObject, completion: @escaping (Error?)->()) {
         container.performBackgroundTask { backgroundContext in
             guard let object = backgroundContext.object(with: object.objectID) as? CoreDataObject else { return }
             do {
                 backgroundContext.delete(object)
                 try backgroundContext.save()
             } catch {
-                print("Core data deletion failed: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    completion(CoreDataError.deletionFailed)
+                }
             }
         }
     }
     
-    func batchDelete(typeString: String, predicate: NSPredicate? = nil) {
+    func batchDelete(typeString: String, predicate: NSPredicate? = nil, completion: @escaping (Error?)->()) {
         container.performBackgroundTask { backgroundContext in
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: typeString)
             if let predicate = predicate {
@@ -113,12 +124,14 @@ class DatabaseManager {
                 let changes = [NSDeletedObjectsKey: objectIDs]
                 NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self.viewContext])
             } catch {
-                print("Core data batch deletion failed: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    completion(CoreDataError.batchDeletionFailed)
+                }
             }
         }
     }
     
-    func createFriend(name: String, tags: [String]? = nil, phoneNumber: String? = nil, completion: @escaping (Friend) -> ()) {
+    func createFriend(name: String, tags: [String]? = nil, phoneNumber: String? = nil, completion: @escaping (Result<Friend>) -> ()) {
         container.performBackgroundTask { backgroundContext in
             let friend: Friend = Friend(context: backgroundContext)
             friend.name = name
@@ -126,19 +139,26 @@ class DatabaseManager {
             friend.phoneNumber = phoneNumber
             friend.favorite = false
             
+            let complete: (Result) -> Void = { result in
+                DispatchQueue.main.async {
+                    completion(result)
+                }
+            }
+            
             do {
                 try backgroundContext.save()
-                DispatchQueue.main.async {
-                    let mainQueueFriend = self.viewContext.object(with: friend.objectID) as! Friend
-                    completion(mainQueueFriend)
+                guard let mainQueueFriend = self.viewContext.object(with: friend.objectID) as? Friend else {
+                    complete(.failure(CoreDataError.creationFailed))
+                    return
                 }
+                complete(.success(mainQueueFriend))
             } catch {
-                print("Friend creation failed: \(error.localizedDescription)")
+                complete(.failure(CoreDataError.creationFailed))
             }
         }
     }
         
-    func createEvent(title: String, date: Date, friend: Friend, completion: @escaping (Event) -> ()) {
+    func createEvent(title: String, date: Date, friend: Friend, completion: @escaping (Event?, Error?) -> ()) {
         container.performBackgroundTask { backgroundContext in
             let event: Event = Event(context: backgroundContext)
             event.title = title
@@ -148,17 +168,16 @@ class DatabaseManager {
             
             do {
                 try backgroundContext.save()
-                DispatchQueue.main.async {
-                    let mainQueueEvent = self.viewContext.object(with: event.objectID) as! Event
-                    completion(mainQueueEvent)
-                }
+                let mainQueueEvent = self.viewContext.object(with: event.objectID) as! Event
+                completion(mainQueueEvent, nil)
             } catch {
                 print("Event creation failed: \(error.localizedDescription)")
+                completion(nil, CoreDataError.creationFailed)
             }
         }
     }
     
-    func createHistory(holiday: String, item: String, isTaken: Bool, date: Date, friend: Friend, completion: @escaping (History) -> ()) {
+    func createHistory(holiday: String, item: String, isTaken: Bool, date: Date, friend: Friend, completion: @escaping (History?, Error?) -> ()) {
         container.performBackgroundTask { backgroundContext in
             let history: History = History(context: backgroundContext)
             history.holiday = holiday
@@ -169,17 +188,15 @@ class DatabaseManager {
             
             do {
                 try backgroundContext.save()
-                DispatchQueue.main.async {
-                    let mainQueueHistory = self.viewContext.object(with: history.objectID) as! History
-                    completion(mainQueueHistory)
-                }
+                let mainQueueHistory = self.viewContext.object(with: history.objectID) as! History
+                completion(mainQueueHistory, nil)
             } catch {
-                print("History creation failed: \(error.localizedDescription)")
+                completion(nil, CoreDataError.creationFailed)
             }
         }
     }
     
-    func createHoliday(title: String, date: Date, image: Data? = nil, completion: @escaping (Holiday) -> ()) {
+    func createHoliday(title: String, date: Date, image: Data? = nil, completion: @escaping (Holiday?, Error?) -> ()) {
         container.performBackgroundTask { backgroundContext in
             let holiday: Holiday = Holiday(context: backgroundContext)
             holiday.title = title
@@ -189,17 +206,15 @@ class DatabaseManager {
             
             do {
                 try backgroundContext.save()
-                DispatchQueue.main.async {
-                    let mainQueueHoliday = self.viewContext.object(with: holiday.objectID) as! Holiday
-                    completion(mainQueueHoliday)
-                }
+                let mainQueueHoliday = self.viewContext.object(with: holiday.objectID) as! Holiday
+                completion(mainQueueHoliday, nil)
             } catch {
-                print("Holiday creation failed: \(error.localizedDescription)")
+                completion(nil, CoreDataError.creationFailed)
             }
         }
     }
     
-    func createNotification(event: Event, date: Date, completion: @escaping (Notification) -> ()) {
+    func createNotification(event: Event, date: Date, completion: @escaping (Notification?, Error?) -> ()) {
         container.performBackgroundTask { backgroundContext in
             let notification: Notification = Notification(context: backgroundContext)
             let eventID = event.objectID
@@ -210,14 +225,12 @@ class DatabaseManager {
             
             do {
                 try backgroundContext.save()
-                DispatchQueue.main.async {
-                    let mainQueueNotification = self.viewContext.object(with: notification.objectID) as! Notification
-                    let mainQueueEvent = self.viewContext.object(with: eventID) as! Event
-                    mainQueueNotification.event = mainQueueEvent
-                    completion(mainQueueNotification)
-                }
+                let mainQueueNotification = self.viewContext.object(with: notification.objectID) as! Notification
+                let mainQueueEvent = self.viewContext.object(with: eventID) as! Event
+                mainQueueNotification.event = mainQueueEvent
+                completion(mainQueueNotification, nil)
             } catch {
-                print("Notification creation failed: \(error.localizedDescription)")
+                completion(nil, CoreDataError.creationFailed)
             }
         }
     }
@@ -237,6 +250,7 @@ class DatabaseManager {
                 try backgroundContext.save()
             } catch {
                 print("Notification creation failed: \(error.localizedDescription)")
+                
             }
         }
     }
@@ -284,21 +298,29 @@ class DatabaseManager {
         }
     }
     
-    func updateHoliday(object: Holiday, title: String? = nil, date: Date? = nil, createdDate: Date? = nil, image: Data? = nil) {
+    func updateHoliday(object: Holiday, title: String? = nil, date: Date? = nil, createdDate: Date? = nil, image: Data? = nil, completion: @escaping (Result<Holiday>)->()) {
         if title == nil, date == nil, createdDate == nil, image == nil {
             return
         }
+
         container.performBackgroundTask { backgroundContext in
-            let holiday = backgroundContext.object(with: object.objectID) as? Holiday
-            if let title = title { holiday?.title = title }
-            if let date = date { holiday?.date = date }
-            if let createdDate = createdDate { holiday?.createdDate = createdDate }
-            if let image = image { holiday?.image = image }
+            guard let holiday = backgroundContext.object(with: object.objectID) as? Holiday else { return }
+            if let title = title { holiday.title = title }
+            if let date = date { holiday.date = date }
+            if let createdDate = createdDate { holiday.createdDate = createdDate }
+            if let image = image { holiday.image = image }
+            let complete: (Result) -> Void = { result in
+                DispatchQueue.main.async {
+                    completion(result)
+                }
+            }
             
             do {
                 try backgroundContext.save()
+                    guard let updatedHoliday = self.viewContext.object(with: holiday.objectID) as? Holiday else { return }
+                    complete(.success(updatedHoliday))
             } catch {
-                print("Notification creation failed: \(error.localizedDescription)")
+                complete(.failure(CoreDataError.creationFailed))
             }
         }
     }
@@ -326,7 +348,7 @@ class DatabaseManager {
         }
     }
     
-    func batchUpdateHistory(typeString: String, predicate: NSPredicate? = nil) {
+    func batchUpdateHistory(typeString: String, predicate: NSPredicate? = nil, completion: @escaping (Result<History>)->()) {
         container.performBackgroundTask { backgroundContext in
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: typeString)
             if let predicate = predicate {
@@ -341,7 +363,7 @@ class DatabaseManager {
                 let changes = [NSDeletedObjectsKey: objectIDs]
                 NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self.viewContext])
             } catch {
-                print("Core data batch deletion failed: \(error.localizedDescription)")
+                completion(Result.failure(CoreDataError.batchUpdateFailed))
             }
         }
     }

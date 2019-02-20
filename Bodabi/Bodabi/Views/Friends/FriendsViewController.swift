@@ -156,17 +156,24 @@ class FriendsViewController: UIViewController {
         emptyView.isHidden = friends.count == 0 ? false : true
     }
     
+    // MARK: Fix me
+    // tableView reload되는 부분과 searchBartext 바꿔주는 부분과, setEmptyView main queue에서 동작하도록 변경
     private func fetchFriend() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        databaseManager.fetch(
+        databaseManager.fetch (
             type: Friend.self,
             sortDescriptor: sortDescriptor
         ) { [weak self] (result) in
-            self?.friends = result
-            self?.setEmptyView(friends: result)
-            self?.sortFriend()
-            self?.tableView.reloadData()
-            self?.searchBar.text = ""
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case let .success(friends):
+                self?.friends = friends
+                self?.setEmptyView(friends: friends)
+                self?.sortFriend()
+                self?.tableView.reloadData()
+                self?.searchBar.text = ""
+            }
         }
     }
     
