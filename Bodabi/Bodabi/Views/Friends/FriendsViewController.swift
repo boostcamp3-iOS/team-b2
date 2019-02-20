@@ -165,6 +165,7 @@ class FriendsViewController: UIViewController {
             self?.friends = result
             self?.setEmptyView(friends: result)
             self?.sortFriend()
+            self?.tableView.reloadData()
             self?.searchBar.text = ""
         }
     }
@@ -185,7 +186,6 @@ class FriendsViewController: UIViewController {
         
         searchFriends = friends
         searchFavoriteFriends = favoriteFriends
-        tableView.reloadData()
     }
     
     private func reloadFriends(friends: [Friend]?,
@@ -216,11 +216,8 @@ class FriendsViewController: UIViewController {
         
         guard let friends = friends,
             let favoriteFriends = favoriteFriends else { return }
-        let allFriends = (friends + favoriteFriends).sorted {
-            $0.name ?? "" < $1.name ?? ""
-        }
-        self.friends = allFriends.filter { $0.favorite == false }
-        self.favoriteFriends = allFriends.filter { $0.favorite == true }
+        self.friends = (friends + favoriteFriends)
+        sortFriend()
         
         reloadFriends(friends: self.friends,
                       favoriteFriends: self.favoriteFriends)
