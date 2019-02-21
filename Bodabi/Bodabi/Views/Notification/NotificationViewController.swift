@@ -36,6 +36,7 @@ class NotificationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         initNavigationBar()
     }
     
@@ -71,19 +72,15 @@ class NotificationViewController: UIViewController {
     
     // MARK: - Method
     
-    func updateNotificationRead(indexPath: IndexPath) {
+    private func updateNotificationRead(indexPath: IndexPath) {
         if let notification = fetchedResultsController?.object(at: indexPath) {
-            notification.isRead = true
-        }
-        do {
-            try databaseManager?.viewContext.save()
-        } catch {
-            print(error.localizedDescription)
+            databaseManager.updateNotification(object: notification, isRead: true)
         }
     }
     
     private func setEmptyView() {
-        emptyView.isHidden = tableView.numberOfRows(inSection: 0) == 0  ? false : true
+        let isEmpty = tableView.numberOfRows(inSection: 0) == 0  ? true : false
+        emptyView.isHidden = !isEmpty
     }
 }
 

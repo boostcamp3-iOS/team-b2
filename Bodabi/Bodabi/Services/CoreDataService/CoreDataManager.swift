@@ -9,12 +9,14 @@
 import Foundation
 import CoreData
 
+
+
 protocol DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager)
 }
 
-class DatabaseManager {
-    let container: NSPersistentContainer
+final class DatabaseManager {
+    var container: NSPersistentContainer
     
     var viewContext: NSManagedObjectContext {
         let context = container.viewContext
@@ -101,6 +103,9 @@ class DatabaseManager {
             do {
                 backgroundContext.delete(object)
                 try backgroundContext.save()
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             } catch {
                 DispatchQueue.main.async {
                     completion(CoreDataError.deletionFailed)
@@ -123,6 +128,9 @@ class DatabaseManager {
                 guard let objectIDs = result?.result as? [NSManagedObjectID] else { return }
                 let changes = [NSDeletedObjectsKey: objectIDs]
                 NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self.viewContext])
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             } catch {
                 DispatchQueue.main.async {
                     completion(CoreDataError.batchDeletionFailed)
@@ -370,3 +378,23 @@ class DatabaseManager {
     }
 }
 
+protocol DatabaseManagerProtocol {
+    var container: NSPersistentContainer { get }
+    var viewContext: NSManagedObjectContext { get }
+    func load(completion: (() -> Void)?)
+    func deleteAll()
+    func fetch<CoreDataObject: NSManagedObject>(type: CoreDataObject.Type, predicate: NSPredicate?, sortDescriptor: NSSortDescriptor?, completion: @escaping (Result<[CoreDataObject]>)->())
+    func delete<CoreDataObject: NSManagedObject>(object: CoreDataObject, completion: @escaping (Error?)->())
+    func batchDelete(typeString: String, predicate: NSPredicate?, completion: @escaping (Error?)->())
+    func createFriend(name: String, tags: [String], phoneNumber: String?, completion: @escaping (Result<Friend>) -> ())
+    func createEvent(title: String, date: Date, friend: Friend, completion: @escaping (Event?, Error?) -> ())
+    func createHistory(holiday: String, item: String, isTaken: Bool, date: Date, friend: Friend, completion: @escaping (History?, Error?) -> ())
+    func createHoliday(title: String, date: Date, image: Data?, completion: @escaping (Holiday?, Error?) -> ())
+    func createNotification(event: Event, date: Date, completion: @escaping (Notification?, Error?) -> ())
+    func updateFriend(object: Friend, name: String?, tags: [String]?, favorite: Bool?, phoneNumber: String?)
+    func updateEvent(object: Event, title: String?, date: Date?, favorite: Bool?, friend: Friend?)
+    func updateHistory(object: History, holiday: String?, item: String?, date: Date?, isTaken: Bool?, friend: Friend?)
+    func updateHoliday(object: Holiday, title: String?, date: Date?, createdDate: Date?, image: Data?, completion: @escaping (Result<Holiday>)->())
+    func updateNotification(object: Notification, event: Event?, date: Date?, isRead: Bool?, isHandled: Bool?)
+    func batchUpdate(typeString: String, predicate: NSPredicate?, updateDictionary: [AnyHashable: Any], completion: @escaping (Result<History>)->())
+}

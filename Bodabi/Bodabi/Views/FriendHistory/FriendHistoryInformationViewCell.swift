@@ -16,11 +16,7 @@ class FriendHistoryInformationViewCell: UITableViewCell {
     @IBOutlet weak var expenditureLabel: UILabel!
     @IBOutlet weak var incomeIcon: UIImageView!
     @IBOutlet weak var expenditureIcon: UIImageView!
-}
-
-// MARK: - Binding
-
-extension FriendHistoryInformationViewCell: FriendHistoryCellProtocol {
+    
     func bind(item: FriendHistorySectionItem) {
         switch item {
         case let .information(income, expenditure):
