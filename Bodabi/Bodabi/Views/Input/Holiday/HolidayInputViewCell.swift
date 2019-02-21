@@ -32,7 +32,6 @@ class HolidayInputViewCell: UITableViewCell {
     
     private func initHolidayButton() {
         holidaybutton.layer.cornerRadius = 10
-        holidaybutton.backgroundColor = UIColor.starColor
     }
     
     private func initDeleteButton() {
@@ -41,14 +40,22 @@ class HolidayInputViewCell: UITableViewCell {
     }
     
     private func setDeleteButton() {
-        if isDeleting {
-            deleteButton.isHidden = false
-        } else {
-            deleteButton.isHidden = true
-        }
+        deleteButton.isHidden = !isDeleting
     }
     
     @IBAction func touchUpHoildayButton(_ sender: UIButton) {
         sender.pulsate()
+    }
+}
+
+extension HolidayInputViewCell: HolidayInputViewCellProtocol {
+    func bind(_ data: String) {
+        if data == "+" {
+            holidaybutton.backgroundColor = .offColor
+        } else {
+            holidaybutton.backgroundColor = .starColor
+        }
+        
+        holidaybutton.setTitle(data, for: .normal)
     }
 }

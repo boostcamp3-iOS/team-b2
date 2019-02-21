@@ -20,24 +20,13 @@ class HolidayInputViewController: UIViewController {
 
     public var inputData: InputData!
     public var entryRoute: EntryRoute!
-    public var isRelationInput: Bool = true
+    public var cellType: CellType = .relation
+    public var cellData: [String]?
     
-    public var myHolidays: [String]? {
-        didSet {
-            tableView.reloadData()
-            UserDefaults.standard.set(myHolidays, forKey: DefaultsKey.defaultHoliday)
-        }
-    }
-    public var myRelations: [String]? {
-        didSet {
-            tableView.reloadData()
-            UserDefaults.standard.set(myRelations, forKey: DefaultsKey.defaultRelation)
-        }
-    }
     private var databaseManager: DatabaseManager!
     private var isDeleting: Bool = false
-    private var selectedHoliday: String?
     private var selectedRelation: String?
+    private var selectedHoliday: String?
     private var holidays: [Holiday]?
     
     // MARK: - Life Cycle
@@ -45,11 +34,16 @@ class HolidayInputViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initDefaultData()
         initTableView()
         initGuideLabel()
         initNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         fetchHoliday()
+        fetchDefaultData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,20 +64,15 @@ class HolidayInputViewController: UIViewController {
         }
     }
     
-    private func initDefaultData() {
-        if isRelationInput {
-            if let defaultRelation = UserDefaults.standard.array(forKey: DefaultsKey.defaultRelation) as? [String] {
-                myRelations = defaultRelation
-            }
-        } else {
-            if let defaultHoliday = UserDefaults.standard.array(forKey: DefaultsKey.defaultHoliday) as? [String] {
-                myHolidays = defaultHoliday
-            }
+    private func fetchDefaultData() {
+        if let data = UserDefaults.standard.array(forKey: cellType.userDefaultKey) as? [String] {
+            cellData = data
+            tableView.reloadData()
         }
     }
     
     private func initTableView() {
-        tableView.delegate = self; tableView.dataSource = self
+        tableView.dataSource = self
     }
     
     private func initGuideLabel() {
@@ -91,11 +80,7 @@ class HolidayInputViewController: UIViewController {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            if isRelationInput {
-                guideLabel.text = "누구의 경조사를\n추가하시겠어요?"
-            } else {
-                guideLabel.text = "어떤 경조사를\n추가하시겠어요?"
-            }
+            guideLabel.text = cellType.guideLabel
         case .addUpcomingEventAtHome,
              .addHistoryAtFriendHistory:
             guideLabel.text = "친구의 경조사는\n무엇입니까?"
@@ -109,7 +94,7 @@ class HolidayInputViewController: UIViewController {
         
         switch entryRoute {
         case .addHolidayAtHome:
-            if !isRelationInput {
+            if cellType == .holiday {
                 let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_backButton"), style: .plain, target: self, action: #selector(popCurrentInputView(_:)))
                 backButton.tintColor = UIColor.mainColor
                 navigationItem.leftBarButtonItem = backButton
@@ -166,9 +151,10 @@ class HolidayInputViewController: UIViewController {
     // MARK: - Objc
     
     @objc func touchUpHoildayButton(_ sender: UIButton) {
-        if isRelationInput {
+        switch cellType {
+        case .relation:
             selectedRelation = sender.titleLabel?.text
-        } else {
+        case .holiday:
             selectedHoliday = sender.titleLabel?.text
         }
         
@@ -179,15 +165,15 @@ class HolidayInputViewController: UIViewController {
                 .instantiateViewController(ofType: NameInputViewController.self)
             
             viewController.entryRoute = .addHolidayAtHome
-            viewController.delegate = self
             viewController.inputData = InputData()
-            viewController.isRelationInput = isRelationInput
+            viewController.cellType = cellType
             let navController = UINavigationController(rootViewController: viewController)
             present(navController, animated: true, completion: nil)
         } else {
             switch entryRoute {
             case .addHolidayAtHome:
-                if isRelationInput {
+                switch cellType {
+                case .relation:
                     let viewController = storyboard(.input)
                         .instantiateViewController(ofType: HolidayInputViewController.self)
                     
@@ -197,22 +183,24 @@ class HolidayInputViewController: UIViewController {
                     viewController.setDatabaseManager(databaseManager)
                     viewController.selectedRelation = selectedRelation
                     viewController.inputData = inputData
-                    viewController.isRelationInput = false
+                    viewController.cellType = .holiday
                     navigationController?.pushViewController(viewController, animated: true)
-                } else if !isRelationInput, isUniqueName() {
-                    let viewController = storyboard(.input)
-                        .instantiateViewController(ofType: DateInputViewController.self)
-                    
-                    viewController.entryRoute = entryRoute
-                    viewController.setDatabaseManager(databaseManager)
-                    inputData?.holiday = selectedHoliday
-                    viewController.inputData = inputData
-                    navigationController?.pushViewController(viewController, animated: true)
-                } else {
-                    let alert = BodabiAlertController(title: "주의", message: "중복된 이름입니다. 이름을 다시 입력해주세요.", type: nil, style: .Alert)
-                    
-                    alert.cancelButtonTitle = "확인"
-                    alert.show()
+                case .holiday:
+                    if isUniqueName() {
+                        let viewController = storyboard(.input)
+                            .instantiateViewController(ofType: DateInputViewController.self)
+                        
+                        viewController.entryRoute = entryRoute
+                        viewController.setDatabaseManager(databaseManager)
+                        inputData?.holiday = selectedHoliday
+                        viewController.inputData = inputData
+                        navigationController?.pushViewController(viewController, animated: true)
+                    } else {
+                        let alert = BodabiAlertController(title: "주의", message: "중복된 이름입니다. 이름을 다시 입력해주세요.", type: nil, style: .Alert)
+                        
+                        alert.cancelButtonTitle = "확인"
+                        alert.show()
+                    }
                 }
             case .addUpcomingEventAtHome:
                 let viewController = storyboard(.input)
@@ -253,11 +241,8 @@ class HolidayInputViewController: UIViewController {
     
     @objc func touchUpDeleteButton(_ sender: UIButton) {
         guard let indexPath = tableView.indexPathForView(sender) else { return }
-        if isRelationInput {
-            myRelations?.remove(at: indexPath.row)
-        } else {
-            myHolidays?.remove(at: indexPath.row)
-        }
+        
+        cellData?.remove(at: indexPath.row)
     }
     
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
@@ -269,41 +254,28 @@ class HolidayInputViewController: UIViewController {
 
 extension HolidayInputViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isRelationInput {
-            return myRelations?.count ?? 1
-        } else {
-            return myHolidays?.count ?? 1
-        }
+        return cellData?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(HolidayInputViewCell.self, for: indexPath)
-        
-        cell.holidaybutton.backgroundColor = indexPath.row == 0 ? UIColor.offColor : UIColor.starColor
-
-        if let myHolidays = myHolidays {
-            cell.holidaybutton.setTitle(myHolidays[indexPath.row], for: .normal)
-        } else if let myRelations = myRelations {
-            cell.holidaybutton.setTitle(myRelations[indexPath.row], for: .normal)
-        }
-        
-        cell.holidaybutton.addTarget(self, action: #selector(touchUpHoildayButton(_:)), for: .touchUpInside)
-        
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(sender:)))
         
+        cell.holidaybutton.addTarget(self, action: #selector(touchUpHoildayButton(_:)), for: .touchUpInside)
+        cell.deleteButton.addTarget(self, action: #selector(touchUpDeleteButton(_:)), for: .touchUpInside)
+        
+        if let cellData = cellData {
+            cell.bind(cellData[indexPath.row])
+        }
+    
         if indexPath.row != 0 {
             cell.addGestureRecognizer(longPressRecognizer)
             cell.isDeleting = isDeleting
         }
         
-        cell.deleteButton.addTarget(self, action: #selector(touchUpDeleteButton(_:)), for: .touchUpInside)
         return cell
     }
 }
-
-// MARK: - UITableViewDelegate
-
-extension HolidayInputViewController: UITableViewDelegate {}
 
 // MARK: - DatabaseManagerClient
 
@@ -311,4 +283,10 @@ extension HolidayInputViewController: DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager
     }
+}
+
+// MARK: - Cell Protocol
+
+protocol HolidayInputViewCellProtocol {
+    func bind(_ data: String)
 }

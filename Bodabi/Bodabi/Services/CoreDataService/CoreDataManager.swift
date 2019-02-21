@@ -101,6 +101,9 @@ class DatabaseManager {
             do {
                 backgroundContext.delete(object)
                 try backgroundContext.save()
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             } catch {
                 DispatchQueue.main.async {
                     completion(CoreDataError.deletionFailed)

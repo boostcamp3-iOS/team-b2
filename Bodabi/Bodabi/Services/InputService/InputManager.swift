@@ -10,6 +10,63 @@ import CoreData
 import UIKit
 
 struct InputManager {
+    var entryType: EntryType
+    var inputData: InputData
+    var inputType: InputType
+    
+    init(entryType: EntryType, inputData: InputData, inputType: InputType) {
+        self.entryType = entryType
+        self.inputData = inputData
+        self.inputType = inputType
+    }
+    
+    init(entryType: EntryType, inputType: InputType) {
+        let inputData: InputData = InputData()
+        self.init(entryType: entryType, inputData: inputData, inputType: inputType)
+    }
+    
+    func getNextViewController(from preViewController: String) -> UIViewController {
+        switch inputType {
+        case .holiday:
+            switch preViewController {
+            case HolidayInputViewController.reuseIdentifier:
+                // holidayAtHome second
+                if let nextViewController = createViewController(type: .holiday) as? DateInputViewController {
+                    // 데이터 변경 후 setInputManager 주입 후 return
+                    return nextViewController
+                }
+            case HomeViewController.reuseIdentifier:
+                // holidayAtHome first
+                if let nextViewController = createViewController(type: .date) as? HolidayInputViewController {
+                    // 데이터 변경 후 setInputManager 주입 후 return
+                    return nextViewController
+                }
+            case FriendHistoryViewController.reuseIdentifier:
+                // historyAtFriendHistory
+                if let nextViewController = createViewController(type: .item) as? ItemInputViewController {
+                    // 데이터 변경 후 setInputManager 주입 후 return
+                    return nextViewController
+                }
+            case NameInputViewController.reuseIdentifier:
+                // upComingEvent
+                if let nextViewController = createViewController(type: .name) as? DateInputViewController {
+                    // 데이터 변경 후 setInputManager 주입 후 return
+                    return nextViewController
+                }
+            default:
+                break
+            }
+        case .name:
+            return UIViewController()
+        case .item:
+           return UIViewController()
+        case .date: return UIViewController()
+        }
+    }
+    
+    func createViewController(type: InputType) -> UIViewController {
+        return UIStoryboard(name: "Input", bundle: nil).instantiateViewController(withIdentifier: type.identifier)
+    }
     
     static func write(context: NSManagedObjectContext, entryRoute: EntryRoute, data: InputData) {
         // FIXME: - Data dummy image
@@ -163,4 +220,6 @@ struct InputManager {
                                          minute: defaultMinutes)
     }
 }
+
+
 

@@ -235,7 +235,8 @@ class HolidayViewController: UIViewController {
         
         inputData.date = holiday?.date
         inputData.holiday = holiday?.title
-        viewController.isRelationInput = false
+//        viewController.isRelationInput = false
+        viewController.cellType = .holiday
         viewController.inputData = inputData
         viewController.entryRoute = .addHistoryAtHoliday
         viewController.setDatabaseManager(databaseManager)
@@ -372,15 +373,21 @@ extension HolidayViewController: UITableViewDelegate {
         case .delete:
             guard let removedHistory = histories?[indexPath.row] else { return }
             // Fix me
-            databaseManager.viewContext.delete(removedHistory)
+//            databaseManager.viewContext.delete(removedHistory)
+//
+//            do {
+//                try databaseManager.viewContext.save()
+//            } catch {
+//                print(error.localizedDescription)
+//            }
             
-            do {
-                try databaseManager.viewContext.save()
-            } catch {
-                print(error.localizedDescription)
+            databaseManager.delete(object: removedHistory) { [weak self] (error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    self?.fetchHistory()
+                }
             }
-            
-            fetchHistory()
             
         default:
             break
