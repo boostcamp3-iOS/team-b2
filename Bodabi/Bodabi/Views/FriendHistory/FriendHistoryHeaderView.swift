@@ -23,6 +23,14 @@ class FriendHistoryHeaderView: UITableViewHeaderFooterView {
     var isSortDescending: Bool = true
     weak var delegate: FriendHistoryHeaderViewDelegate?
     
+    // MARK: - Life Cycle
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        headerTitleLabel.text = "주고받은 내역"
+    }
+    
     // MARK: - IBAction
 
     @IBAction func touchUpSortButton(_ sender: UIButton) {

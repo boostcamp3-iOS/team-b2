@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mJt-lG-RqE" userLabel="Message View">
-                        <rect key="frame" x="24" y="4" width="197" height="78.5"/>
+                        <rect key="frame" x="18" y="4" width="235" height="78.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKq-59-auJ">
                                 <rect key="frame" x="16" y="12" width="140" height="16"/>
@@ -33,13 +33,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZjE-wM-AC3">
-                                <rect key="frame" x="148" y="12" width="33" height="16"/>
+                                <rect key="frame" x="186" y="12" width="33" height="16"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcA-0M-Dgd">
-                                <rect key="frame" x="16" y="32" width="171" height="34.5"/>
+                                <rect key="frame" x="16" y="32" width="209" height="34.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="245" id="rGK-ni-isz"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -47,13 +50,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.93332195281982422" green="0.93332749605178833" blue="0.93334168195724487" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="hcA-0M-Dgd" firstAttribute="leading" secondItem="mJt-lG-RqE" secondAttribute="leading" constant="16" id="3gi-bj-dWn"/>
+                            <constraint firstItem="hcA-0M-Dgd" firstAttribute="leading" secondItem="mJt-lG-RqE" secondAttribute="leading" priority="900" constant="16" id="3gi-bj-dWn"/>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="DvK-lC-OJc"/>
                             <constraint firstItem="ZjE-wM-AC3" firstAttribute="centerY" secondItem="PKq-59-auJ" secondAttribute="centerY" id="ZVQ-9P-M1Z"/>
-                            <constraint firstItem="hcA-0M-Dgd" firstAttribute="top" secondItem="PKq-59-auJ" secondAttribute="bottom" constant="4" id="cZ1-yJ-bOc"/>
+                            <constraint firstItem="hcA-0M-Dgd" firstAttribute="top" secondItem="PKq-59-auJ" secondAttribute="bottom" priority="900" constant="4" id="cZ1-yJ-bOc"/>
                             <constraint firstItem="PKq-59-auJ" firstAttribute="leading" secondItem="mJt-lG-RqE" secondAttribute="leading" constant="16" id="fNQ-wi-ELq"/>
-                            <constraint firstAttribute="bottom" secondItem="hcA-0M-Dgd" secondAttribute="bottom" constant="12" id="hMq-XA-OdO"/>
-                            <constraint firstAttribute="trailing" secondItem="hcA-0M-Dgd" secondAttribute="trailing" constant="10" id="mUP-IF-9xM"/>
+                            <constraint firstAttribute="bottom" secondItem="hcA-0M-Dgd" secondAttribute="bottom" priority="900" constant="12" id="hMq-XA-OdO"/>
+                            <constraint firstAttribute="trailing" secondItem="hcA-0M-Dgd" secondAttribute="trailing" priority="900" constant="10" id="mUP-IF-9xM"/>
                             <constraint firstItem="PKq-59-auJ" firstAttribute="top" secondItem="mJt-lG-RqE" secondAttribute="top" constant="12" id="qvL-Xi-eZV"/>
                             <constraint firstItem="ZjE-wM-AC3" firstAttribute="height" secondItem="PKq-59-auJ" secondAttribute="height" id="tIR-PT-LXg"/>
                             <constraint firstAttribute="trailing" secondItem="ZjE-wM-AC3" secondAttribute="trailing" constant="16" id="wzI-Zg-O20"/>
@@ -64,21 +67,35 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dgn-rc-W2A">
+                        <rect key="frame" x="-46" y="11.5" width="64" height="64"/>
+                        <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                        <state key="normal" image="ic_delete"/>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Uep-Po-y3J" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mJt-lG-RqE" secondAttribute="trailing" priority="300" constant="44" id="0zD-HM-RyX"/>
+                    <constraint firstItem="Uep-Po-y3J" firstAttribute="leading" secondItem="Dgn-rc-W2A" secondAttribute="leading" constant="46" id="2dK-Cr-xix"/>
+                    <constraint firstItem="mJt-lG-RqE" firstAttribute="width" secondItem="4Sq-ZM-WvW" secondAttribute="width" multiplier="235:321" priority="900" id="MQg-lW-YyL"/>
                     <constraint firstAttribute="bottom" secondItem="mJt-lG-RqE" secondAttribute="bottom" constant="4" id="Tls-rK-WiQ"/>
-                    <constraint firstItem="mJt-lG-RqE" firstAttribute="leading" secondItem="Uep-Po-y3J" secondAttribute="leading" constant="24" id="dhg-Iq-kuU"/>
+                    <constraint firstItem="Dgn-rc-W2A" firstAttribute="centerY" secondItem="mJt-lG-RqE" secondAttribute="centerY" id="VJM-nW-jnd"/>
+                    <constraint firstItem="mJt-lG-RqE" firstAttribute="leading" secondItem="Dgn-rc-W2A" secondAttribute="trailing" priority="500" id="eqh-U2-hSb"/>
+                    <constraint firstItem="Uep-Po-y3J" firstAttribute="leading" secondItem="Dgn-rc-W2A" secondAttribute="leading" priority="500" constant="6" id="j1N-Kz-LKO"/>
                     <constraint firstItem="mJt-lG-RqE" firstAttribute="top" secondItem="4Sq-ZM-WvW" secondAttribute="top" constant="4" id="pNg-QA-Xot"/>
-                    <constraint firstItem="Uep-Po-y3J" firstAttribute="trailing" secondItem="mJt-lG-RqE" secondAttribute="trailing" priority="900" constant="100" id="vsz-Pl-pi5"/>
                 </constraints>
                 <viewLayoutGuide key="safeArea" id="Uep-Po-y3J"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="dateLabel" destination="ZjE-wM-AC3" id="u91-Nd-zo7"/>
+                <outlet property="deleteButton" destination="Dgn-rc-W2A" id="9cA-k3-FkC"/>
+                <outlet property="deleteButtonConstraint" destination="2dK-Cr-xix" id="Hxs-6D-Ufz"/>
                 <outlet property="holidayLabel" destination="PKq-59-auJ" id="q4o-Wa-1Ea"/>
                 <outlet property="sentenceLabel" destination="hcA-0M-Dgd" id="7vA-Au-24b"/>
             </connections>
             <point key="canvasLocation" x="92" y="112.89355322338831"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="ic_delete" width="64" height="64"/>
+    </resources>
 </document>
