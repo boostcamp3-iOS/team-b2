@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private var events: [Event]?
     private var holidays: [Holiday]?
     private var isEventEmpty: Bool = true
@@ -386,8 +386,8 @@ extension HomeViewController: UICollectionViewDelegate {
 
 // MARK: - DatabaseManagerClient
 
-extension HomeViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension HomeViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

@@ -27,7 +27,7 @@ class FriendHistoryViewController: UIViewController {
     }
     private var friend: Friend?
     private var histories: [History]?
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private var isSortDescending: Bool = true
     private var isTableViewLoaded: Bool = false
     private var isInputStatus: Bool = false
@@ -352,8 +352,8 @@ extension FriendHistorySection {
 
 // MARK: - DatabaseManagerClient
 
-extension FriendHistoryViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension FriendHistoryViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }
