@@ -9,13 +9,16 @@
 import Foundation
 
 extension Error {
-    func loadErrorAlert(title: String = "", completion: (() -> Void)? = nil) {
+    func loadErrorAlert(title: String = "",
+                        alertHandler: ((BodabiAlertController) -> Void)? = nil,
+                        completion: (() -> Void)? = nil) {
         let alert = BodabiAlertController(
             title: self is ContactError ? (self as? ContactError)?.title : title,
             message: self.localizedDescription,
             type: nil,
             style: .Alert
         )
+        alertHandler?(alert)
         alert.addButton(title: "확인") {
             completion?()
         }

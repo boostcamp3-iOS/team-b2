@@ -20,15 +20,15 @@ class ContactManager {
         queue.async { [weak self] in
             guard let self = self else { return }
             self.store.requestAccess(for: .contacts) { (granted, err) in
-                if let err = err {
-                    completion?(.failure(ContactError
-                        .accessFailed(errorMessage: err.localizedDescription)))
-                }
-                
                 let completion: (Result<Void>) -> Void = { result in
                     DispatchQueue.main.async {
                         completion?(result)
                     }
+                }
+                
+                if let err = err {
+                    completion(.failure(ContactError
+                        .accessFailed(errorMessage: err.localizedDescription)))
                 }
                 
                 guard granted else {
@@ -43,7 +43,7 @@ class ContactManager {
     private func fetchAllContacts(completion: ((Result<[CNContact]>) -> Void)?)  {
         accessContacts { [weak self] (result) in
             switch result {
-            case .success():
+            case .success:
                 self?.queue.async { [weak self] in
                     let keys: [CNKeyDescriptor] = [
                         CNContactGivenNameKey,
@@ -67,13 +67,11 @@ class ContactManager {
                         completion(.failure(ContactError
                             .loadFailed(errorMessage: error.localizedDescription)))
                     }
-                    
                     completion(.success(contacts))
                 }
             case .failure(let err):
                 completion?(.failure(err))
             }
-            
         }
     }
     

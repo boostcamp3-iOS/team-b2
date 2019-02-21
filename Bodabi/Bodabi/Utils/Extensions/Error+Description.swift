@@ -14,7 +14,8 @@ extension ContactError: LocalizedError {
         case .accessFailed(errorMessage: let message):
             return NSLocalizedString("Contact access failed : \(message)", comment: "Contact error")
         case .accessDeniedError:
-            return NSLocalizedString("Contact access denied", comment: "Contact error")
+            return NSLocalizedString("연락처 접근이 허용되지 않았습니다.\n설정에서 접근 권한을 허용해주세요.",
+                                     comment: "Contact error")
         case .loadFailed(errorMessage: let message):
             return NSLocalizedString("Contact load failed : \(message)", comment: "Contact error")
         }

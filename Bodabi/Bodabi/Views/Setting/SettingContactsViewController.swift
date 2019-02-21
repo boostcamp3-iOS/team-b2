@@ -25,6 +25,8 @@ class SettingContactsViewController: UIViewController {
             tableView.reloadData()
         }
     }
+    private let mediumImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -47,11 +49,13 @@ class SettingContactsViewController: UIViewController {
     // MARK: - IBAction
     
     @IBAction func touchUpFetchAllContactsButton(_ sender: UIButton) {
+        mediumImpactFeedbackGenerator.impactOccurred()
         guard (contacts?.count ?? 0) > 0 else { return }
         saveContacts(contacts: contacts)
     }
     
     @IBAction func touchUpFetchSelectedContactsButton(_ sender: Any) {
+        mediumImpactFeedbackGenerator.impactOccurred()
         let contacts = tableView.indexPathsForSelectedRows?
             .map { (indexPath) in
                 return (tableView.cellForRow(at: indexPath) as? FriendViewCell)?
@@ -104,7 +108,11 @@ class SettingContactsViewController: UIViewController {
                 case .success(let contacts):
                     self?.contacts = contacts
                 case .failure(let err):
-                    err.loadErrorAlert()
+                    err.loadErrorAlert(alertHandler: { [weak self] (alert) in
+                        alert.addButton(title: "설정으로 가기") { [weak self] in
+                            self?.goSettingView()
+                        }
+                    })
                 }
         }
     }
@@ -136,6 +144,18 @@ class SettingContactsViewController: UIViewController {
             }
         }
         alert.show()
+    }
+    
+    private func goSettingView() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+        
+        navigationController?.popViewController(animated: true)
     }
 }
 
