@@ -116,12 +116,13 @@
 		F82C68D42217B579000FFE7E /* SettingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82C68D32217B579000FFE7E /* SettingAlarmViewController.swift */; };
 		F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */; };
 		F8367C9821FACA9400EBA91E /* FriendHistorySendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */; };
-		F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */; };
 		F8367C9C21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */; };
 		F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8485CF621FA11BB003C935C /* FriendHistory.storyboard */; };
 		F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */; };
 		F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */; };
 		F85A8BCD22193111006FB44E /* DefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85A8BCC22193111006FB44E /* DefaultsKey.swift */; };
+		F8748907221E09110087CFD1 /* RemoteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8748906221E09110087CFD1 /* RemoteType.swift */; };
+		F8748909221E463C0087CFD1 /* FriendHistoryReceiveViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8748908221E463C0087CFD1 /* FriendHistoryReceiveViewCell.xib */; };
 		F89ED960221294F2006588E1 /* NotificationSchedular.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED95F221294F2006588E1 /* NotificationSchedular.swift */; };
 		F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */; };
 		F89ED96B22151D2F006588E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F89ED96A22151D2F006588E1 /* Assets.xcassets */; };
@@ -242,12 +243,13 @@
 		F82C68D32217B579000FFE7E /* SettingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewController.swift; sourceTree = "<group>"; };
 		F8367C9521FAC77A00EBA91E /* NSObject+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Identifier.swift"; sourceTree = "<group>"; };
 		F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistorySendViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistorySendViewCell.swift; sourceTree = SOURCE_ROOT; };
-		F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendHistoryReceiveViewCell.xib; sourceTree = "<group>"; };
 		F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendHistorySendViewCell.xib; sourceTree = "<group>"; };
 		F8485CF621FA11BB003C935C /* FriendHistory.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FriendHistory.storyboard; sourceTree = "<group>"; };
 		F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryViewController.swift; path = Bodabi/Views/FriendHistory/FriendHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryReceiveViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistoryReceiveViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F85A8BCC22193111006FB44E /* DefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKey.swift; sourceTree = "<group>"; };
+		F8748906221E09110087CFD1 /* RemoteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteType.swift; sourceTree = "<group>"; };
+		F8748908221E463C0087CFD1 /* FriendHistoryReceiveViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendHistoryReceiveViewCell.xib; sourceTree = "<group>"; };
 		F89ED95F221294F2006588E1 /* NotificationSchedular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedular.swift; sourceTree = "<group>"; };
 		F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 		F89ED96A22151D2F006588E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */,
 				491DD81D221505340093720A /* Tag.swift */,
 				F85A8BCC22193111006FB44E /* DefaultsKey.swift */,
+				F8748906221E09110087CFD1 /* RemoteType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -523,7 +526,7 @@
 			children = (
 				F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */,
 				F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */,
-				F8367C9921FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib */,
+				F8748908221E463C0087CFD1 /* FriendHistoryReceiveViewCell.xib */,
 				F8367C9721FACA9400EBA91E /* FriendHistorySendViewCell.swift */,
 				F8367C9B21FAD0EF00EBA91E /* FriendHistorySendViewCell.xib */,
 				F80C289F22026F0D0032DE3E /* FriendHistoryInformationViewCell.swift */,
@@ -587,13 +590,21 @@
 		F80C28AB22040EDB0032DE3E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F8CB544D221DEEF6001693E2 /* CloudService */,
 				DB47A572221CF055002A2081 /* Error.swift */,
 				DB47A57A221D002A002A2081 /* CoreDataService */,
 				DB47A571221CF03A002A2081 /* InputService */,
-				DB147036220D4707000EA1D7 /* CloudManager.swift */,
 				4969A58D221A789900E189BD /* ContactManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		F8CB544D221DEEF6001693E2 /* CloudService */ = {
+			isa = PBXGroup;
+			children = (
+				DB147036220D4707000EA1D7 /* CloudManager.swift */,
+			);
+			path = CloudService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -662,7 +673,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8367C9A21FACC2800EBA91E /* FriendHistoryReceiveViewCell.xib in Resources */,
 				4998127B21F9D7B6000DB7B2 /* LaunchScreen.storyboard in Resources */,
 				F8485CF721FA11BB003C935C /* FriendHistory.storyboard in Resources */,
 				F80C28AA22031E740032DE3E /* FriendHistoryHeaderView.xib in Resources */,
@@ -683,6 +693,7 @@
 				496683C121FAC662003FBA5B /* HomeTitleViewCell.xib in Resources */,
 				4998127321F9D7B4000DB7B2 /* Main.storyboard in Resources */,
 				4998128A21F9D97E000DB7B2 /* Home.storyboard in Resources */,
+				F8748909221E463C0087CFD1 /* FriendHistoryReceiveViewCell.xib in Resources */,
 				4967D6682202C64700223ADF /* CalendarWeekDayViewCell.xib in Resources */,
 				F81452A021FCDDE0004A2CF0 /* NotificationViewCell.xib in Resources */,
 				4967D66C2202C65500223ADF /* CalendarDayViewCell.xib in Resources */,
@@ -768,6 +779,7 @@
 				496683B521FAADAE003FBA5B /* UINavigationBar+Clear.swift in Sources */,
 				491DD820221532290093720A /* UIView+Shadow.swift in Sources */,
 				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
+				F8748907221E09110087CFD1 /* RemoteType.swift in Sources */,
 				49484D0522140F3800C09384 /* SelectedTagViewCell.swift in Sources */,
 				F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */,
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
