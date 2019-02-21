@@ -45,5 +45,11 @@ enum CloudError: Error {
 }
 
 enum ContactError: Error {
+    case accessFailed(errorMessage: String)
+    case accessDeniedError
+    case loadFailed(errorMessage: String)
     
+    var title: String {
+        return "연락처 에러"
+    }
 }

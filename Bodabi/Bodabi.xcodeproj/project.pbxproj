@@ -64,6 +64,9 @@
 		49C0851421FD979A0060B02C /* FriendViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C0851221FD979A0060B02C /* FriendViewCell.xib */; };
 		49C0851721FDA8A60060B02C /* FriendsHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C0851521FDA8A60060B02C /* FriendsHeaderViewCell.swift */; };
 		49C0851821FDA8A60060B02C /* FriendsHeaderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C0851621FDA8A60060B02C /* FriendsHeaderViewCell.xib */; };
+		49C86BF4221E406100D63455 /* Error+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF3221E406100D63455 /* Error+Alert.swift */; };
+		49C86BF8221E483500D63455 /* Error+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF7221E483500D63455 /* Error+Description.swift */; };
+		49C86BFA221E48FF00D63455 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF9221E48FF00D63455 /* TabBar.swift */; };
 		DB147035220D4363000EA1D7 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB147034220D4363000EA1D7 /* CloudKit.framework */; };
 		DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB147036220D4707000EA1D7 /* CloudManager.swift */; };
 		DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */; };
@@ -190,6 +193,9 @@
 		49C0851221FD979A0060B02C /* FriendViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendViewCell.xib; sourceTree = "<group>"; };
 		49C0851521FDA8A60060B02C /* FriendsHeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsHeaderViewCell.swift; sourceTree = "<group>"; };
 		49C0851621FDA8A60060B02C /* FriendsHeaderViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendsHeaderViewCell.xib; sourceTree = "<group>"; };
+		49C86BF3221E406100D63455 /* Error+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Alert.swift"; sourceTree = "<group>"; };
+		49C86BF7221E483500D63455 /* Error+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Description.swift"; sourceTree = "<group>"; };
+		49C86BF9221E48FF00D63455 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		DB147032220D426A000EA1D7 /* Bodabi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bodabi.entitlements; sourceTree = "<group>"; };
 		DB147034220D4363000EA1D7 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		DB147036220D4707000EA1D7 /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
@@ -345,6 +351,7 @@
 				F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */,
 				491DD81D221505340093720A /* Tag.swift */,
 				F85A8BCC22193111006FB44E /* DefaultsKey.swift */,
+				49C86BF9221E48FF00D63455 /* TabBar.swift */,
 				F8748906221E09110087CFD1 /* RemoteType.swift */,
 			);
 			path = Models;
@@ -422,6 +429,8 @@
 				497882562217BFCB00ED64A7 /* UIImage+Resize.swift */,
 				491B1C4D221BF86B00ECB66F /* String+PhoneFormat.swift */,
 				F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */,
+				49C86BF3221E406100D63455 /* Error+Alert.swift */,
+				49C86BF7221E483500D63455 /* Error+Description.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -728,6 +737,7 @@
 				DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */,
 				496683C021FAC662003FBA5B /* HomeTitleViewCell.swift in Sources */,
 				491B1C4E221BF86B00ECB66F /* String+PhoneFormat.swift in Sources */,
+				49C86BF4221E406100D63455 /* Error+Alert.swift in Sources */,
 				49484D012214060E00C09384 /* TagViewController.swift in Sources */,
 				DBABB192220C49EF00B808F6 /* InputData.swift in Sources */,
 				4910CCA922043EB4004BDBF1 /* CalendarViewStyle.swift in Sources */,
@@ -743,6 +753,7 @@
 				F89ED960221294F2006588E1 /* NotificationSchedular.swift in Sources */,
 				49C0850721FAF2810060B02C /* UpcomingEventViewCell.swift in Sources */,
 				4967D66022028D0300223ADF /* CalendarView.swift in Sources */,
+				49C86BF8221E483500D63455 /* Error+Description.swift in Sources */,
 				4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */,
 				49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */,
 				F82C68D42217B579000FFE7E /* SettingAlarmViewController.swift in Sources */,
@@ -803,6 +814,7 @@
 				4978BCCD220D5B230052156E /* CollectionFetchedResultsDelegate.swift in Sources */,
 				49C0851721FDA8A60060B02C /* FriendsHeaderViewCell.swift in Sources */,
 				F814529A21FCD4BC004A2CF0 /* SettingOptions.swift in Sources */,
+				49C86BFA221E48FF00D63455 /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
