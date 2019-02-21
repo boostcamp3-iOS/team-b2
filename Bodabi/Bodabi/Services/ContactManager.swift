@@ -16,13 +16,13 @@ class ContactManager {
     private let store = CNContactStore()
     private let queue = DispatchQueue(label: "com.teamB2.Bodabi.contact")
     
-    private func accessContacts(completion: ((Result<Void>) -> Void)?) {
+    private func accessContacts(completion: @escaping (Result<Void>) -> Void) {
         queue.async { [weak self] in
             guard let self = self else { return }
             self.store.requestAccess(for: .contacts) { (granted, err) in
                 let completion: (Result<Void>) -> Void = { result in
                     DispatchQueue.main.async {
-                        completion?(result)
+                        completion(result)
                     }
                 }
                 
@@ -40,7 +40,7 @@ class ContactManager {
         }
     }
     
-    private func fetchAllContacts(completion: ((Result<[CNContact]>) -> Void)?)  {
+    private func fetchAllContacts(completion: @escaping (Result<[CNContact]>) -> Void)  {
         accessContacts { [weak self] (result) in
             switch result {
             case .success:
@@ -55,7 +55,7 @@ class ContactManager {
                     
                     let completion: (Result<[CNContact]>) -> Void = { result in
                         DispatchQueue.main.async {
-                            completion?(result)
+                            completion(result)
                         }
                     }
                     
@@ -70,13 +70,13 @@ class ContactManager {
                     completion(.success(contacts))
                 }
             case .failure(let err):
-                completion?(.failure(err))
+                completion(.failure(err))
             }
         }
     }
     
     public func fetchNonexistentContact(existingFriends: [Friend]?,
-                                        completion: ((Result<[CNContact]?>) -> Void)?) {
+                                        completion: @escaping (Result<[CNContact]?>) -> Void) {
         let friendsPhones = existingFriends?.map { $0.phoneNumber } ?? []
         fetchAllContacts { (result) in
             switch result {
@@ -87,9 +87,9 @@ class ContactManager {
                         let phone = $0.phoneNumbers.first?.value.value(forKey: "digits") as? String
                         return !friendsPhones.contains(phone?.toPhoneFormat())
                     }.sorted(by: { $0.familyName+$0.givenName < $1.familyName+$1.givenName })
-                completion?(.success(contacts))
+                completion(.success(contacts))
             case .failure(let err):
-                completion?(.failure(err))
+                completion(.failure(err))
             }
         }
     }
