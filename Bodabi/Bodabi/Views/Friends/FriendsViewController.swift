@@ -298,6 +298,12 @@ extension FriendsViewController: UITableViewDelegate {
         }
         fetchFriend()
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        guard let section = Section(rawValue: indexPath.section),
+            (section == .favorite || section == .friends) else { return false }
+        return true
+    }
 }
 
 // MARK: - UITableViewDataSource

@@ -19,4 +19,5 @@ struct DefaultsKey {
     static let defaultAlarmDday: String = "defaultAlarmDday"
     static let favoriteFirstAlarmDday: String = "favoriteFirstAlarmDday"
     static let favoriteSecondAlarmDday: String = "favoriteSecondAlarmDday"
+    static let iCloudAccountAvailable: String = "iCloudAccountAvailable"
 }
