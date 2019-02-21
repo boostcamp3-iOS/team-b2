@@ -33,6 +33,7 @@ class FriendHistoryViewController: UIViewController {
     private var isInputStatus: Bool = false
     private var isHolidayEmpty: Bool = true
     private var sections: [FriendHistorySection] = []
+    private var cancelDeleteModeGesture: UITapGestureRecognizer?
     private struct Const {
         static let bottomInset: CGFloat = 90.0
         static let buttonAnimationScale: CGFloat = 1.35
@@ -47,15 +48,15 @@ class FriendHistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initNavigationBar()
         initTableView()
+        initNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         fetchHistory()
-        reloadSection()
+        updateSection()
         isInputStatus = false
     }
     
@@ -72,16 +73,17 @@ class FriendHistoryViewController: UIViewController {
     private func fetchHistory() {
         guard let id = friendID else { return }
         friend = databaseManager.viewContext.object(with: id) as? Friend
-        guard let friendToFetch: Friend = friend else { return }
-        let request: NSFetchRequest<History> = History.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        let predicate: NSPredicate = NSPredicate(format: "friend = %@", friendToFetch)
-        request.predicate = predicate
         
-        if let result = try? databaseManager.viewContext.fetch(request) {
-            histories = result
+        guard var faultedHistories = friend?.histories?.allObjects as? [History] else { return }
+        
+        faultedHistories.sort { (history, otherHistory) in
+            if let historyDate = history.date, let otherHistoryDate = otherHistory.date {
+                return historyDate < otherHistoryDate
+            } else {
+                return true
+            }
         }
+        histories = faultedHistories
     }
     
     private func initNavigationBar() {
@@ -103,16 +105,17 @@ class FriendHistoryViewController: UIViewController {
         tableView.register(cells)
         tableView.register(nib, forHeaderFooterViewReuseIdentifier: FriendHistoryHeaderView.reuseIdentifier)
         tableView.contentInset.bottom = Const.bottomInset
-        tableView.reloadData()
     }
     
-    private func reloadSection() {
+    private func updateSection() {
+        var income: Int = 0
+        var expenditure: Int = 0
+        sections = []
+        sections.append(.information(items: [.information(income: String(income), expenditure: String(expenditure))]))
+        
         guard let histories = histories else {
             return
         }
-        sections = []
-        var income: Int = 0
-        var expenditure: Int = 0
         var historyItems: [FriendHistorySectionItem] = []
         for history in histories {
             if let amount = Int(history.item ?? "") {
@@ -129,7 +132,6 @@ class FriendHistoryViewController: UIViewController {
                 historyItems.append(.giveHistory(history: history))
             }
         }
-        sections.append(.information(items: [.information(income: String(income), expenditure: String(expenditure))]))
         sections.append(.history(items: historyItems))
         tableView.reloadData()
     }
@@ -142,6 +144,53 @@ class FriendHistoryViewController: UIViewController {
         } else {
             histories = histories?.sorted(by: {$0.date ?? Date() < $1.date ?? Date()})
         }
+    }
+    
+    private func setShowTableViewCellDeleteButton(isShow: Bool) {
+        setDeleteModeTapGesture(isDeleteMode: isShow)
+        
+        let indexPaths = tableView.getAllIndexPathsInSection(section: 1)
+        indexPaths.forEach { (indexPath) in
+            let cell = tableView.cellForRow(at: indexPath) as? FriendHistoryCellProtocol
+            isShow ? cell?.showDeleteButton() : cell?.hideDeleteButton()
+        }
+    }
+    
+    private func setDeleteModeTapGesture(isDeleteMode: Bool) {
+        guard isDeleteMode else {
+            guard let gesture = cancelDeleteModeGesture else { return }
+            view.removeGestureRecognizer(gesture)
+            cancelDeleteModeGesture = nil
+            return
+        }
+        cancelDeleteModeGesture = UITapGestureRecognizer(target: self, action: #selector(tapBackground(_:)))
+        guard let gesture = cancelDeleteModeGesture else { return }
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc func longPressUpcomingEvent(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
+        setShowTableViewCellDeleteButton(isShow: true)
+    }
+    
+    @objc func tapBackground(_ sender: UITapGestureRecognizer?) {
+        setShowTableViewCellDeleteButton(isShow: false)
+    }
+    
+    @objc func touchUpHistoryDeleteButton(_ sender: UIButton) {
+        let selectedRow = sender.tag
+        guard let history = histories?[selectedRow] else { return }
+        databaseManager.delete(object: history) { error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                self.fetchHistory()
+                self.updateSection()
+                self.tableView.reloadData()
+                self.setShowTableViewCellDeleteButton(isShow: false)
+            }
+        }
+
     }
     
     // MARK: - IBAction
@@ -164,14 +213,13 @@ class FriendHistoryViewController: UIViewController {
     }
     
     @IBAction func touchUpFavoriteButton(_ sender: UIBarButtonItem) {
+        guard let friend = friend else { return }
         if favoriteButton.image == #imageLiteral(resourceName: "ic_emptyStar") {
-            friend?.favorite = false
+            databaseManager.updateFriend(object: friend, favorite: false)
             favoriteButton.image = #imageLiteral(resourceName: "WhiteStar")
-            try? databaseManager?.viewContext.save()
         } else {
-            friend?.favorite = true
+            databaseManager.updateFriend(object: friend, favorite: true)
             favoriteButton.image = #imageLiteral(resourceName: "ic_emptyStar")
-            try? databaseManager?.viewContext.save()
         }
         
         let pulse = CASpringAnimation(keyPath: "transform.scale")
@@ -211,9 +259,18 @@ extension FriendHistoryViewController: UITableViewDataSource {
         }
         let item = section.items[indexPath.row]
         let cell = tableView.dequeue(section.cellType(item), for: indexPath)
-        (cell as? FriendHistoryCellProtocol)?.bind(item: item)
-
-        return cell
+        
+        if let _ = cell as? FriendHistoryCellProtocol {
+            (cell as? FriendHistoryCellProtocol)?.bind(item: item)
+            let gesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressUpcomingEvent(_:)))
+            cell.addGestureRecognizer(gesture)
+            (cell as? FriendHistoryCellProtocol)?.button.addTarget(self, action: #selector(touchUpHistoryDeleteButton(_:)), for: .touchUpInside)
+            (cell as? FriendHistoryCellProtocol)?.button.tag = indexPath.row
+            return cell
+        } else {
+            (cell as? FriendHistoryInformationViewCell)?.bind(item: item)
+            return cell
+        }
     }
 }
 
@@ -239,13 +296,10 @@ extension FriendHistoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 1 {
             guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: FriendHistoryHeaderView.reuseIdentifier) as? FriendHistoryHeaderView else { return UIView() }
-            
-            header.headerTitleLabel.text = "주고받은 내역"
             header.delegate = self
             return header
-        } else {
-            return UIView()
         }
+        return UIView()
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -274,7 +328,7 @@ extension FriendHistoryViewController: UITableViewDelegate {
 extension FriendHistoryViewController: FriendHistoryHeaderViewDelegate {
     func friendHistoryHeaderView(_ headerView: FriendHistoryHeaderView, didTapSortButtonWith descending: Bool) {
         sortHistories(descending: isSortDescending)
-        reloadSection()
+        updateSection()
         tableView.reloadData()
         isTableViewLoaded = false
         isSortDescending = !isSortDescending
@@ -302,10 +356,4 @@ extension FriendHistoryViewController: DatabaseManagerClient {
     func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager
     }
-}
-
-// MARK: - Cell Protocol
-
-protocol FriendHistoryCellProtocol {
-    func bind(item: FriendHistorySectionItem)
 }
