@@ -148,10 +148,8 @@ class SettingContactsViewController: UIViewController {
     
     private func goSettingView() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
-            if #available(iOS 10.0, *) {
+            if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(url)
             }
         }
         
