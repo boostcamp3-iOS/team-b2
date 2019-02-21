@@ -84,22 +84,28 @@ class SettingContactsViewController: UIViewController {
     
     private func fetchFriend() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        databaseManager.fetch(type: Friend.self,
-                              sortDescriptor: sortDescriptor) { [weak self] (result) in
-                                switch result {
-                                case let .failure(error):
-                                    print(error.localizedDescription)
-                                case let .success(friends):
-                                    self?.friends = friends
-                                    self?.fetchContacts()
-                                }
+        databaseManager.fetch(
+            type: Friend.self,
+            sortDescriptor: sortDescriptor
+        ) { [weak self] (result) in
+            switch result {
+            case let .success(friends):
+                self?.friends = friends
+            case let .failure(error):
+                error.loadErrorAlert(title: "친구목록 가져오기 에러")
+            }
         }
     }
     
     private func fetchContacts() {
         ContactManager.shared
-            .fetchNonexistentContact(existingFriends: friends) { [weak self] (contacts) in
-                self?.contacts = contacts
+            .fetchNonexistentContact(existingFriends: friends) { [weak self] (result) in
+                switch result {
+                case .success(let contacts):
+                    self?.contacts = contacts
+                case .failure(let err):
+                    err.loadErrorAlert()
+                }
         }
     }
     
@@ -111,7 +117,6 @@ class SettingContactsViewController: UIViewController {
             style: .Alert
         )
         
-        // MARK: Fix me
         alert.cancelButtonTitle = "취소"
         alert.addButton(title: "확인") { [weak self] in
             contacts?.forEach { [weak self] (contact) in
@@ -121,11 +126,11 @@ class SettingContactsViewController: UIViewController {
                     database: databaseManager
                 ) { [weak self] (result) in
                     switch result {
-                    case let .failure(error):
-                        print(error.localizedDescription)
                     case .success:
-                        self?.tabBarController?.selectedIndex = 1
+                        self?.tabBarController?.selectedIndex = TabBar.friends.rawValue
                         self?.navigationController?.popViewController(animated: true)
+                    case let .failure(error):
+                        error.loadErrorAlert()
                     }
                 }
             }

@@ -16,71 +16,83 @@ class ContactManager {
     private let store = CNContactStore()
     private let queue = DispatchQueue(label: "com.teamB2.Bodabi.contact")
     
-    private func accessContacts(completion: ((Bool) -> Void)?) {
+    private func accessContacts(completion: ((Result<Void>) -> Void)?) {
         queue.async { [weak self] in
             guard let self = self else { return }
             self.store.requestAccess(for: .contacts) { (granted, err) in
                 if let err = err {
-                    print(err.localizedDescription)
-                    print("Access error")
+                    completion?(.failure(ContactError
+                        .accessFailed(errorMessage: err.localizedDescription)))
                 }
                 
-                let completion: (Bool) -> Void = { result in
+                let completion: (Result<Void>) -> Void = { result in
                     DispatchQueue.main.async {
                         completion?(result)
                     }
                 }
                 
                 guard granted else {
-                    print("Access denied")
-                    completion(false)
+                    completion(.failure(ContactError.accessDeniedError))
                     return
                 }
-                completion(granted)
+                completion(.success(()))
             }
         }
     }
     
-    private func fetchAllContacts(completion: (([CNContact]) -> Void)?)  {
-        accessContacts { [weak self] (granted) in
-            guard granted else {
-                // FIXME: - Fix can's access issue
-                return
+    private func fetchAllContacts(completion: ((Result<[CNContact]>) -> Void)?)  {
+        accessContacts { [weak self] (result) in
+            switch result {
+            case .success():
+                self?.queue.async { [weak self] in
+                    let keys: [CNKeyDescriptor] = [
+                        CNContactGivenNameKey,
+                        CNContactFamilyNameKey,
+                        CNContactPhoneNumbersKey
+                        ] as [CNKeyDescriptor]
+                    let request = CNContactFetchRequest(keysToFetch: keys)
+                    var contacts: [CNContact] = []
+                    
+                    let completion: (Result<[CNContact]>) -> Void = { result in
+                        DispatchQueue.main.async {
+                            completion?(result)
+                        }
+                    }
+                    
+                    do {
+                        try self?.store.enumerateContacts(with: request) { (contact, stoppingPointer) in
+                            contacts.append(contact)
+                        }
+                    } catch {
+                        completion(.failure(ContactError
+                            .loadFailed(errorMessage: error.localizedDescription)))
+                    }
+                    
+                    completion(.success(contacts))
+                }
+            case .failure(let err):
+                completion?(.failure(err))
             }
             
-            self?.queue.async {
-                let keys: [CNKeyDescriptor] = [CNContactGivenNameKey,
-                                               CNContactFamilyNameKey,
-                                               CNContactPhoneNumbersKey] as [CNKeyDescriptor]
-                let request = CNContactFetchRequest(keysToFetch: keys)
-                var contacts: [CNContact] = []
-                
-                do {
-                    try self?.store.enumerateContacts(with: request) { (contact, stoppingPointer) in
-                        contacts.append(contact)
-                    }
-                } catch {
-                    print(error.localizedDescription)
-                }
-                
-                DispatchQueue.main.async {
-                    completion?(contacts)
-                }
-            }
         }
     }
     
     public func fetchNonexistentContact(existingFriends: [Friend]?,
-                                        completion: (([CNContact]?) -> Void)?) {
+                                        completion: ((Result<[CNContact]?>) -> Void)?) {
         let friendsPhones = existingFriends?.map { $0.phoneNumber } ?? []
         fetchAllContacts { (result) in
-            let contacts = result
-                .filter { !(($0.familyName + $0.givenName).isEmpty) }
-                .filter {
-                    let phone = $0.phoneNumbers.first?.value.value(forKey: "digits") as? String
-                    return !friendsPhones.contains(phone?.toPhoneFormat())
-                }.sorted(by: { $0.familyName+$0.givenName < $1.familyName+$1.givenName })
-            completion?(contacts)
+            switch result {
+            case .success(let contacts):
+                let contacts = contacts
+                    .filter { !(($0.familyName + $0.givenName).isEmpty) }
+                    .filter {
+                        let phone = $0.phoneNumbers.first?.value.value(forKey: "digits") as? String
+                        return !friendsPhones.contains(phone?.toPhoneFormat())
+                    }.sorted(by: { $0.familyName+$0.givenName < $1.familyName+$1.givenName })
+                completion?(.success(contacts))
+            case .failure(let err):
+                completion?(.failure(err))
+            }
         }
     }
     
