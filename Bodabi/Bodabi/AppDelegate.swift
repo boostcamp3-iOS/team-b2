@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    let databaseManager = CoreDataManager(modelName: "Bodabi")
+    let databaseManager = DatabaseManager(modelName: "Bodabi")
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let tabBarController = window?.rootViewController
         for navigationController in tabBarController?.children ?? [] {
-            let viewController = navigationController.children.first as? CoreDataManagerClient
+            let viewController = navigationController.children.first as? DatabaseManagerClient
             viewController?.setDatabaseManager(databaseManager)
         }
         return true

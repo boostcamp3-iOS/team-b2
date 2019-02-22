@@ -34,7 +34,7 @@ class HolidayInputViewController: UIViewController {
             UserDefaults.standard.set(myRelations, forKey: DefaultsKey.defaultRelation)
         }
     }
-    private var databaseManager: CoreDataManager!
+    private var databaseManager: DatabaseManager!
     private var isDeleting: Bool = false
     private var selectedHoliday: String?
     private var selectedRelation: String?
@@ -307,8 +307,8 @@ extension HolidayInputViewController: UITableViewDelegate {}
 
 // MARK: - DatabaseManagerClient
 
-extension HolidayInputViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
+extension HolidayInputViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager
     }
 }
