@@ -98,10 +98,6 @@ class CalendarView: UIView {
             .viewControllers?.first as? CalendarMonthViewController {
             guard let toDate = date,
                 let fromDate = viewController.visibleMonthFirstDay else { return }
-            let visibleDateString = fromDate.toString(of: .noDay)
-            let dateToMoveString = toDate.toString(of: .noDay)
-            
-            guard visibleDateString != dateToMoveString else { return }
             setNextPageView(fromDate: fromDate, toDate: toDate,
                             shouldSelectedDay: shouldSelectedDay)
         }
@@ -119,17 +115,18 @@ class CalendarView: UIView {
     private func setNextPageView(fromDate: Date, toDate: Date,
                                  shouldSelectedDay: Bool = false) {
         let direction: UIPageViewController.NavigationDirection = fromDate > toDate ? .reverse : .forward
+        let visibleDateString = fromDate.toString(of: .noDay)
+        let dateToMoveString = toDate.toString(of: .noDay)
         
-        if let nextPageController = pageViewController(date: toDate,
-                                                       shouldSelectedDay: shouldSelectedDay) {
-            pageController?.setViewControllers(
-                [nextPageController],
-                direction: direction,
-                animated: true,
-                completion: nil
-            )
-            delegate?.calendar?(self, currentVisibleItem: toDate)
-        }
+        guard let nextPageController = pageViewController(date: toDate,
+                                                          shouldSelectedDay: shouldSelectedDay) else { return }
+        pageController?.setViewControllers(
+            [nextPageController],
+            direction: direction,
+            animated: visibleDateString != dateToMoveString,
+            completion: nil
+        )
+        delegate?.calendar?(self, currentVisibleItem: toDate)
     }
 }
 
