@@ -13,6 +13,7 @@ enum SettingOptions: Int, CaseIterable {
     case notification
     case contact
     case facebook
+    case copyright
     
     func description() -> String {
         switch self {
@@ -24,6 +25,8 @@ enum SettingOptions: Int, CaseIterable {
             return "연락처 연동"
         case .facebook:
             return "페이스북 페이지"
+        case .copyright:
+            return "저작권 표기"
         }
     }
 }
