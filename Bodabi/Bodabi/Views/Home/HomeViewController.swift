@@ -194,7 +194,8 @@ class HomeViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
         
-        viewController.isRelationInput = false
+//        viewController.isRelationInput = false
+        viewController.cellType = .holiday
         viewController.entryRoute = .addUpcomingEventAtHome
         viewController.setDatabaseManager(databaseManager)
         viewController.inputData = InputData()

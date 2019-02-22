@@ -207,7 +207,8 @@ class FriendHistoryViewController: UIViewController {
         inputData.isNewData = false
         viewController.inputData = inputData
         viewController.entryRoute = .addHistoryAtFriendHistory
-        viewController.isRelationInput = false
+//        viewController.isRelationInput = false
+        viewController.cellType = .holiday
         viewController.setDatabaseManager(databaseManager)
         present(navigationController, animated: true, completion: nil)
     }
