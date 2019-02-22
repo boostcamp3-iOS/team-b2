@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class SettingAlarmViewController: UIViewController {
     
@@ -32,6 +33,9 @@ class SettingAlarmViewController: UIViewController {
     }
     private var editingText: UILabel?
     private var initialValues: [Int] = []
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,61 +109,41 @@ class SettingAlarmViewController: UIViewController {
         }
     }
     
+    func checkValueChanged(_ currentDday: Int,_ currentHour: Int, _ currentMinutes: Int,_ currentFirstDday: Int,_ currentSecondDday: Int) -> Bool {
+        let currentValues = [currentHour, currentMinutes, currentDday, currentFirstDday, currentSecondDday]
+        for (index, _) in currentValues.enumerated() {
+            if currentValues[index] != initialValues[index] {
+                return true
+            }
+        }
+        return false
+    }
+    
     func updateNotification() {
-        var hasChanged: Bool = false
-        
         let defaultDday = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmDday)
         let favoriteFirstDday = UserDefaults.standard.integer(forKey: DefaultsKey.favoriteFirstAlarmDday)
         let favoriteSecondDday = UserDefaults.standard.integer(forKey: DefaultsKey.favoriteSecondAlarmDday)
         let defaultHour = UserDefaults.standard.integer(forKey: DefaultsKey.defaultAlarmHour)
         let defaultMinutes = UserDefaults.standard.integer(forKey:  DefaultsKey.defaultAlarmMinutes)
-        let currentValues: [Int] = [defaultHour, defaultMinutes, defaultDday, favoriteFirstDday, favoriteSecondDday]
         
-        for (index, _) in currentValues.enumerated() {
-            if currentValues[index] != initialValues[index] {
-                hasChanged = true
-            }
-        }
+        if !checkValueChanged(defaultHour, defaultMinutes, defaultDday, favoriteFirstDday, favoriteSecondDday) { return }
         
-        if hasChanged {
-            NotificationSchedular.deleteAllNotification()
-            let predicate: NSPredicate = NSPredicate(format: "isHandled = %@", NSNumber(value: false))
-            databaseManager.batchDelete(typeString: "Notification", predicate: predicate) { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-            }
-            databaseManager.fetch(type: Event.self) { result in
-                switch result {
-                case let .failure(error):
-                    print(error.localizedDescription)
-                case let .success(events):
-                    for event in events {
-                        var currentNotificaion: Notification?
-                        guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * defaultDday + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
-                        self.databaseManager.createNotification(event: event
-                            , date: notificationDate, completion: { result, error in
-                                currentNotificaion = result
-                                if let notificationToSchedule = currentNotificaion {
-                                    NotificationSchedular.create(notification: notificationToSchedule, hour: defaultHour, minute: defaultMinutes)
-                                }
-                        })
-                        
-                        if event.favorite {
-                            let favoriteDdays = [favoriteFirstDday, favoriteSecondDday]
-                            for dDay in favoriteDdays {
-                                var favoriteNotification: Notification?
-                                guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * dDay + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
-                                self.databaseManager.createNotification(event: event
-                                    , date: notificationDate, completion: { result, error in
-                                        favoriteNotification = result
-                                        if let notificationToSchedule = favoriteNotification {
-                                            NotificationSchedular.create(notification: notificationToSchedule, hour: defaultHour, minute: defaultMinutes)
-                                        }
-                                })
-                                
-                            }
+        databaseManager.fetch(type: Event.self) { result in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case let .success(events):
+                for event in events {
+                    guard let notifications = event.notifications?.allObjects as? [Notification] else { return }
+                    guard let defaultNotificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * defaultDday + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
+                        NotificationSchedular.deleteAllNotification()
+                        notifications.forEach { notification in
+                        if !notification.isHandled {
+                            print(notification.event?.friend?.name!)
+                            self.databaseManager.updateNotification(object: notification, date: defaultNotificationDate)
+                            NotificationSchedular.create(notification: notification, hour: defaultHour, minute: defaultMinutes)
                         }
+                        NotificationSchedular.readAllPendingNotification()
                     }
                 }
             }
