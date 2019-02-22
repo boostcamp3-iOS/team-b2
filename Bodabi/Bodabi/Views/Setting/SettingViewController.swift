@@ -16,7 +16,7 @@ class SettingViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: CoreDataManager!
+    private var databaseManager: DatabaseManager!
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -94,14 +94,14 @@ extension SettingViewController: UITableViewDelegate {
         case .contact:
             let viewController = storyboard(.setting)
                 .instantiateViewController(ofType: SettingContactsViewController.self)
-            viewController.setDatabaseManager(databaseManager)
+            viewController.databaseManager = databaseManager
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
 }
 
-extension SettingViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
+extension SettingViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager
     }
 }

@@ -40,7 +40,7 @@ class HolidayViewController: UIViewController {
             }
         }
     }
-    private var databaseManager: CoreDataManager!
+    private var databaseManager: DatabaseManager!
     private var isFirstScroll: Bool = true
     private var isHolidayEmpty: Bool = true
     private struct Const {
@@ -598,8 +598,8 @@ extension HolidayViewController: BodabiAlertControllerDelegate {
     }
 }
 
-extension HolidayViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
+extension HolidayViewController: DatabaseManagerClient {
+    func setDatabaseManager(_ manager: DatabaseManager) {
         databaseManager = manager
     }
 }
