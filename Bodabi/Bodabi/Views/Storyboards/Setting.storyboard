@@ -316,7 +316,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iam-p9-Nz0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1714" y="98"/>
+            <point key="canvasLocation" x="873" y="817"/>
         </scene>
         <!--연락처 연동-->
         <scene sceneID="p5X-AO-OUi">
@@ -447,6 +447,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sVc-ex-1Yu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="77.599999999999994" y="99.400299850074973"/>
+        </scene>
+        <!--저작권 표기-->
+        <scene sceneID="czG-eC-ouR">
+            <objects>
+                <viewController storyboardIdentifier="SettingCopyrightViewController" title="저작권 표기" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j2U-xX-lKY" customClass="SettingCopyrightViewController" customModule="Bodabi" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ss7-l7-j7v">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nf-G4-Mod">
+                                <rect key="frame" x="16" y="108" width="343" height="670"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">designed by srip from Flaticon
+
+designed by Freepik from Flaticon
+
+Photos by Unsplash</string>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resources" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r64-sl-GKa">
+                                <rect key="frame" x="22" y="60" width="337" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="vLg-vZ-jBZ" firstAttribute="trailing" secondItem="4nf-G4-Mod" secondAttribute="trailing" constant="16" id="FdB-k1-owM"/>
+                            <constraint firstItem="vLg-vZ-jBZ" firstAttribute="bottom" secondItem="4nf-G4-Mod" secondAttribute="bottom" id="Fog-y5-Xms"/>
+                            <constraint firstItem="4nf-G4-Mod" firstAttribute="leading" secondItem="vLg-vZ-jBZ" secondAttribute="leading" constant="16" id="IVY-hn-Wz3"/>
+                            <constraint firstItem="vLg-vZ-jBZ" firstAttribute="trailing" secondItem="r64-sl-GKa" secondAttribute="trailing" constant="16" id="Jg8-hj-Mjg"/>
+                            <constraint firstItem="4nf-G4-Mod" firstAttribute="top" secondItem="r64-sl-GKa" secondAttribute="bottom" constant="16" id="Jic-9c-mdf"/>
+                            <constraint firstItem="r64-sl-GKa" firstAttribute="leading" secondItem="vLg-vZ-jBZ" secondAttribute="leading" constant="22" id="L1F-ky-Tr2"/>
+                            <constraint firstItem="r64-sl-GKa" firstAttribute="top" secondItem="vLg-vZ-jBZ" secondAttribute="top" constant="16" id="uME-I4-gaZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="vLg-vZ-jBZ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Okg-vU-VpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1713" y="99"/>
         </scene>
     </scenes>
     <resources>

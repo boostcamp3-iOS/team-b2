@@ -24,6 +24,9 @@ class HomeViewController: UIViewController {
     private var isHolidayEmpty: Bool = true
     
     private var cancelDeleteModeGesture: UITapGestureRecognizer?
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
     
     struct Const {
         static let bottomInset: CGFloat = 60.0

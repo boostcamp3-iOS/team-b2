@@ -20,10 +20,13 @@ class UpcomingEventViewCell: UITableViewCell {
     @IBOutlet weak var lastHistoryLabel: UILabel!
     @IBOutlet weak var lastHistoryImageView: UIImageView!
     @IBOutlet weak var dDayLabel: UILabel!
+    @IBOutlet weak var leftColorView: UIView!
+    @IBOutlet weak var rightColorView: UIImageView!
     
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet var deleteActionConstraint: NSLayoutConstraint!
     
+   
     // MARK: - Property
     
     public var event: Event? {
@@ -62,12 +65,14 @@ class UpcomingEventViewCell: UITableViewCell {
     // MARK: - Configure
     
     private func configure() {
-        guard let event = event else { return }
+        guard let event = event, let title = event.title else { return }
 
         nameLabel.text = event.friend?.name
         holidayLabel.text = event.title
         dDayLabel.text = event.dday == 0 ? "Today" : "D-\(event.dday)"
         favoriteButton.isSelected = event.favorite
+        leftColorView.backgroundColor = DefaultHolidayType.parse(with: title)?.color ?? #colorLiteral(red: 0.961987555, green: 0.7720394135, blue: 0.4948675036, alpha: 1)
+        rightColorView.tintColor = event.dday == 0 ? #colorLiteral(red: 0.5507660194, green: 0.5332616567, blue: 0.5859107449, alpha: 1) : #colorLiteral(red: 0.6840819716, green: 0.6623405814, blue: 0.7277336717, alpha: 1)
         
         let friendHistories = event.friend?.histories
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)

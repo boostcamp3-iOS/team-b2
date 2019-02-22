@@ -29,28 +29,21 @@ class NotificationViewCell: UITableViewCell {
                 notificationDateLabel.text = ""
                 return
             }
-            
+            guard let eventTitle = notification.event?.title else { return }
+           
             backgroundColor = notification.isRead ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) : #colorLiteral(red: 0.9764705896, green: 0.9394879168, blue: 0.8803283655, alpha: 1)
+            iconImageView.image = DefaultHolidayType.parse(with: eventTitle)?.notificationImage ?? #imageLiteral(resourceName: "ic_noti_default")
             imageContainerView.makeRound(with: .heightRound)
-            // TODO: - Image Setup for each holiday
-            iconImageView.image = UIImage(named: "ic_fullStar")
             eventDateLabel.text = notification.event?.date?.toString(of: .year)
             notificationLabel.text = notification.sentence
-            
-            let notificationText: String
-            let today: Date = Date()
-            let yesterday: Date = today.addingTimeInterval(60 * 60 * 24 * -1)
-            guard let date = notification.date else { return }
-            
-            switch Calendar.current.dateComponents([.year, .month, .day], from: date) {
-            case Calendar.current.dateComponents([.year, .month, .day], from: today):
-                notificationText = "오늘"
-            case Calendar.current.dateComponents([.year, .month, .day], from: yesterday):
-                notificationText = "어제"
+
+            let difference = notification.difference
+            switch difference {
+            case 0: notificationDateLabel.text = "오늘"
+            case 1: notificationDateLabel.text = "어제"
             default:
-                notificationText = notification.date?.toString(of: .none) ?? ""
+                notificationDateLabel.text = "\(difference)일 전"
             }
-            notificationDateLabel.text = notificationText
         }
     }
     

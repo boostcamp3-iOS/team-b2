@@ -47,10 +47,10 @@ extension Date {
     
     func offsetFrom(date : Date) -> Int {
         let calendar: Calendar = Calendar.current
-        let eventDateComponents = calendar.dateComponents([.era, .year, .month, .day], from: self)
-        let todayDateComponents = calendar.dateComponents(
-            [.era, .year, .month, .day], from: date)
-        let difference = calendar.dateComponents([.day], from: todayDateComponents, to: eventDateComponents)
+        let sourceDateComponents = calendar.dateComponents([.era, .year, .month, .day, .hour, .minute], from: self)
+        var targetDateComponents = calendar.dateComponents(
+            [.era, .year, .month, .day, .hour, .minute], from: date)
+        let difference = calendar.dateComponents([.day], from: targetDateComponents, to: sourceDateComponents)
         if let dday = difference.day {
             return dday
         }

@@ -115,6 +115,8 @@
 		F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814529D21FCDDE0004A2CF0 /* NotificationViewCell.swift */; };
 		F81452A021FCDDE0004A2CF0 /* NotificationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F814529E21FCDDE0004A2CF0 /* NotificationViewCell.xib */; };
 		F81452A421FD8C1B004A2CF0 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81452A321FD8C1B004A2CF0 /* String+Extensions.swift */; };
+		F8197BAF221F983300984C8B /* DefaultHolidayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8197BAE221F983300984C8B /* DefaultHolidayType.swift */; };
+		F8197BB3221FB10B00984C8B /* SettingCopyrightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8197BB2221FB10B00984C8B /* SettingCopyrightViewController.swift */; };
 		F82BE25D2211309B00C194F1 /* History+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82BE25C2211309B00C194F1 /* History+Extensions.swift */; };
 		F82BE25F221130B400C194F1 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82BE25E221130B400C194F1 /* Notification+Extensions.swift */; };
 		F82BE261221130D000C194F1 /* Event+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82BE260221130D000C194F1 /* Event+Extensions.swift */; };
@@ -247,6 +249,8 @@
 		F814529D21FCDDE0004A2CF0 /* NotificationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewCell.swift; sourceTree = "<group>"; };
 		F814529E21FCDDE0004A2CF0 /* NotificationViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationViewCell.xib; sourceTree = "<group>"; };
 		F81452A321FD8C1B004A2CF0 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		F8197BAE221F983300984C8B /* DefaultHolidayType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHolidayType.swift; sourceTree = "<group>"; };
+		F8197BB2221FB10B00984C8B /* SettingCopyrightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCopyrightViewController.swift; sourceTree = "<group>"; };
 		F82BE25C2211309B00C194F1 /* History+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+Extensions.swift"; sourceTree = "<group>"; };
 		F82BE25E221130B400C194F1 /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
 		F82BE260221130D000C194F1 /* Event+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+Extensions.swift"; sourceTree = "<group>"; };
@@ -357,6 +361,7 @@
 				F85A8BCC22193111006FB44E /* DefaultsKey.swift */,
 				49C86BF9221E48FF00D63455 /* TabBar.swift */,
 				F8748906221E09110087CFD1 /* RemoteType.swift */,
+				F8197BAE221F983300984C8B /* DefaultHolidayType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -488,6 +493,7 @@
 				F814529621FCCF6B004A2CF0 /* SettingViewCell.xib */,
 				F82C68D32217B579000FFE7E /* SettingAlarmViewController.swift */,
 				4976CFC7221BA17400745422 /* SettingContactsViewController.swift */,
+				F8197BB2221FB10B00984C8B /* SettingCopyrightViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -784,6 +790,7 @@
 				49484CF22212613B00C09384 /* String+Unicode.swift in Sources */,
 				F89ED97722163A34006588E1 /* InputFriendViewCell.swift in Sources */,
 				49C0850C21FB092E0060B02C /* UIStoryboard+Extensions.swift in Sources */,
+				F8197BB3221FB10B00984C8B /* SettingCopyrightViewController.swift in Sources */,
 				F814529C21FCDD76004A2CF0 /* NotificationViewController.swift in Sources */,
 				49C0850421FAE1600060B02C /* UICollectionView+Extensions.swift in Sources */,
 				49484CF72212D70400C09384 /* FriendsIndexViewCell.swift in Sources */,
@@ -805,6 +812,7 @@
 				F8CB544A221D069D001693E2 /* UINavigationController+Extensions.swift in Sources */,
 				4969A58E221A789900E189BD /* ContactManager.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
+				F8197BAF221F983300984C8B /* DefaultHolidayType.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
 				4967D6622202C1B000223ADF /* UIView+ParentViewController.swift in Sources */,
 				4967D6672202C64700223ADF /* CalendarWeekDayViewCell.swift in Sources */,
