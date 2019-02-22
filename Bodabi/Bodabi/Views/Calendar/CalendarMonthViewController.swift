@@ -23,7 +23,6 @@ class CalendarMonthViewController: UICollectionViewController {
         didSet {
             collectionView.visibleCells.enumerated()
                 .forEach { [weak self] (index, cell) in
-                    print(index)
                     self?.collectionView.deselectItem(
                         at: IndexPath(item: index, section: Section.day.rawValue),
                         animated: false

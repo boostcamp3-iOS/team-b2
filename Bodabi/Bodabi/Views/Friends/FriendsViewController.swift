@@ -97,7 +97,7 @@ class FriendsViewController: UIViewController {
     @IBAction func touchUpAddFriendButton(_ sender: UIButton) {
         let viewController = storyboard(.input)
             .instantiateViewController(ofType: NameInputViewController.self)
-        viewController.isRelationInput = false
+        viewController.cellType = .holiday
         viewController.entryRoute = .addFriendAtFriends
         viewController.setDatabaseManager(databaseManager)
         viewController.inputData = InputData()
@@ -159,8 +159,6 @@ class FriendsViewController: UIViewController {
         emptyView.isHidden = friends.count == 0 ? false : true
     }
     
-    // MARK: Fix me
-    // tableView reload되는 부분과 searchBartext 바꿔주는 부분과, setEmptyView main queue에서 동작하도록 변경
     private func fetchFriend() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         databaseManager.fetch (
@@ -169,7 +167,7 @@ class FriendsViewController: UIViewController {
         ) { [weak self] (result) in
             switch result {
             case let .failure(error):
-                print(error.localizedDescription)
+                error.loadErrorAlert(title: "친구 불러오기 에러")
             case let .success(friends):
                 self?.friends = friends
                 self?.setEmptyView(friends: friends)
@@ -299,6 +297,12 @@ extension FriendsViewController: UITableViewDelegate {
             print(error.localizedDescription)
         }
         fetchFriend()
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        guard let section = Section(rawValue: indexPath.section),
+            (section == .favorite || section == .friends) else { return false }
+        return true
     }
 }
 

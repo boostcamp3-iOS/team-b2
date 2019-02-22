@@ -9,7 +9,7 @@
 import UIKit
 
 protocol BindDataDelegate: class {
-    func bind(_ data: [String])
+    func bind(_ data: [String]?)
 }
 
 class TagViewController: UIViewController {

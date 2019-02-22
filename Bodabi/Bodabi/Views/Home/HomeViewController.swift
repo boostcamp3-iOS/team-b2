@@ -95,33 +95,42 @@ class HomeViewController: UIViewController {
     // MARK: - Method
     
     private func fetchEvent() {
-        let request: NSFetchRequest<Event> = Event.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-
         let predicate: NSPredicate = NSPredicate(format: "date >= %@", NSDate())
-        request.predicate = predicate
-
-        if let result = try? databaseManager.viewContext.fetch(request) {
-            events = result
-            tableView.reloadSections(
-                IndexSet(integer: Section.friendEvents.rawValue),
-                with: .none
-            )
+        databaseManager.fetch(
+            type: Event.self,
+            predicate: predicate,
+            sortDescriptor: sortDescriptor
+        ) { [weak self] (result) in
+            switch result {
+            case .success(let events):
+                self?.events = events
+                self?.tableView.reloadSections(
+                    IndexSet(integer: Section.friendEvents.rawValue),
+                    with: .none
+                )
+            case .failure(let err):
+                err.loadErrorAlert(title: "이벤트 불러오기 에러")
+            }
         }
     }
     
     private func fetchHoliday() {
-        let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
-        request.sortDescriptors = [sortDescriptor]
-        
-        if let result = try? databaseManager.viewContext.fetch(request) {
-            holidays = result
-            tableView.reloadSections(
-                IndexSet(integer: Section.holidays.rawValue),
-                with: .none
-            )
+        databaseManager.fetch(
+            type: Holiday.self,
+            sortDescriptor: sortDescriptor
+        ) { [weak self] (result) in
+            switch result {
+            case .success(let holidays):
+                self?.holidays = holidays
+                self?.tableView.reloadSections(
+                    IndexSet(integer: Section.holidays.rawValue),
+                    with: .none
+                )
+            case .failure(let err):
+                err.loadErrorAlert(title: "나의 경조사 불러오기 에러")
+            }
         }
     }
     
@@ -188,7 +197,8 @@ class HomeViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
         
-        viewController.isRelationInput = false
+//        viewController.isRelationInput = false
+        viewController.cellType = .holiday
         viewController.entryRoute = .addUpcomingEventAtHome
         viewController.setDatabaseManager(databaseManager)
         viewController.inputData = InputData()
