@@ -46,7 +46,7 @@ class FriendsViewController: UIViewController {
         static let buttonAnimationScale: CGFloat = 1.3
         static let buttonAnimationDuration: TimeInterval = 0.18
         
-        static let cellWidthSize: CGFloat = 30.0
+        static let cellWidthSize: CGFloat = 35.0
     }
     
     enum Section: Int, CaseIterable {
