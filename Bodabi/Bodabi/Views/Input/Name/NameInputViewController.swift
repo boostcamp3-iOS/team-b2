@@ -284,17 +284,16 @@ class NameInputViewController: UIViewController {
     
     private func isUniqueTags(from newName: String) -> Bool {
         guard newName != "" else { return false }
-        guard let newTags = inputData.tags else { return false }
         guard let searchedFriends = searchedFriends else { return true }
         
         var isUnique: Bool = true
-        if searchedFriends.count == 0 { isUnique = false }
+        if searchedFriends.count == 0 { return false }
         searchedFriends.forEach { (friend) in
-            if friend.name == newName, let friendTags = friend.tags {
+            if friend.name == newName, let friendTags = friend.tags, let newTags = inputData.tags {
                 if isSame(newTags, with: friendTags) {
                     isUnique = false
                 }
-            } else if friend.tags == nil, newTags.count == 0{
+            } else if friend.tags == nil, inputData.tags == nil {
                 isUnique = false
             }
         }
@@ -304,12 +303,13 @@ class NameInputViewController: UIViewController {
     
     private func isUniqueName(with name: String) -> Bool {
         guard name != "" else { return false }
-        guard let cellData = cellData else { return false }
         guard let entryRoute = entryRoute else { return false }
+        
         var isUnique: Bool = true
         
         switch entryRoute {
         case .addHolidayAtHome:
+            guard let cellData = cellData else { return false }
             cellData.forEach {
                 if $0 == name {
                     isUnique = false
@@ -318,7 +318,8 @@ class NameInputViewController: UIViewController {
         case .addFriendAtFriends,
              .addHistoryAtHoliday,
              .addUpcomingEventAtHome:
-            friends?.forEach {
+            guard let friends = friends else { return false }
+            friends.forEach {
                 if $0.name == name {
                    isUnique = false
                 }
