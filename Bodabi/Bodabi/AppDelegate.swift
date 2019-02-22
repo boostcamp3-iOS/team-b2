@@ -106,8 +106,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         renumberBadgesOfPendingNotifications()
     }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        updateDeliveredNotification()
+    }
+    
     func updateDeliveredNotification() {
-        let predicate = NSPredicate(format: "date > %@", NSDate())
+        let predicate = NSPredicate(format: "date < %@", NSDate())
         let anotherPredicate = NSPredicate(format: "isRead = %@", NSNumber(value: false))
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicate, anotherPredicate])
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
@@ -118,7 +123,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 print(error.localizedDescription)
             case let .success(notifications):
                 notifications.forEach {
-                    self.databaseManager.updateNotification(object: $0, isHandled: true)
+                    self.databaseManager.updateNotification(object: $0, isHandled: true)  {
+                        switch $0 {
+                        case let .failure(error):
+                            print(error.localizedDescription)
+                        case .success:
+                            break
+                        }
+                    }
                 }
             }
         }
@@ -160,4 +172,3 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
     }
 }
-

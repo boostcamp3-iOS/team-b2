@@ -74,7 +74,14 @@ class NotificationViewController: UIViewController {
     
     private func updateNotificationRead(indexPath: IndexPath) {
         if let notification = fetchedResultsController?.object(at: indexPath) {
-            databaseManager.updateNotification(object: notification, isRead: true)
+            databaseManager.updateNotification(object: notification, isRead: true) {
+                switch $0 {
+                case let .failure(error):
+                    print(error.localizedDescription)
+                case .success:
+                    break
+                }
+            }
         }
     }
     

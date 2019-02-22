@@ -37,7 +37,8 @@ class NotificationViewCell: UITableViewCell {
             eventDateLabel.text = notification.event?.date?.toString(of: .year)
             notificationLabel.text = notification.sentence
 
-            let difference = notification.difference
+            let currentDate = Date()
+            guard let difference = notification.date?.offsetFrom(date: currentDate) else { return }
             switch difference {
             case 0: notificationDateLabel.text = "오늘"
             case 1: notificationDateLabel.text = "어제"

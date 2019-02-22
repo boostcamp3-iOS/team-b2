@@ -135,6 +135,7 @@
 		F89ED96B22151D2F006588E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F89ED96A22151D2F006588E1 /* Assets.xcassets */; };
 		F89ED97722163A34006588E1 /* InputFriendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED97622163A34006588E1 /* InputFriendViewCell.swift */; };
 		F8CB544A221D069D001693E2 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */; };
+		F8E7D5B0222089EF00F1F537 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E7D5AF222089EF00F1F537 /* Int+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -269,6 +270,7 @@
 		F89ED96A22151D2F006588E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F89ED97622163A34006588E1 /* InputFriendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFriendViewCell.swift; sourceTree = "<group>"; };
 		F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
+		F8E7D5AF222089EF00F1F537 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -440,6 +442,7 @@
 				F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */,
 				49C86BF3221E406100D63455 /* Error+Alert.swift */,
 				49C86BF7221E483500D63455 /* Error+Description.swift */,
+				F8E7D5AF222089EF00F1F537 /* Int+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -829,6 +832,7 @@
 				F82BE25F221130B400C194F1 /* Notification+Extensions.swift in Sources */,
 				4978BCCD220D5B230052156E /* CollectionFetchedResultsDelegate.swift in Sources */,
 				49C0851721FDA8A60060B02C /* FriendsHeaderViewCell.swift in Sources */,
+				F8E7D5B0222089EF00F1F537 /* Int+Extensions.swift in Sources */,
 				F814529A21FCD4BC004A2CF0 /* SettingOptions.swift in Sources */,
 				49C86BFA221E48FF00D63455 /* TabBar.swift in Sources */,
 			);

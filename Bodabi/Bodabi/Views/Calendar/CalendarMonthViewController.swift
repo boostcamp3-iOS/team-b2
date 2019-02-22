@@ -192,6 +192,7 @@ extension CalendarMonthViewController {
             dateComponents.day = indexPath.item - visibleMonthInfo.firstDay + 1
             dateComponents.hour = 23
             dateComponents.minute = 59
+            dateComponents.second = 59
             cell.date = calendar.date(from: dateComponents)
             
             cell.day = dateComponents.day ?? 0
