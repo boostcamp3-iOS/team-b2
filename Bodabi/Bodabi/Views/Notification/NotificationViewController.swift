@@ -18,7 +18,7 @@ class NotificationViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private var fetchedResultsController: NSFetchedResultsController<Notification>?
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -136,8 +136,8 @@ extension NotificationViewController: UITableViewDelegate {
 
 // MARK: - DatabaseManagerClient
 
-extension NotificationViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension NotificationViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

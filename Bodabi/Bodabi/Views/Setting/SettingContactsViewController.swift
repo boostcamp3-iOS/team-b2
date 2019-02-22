@@ -18,7 +18,7 @@ class SettingContactsViewController: UIViewController {
     
     // MARK: - Property
     
-    public var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private var friends: [Friend]?
     private var contacts: [CNContact]? {
         didSet {
@@ -101,7 +101,8 @@ class SettingContactsViewController: UIViewController {
         }
     }
     
-    private func fetchContacts() {
+//    private
+    func fetchContacts() {
         ContactManager.shared
             .fetchNonexistentContact(existingFriends: friends) { [weak self] (result) in
                 switch result {
@@ -117,7 +118,8 @@ class SettingContactsViewController: UIViewController {
         }
     }
     
-    private func saveContacts(contacts: [CNContact]?) {
+//    private
+    func saveContacts(contacts: [CNContact]?) {
         let alert = BodabiAlertController(
             title: "연락처 가져오기",
             message: "총 \(contacts?.count ?? 0)개의 연락처를 가져오시겠습니까?",
@@ -182,5 +184,11 @@ extension SettingContactsViewController: UITableViewDataSource {
         let cell = tableView.dequeue(FriendViewCell.self, for: indexPath)
         cell.contact = contacts?[indexPath.row]
         return cell
+    }
+}
+
+extension SettingContactsViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
+        databaseManager = manager
     }
 }

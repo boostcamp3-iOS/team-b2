@@ -67,6 +67,10 @@
 		49C86BF4221E406100D63455 /* Error+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF3221E406100D63455 /* Error+Alert.swift */; };
 		49C86BF8221E483500D63455 /* Error+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF7221E483500D63455 /* Error+Description.swift */; };
 		49C86BFA221E48FF00D63455 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF9221E48FF00D63455 /* TabBar.swift */; };
+		49C86C02221E7C3700D63455 /* BodabiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86C01221E7C3700D63455 /* BodabiTests.swift */; };
+		49C86C0D221E7DF400D63455 /* MockCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86C0C221E7DF400D63455 /* MockCoreDataManager.swift */; };
+		49E4CA4D221E95030099A741 /* SettingContactsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E4CA4C221E95030099A741 /* SettingContactsViewControllerTests.swift */; };
+		49E4CA4F221E96F80099A741 /* DummyContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E4CA4E221E96F80099A741 /* DummyContacts.swift */; };
 		DB147035220D4363000EA1D7 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB147034220D4363000EA1D7 /* CloudKit.framework */; };
 		DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB147036220D4707000EA1D7 /* CloudManager.swift */; };
 		DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */; };
@@ -133,6 +137,16 @@
 		F8CB544A221D069D001693E2 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		49C86C04221E7C3700D63455 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4998126221F9D7B4000DB7B2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4998126921F9D7B4000DB7B2;
+			remoteInfo = Bodabi;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		4910CCA822043EB4004BDBF1 /* CalendarViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewStyle.swift; sourceTree = "<group>"; };
 		491B1C4D221BF86B00ECB66F /* String+PhoneFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PhoneFormat.swift"; sourceTree = "<group>"; };
@@ -196,6 +210,12 @@
 		49C86BF3221E406100D63455 /* Error+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Alert.swift"; sourceTree = "<group>"; };
 		49C86BF7221E483500D63455 /* Error+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Description.swift"; sourceTree = "<group>"; };
 		49C86BF9221E48FF00D63455 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		49C86BFF221E7C3700D63455 /* BodabiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BodabiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		49C86C01221E7C3700D63455 /* BodabiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodabiTests.swift; sourceTree = "<group>"; };
+		49C86C03221E7C3700D63455 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49C86C0C221E7DF400D63455 /* MockCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoreDataManager.swift; sourceTree = "<group>"; };
+		49E4CA4C221E95030099A741 /* SettingContactsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContactsViewControllerTests.swift; sourceTree = "<group>"; };
+		49E4CA4E221E96F80099A741 /* DummyContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyContacts.swift; sourceTree = "<group>"; };
 		DB147032220D426A000EA1D7 /* Bodabi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bodabi.entitlements; sourceTree = "<group>"; };
 		DB147034220D4363000EA1D7 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		DB147036220D4707000EA1D7 /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
@@ -272,6 +292,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		49C86BFC221E7C3700D63455 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -304,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				4998126C21F9D7B4000DB7B2 /* Bodabi */,
+				49C86C00221E7C3700D63455 /* BodabiTests */,
 				4998126B21F9D7B4000DB7B2 /* Products */,
 				DB147033220D4363000EA1D7 /* Frameworks */,
 			);
@@ -313,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				4998126A21F9D7B4000DB7B2 /* Bodabi.app */,
+				49C86BFF221E7C3700D63455 /* BodabiTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -433,6 +462,42 @@
 				49C86BF7221E483500D63455 /* Error+Description.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		49C86C00221E7C3700D63455 /* BodabiTests */ = {
+			isa = PBXGroup;
+			children = (
+				49C86C09221E7D0800D63455 /* Mock */,
+				49C86C0B221E7D1600D63455 /* Dummy */,
+				49C86C0A221E7D1400D63455 /* Tests */,
+				49C86C01221E7C3700D63455 /* BodabiTests.swift */,
+				49C86C03221E7C3700D63455 /* Info.plist */,
+			);
+			path = BodabiTests;
+			sourceTree = "<group>";
+		};
+		49C86C09221E7D0800D63455 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				49C86C0C221E7DF400D63455 /* MockCoreDataManager.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		49C86C0A221E7D1400D63455 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				49E4CA4C221E95030099A741 /* SettingContactsViewControllerTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		49C86C0B221E7D1600D63455 /* Dummy */ = {
+			isa = PBXGroup;
+			children = (
+				49E4CA4E221E96F80099A741 /* DummyContacts.swift */,
+			);
+			path = Dummy;
 			sourceTree = "<group>";
 		};
 		DB147033220D4363000EA1D7 /* Frameworks */ = {
@@ -636,6 +701,24 @@
 			productReference = 4998126A21F9D7B4000DB7B2 /* Bodabi.app */;
 			productType = "com.apple.product-type.application";
 		};
+		49C86BFE221E7C3700D63455 /* BodabiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 49C86C08221E7C3700D63455 /* Build configuration list for PBXNativeTarget "BodabiTests" */;
+			buildPhases = (
+				49C86BFB221E7C3700D63455 /* Sources */,
+				49C86BFC221E7C3700D63455 /* Frameworks */,
+				49C86BFD221E7C3700D63455 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				49C86C05221E7C3700D63455 /* PBXTargetDependency */,
+			);
+			name = BodabiTests;
+			productName = BodabiTests;
+			productReference = 49C86BFF221E7C3700D63455 /* BodabiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -657,6 +740,10 @@
 							};
 						};
 					};
+					49C86BFE221E7C3700D63455 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 4998126921F9D7B4000DB7B2;
+					};
 				};
 			};
 			buildConfigurationList = 4998126521F9D7B4000DB7B2 /* Build configuration list for PBXProject "Bodabi" */;
@@ -673,6 +760,7 @@
 			projectRoot = "";
 			targets = (
 				4998126921F9D7B4000DB7B2 /* Bodabi */,
+				49C86BFE221E7C3700D63455 /* BodabiTests */,
 			);
 		};
 /* End PBXProject section */
@@ -712,6 +800,13 @@
 				F89ED96B22151D2F006588E1 /* Assets.xcassets in Resources */,
 				DB38739A21FEDAC200ADF0CB /* Holiday.storyboard in Resources */,
 				49C084F221FAD36D0060B02C /* MyHolidaysViewCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49C86BFD221E7C3700D63455 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -818,7 +913,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		49C86BFB221E7C3700D63455 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49C86C0D221E7DF400D63455 /* MockCoreDataManager.swift in Sources */,
+				49E4CA4F221E96F80099A741 /* DummyContacts.swift in Sources */,
+				49E4CA4D221E95030099A741 /* SettingContactsViewControllerTests.swift in Sources */,
+				49C86C02221E7C3700D63455 /* BodabiTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		49C86C05221E7C3700D63455 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4998126921F9D7B4000DB7B2 /* Bodabi */;
+			targetProxy = 49C86C04221E7C3700D63455 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4998127121F9D7B4000DB7B2 /* Main.storyboard */ = {
@@ -996,6 +1110,46 @@
 			};
 			name = Release;
 		};
+		49C86C06221E7C3700D63455 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y6J9HAPEME;
+				INFOPLIST_FILE = BodabiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyejin.BodabiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bodabi.app/Bodabi";
+			};
+			name = Debug;
+		};
+		49C86C07221E7C3700D63455 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y6J9HAPEME;
+				INFOPLIST_FILE = BodabiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyejin.BodabiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bodabi.app/Bodabi";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1013,6 +1167,15 @@
 			buildConfigurations = (
 				4998128021F9D7B6000DB7B2 /* Debug */,
 				4998128121F9D7B6000DB7B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		49C86C08221E7C3700D63455 /* Build configuration list for PBXNativeTarget "BodabiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49C86C06221E7C3700D63455 /* Debug */,
+				49C86C07221E7C3700D63455 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
