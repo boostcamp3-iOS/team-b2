@@ -148,25 +148,25 @@ final class CoreDataManager {
             friend.favorite = false
             
             let complete: (Result) -> Void = { result in
-                DispatchQueue.main.async {
                     completion(result)
-                }
             }
             
             do {
                 try backgroundContext.save()
-                guard let mainQueueFriend = self.viewContext.object(with: friend.objectID) as? Friend else {
-                    complete(.failure(CoreDataError.creationFailed))
-                    return
+                DispatchQueue.main.async {
+                    guard let mainQueueFriend = self.viewContext.object(with: friend.objectID) as? Friend else {
+                        complete(.failure(CoreDataError.creationFailed))
+                        return
+                    }
+                    complete(.success(mainQueueFriend))
                 }
-                complete(.success(mainQueueFriend))
             } catch {
                 complete(.failure(CoreDataError.creationFailed))
             }
         }
     }
         
-    func createEvent(title: String, date: Date, friend: Friend, completion: @escaping (Event?, Error?) -> ()) {
+    func createEvent(title: String, date: Date, friend: Friend, completion: @escaping (Result<Event>) -> ()) {
         container.performBackgroundTask { backgroundContext in
             let event: Event = Event(context: backgroundContext)
             event.title = title
@@ -174,18 +174,23 @@ final class CoreDataManager {
             event.friend = friend
             event.favorite = false
             
+            let complete: (Result) -> Void = { result in
+                DispatchQueue.main.async {
+                    completion(result)
+                }
+            }
+            
             do {
                 try backgroundContext.save()
                 let mainQueueEvent = self.viewContext.object(with: event.objectID) as! Event
-                completion(mainQueueEvent, nil)
+                complete(.success(mainQueueEvent))
             } catch {
-                print("Event creation failed: \(error.localizedDescription)")
-                completion(nil, CoreDataError.creationFailed)
+                complete(.failure(CoreDataError.creationFailed))
             }
         }
     }
     
-    func createHistory(holiday: String, item: String, isTaken: Bool, date: Date, friend: Friend, completion: @escaping (History?, Error?) -> ()) {
+    func createHistory(holiday: String, item: String, isTaken: Bool, date: Date, friend: Friend, completion: @escaping (Result<History>) -> ()) {
         container.performBackgroundTask { backgroundContext in
             let history: History = History(context: backgroundContext)
             history.holiday = holiday
@@ -194,17 +199,23 @@ final class CoreDataManager {
             history.date = date
             history.friend = friend
             
+            let complete: (Result) -> Void = { result in
+                DispatchQueue.main.async {
+                    completion(result)
+                }
+            }
+            
             do {
                 try backgroundContext.save()
                 let mainQueueHistory = self.viewContext.object(with: history.objectID) as! History
-                completion(mainQueueHistory, nil)
+                complete(.success(mainQueueHistory))
             } catch {
-                completion(nil, CoreDataError.creationFailed)
+                complete(.failure(CoreDataError.creationFailed))
             }
         }
     }
     
-    func createHoliday(title: String, date: Date, image: Data? = nil, completion: @escaping (Holiday?, Error?) -> ()) {
+    func createHoliday(title: String, date: Date, image: Data? = nil, completion: @escaping (Result<Holiday>) -> ()) {
         container.performBackgroundTask { backgroundContext in
             let holiday: Holiday = Holiday(context: backgroundContext)
             holiday.title = title
@@ -212,33 +223,47 @@ final class CoreDataManager {
             holiday.image = image
             holiday.createdDate = Date()
             
+            let complete: (Result) -> Void = { result in
+                DispatchQueue.main.async {
+                    completion(result)
+                }
+            }
+            
             do {
                 try backgroundContext.save()
                 let mainQueueHoliday = self.viewContext.object(with: holiday.objectID) as! Holiday
-                completion(mainQueueHoliday, nil)
+                complete(.success(mainQueueHoliday))
             } catch {
-                completion(nil, CoreDataError.creationFailed)
+                complete(.failure(CoreDataError.creationFailed))
             }
         }
     }
     
-    func createNotification(event: Event, date: Date, completion: @escaping (Notification?, Error?) -> ()) {
+    func createNotification(event: Event, date: Date, completion: @escaping (Result<Notification>) -> ()) {
         container.performBackgroundTask { backgroundContext in
             let notification: Notification = Notification(context: backgroundContext)
-            let eventID = event.objectID
             notification.id = UUID().uuidString
             notification.date = date
             notification.isRead = false
             notification.isHandled = false
+            guard let event = (backgroundContext.object(with: event.objectID)) as? Event else {
+                return
+            }
+            notification.event = event
+            
+            let complete: (Result) -> Void = { result in
+                completion(result)
+            }
             
             do {
                 try backgroundContext.save()
-                let mainQueueNotification = self.viewContext.object(with: notification.objectID) as! Notification
-                let mainQueueEvent = self.viewContext.object(with: eventID) as! Event
-                mainQueueNotification.event = mainQueueEvent
-                completion(mainQueueNotification, nil)
+                DispatchQueue.main.async {
+                    guard let updatedNotification = self.viewContext.object(with: notification.objectID) as? Notification else { return }
+                    complete(.success(updatedNotification))
+                }
             } catch {
-                completion(nil, CoreDataError.creationFailed)
+                print(error.localizedDescription)
+                complete(.failure(CoreDataError.creationFailed))
             }
         }
     }

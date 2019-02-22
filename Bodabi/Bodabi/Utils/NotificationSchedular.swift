@@ -11,7 +11,7 @@ import UserNotifications
 
 struct NotificationSchedular {
     
-    static func create(notification: Notification, hour: Int? = nil, minute: Int? = nil) {
+    static func create(notification: Notification, hour: Int? = nil, minute: Int? = nil, completion: @escaping (UNNotificationRequest) -> Void = { _ in }) {
         
         // Prepare properties for register notification
         guard let event = notification.event else { return }
@@ -24,7 +24,7 @@ struct NotificationSchedular {
         } else if notification.difference == 1 {
             notificationString = "내일은 \(name)님의 \(event.title ?? "")입니다."
         } else {
-            notificationString = "(name)님의 \(event.title?.addSubjectSuffix() ?? "") \(notification.difference)일 남았습니다"
+            notificationString = "\(name)님의 \(event.title?.addSubjectSuffix() ?? "") \(notification.difference)일 남았습니다"
         }
         let content = UNMutableNotificationContent()
         content.title = "\(name)님의 경조사를 알려드립니다"
@@ -51,6 +51,7 @@ struct NotificationSchedular {
             if let error = error {
                 print(error.localizedDescription)
             }
+            completion(request)
         }
         
     }
@@ -70,7 +71,7 @@ struct NotificationSchedular {
     static func readAllPendingNotification() {
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
             for request in requests {
-                print("badge: \(String(describing: request.content.badge)) | \(request.content.body)")
+                print("badge: \(request.content.badge!)) | \(request.content.body) | \(request.trigger.debugDescription)")
                 print("---------------------------")
             }
         }

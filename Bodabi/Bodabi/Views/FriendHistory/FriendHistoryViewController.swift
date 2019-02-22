@@ -186,10 +186,11 @@ class FriendHistoryViewController: UIViewController {
             if let error = error {
                 print(error.localizedDescription)
             } else {
+                self.setShowTableViewCellDeleteButton(isShow: false)
                 self.fetchHistory()
                 self.updateSection()
                 self.tableView.reloadData()
-                self.setShowTableViewCellDeleteButton(isShow: false)
+
             }
         }
 
@@ -209,7 +210,8 @@ class FriendHistoryViewController: UIViewController {
         inputData.isNewData = false
         viewController.inputData = inputData
         viewController.entryRoute = .addHistoryAtFriendHistory
-        viewController.isRelationInput = false
+//        viewController.isRelationInput = false
+        viewController.cellType = .holiday
         viewController.setDatabaseManager(databaseManager)
         present(navigationController, animated: true, completion: nil)
     }

@@ -25,6 +25,9 @@ class HomeViewController: UIViewController {
     
     private var cancelDeleteModeGesture: UITapGestureRecognizer?
     private let heavyImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
     
     struct Const {
         static let bottomInset: CGFloat = 60.0
@@ -196,7 +199,8 @@ class HomeViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         let navController = UINavigationController(rootViewController: viewController)
         
-        viewController.isRelationInput = false
+//        viewController.isRelationInput = false
+        viewController.cellType = .holiday
         viewController.entryRoute = .addUpcomingEventAtHome
         viewController.setDatabaseManager(databaseManager)
         viewController.inputData = InputData()

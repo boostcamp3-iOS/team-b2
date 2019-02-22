@@ -10,6 +10,24 @@ import CoreData
 import UIKit
 
 struct InputManager {
+    var entryType: EntryType
+    var inputData: InputData
+    var inputType: InputType
+    
+    init(entryType: EntryType, inputData: InputData, inputType: InputType) {
+        self.entryType = entryType
+        self.inputData = inputData
+        self.inputType = inputType
+    }
+    
+    init(entryType: EntryType, inputType: InputType) {
+        let inputData: InputData = InputData()
+        self.init(entryType: entryType, inputData: inputData, inputType: inputType)
+    }
+    
+    func createViewController(type: InputType) -> UIViewController {
+        return UIStoryboard(name: "Input", bundle: nil).instantiateViewController(withIdentifier: type.identifier)
+    }
     
     static func write(context: NSManagedObjectContext, entryRoute: EntryRoute, data: InputData) {
         // FIXME: - Data dummy image
@@ -163,4 +181,6 @@ struct InputManager {
                                          minute: defaultMinutes)
     }
 }
+
+
 
