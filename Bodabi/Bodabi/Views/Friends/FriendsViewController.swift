@@ -108,7 +108,7 @@ class FriendsViewController: UIViewController {
     @IBAction func touchUpGoFetchContactsButton(_ sender: UIButton) {
         let viewController = storyboard(.setting)
             .instantiateViewController(ofType: SettingContactsViewController.self)
-        viewController.databaseManager = databaseManager
+        viewController.setDatabaseManager(databaseManager)
         navigationController?.pushViewController(viewController, animated: true)
     }
     
