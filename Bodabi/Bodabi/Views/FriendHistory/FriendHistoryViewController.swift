@@ -184,10 +184,11 @@ class FriendHistoryViewController: UIViewController {
             if let error = error {
                 print(error.localizedDescription)
             } else {
+                self.setShowTableViewCellDeleteButton(isShow: false)
                 self.fetchHistory()
                 self.updateSection()
                 self.tableView.reloadData()
-                self.setShowTableViewCellDeleteButton(isShow: false)
+
             }
         }
 

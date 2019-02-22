@@ -85,7 +85,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard granted, let center = center, let `self` = self
                 else { return }
             if granted {
-                print("delegate")
                 center.delegate = self
             }
         }
