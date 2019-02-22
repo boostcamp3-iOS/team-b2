@@ -19,7 +19,7 @@ class SettingAlarmViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private let datePickerView = UIDatePicker()
     private let dayPickerView = UIPickerView()
     private let dDayData: [String: Int] = ["당일": 0, "하루 전": 1, "이틀 전": 2, "3일 전": 3, "5일 전": 5, "일주일 전": 7, "10일 전": 10, "2주 전": 14, "한 달 전": 30]
@@ -273,8 +273,8 @@ extension SettingAlarmViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension SettingAlarmViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension SettingAlarmViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

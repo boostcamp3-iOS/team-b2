@@ -11,11 +11,11 @@ import CoreData
 
 
 
-protocol DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager)
+protocol CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager)
 }
 
-final class DatabaseManager {
+final class CoreDataManager {
     var container: NSPersistentContainer
     
     var viewContext: NSManagedObjectContext {
@@ -378,7 +378,7 @@ final class DatabaseManager {
     }
 }
 
-protocol DatabaseManagerProtocol {
+protocol CoreDataManagerProtocol {
     var container: NSPersistentContainer { get }
     var viewContext: NSManagedObjectContext { get }
     func load(completion: (() -> Void)?)

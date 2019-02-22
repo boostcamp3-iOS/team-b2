@@ -26,7 +26,7 @@ class ItemInputViewController: UIViewController {
     
     public var inputData: InputData?
     public var entryRoute: EntryRoute!
-    public var databaseManager: DatabaseManager!
+    public var databaseManager: CoreDataManager!
     
     private var originalBottomConstraint: CGFloat = 0.0
     private var originalHeightConstraint: CGFloat = 0.0
@@ -313,8 +313,8 @@ extension ItemInputViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension ItemInputViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension ItemInputViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

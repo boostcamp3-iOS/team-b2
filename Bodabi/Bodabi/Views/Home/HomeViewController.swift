@@ -17,13 +17,14 @@ class HomeViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private var events: [Event]?
     private var holidays: [Holiday]?
     private var isEventEmpty: Bool = true
     private var isHolidayEmpty: Bool = true
     
     private var cancelDeleteModeGesture: UITapGestureRecognizer?
+    private let heavyImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     struct Const {
         static let bottomInset: CGFloat = 60.0
@@ -71,6 +72,7 @@ class HomeViewController: UIViewController {
         super.viewWillDisappear(animated)
 
         navigationController?.navigationBar.isHidden = false
+        setShowTableViewCellDeleteButton(isShow: false)
     }
     
     // MARK: - Initialization
@@ -245,6 +247,7 @@ class HomeViewController: UIViewController {
     
     @objc func longPressUpcomingEvent(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else { return }
+        heavyImpactFeedbackGenerator.impactOccurred()
         setShowTableViewCellDeleteButton(isShow: true)
     }
     
@@ -386,8 +389,8 @@ extension HomeViewController: UICollectionViewDelegate {
 
 // MARK: - DatabaseManagerClient
 
-extension HomeViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension HomeViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

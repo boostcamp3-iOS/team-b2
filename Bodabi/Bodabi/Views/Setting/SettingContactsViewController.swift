@@ -18,7 +18,7 @@ class SettingContactsViewController: UIViewController {
     
     // MARK: - Property
     
-    public var databaseManager: DatabaseManager!
+    public var databaseManager: CoreDataManager!
     private var friends: [Friend]?
     private var contacts: [CNContact]? {
         didSet {
@@ -189,8 +189,8 @@ extension SettingContactsViewController: UITableViewDataSource {
     }
 }
 
-extension SettingContactsViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension SettingContactsViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

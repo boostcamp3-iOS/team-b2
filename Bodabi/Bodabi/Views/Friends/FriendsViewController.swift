@@ -21,7 +21,7 @@ class FriendsViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private var friends: [Friend]?
     private var favoriteFriends: [Friend]?
     private let indexs: [Character] = ["★", "•", "ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ",
@@ -403,8 +403,8 @@ extension FriendsViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - DatabaseManagerClient
 
-extension FriendsViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension FriendsViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

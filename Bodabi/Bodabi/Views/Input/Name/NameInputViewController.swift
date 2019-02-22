@@ -42,7 +42,7 @@ class NameInputViewController: UIViewController {
         }
     }
     public var isRelationInput: Bool?
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private var friends: [Friend]?
     private var myRelations: [String]?
     private var myHolidays: [String]?
@@ -647,8 +647,8 @@ extension NameInputViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension NameInputViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension NameInputViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

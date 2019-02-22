@@ -27,13 +27,14 @@ class FriendHistoryViewController: UIViewController {
     }
     private var friend: Friend?
     private var histories: [History]?
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private var isSortDescending: Bool = true
     private var isTableViewLoaded: Bool = false
     private var isInputStatus: Bool = false
     private var isHolidayEmpty: Bool = true
     private var sections: [FriendHistorySection] = []
     private var cancelDeleteModeGesture: UITapGestureRecognizer?
+    private let heavyImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     private struct Const {
         static let bottomInset: CGFloat = 90.0
         static let buttonAnimationScale: CGFloat = 1.35
@@ -170,6 +171,7 @@ class FriendHistoryViewController: UIViewController {
     
     @objc func longPressUpcomingEvent(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else { return }
+        heavyImpactFeedbackGenerator.impactOccurred()
         setShowTableViewCellDeleteButton(isShow: true)
     }
     
@@ -352,8 +354,8 @@ extension FriendHistorySection {
 
 // MARK: - DatabaseManagerClient
 
-extension FriendHistoryViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension FriendHistoryViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }
