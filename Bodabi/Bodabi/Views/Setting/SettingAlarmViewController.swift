@@ -109,7 +109,7 @@ class SettingAlarmViewController: UIViewController {
         }
     }
     
-    func checkValueChanged(_ currentDday: Int,_ currentHour: Int, _ currentMinutes: Int,_ currentFirstDday: Int,_ currentSecondDday: Int) -> Bool {
+    func checkValueChanged(_ currentHour: Int,_ currentMinutes: Int, _ currentDday: Int,_ currentFirstDday: Int,_ currentSecondDday: Int) -> Bool {
         let currentValues = [currentHour, currentMinutes, currentDday, currentFirstDday, currentSecondDday]
         for (index, _) in currentValues.enumerated() {
             if currentValues[index] != initialValues[index] {
@@ -135,15 +135,21 @@ class SettingAlarmViewController: UIViewController {
             case let .success(events):
                 for event in events {
                     guard let notifications = event.notifications?.allObjects as? [Notification] else { return }
-                    guard let defaultNotificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -3600 * 24 * defaultDday + 3600 * defaultHour + 60 * defaultMinutes)!) else { return }
+                    guard let defaultNotificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -1 * Int.day * (defaultDday + 1) + Int.hour * defaultHour + Int.minute * defaultMinutes)!) else { return }
                         NotificationSchedular.deleteAllNotification()
                         notifications.forEach { notification in
                         if !notification.isHandled {
-                            print(notification.event?.friend?.name!)
-                            self.databaseManager.updateNotification(object: notification, date: defaultNotificationDate)
-                            NotificationSchedular.create(notification: notification, hour: defaultHour, minute: defaultMinutes)
+                            self.databaseManager.updateNotification(object: notification, date: defaultNotificationDate)  {
+                                switch $0 {
+                                case let .failure(error):
+                                    print(error.localizedDescription)
+                                case let .success(updatedNotification):
+                                    NotificationSchedular.create(notification: updatedNotification,
+                                                                 hour: defaultHour,
+                                                                 minute: defaultMinutes)
+                                }
+                            }
                         }
-                        NotificationSchedular.readAllPendingNotification()
                     }
                 }
             }

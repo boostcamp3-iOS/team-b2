@@ -358,23 +358,25 @@ final class CoreDataManager {
         }
     }
     
-    func updateNotification(object: Notification, event: Event? = nil, date: Date? = nil, isRead: Bool? = nil, isHandled: Bool? = nil) {
+    func updateNotification(object: Notification, event: Event? = nil, date: Date? = nil, isRead: Bool? = nil, isHandled: Bool? = nil, completion: @escaping (Result<Notification>)->()) {
         if event == nil, date == nil, isRead == nil, isHandled == nil {
             return
         }
         container.performBackgroundTask { backgroundContext in
-            let notification = backgroundContext.object(with: object.objectID) as? Notification
+            guard let notification = backgroundContext.object(with: object.objectID) as? Notification else { return }
             if let event = event {
-                notification?.event = backgroundContext.object(with: event.objectID) as? Event
+                notification.event = backgroundContext.object(with: event.objectID) as? Event
             }
-            if let date = date { notification?.date = date }
-            if let isRead = isRead { notification?.isRead = isRead }
-            if let isHandled = isHandled { notification?.isHandled = isHandled }
+            if let date = date { notification.date = date }
+            if let isRead = isRead { notification.isRead = isRead }
+            if let isHandled = isHandled { notification.isHandled = isHandled }
             
             do {
                 try backgroundContext.save()
-                
-                
+                DispatchQueue.main.async {
+                    guard let updatedNotification = self.viewContext.object(with: notification.objectID) as? Notification else { return }
+                    completion(.success(updatedNotification))
+                }
             } catch {
                 print("Notification creation failed: \(error.localizedDescription)")
             }
