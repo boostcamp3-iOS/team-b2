@@ -57,9 +57,11 @@ class NotificationViewController: UIViewController {
     private func initFetchedResultsController() {
         let fetchResult: NSFetchRequest<Notification> = Notification.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
-        let predicate = NSPredicate(format: "isHandled = %@", NSNumber(value: true))
+        let deliveredPredicate = NSPredicate(format: "isHandled = %@", NSNumber(value: true))
+        let datePredicate = NSPredicate(format: "date > %@", NSDate())
+        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [deliveredPredicate, datePredicate])
         fetchResult.sortDescriptors = [sortDescriptor]
-        fetchResult.predicate = predicate
+        fetchResult.predicate = compoundPredicate
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchResult, managedObjectContext: (databaseManager?.viewContext)!, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController?.delegate = self
@@ -108,6 +110,8 @@ extension NotificationViewController: UITableViewDataSource {
         }
         
         cell.notification = notification
+        print(notification.date)
+        print(Date())
         return cell
     }
 }
