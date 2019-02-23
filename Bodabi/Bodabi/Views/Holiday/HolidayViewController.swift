@@ -40,7 +40,7 @@ class HolidayViewController: UIViewController {
             }
         }
     }
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private var isFirstScroll: Bool = true
     private var isHolidayEmpty: Bool = true
     private struct Const {
@@ -278,6 +278,8 @@ class HolidayViewController: UIViewController {
             self?.databaseManager.delete(object: holiday) { error in
                 if let error = error {
                     print(error.localizedDescription)
+                } else {
+                    self?.navigationController?.popViewController(animated: true)
                 }
             }
             
@@ -289,8 +291,6 @@ class HolidayViewController: UIViewController {
                     print(error.localizedDescription)
                 }
             }
-            
-            self?.navigationController?.popViewController(animated: true)
         }
 
         alert.cancelButtonTitle = "취소"
@@ -372,14 +372,6 @@ extension HolidayViewController: UITableViewDelegate {
         switch editingStyle {
         case .delete:
             guard let removedHistory = histories?[indexPath.row] else { return }
-            // Fix me
-//            databaseManager.viewContext.delete(removedHistory)
-//
-//            do {
-//                try databaseManager.viewContext.save()
-//            } catch {
-//                print(error.localizedDescription)
-//            }
             
             databaseManager.delete(object: removedHistory) { [weak self] (error) in
                 if let error = error {
@@ -605,8 +597,8 @@ extension HolidayViewController: BodabiAlertControllerDelegate {
     }
 }
 
-extension HolidayViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension HolidayViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

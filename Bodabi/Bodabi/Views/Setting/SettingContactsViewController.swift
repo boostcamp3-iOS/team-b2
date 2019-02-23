@@ -18,7 +18,7 @@ class SettingContactsViewController: UIViewController {
     
     // MARK: - Property
     
-    public var databaseManager: DatabaseManager!
+    public var databaseManager: CoreDataManager!
     private var friends: [Friend]?
     private var contacts: [CNContact]? {
         didSet {
@@ -42,8 +42,7 @@ class SettingContactsViewController: UIViewController {
 
         initButton()
         initTableView()
-        fetchFriend()
-        fetchContacts()
+        fetchFriendAndFetchContact()
     }
     
     // MARK: - IBAction
@@ -51,7 +50,7 @@ class SettingContactsViewController: UIViewController {
     @IBAction func touchUpFetchAllContactsButton(_ sender: UIButton) {
         mediumImpactFeedbackGenerator.impactOccurred()
         guard (contacts?.count ?? 0) > 0 else { return }
-        saveContacts(contacts: contacts)
+        saveContactsAlert(contacts: contacts)
     }
     
     @IBAction func touchUpFetchSelectedContactsButton(_ sender: Any) {
@@ -62,7 +61,7 @@ class SettingContactsViewController: UIViewController {
                     .contact ?? CNContact()
         }
         guard (contacts?.count ?? 0) > 0 else { return }
-        saveContacts(contacts: contacts)
+        saveContactsAlert(contacts: contacts)
     }
     
     // MARK: - Initialization
@@ -86,7 +85,7 @@ class SettingContactsViewController: UIViewController {
     
     // MARK: - Method
     
-    private func fetchFriend() {
+    private func fetchFriendAndFetchContact() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         databaseManager.fetch(
             type: Friend.self,
@@ -94,14 +93,14 @@ class SettingContactsViewController: UIViewController {
         ) { [weak self] (result) in
             switch result {
             case let .success(friends):
-                self?.friends = friends
+                self?.fetchContacts(friends: friends)
             case let .failure(error):
                 error.loadErrorAlert(title: "친구목록 가져오기 에러")
             }
         }
     }
     
-    private func fetchContacts() {
+    private func fetchContacts(friends: [Friend]) {
         ContactManager.shared
             .fetchNonexistentContact(existingFriends: friends) { [weak self] (result) in
                 switch result {
@@ -117,7 +116,7 @@ class SettingContactsViewController: UIViewController {
         }
     }
     
-    private func saveContacts(contacts: [CNContact]?) {
+    private func saveContactsAlert(contacts: [CNContact]?) {
         let alert = BodabiAlertController(
             title: "연락처 가져오기",
             message: "총 \(contacts?.count ?? 0)개의 연락처를 가져오시겠습니까?",
@@ -127,21 +126,7 @@ class SettingContactsViewController: UIViewController {
         
         alert.cancelButtonTitle = "취소"
         alert.addButton(title: "확인") { [weak self] in
-            contacts?.forEach { [weak self] (contact) in
-                guard let databaseManager = self?.databaseManager else { return }
-                ContactManager.shared.convertAndSaveFriend(
-                    from: contact,
-                    database: databaseManager
-                ) { [weak self] (result) in
-                    switch result {
-                    case .success:
-                        self?.tabBarController?.selectedIndex = TabBar.friends.rawValue
-                        self?.navigationController?.popViewController(animated: true)
-                    case let .failure(error):
-                        error.loadErrorAlert()
-                    }
-                }
-            }
+            self?.saveContacts(contacts: contacts)
         }
         alert.show()
     }
@@ -154,6 +139,25 @@ class SettingContactsViewController: UIViewController {
         }
         
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func saveContacts(contacts: [CNContact]?) {
+        contacts?.enumerated().forEach { [weak self] (index, contact) in
+            guard let databaseManager = self?.databaseManager else { return }
+            ContactManager.shared.convertAndSaveFriend(
+                from: contact,
+                database: databaseManager
+            ) { [weak self] (result) in
+                switch result {
+                case .success:
+                    guard index == (contacts?.count ?? 0) - 1 else { return }
+                    self?.tabBarController?.selectedIndex = TabBar.friends.rawValue
+                    self?.navigationController?.popViewController(animated: true)
+                case let .failure(error):
+                    error.loadErrorAlert()
+                }
+            }
+        }
     }
 }
 
@@ -182,5 +186,11 @@ extension SettingContactsViewController: UITableViewDataSource {
         let cell = tableView.dequeue(FriendViewCell.self, for: indexPath)
         cell.contact = contacts?[indexPath.row]
         return cell
+    }
+}
+
+extension SettingContactsViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
+        databaseManager = manager
     }
 }

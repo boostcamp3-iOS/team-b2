@@ -16,7 +16,7 @@ class SettingViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private let copyrightSegueIndentifier = "Copyright"
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -95,7 +95,7 @@ extension SettingViewController: UITableViewDelegate {
         case .contact:
             let viewController = storyboard(.setting)
                 .instantiateViewController(ofType: SettingContactsViewController.self)
-            viewController.databaseManager = databaseManager
+            viewController.setDatabaseManager(databaseManager)
             navigationController?.pushViewController(viewController, animated: true)
         case .copyright:
             let viewController = storyboard(.setting)
@@ -105,8 +105,8 @@ extension SettingViewController: UITableViewDelegate {
     }
 }
 
-extension SettingViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension SettingViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

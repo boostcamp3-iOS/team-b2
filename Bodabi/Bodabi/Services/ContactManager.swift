@@ -17,26 +17,22 @@ class ContactManager {
     private let queue = DispatchQueue(label: "com.teamB2.Bodabi.contact")
     
     private func accessContacts(completion: @escaping (Result<Void>) -> Void) {
-        queue.async { [weak self] in
-            guard let self = self else { return }
-            self.store.requestAccess(for: .contacts) { (granted, err) in
-                let completion: (Result<Void>) -> Void = { result in
-                    DispatchQueue.main.async {
-                        completion(result)
-                    }
+        store.requestAccess(for: .contacts) { (granted, err) in
+            let completion: (Result<Void>) -> Void = { result in
+                DispatchQueue.main.async {
+                    completion(result)
                 }
-                
-                if let err = err {
-                    completion(.failure(ContactError
-                        .accessFailed(errorMessage: err.localizedDescription)))
-                }
-                
-                guard granted else {
-                    completion(.failure(ContactError.accessDeniedError))
-                    return
-                }
-                completion(.success(()))
             }
+            
+            if let err = err {
+                print(err.localizedDescription)
+            }
+            
+            guard granted else {
+                completion(.failure(ContactError.accessDeniedError))
+                return
+            }
+            completion(.success(()))
         }
     }
     
@@ -95,9 +91,9 @@ class ContactManager {
     }
     
     public func convertAndSaveFriend(from contact: CNContact,
-                                     database manager: DatabaseManager,
+                                     database manager: CoreDataManager,
                                      completion: @escaping (Result<Friend>) -> Void) {
-        let phone = contact.phoneNumbers.first?.value .value(forKey: "digits") as? String
+        let phone = contact.phoneNumbers.first?.value.value(forKey: "digits") as? String
         manager.createFriend(
             name: contact.familyName + contact.givenName,
             tags: ["연락처"],

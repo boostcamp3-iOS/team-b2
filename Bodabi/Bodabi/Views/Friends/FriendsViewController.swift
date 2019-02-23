@@ -21,7 +21,7 @@ class FriendsViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: DatabaseManager!
+    private var databaseManager: CoreDataManager!
     private var friends: [Friend]?
     private var favoriteFriends: [Friend]?
     private let indexs: [Character] = ["★", "•", "ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ",
@@ -46,7 +46,7 @@ class FriendsViewController: UIViewController {
         static let buttonAnimationScale: CGFloat = 1.3
         static let buttonAnimationDuration: TimeInterval = 0.18
         
-        static let cellWidthSize: CGFloat = 30.0
+        static let cellWidthSize: CGFloat = 35.0
     }
     
     enum Section: Int, CaseIterable {
@@ -108,7 +108,7 @@ class FriendsViewController: UIViewController {
     @IBAction func touchUpGoFetchContactsButton(_ sender: UIButton) {
         let viewController = storyboard(.setting)
             .instantiateViewController(ofType: SettingContactsViewController.self)
-        viewController.databaseManager = databaseManager
+        viewController.setDatabaseManager(databaseManager)
         navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -403,8 +403,8 @@ extension FriendsViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - DatabaseManagerClient
 
-extension FriendsViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension FriendsViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

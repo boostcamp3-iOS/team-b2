@@ -14,7 +14,7 @@ import UIKit
 
 protocol Inputable {
     var inputManager: InputManager! { get set }
-    var databaseManager: DatabaseManager! { get set }
+    var databaseManager: CoreDataManager! { get set }
 }
 
 extension Inputable where Self: UIViewController {
@@ -22,7 +22,7 @@ extension Inputable where Self: UIViewController {
         inputManager = manager
     }
     
-    mutating func setDatabaseManager(_ manager: DatabaseManager) {
+    mutating func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }

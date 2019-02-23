@@ -23,11 +23,24 @@ class HolidayInputViewController: UIViewController {
     public var cellType: CellType = .relation
     public var cellData: [String]?
     
-    private var databaseManager: DatabaseManager!
+    public var myHolidays: [String]? {
+        didSet {
+            tableView.reloadData()
+            UserDefaults.standard.set(myHolidays, forKey: DefaultsKey.defaultHoliday)
+        }
+    }
+    public var myRelations: [String]? {
+        didSet {
+            tableView.reloadData()
+            UserDefaults.standard.set(myRelations, forKey: DefaultsKey.defaultRelation)
+        }
+    }
+    private var databaseManager: CoreDataManager!
     private var isDeleting: Bool = false
     private var selectedRelation: String?
     private var selectedHoliday: String?
     private var holidays: [Holiday]?
+    private let heavyImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     // MARK: - Life Cycle
     
@@ -234,6 +247,7 @@ class HolidayInputViewController: UIViewController {
     
     @objc func longPressed(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
+            heavyImpactFeedbackGenerator.impactOccurred()
             setDeleteButton(to: true)
             addTapGesture()
         }
@@ -279,8 +293,8 @@ extension HolidayInputViewController: UITableViewDataSource {
 
 // MARK: - DatabaseManagerClient
 
-extension HolidayInputViewController: DatabaseManagerClient {
-    func setDatabaseManager(_ manager: DatabaseManager) {
+extension HolidayInputViewController: CoreDataManagerClient {
+    func setDatabaseManager(_ manager: CoreDataManager) {
         databaseManager = manager
     }
 }
