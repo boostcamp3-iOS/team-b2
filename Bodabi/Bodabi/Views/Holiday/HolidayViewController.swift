@@ -585,6 +585,8 @@ extension HolidayViewController: UITextFieldDelegate {
         guard let newHolidayName = textField.text else { return true }
         updateHolidayName(to: newHolidayName)
         view.endEditing(true)
+        self.textField?.removeFromSuperview()
+        self.textField = nil
         return true
     }
 }
@@ -615,6 +617,7 @@ extension HolidayViewController {
         if let textField = textField {
             textField.resignFirstResponder()
         }
+        self.textField?.removeFromSuperview()
     }
     
     private func adjustKeyboardDismisTapGesture(_ notification: Foundation.Notification) {
