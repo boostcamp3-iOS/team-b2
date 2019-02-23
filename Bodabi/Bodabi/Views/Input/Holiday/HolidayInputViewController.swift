@@ -22,19 +22,6 @@ class HolidayInputViewController: UIViewController {
     public var entryRoute: EntryRoute!
     public var cellType: CellType = .relation
     public var cellData: [String]?
-    
-    public var myHolidays: [String]? {
-        didSet {
-            tableView.reloadData()
-            UserDefaults.standard.set(myHolidays, forKey: DefaultsKey.defaultHoliday)
-        }
-    }
-    public var myRelations: [String]? {
-        didSet {
-            tableView.reloadData()
-            UserDefaults.standard.set(myRelations, forKey: DefaultsKey.defaultRelation)
-        }
-    }
     private var databaseManager: CoreDataManager!
     private var isDeleting: Bool = false
     private var selectedRelation: String?
@@ -255,8 +242,18 @@ class HolidayInputViewController: UIViewController {
     
     @objc func touchUpDeleteButton(_ sender: UIButton) {
         guard let indexPath = tableView.indexPathForView(sender) else { return }
+        guard var cellData = cellData else { return }
         
-        cellData?.remove(at: indexPath.row)
+        cellData.remove(at: indexPath.row)
+        self.cellData = cellData
+        switch cellType {
+        case .holiday:
+            UserDefaults.standard.set(cellData, forKey: DefaultsKey.defaultHoliday)
+        case .relation:
+            UserDefaults.standard.set(cellData, forKey: DefaultsKey.defaultRelation)
+        }
+        
+        tableView.reloadData()
     }
     
     @objc func popCurrentInputView(_ sender: UIBarButtonItem) {
