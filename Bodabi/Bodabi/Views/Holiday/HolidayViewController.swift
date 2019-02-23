@@ -278,8 +278,9 @@ class HolidayViewController: UIViewController {
             self?.databaseManager.delete(object: holiday) { error in
                 if let error = error {
                     print(error.localizedDescription)
+                } else {
+                    self?.navigationController?.popViewController(animated: true)
                 }
-                self?.navigationController?.popViewController(animated: true)
             }
             
             guard let currentTitle = holiday.title else { return }
@@ -371,14 +372,6 @@ extension HolidayViewController: UITableViewDelegate {
         switch editingStyle {
         case .delete:
             guard let removedHistory = histories?[indexPath.row] else { return }
-            // Fix me
-//            databaseManager.viewContext.delete(removedHistory)
-//
-//            do {
-//                try databaseManager.viewContext.save()
-//            } catch {
-//                print(error.localizedDescription)
-//            }
             
             databaseManager.delete(object: removedHistory) { [weak self] (error) in
                 if let error = error {
