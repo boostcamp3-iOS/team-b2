@@ -279,6 +279,7 @@ class HolidayViewController: UIViewController {
                 if let error = error {
                     print(error.localizedDescription)
                 }
+                self?.navigationController?.popViewController(animated: true)
             }
             
             guard let currentTitle = holiday.title else { return }
@@ -289,8 +290,6 @@ class HolidayViewController: UIViewController {
                     print(error.localizedDescription)
                 }
             }
-            
-            self?.navigationController?.popViewController(animated: true)
         }
 
         alert.cancelButtonTitle = "취소"
