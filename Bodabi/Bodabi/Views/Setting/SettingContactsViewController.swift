@@ -25,6 +25,7 @@ class SettingContactsViewController: UIViewController {
             tableView.reloadData()
         }
     }
+    private var selectedContacts: Set<CNContact> = []
     private let mediumImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -55,12 +56,8 @@ class SettingContactsViewController: UIViewController {
     
     @IBAction func touchUpFetchSelectedContactsButton(_ sender: Any) {
         mediumImpactFeedbackGenerator.impactOccurred()
-        let contacts = tableView.indexPathsForSelectedRows?
-            .map { (indexPath) in
-                return (tableView.cellForRow(at: indexPath) as? FriendViewCell)?
-                    .contact ?? CNContact()
-        }
-        guard (contacts?.count ?? 0) > 0 else { return }
+        let contacts: [CNContact] = Array(selectedContacts)
+        guard contacts.count > 0 else { return }
         saveContactsAlert(contacts: contacts)
     }
     
@@ -149,7 +146,7 @@ class SettingContactsViewController: UIViewController {
                 database: databaseManager
             ) { [weak self] (result) in
                 switch result {
-                case .success:
+                case .success(let friend):
                     guard index == (contacts?.count ?? 0) - 1 else { return }
                     self?.tabBarController?.selectedIndex = TabBar.friends.rawValue
                     self?.navigationController?.popViewController(animated: true)
@@ -167,11 +164,15 @@ extension SettingContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let title = "\(tableView.indexPathsForSelectedRows?.count ?? 0)개 추가"
         fetchSelectedContactsButton.setTitle(title, for: .normal)
+        guard let contact = contacts?[indexPath.row] else { return }
+        selectedContacts.insert(contact)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let title = "\(tableView.indexPathsForSelectedRows?.count ?? 0)개 추가"
         fetchSelectedContactsButton.setTitle(title, for: .normal)
+        guard let contact = contacts?[indexPath.row] else { return }
+        selectedContacts.remove(contact)
     }
 }
 
