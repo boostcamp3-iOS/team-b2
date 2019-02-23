@@ -30,7 +30,6 @@ class HomeViewController: UIViewController {
     
     struct Const {
         static let bottomInset: CGFloat = 60.0
-        static let dayHours: Int = 24 * 3600
         static let buttonAnimationScale: CGFloat = 1.35
         static let buttonAnimationDuration: TimeInterval = 0.12
     }
@@ -222,7 +221,7 @@ class HomeViewController: UIViewController {
         if sender.isSelected {
             for dDay in [favortieFirstDday, favoriteSecondDday] {
                 let notification = Notification(context: databaseManager.viewContext)
-                guard let interval: TimeInterval = TimeInterval(exactly: dDay * Const.dayHours * -1) else { return }
+                guard let interval: TimeInterval = TimeInterval(exactly: dDay * Int.day * -1) else { return }
                 notification.id = UUID().uuidString
                 notification.date = event.date?.addingTimeInterval(interval)
                 notification.event = event
@@ -236,7 +235,7 @@ class HomeViewController: UIViewController {
                     NotificationSchedular.delete(notification: notificaion)
             }
             let notification = Notification(context: databaseManager.viewContext)
-            guard let interval: TimeInterval = TimeInterval(exactly: defaultDday * Const.dayHours * -1) else { return }
+            guard let interval: TimeInterval = TimeInterval(exactly: defaultDday * Int.day * -1) else { return }
             notification.id = UUID().uuidString
             notification.date = event.date?.addingTimeInterval(interval)
             notification.event = event

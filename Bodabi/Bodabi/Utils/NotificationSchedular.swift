@@ -21,10 +21,10 @@ struct NotificationSchedular {
         let notificationString: String?
         if notification.difference == 0 {
             notificationString = "오늘은 \(name)님의 \(event.title ?? "")입니다."
-        } else if notification.difference == 1 {
+        } else if notification.difference == -1 {
             notificationString = "내일은 \(name)님의 \(event.title ?? "")입니다."
         } else {
-            notificationString = "\(name)님의 \(event.title?.addSubjectSuffix() ?? "") \(notification.difference)일 남았습니다"
+            notificationString = "\(name)님의 \(event.title?.addSubjectSuffix() ?? "") \(-notification.difference)일 남았습니다"
         }
         let content = UNMutableNotificationContent()
         content.title = "\(name)님의 경조사를 알려드립니다"
@@ -36,7 +36,7 @@ struct NotificationSchedular {
         // Make Trigger
         let calendar = Calendar.current
         var notificationDateComponents = calendar.dateComponents(
-            [.era, .year, .month, .day], from: notification.date ?? Date())
+            [.era, .year, .month, .day, .hour, .minute], from: notification.date ?? Date())
         notificationDateComponents.setValue(hour, for: .hour)
         notificationDateComponents.setValue(minute, for: .minute)
         content.userInfo["date"] = notification.date
@@ -66,14 +66,5 @@ struct NotificationSchedular {
     static func deleteAllNotification() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-    }
-    
-    static func readAllPendingNotification() {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
-            for request in requests {
-                print("badge: \(request.content.badge!)) | \(request.content.body) | \(request.trigger.debugDescription)")
-                print("---------------------------")
-            }
-        }
     }
 }
