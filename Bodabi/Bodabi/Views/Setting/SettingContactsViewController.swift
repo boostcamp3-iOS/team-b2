@@ -56,13 +56,7 @@ class SettingContactsViewController: UIViewController {
     
     @IBAction func touchUpFetchSelectedContactsButton(_ sender: Any) {
         mediumImpactFeedbackGenerator.impactOccurred()
-//        let contacts = tableView.indexPathsForSelectedRows?
-//            .map { (indexPath) in
-//                return (tableView.cellForRow(at: indexPath) as? FriendViewCell)?
-//                    .contact ?? CNContact()
-//        }
         let contacts: [CNContact] = Array(selectedContacts)
-        print(1111111, contacts)
         guard contacts.count > 0 else { return }
         saveContactsAlert(contacts: contacts)
     }
@@ -120,7 +114,6 @@ class SettingContactsViewController: UIViewController {
     }
     
     private func saveContactsAlert(contacts: [CNContact]?) {
-        print(22222222)
         let alert = BodabiAlertController(
             title: "연락처 가져오기",
             message: "총 \(contacts?.count ?? 0)개의 연락처를 가져오시겠습니까?",
@@ -147,7 +140,6 @@ class SettingContactsViewController: UIViewController {
     
     private func saveContacts(contacts: [CNContact]?) {
         contacts?.enumerated().forEach { [weak self] (index, contact) in
-            print(333333, contact)
             guard let databaseManager = self?.databaseManager else { return }
             ContactManager.shared.convertAndSaveFriend(
                 from: contact,
@@ -155,7 +147,6 @@ class SettingContactsViewController: UIViewController {
             ) { [weak self] (result) in
                 switch result {
                 case .success(let friend):
-                    print(444444, friend)
                     guard index == (contacts?.count ?? 0) - 1 else { return }
                     self?.tabBarController?.selectedIndex = TabBar.friends.rawValue
                     self?.navigationController?.popViewController(animated: true)
