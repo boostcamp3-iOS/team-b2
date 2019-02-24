@@ -123,9 +123,7 @@ class NameInputViewController: UIViewController {
         originalHeightConstraint = heightConstriant.constant
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
@@ -428,8 +426,8 @@ class NameInputViewController: UIViewController {
     @objc func keyboardWillChange(_ notification: Foundation.Notification) {
         if notification.name == UIWindow.keyboardWillChangeFrameNotification ||
             notification.name == UIWindow.keyboardWillShowNotification {
-            let userInfo:NSDictionary = notification.userInfo! as NSDictionary
-            let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+            let userInfo: NSDictionary = notification.userInfo! as NSDictionary
+            let keyboardFrame: NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             
