@@ -14,21 +14,6 @@ enum EntryType: String {
     case addHistoryAtFriendHistory
     case addHistoryAtHoliday
     case addFriendAtFriends
-    
-    var guideLabel: String {
-        switch self {
-        case .addHolidayAtHome:
-            return ""
-        case .addUpcomingEventAtHome:
-            return ""
-        case .addHistoryAtFriendHistory:
-            return ""
-        case .addHistoryAtHoliday:
-            return ""
-        case .addFriendAtFriends:
-            return ""
-        }
-    }
 }
 
 enum InputType: String {
