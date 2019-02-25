@@ -36,7 +36,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>경조사 대표 이미지를 촬영할 수 있습니다.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>사용자의 연락처에 접근하여 보다비에 친구를 추가할 수 있습니다. 선물을 주고 받은 친구를 손쉽게 추가해보세요.</string>
+	<string>사용자의 연락처를 받아서 빠르게 경조사 내역을 추가합니다. 또한 연락처를 통해 같은 이름의 친구를 식별할 수 있습니다.
+연락처 정보는 외부에 공개되지 않으며 개인공간에만 저장됩니다. 권한 설정은 설정탭을 통하여 나중에 다시 설정할 수 있습니다.
+(설정&gt;개인정보처리방침 확인 가능)</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>경조사 대표 이미지를 바꿀 수 있습니다.</string>
 	<key>UILaunchStoryboardName</key>
