@@ -87,6 +87,14 @@ extension SettingViewController: UITableViewDelegate {
             } else {
                 application.open(URL(string: web)!, options: [:], completionHandler: nil)
             }
+        case .privacyPolicy:
+            let web = "https://www.facebook.com/notes/548962302252309/privacy-policy/550088932139646"
+            let application = UIApplication.shared
+            application.open(URL(string: web)!, options: [:], completionHandler: nil)
+            
+            if application.canOpenURL(URL(string: web)!) {
+                application.open(URL(string: web)!, options: [:], completionHandler: nil)
+            }
         case .notification:
             let viewController = storyboard(.setting)
                 .instantiateViewController(ofType: SettingAlarmViewController.self)
