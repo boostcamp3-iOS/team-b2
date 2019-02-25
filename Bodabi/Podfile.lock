@@ -1,0 +1,16 @@
+PODS:
+  - SIUNCalendarView (1.0.1)
+
+DEPENDENCIES:
+  - SIUNCalendarView
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SIUNCalendarView
+
+SPEC CHECKSUMS:
+  SIUNCalendarView: de21e7041631bebc84895abf226333d485e10379
+
+PODFILE CHECKSUM: 0c19a06c0e3597fad73437ec9e762d2c27cf078a
+
+COCOAPODS: 1.5.3

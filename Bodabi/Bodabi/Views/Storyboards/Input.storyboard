@@ -572,7 +572,7 @@
                                     <action selector="touchUpNextButton:" destination="R9B-4A-5Wf" eventType="touchUpInside" id="fh8-it-4Vz"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-WU-Hc7" customClass="CalendarView" customModule="Bodabi" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-WU-Hc7" customClass="CalendarView" customModule="SIUNCalendarView">
                                 <rect key="frame" x="20" y="194" width="335" height="335"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -673,8 +673,8 @@
     <resources>
         <image name="addButton" width="20" height="19"/>
         <image name="ic_add_2" width="64" height="64"/>
-        <image name="ic_next" width="16.666666030883789" height="30"/>
-        <image name="ic_prev" width="16.666666030883789" height="30"/>
-        <image name="ic_tag" width="128.33332824707031" height="128.33332824707031"/>
+        <image name="ic_next" width="16" height="30"/>
+        <image name="ic_prev" width="16" height="30"/>
+        <image name="ic_tag" width="128" height="128"/>
     </resources>
 </document>
