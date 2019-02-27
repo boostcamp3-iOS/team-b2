@@ -45,7 +45,7 @@ class NameInputViewController: UIViewController {
     public var cellType: CellType!
     
     public var isRelationInput: Bool?
-    private var databaseManager: CoreDataManager!
+    private var coreDataManager: CoreDataManager!
     private var friends: [Friend]?
     private var cellData: [String]?
     private var searchedFriends: [Friend]? {
@@ -194,7 +194,7 @@ class NameInputViewController: UIViewController {
     private func fetchFriend() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         
-        databaseManager.fetch(type: Friend.self, sortDescriptor: sortDescriptor) { [weak self] (result) in
+        coreDataManager.fetch(type: Friend.self, sortDescriptor: sortDescriptor) { [weak self] (result) in
             switch result {
             case let .failure(error):
                 print(error.localizedDescription)
@@ -355,13 +355,13 @@ class NameInputViewController: UIViewController {
             viewController.entryRoute = entryRoute
             viewController.inputData = inputData
             viewController.cellType = .holiday
-            viewController.setDatabaseManager(databaseManager)
+            viewController.setCoreDataManager(coreDataManager)
             navigationController?.pushViewController(viewController, animated: true)
         case .addHistoryAtHoliday:
             let viewController = storyboard(.input)
                 .instantiateViewController(ofType: ItemInputViewController.self)
             
-            viewController.setDatabaseManager(databaseManager)
+            viewController.setCoreDataManager(coreDataManager)
             viewController.entryRoute = entryRoute
             
             inputData?.isNewData = isNewData
@@ -374,7 +374,7 @@ class NameInputViewController: UIViewController {
             inputData?.isNewData = isNewData
             
             guard let inputData = inputData else { return }
-            InputManager.write(context: databaseManager.viewContext, entryRoute: entryRoute, data: inputData)
+            InputManager.write(context: coreDataManager.viewContext, entryRoute: entryRoute, data: inputData)
             dismiss(animated: true, completion: nil)
         default:
             break
@@ -585,8 +585,8 @@ extension NameInputViewController: UIGestureRecognizerDelegate {
 }
 
 extension NameInputViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }
 

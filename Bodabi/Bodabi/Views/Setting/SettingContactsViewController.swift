@@ -18,7 +18,7 @@ class SettingContactsViewController: UIViewController {
     
     // MARK: - Property
     
-    public var databaseManager: CoreDataManager!
+    public var coreDataManager: CoreDataManager!
     private var friends: [Friend]?
     private var contacts: [CNContact]? {
         didSet {
@@ -84,7 +84,7 @@ class SettingContactsViewController: UIViewController {
     
     private func fetchFriendAndFetchContact() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        databaseManager.fetch(
+        coreDataManager.fetch(
             type: Friend.self,
             sortDescriptor: sortDescriptor
         ) { [weak self] (result) in
@@ -140,10 +140,10 @@ class SettingContactsViewController: UIViewController {
     
     private func saveContacts(contacts: [CNContact]?) {
         contacts?.enumerated().forEach { [weak self] (index, contact) in
-            guard let databaseManager = self?.databaseManager else { return }
+            guard let coreDataManager = self?.coreDataManager else { return }
             ContactManager.shared.convertAndSaveFriend(
                 from: contact,
-                database: databaseManager
+                database: coreDataManager
             ) { [weak self] (result) in
                 switch result {
                 case .success(let friend):
@@ -191,7 +191,7 @@ extension SettingContactsViewController: UITableViewDataSource {
 }
 
 extension SettingContactsViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }

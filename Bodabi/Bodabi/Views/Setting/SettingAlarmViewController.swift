@@ -20,7 +20,7 @@ class SettingAlarmViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: CoreDataManager!
+    private var coreDataManager: CoreDataManager!
     private let datePickerView = UIDatePicker()
     private let dayPickerView = UIPickerView()
     private let dDayData: [String: Int] = ["당일": 0, "하루 전": 1, "이틀 전": 2, "3일 전": 3, "5일 전": 5, "일주일 전": 7, "10일 전": 10, "2주 전": 14, "한 달 전": 30]
@@ -128,32 +128,35 @@ class SettingAlarmViewController: UIViewController {
         
         if !checkValueChanged(defaultHour, defaultMinutes, defaultDday, favoriteFirstDday, favoriteSecondDday) { return }
         
-        databaseManager.fetch(type: Event.self) { result in
+        coreDataManager.fetch(type: Event.self) { result in
             switch result {
             case let .failure(error):
                 print(error.localizedDescription)
             case let .success(events):
                 for event in events {
                     guard let notifications = event.notifications?.allObjects as? [Notification] else { return }
-                    guard let defaultNotificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -1 * Int.day * (defaultDday + 1) + Int.hour * defaultHour + Int.minute * defaultMinutes)!) else { return }
+                    
+                    let notificationDates = [defaultDday, favoriteFirstDday, favoriteSecondDday]
+                    
                         NotificationSchedular.deleteAllNotification()
-                        notifications.forEach { notification in
-                        if !notification.isHandled {
-                            self.databaseManager.updateNotification(object: notification, date: defaultNotificationDate)  {
-                                switch $0 {
-                                case let .failure(error):
-                                    print(error.localizedDescription)
-                                case let .success(updatedNotification):
-                                    NotificationSchedular.create(notification: updatedNotification,
-                                                                 hour: defaultHour,
-                                                                 minute: defaultMinutes)
+                        for (index, notification) in notifications.enumerated() {
+                            if !notification.isHandled {
+                                guard let notificationDate = event.date?.addingTimeInterval(TimeInterval(exactly: -1 * Int.day * (notificationDates[index] + 1) + Int.hour * defaultHour + Int.minute * defaultMinutes)!) else { return }
+                                self.coreDataManager.updateNotification(object: notification, date: notificationDate)  {
+                                    switch $0 {
+                                    case let .failure(error):
+                                        print(error.localizedDescription)
+                                    case let .success(updatedNotification):
+                                        NotificationSchedular.create(notification: updatedNotification,
+                                                                     hour: defaultHour,
+                                                                     minute: defaultMinutes)
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
     }
     
     @objc private func touchUpPickerDoneButton() {
@@ -264,7 +267,7 @@ extension SettingAlarmViewController: UIGestureRecognizerDelegate {
 }
 
 extension SettingAlarmViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }

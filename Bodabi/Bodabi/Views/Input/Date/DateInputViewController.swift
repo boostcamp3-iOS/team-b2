@@ -36,7 +36,7 @@ class DateInputViewController: UIViewController {
     
     public var inputData: InputData?
     public var entryRoute: EntryRoute!
-    private var databaseManager: CoreDataManager!
+    private var coreDataManager: CoreDataManager!
     private var date: Date? {
         didSet {
             setNextButton()
@@ -136,7 +136,7 @@ class DateInputViewController: UIViewController {
         guard var inputData = inputData else { return }
         
         inputData.date = date
-        InputManager.write(context: databaseManager.viewContext, entryRoute: entryRoute, data: inputData)
+        InputManager.write(context: coreDataManager.viewContext, entryRoute: entryRoute, data: inputData)
         dismiss(animated: true, completion: nil)
     }
     
@@ -190,11 +190,11 @@ extension DateInputViewController {
     }
 }
 
-// MARK: - DatabaseManagerClient
+// MARK: - CoreDataManagerClient
 
 extension DateInputViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }
 
