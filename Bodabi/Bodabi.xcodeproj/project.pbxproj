@@ -68,7 +68,6 @@
 		49C86BF8221E483500D63455 /* Error+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF7221E483500D63455 /* Error+Description.swift */; };
 		49C86BFA221E48FF00D63455 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF9221E48FF00D63455 /* TabBar.swift */; };
 		DB147035220D4363000EA1D7 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB147034220D4363000EA1D7 /* CloudKit.framework */; };
-		DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB147036220D4707000EA1D7 /* CloudManager.swift */; };
 		DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */; };
 		DB2726022209740700F30CBC /* ThanksFriendHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */; };
 		DB27260A2209AD9700F30CBC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2726092209AD9700F30CBC /* Item.swift */; };
@@ -128,12 +127,20 @@
 		F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */; };
 		F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */; };
 		F85A8BCD22193111006FB44E /* DefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85A8BCC22193111006FB44E /* DefaultsKey.swift */; };
+		F85F3300222369AD002966E4 /* CloudZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85F32FF222369AD002966E4 /* CloudZone.swift */; };
+		F85F33042223A83D002966E4 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85F33032223A83D002966E4 /* CloudManager.swift */; };
+		F85F33062223ACEC002966E4 /* CloudSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85F33052223ACEC002966E4 /* CloudSyncManager.swift */; };
 		F8748907221E09110087CFD1 /* RemoteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8748906221E09110087CFD1 /* RemoteType.swift */; };
 		F8748909221E463C0087CFD1 /* FriendHistoryReceiveViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8748908221E463C0087CFD1 /* FriendHistoryReceiveViewCell.xib */; };
 		F89ED960221294F2006588E1 /* NotificationSchedular.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED95F221294F2006588E1 /* NotificationSchedular.swift */; };
-		F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */; };
 		F89ED96B22151D2F006588E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F89ED96A22151D2F006588E1 /* Assets.xcassets */; };
 		F89ED97722163A34006588E1 /* InputFriendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89ED97622163A34006588E1 /* InputFriendViewCell.swift */; };
+		F8AFF1882221FF9D006767EA /* CloudManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AFF1872221FF9D006767EA /* CloudManagedObject.swift */; };
+		F8AFF18A2221FFCE006767EA /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AFF1892221FFCE006767EA /* CloudKitManager.swift */; };
+		F8AFF18C2222063C006767EA /* Friend+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AFF18B2222063C006767EA /* Friend+Extensions.swift */; };
+		F8AFF18E2222064C006767EA /* Holiday+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AFF18D2222064C006767EA /* Holiday+Extensions.swift */; };
+		F8AFF191222209E4006767EA /* Bodabi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8AFF18F222209E4006767EA /* Bodabi.xcdatamodeld */; };
+		F8AFF19322234933006767EA /* RecordZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AFF19222234933006767EA /* RecordZone.swift */; };
 		F8CB544A221D069D001693E2 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */; };
 		F8E7D5B0222089EF00F1F537 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E7D5AF222089EF00F1F537 /* Int+Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -203,7 +210,6 @@
 		49C86BF9221E48FF00D63455 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		DB147032220D426A000EA1D7 /* Bodabi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bodabi.entitlements; sourceTree = "<group>"; };
 		DB147034220D4363000EA1D7 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		DB147036220D4707000EA1D7 /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
 		DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanksFriendHeaderView.swift; sourceTree = "<group>"; };
 		DB2726012209740700F30CBC /* ThanksFriendHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThanksFriendHeaderView.xib; sourceTree = "<group>"; };
 		DB2726092209AD9700F30CBC /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -263,12 +269,20 @@
 		F8485CF821FA176B003C935C /* FriendHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryViewController.swift; path = Bodabi/Views/FriendHistory/FriendHistoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F8485CFC21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendHistoryReceiveViewCell.swift; path = Bodabi/Views/FriendHistory/FriendHistoryReceiveViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F85A8BCC22193111006FB44E /* DefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKey.swift; sourceTree = "<group>"; };
+		F85F32FF222369AD002966E4 /* CloudZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudZone.swift; sourceTree = "<group>"; };
+		F85F33032223A83D002966E4 /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
+		F85F33052223ACEC002966E4 /* CloudSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncManager.swift; sourceTree = "<group>"; };
 		F8748906221E09110087CFD1 /* RemoteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteType.swift; sourceTree = "<group>"; };
 		F8748908221E463C0087CFD1 /* FriendHistoryReceiveViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendHistoryReceiveViewCell.xib; sourceTree = "<group>"; };
 		F89ED95F221294F2006588E1 /* NotificationSchedular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedular.swift; sourceTree = "<group>"; };
-		F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
 		F89ED96A22151D2F006588E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F89ED97622163A34006588E1 /* InputFriendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFriendViewCell.swift; sourceTree = "<group>"; };
+		F8AFF1872221FF9D006767EA /* CloudManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManagedObject.swift; sourceTree = "<group>"; };
+		F8AFF1892221FFCE006767EA /* CloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
+		F8AFF18B2222063C006767EA /* Friend+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Friend+Extensions.swift"; sourceTree = "<group>"; };
+		F8AFF18D2222064C006767EA /* Holiday+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Holiday+Extensions.swift"; sourceTree = "<group>"; };
+		F8AFF190222209E4006767EA /* Bodabi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bodabi.xcdatamodel; sourceTree = "<group>"; };
+		F8AFF19222234933006767EA /* RecordZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordZone.swift; sourceTree = "<group>"; };
 		F8CB5449221D069D001693E2 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		F8E7D5AF222089EF00F1F537 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -358,12 +372,15 @@
 				F82BE25C2211309B00C194F1 /* History+Extensions.swift */,
 				F82BE25E221130B400C194F1 /* Notification+Extensions.swift */,
 				F82BE260221130D000C194F1 /* Event+Extensions.swift */,
-				F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */,
 				491DD81D221505340093720A /* Tag.swift */,
 				F85A8BCC22193111006FB44E /* DefaultsKey.swift */,
 				49C86BF9221E48FF00D63455 /* TabBar.swift */,
 				F8748906221E09110087CFD1 /* RemoteType.swift */,
 				F8197BAE221F983300984C8B /* DefaultHolidayType.swift */,
+				F8AFF18B2222063C006767EA /* Friend+Extensions.swift */,
+				F8AFF18D2222064C006767EA /* Holiday+Extensions.swift */,
+				F8AFF18F222209E4006767EA /* Bodabi.xcdatamodeld */,
+				F85F32FF222369AD002966E4 /* CloudZone.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -626,7 +643,11 @@
 		F8CB544D221DEEF6001693E2 /* CloudService */ = {
 			isa = PBXGroup;
 			children = (
-				DB147036220D4707000EA1D7 /* CloudManager.swift */,
+				F8AFF1872221FF9D006767EA /* CloudManagedObject.swift */,
+				F8AFF1892221FFCE006767EA /* CloudKitManager.swift */,
+				F8AFF19222234933006767EA /* RecordZone.swift */,
+				F85F33032223A83D002966E4 /* CloudManager.swift */,
+				F85F33052223ACEC002966E4 /* CloudSyncManager.swift */,
 			);
 			path = CloudService;
 			sourceTree = "<group>";
@@ -664,6 +685,9 @@
 					4998126921F9D7B4000DB7B2 = {
 						CreatedOnToolsVersion = 10.1;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -751,7 +775,9 @@
 				F8367C9621FAC77A00EBA91E /* NSObject+Identifier.swift in Sources */,
 				497882572217BFCB00ED64A7 /* UIImage+Resize.swift in Sources */,
 				DBF4CEFD21FAE59B001536A8 /* UIViewController+ActionSheet.swift in Sources */,
+				F8AFF18A2221FFCE006767EA /* CloudKitManager.swift in Sources */,
 				496683C021FAC662003FBA5B /* HomeTitleViewCell.swift in Sources */,
+				F8AFF19322234933006767EA /* RecordZone.swift in Sources */,
 				491B1C4E221BF86B00ECB66F /* String+PhoneFormat.swift in Sources */,
 				49C86BF4221E406100D63455 /* Error+Alert.swift in Sources */,
 				49484D012214060E00C09384 /* TagViewController.swift in Sources */,
@@ -766,6 +792,7 @@
 				49C0850E21FB10020060B02C /* UIViewController+Storyboard.swift in Sources */,
 				49C084FD21FADDBB0060B02C /* HolidayViewCell.swift in Sources */,
 				496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */,
+				F85F33042223A83D002966E4 /* CloudManager.swift in Sources */,
 				F89ED960221294F2006588E1 /* NotificationSchedular.swift in Sources */,
 				49C0850721FAF2810060B02C /* UpcomingEventViewCell.swift in Sources */,
 				4967D66022028D0300223ADF /* CalendarView.swift in Sources */,
@@ -774,16 +801,18 @@
 				49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */,
 				F82C68D42217B579000FFE7E /* SettingAlarmViewController.swift in Sources */,
 				4976CFC8221BA17400745422 /* SettingContactsViewController.swift in Sources */,
+				F85F3300222369AD002966E4 /* CloudZone.swift in Sources */,
 				DB272661220A90AE00F30CBC /* ItemCollectionViewFlowLayout.swift in Sources */,
 				F814529721FCCF6B004A2CF0 /* SettingViewCell.swift in Sources */,
+				F8AFF191222209E4006767EA /* Bodabi.xcdatamodeld in Sources */,
 				49C084E821FAC9B80060B02C /* HomeViewController.swift in Sources */,
 				DB3873CD22017E5300ADF0CB /* ItemViewCell.swift in Sources */,
 				49484D072214F9A700C09384 /* TagHeaderViewCell.swift in Sources */,
-				DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */,
 				DB272663220BCA4200F30CBC /* HolidayInformationView.swift in Sources */,
 				DB3873C922006D3900ADF0CB /* UITextField+BottomLine.swift in Sources */,
 				F80C28AE22040FDB0032DE3E /* CoreDataManager.swift in Sources */,
 				4978BCCB220D5A6F0052156E /* TableFetchedResultsDelegate.swift in Sources */,
+				F85F33062223ACEC002966E4 /* CloudSyncManager.swift in Sources */,
 				DBF4CF0921FB8452001536A8 /* UIView+InitFromXib.swift in Sources */,
 				DB47A573221CF055002A2081 /* Error.swift in Sources */,
 				F80C28A122026F0D0032DE3E /* FriendHistoryInformationViewCell.swift in Sources */,
@@ -800,7 +829,9 @@
 				49C0850A21FAF6AA0060B02C /* UIView+Animation.swift in Sources */,
 				F80C28A822030D500032DE3E /* FriendHistoryHeaderView.swift in Sources */,
 				DB47A582221E3381002A2081 /* HolidayInputModel.swift in Sources */,
+				F8AFF18E2222064C006767EA /* Holiday+Extensions.swift in Sources */,
 				DBF4CF2921FC42D7001536A8 /* EntryRoute.swift in Sources */,
+				F8AFF18C2222063C006767EA /* Friend+Extensions.swift in Sources */,
 				49C0850121FADE640060B02C /* MyHolidayInputViewCell.swift in Sources */,
 				49484CF42212981800C09384 /* Character+Unicode.swift in Sources */,
 				DBABB194220C4DE000B808F6 /* InputManager.swift in Sources */,
@@ -810,9 +841,9 @@
 				F814529F21FCDDE0004A2CF0 /* NotificationViewCell.swift in Sources */,
 				F8748907221E09110087CFD1 /* RemoteType.swift in Sources */,
 				49484D0522140F3800C09384 /* SelectedTagViewCell.swift in Sources */,
-				F89ED9692213E5BB006588E1 /* Bodabi.xcdatamodeld in Sources */,
 				F814529421FCC909004A2CF0 /* SettingViewController.swift in Sources */,
 				F8CB544A221D069D001693E2 /* UINavigationController+Extensions.swift in Sources */,
+				F8AFF1882221FF9D006767EA /* CloudManagedObject.swift in Sources */,
 				4969A58E221A789900E189BD /* ContactManager.swift in Sources */,
 				F8485CFD21FA2CB4003C935C /* FriendHistoryReceiveViewCell.swift in Sources */,
 				F8197BAF221F983300984C8B /* DefaultHolidayType.swift in Sources */,
@@ -1040,12 +1071,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		F89ED9672213E5BB006588E1 /* Bodabi.xcdatamodeld */ = {
+		F8AFF18F222209E4006767EA /* Bodabi.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */,
+				F8AFF190222209E4006767EA /* Bodabi.xcdatamodel */,
 			);
-			currentVersion = F89ED9682213E5BB006588E1 /* Bodabi.xcdatamodel */;
+			currentVersion = F8AFF190222209E4006767EA /* Bodabi.xcdatamodel */;
 			path = Bodabi.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
