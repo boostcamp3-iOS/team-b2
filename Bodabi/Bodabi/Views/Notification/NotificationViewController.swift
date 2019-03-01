@@ -18,7 +18,7 @@ class NotificationViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: CoreDataManager!
+    private var coreDataManager: CoreDataManager!
     private var fetchedResultsController: NSFetchedResultsController<Notification>?
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -63,7 +63,7 @@ class NotificationViewController: UIViewController {
         fetchResult.sortDescriptors = [sortDescriptor]
         fetchResult.predicate = compoundPredicate
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchResult, managedObjectContext: (databaseManager?.viewContext)!, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchResult, managedObjectContext: (coreDataManager?.viewContext)!, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController?.delegate = self
         do {
             try fetchedResultsController?.performFetch()
@@ -76,7 +76,7 @@ class NotificationViewController: UIViewController {
     
     private func updateNotificationRead(indexPath: IndexPath) {
         if let notification = fetchedResultsController?.object(at: indexPath) {
-            databaseManager.updateNotification(object: notification, isRead: true) {
+            coreDataManager.updateNotification(object: notification, isRead: true) {
                 switch $0 {
                 case let .failure(error):
                     print(error.localizedDescription)
@@ -124,7 +124,7 @@ extension NotificationViewController: UITableViewDelegate {
             .instantiateViewController(ofType: FriendHistoryViewController.self)
         if let notification = fetchedResultsController?.object(at: indexPath) {
             updateNotificationRead(indexPath: indexPath)
-            viewController.setDatabaseManager(databaseManager)
+            viewController.setCoreDataManager(coreDataManager)
             viewController.friendID = notification.event?.friend?.objectID
             navigationController?.pushViewController(viewController, animated: true)
         }
@@ -133,9 +133,10 @@ extension NotificationViewController: UITableViewDelegate {
     func tableView (_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if let objectToDelete = fetchedResultsController?.object(at: indexPath) {
-                databaseManager?.viewContext.delete(objectToDelete)
+                coreDataManager?.viewContext.delete(objectToDelete)
+                CloudManager.deleteFromCloud(object: objectToDelete)
                 do {
-                    try databaseManager?.viewContext.save()
+                    try coreDataManager?.viewContext.save()
                 } catch {
                     print(error.localizedDescription)
                 }
@@ -145,11 +146,11 @@ extension NotificationViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - DatabaseManagerClient
+// MARK: - CoreDataManagerClient
 
 extension NotificationViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }
 

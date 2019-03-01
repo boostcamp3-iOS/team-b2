@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: CoreDataManager!
+    private var coreDataManager: CoreDataManager!
     private var events: [Event]?
     private var holidays: [Holiday]?
     private var isEventEmpty: Bool = true
@@ -98,7 +98,7 @@ class HomeViewController: UIViewController {
     private func fetchEvent() {
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
         let predicate: NSPredicate = NSPredicate(format: "date >= %@", NSDate())
-        databaseManager.fetch(
+        coreDataManager.fetch(
             type: Event.self,
             predicate: predicate,
             sortDescriptor: sortDescriptor
@@ -106,10 +106,12 @@ class HomeViewController: UIViewController {
             switch result {
             case .success(let events):
                 self?.events = events
-                self?.tableView.reloadSections(
-                    IndexSet(integer: Section.friendEvents.rawValue),
-                    with: .none
-                )
+                UIView.performWithoutAnimation {
+                    self?.tableView.reloadSections(
+                        IndexSet(integer: Section.friendEvents.rawValue),
+                        with: .none)
+                }
+                self?.tableView.reloadData()
             case .failure(let err):
                 err.loadErrorAlert(title: "이벤트 불러오기 에러")
             }
@@ -118,17 +120,18 @@ class HomeViewController: UIViewController {
     
     private func fetchHoliday() {
         let sortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
-        databaseManager.fetch(
+        coreDataManager.fetch(
             type: Holiday.self,
             sortDescriptor: sortDescriptor
         ) { [weak self] (result) in
             switch result {
             case .success(let holidays):
                 self?.holidays = holidays
-                self?.tableView.reloadSections(
-                    IndexSet(integer: Section.holidays.rawValue),
-                    with: .none
-                )
+                UIView.performWithoutAnimation {
+                    self?.tableView.reloadSections(
+                        IndexSet(integer: Section.holidays.rawValue),
+                        with: .none)
+                }
             case .failure(let err):
                 err.loadErrorAlert(title: "나의 경조사 불러오기 에러")
             }
@@ -158,9 +161,9 @@ class HomeViewController: UIViewController {
     
     private func deleteUpcomingEvent(at indexPath: IndexPath) {
         guard let event = events?[indexPath.row] else { return }
-        databaseManager?.viewContext.delete(event)
+        coreDataManager?.viewContext.delete(event)
         do {
-            try databaseManager?.viewContext.save()
+            try coreDataManager?.viewContext.save()
         } catch {
             print(error.localizedDescription)
         }
@@ -172,6 +175,7 @@ class HomeViewController: UIViewController {
         }
         tableView.deleteRows(at: [indexPath],
                              with: .automatic)
+        CloudManager.deleteFromCloud(object: event)
     }
     
     // MARK: - @objcs
@@ -182,7 +186,7 @@ class HomeViewController: UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
     
         viewController.entryRoute = .addHolidayAtHome
-        viewController.setDatabaseManager(databaseManager)
+        viewController.setCoreDataManager(coreDataManager)
         viewController.inputData = InputData()
         present(navController, animated: true, completion: nil)
     }
@@ -191,7 +195,7 @@ class HomeViewController: UIViewController {
         if UserDefaults.standard.bool(forKey: DefaultsKey.askedAuthorizeNotification) == false {
             UserDefaults.standard.set(true, forKey: DefaultsKey.askedAuthorizeNotification)
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.registerForLocalNotifications(application: UIApplication.shared)
+            appDelegate.registerForNotifications(application: UIApplication.shared)
         }
         
         let viewController = storyboard(.input)
@@ -201,7 +205,7 @@ class HomeViewController: UIViewController {
 //        viewController.isRelationInput = false
         viewController.cellType = .holiday
         viewController.entryRoute = .addUpcomingEventAtHome
-        viewController.setDatabaseManager(databaseManager)
+        viewController.setCoreDataManager(coreDataManager)
         viewController.inputData = InputData()
         present(navController, animated: true, completion: nil)
     }
@@ -222,7 +226,7 @@ class HomeViewController: UIViewController {
         
         if sender.isSelected {
             for dDay in [favortieFirstDday, favoriteSecondDday] {
-                let notification = Notification(context: databaseManager.viewContext)
+                let notification = Notification(context: coreDataManager.viewContext)
                 guard let interval: TimeInterval = TimeInterval(exactly: dDay * Int.day * -1) else { return }
                 notification.id = UUID().uuidString
                 notification.date = event.date?.addingTimeInterval(interval)
@@ -233,10 +237,10 @@ class HomeViewController: UIViewController {
             }
         } else {
             notifications.forEach { notificaion in
-                    self.databaseManager.viewContext.delete(notificaion)
+                    self.coreDataManager.viewContext.delete(notificaion)
                     NotificationSchedular.delete(notification: notificaion)
             }
-            let notification = Notification(context: databaseManager.viewContext)
+            let notification = Notification(context: coreDataManager.viewContext)
             guard let interval: TimeInterval = TimeInterval(exactly: defaultDday * Int.day * -1) else { return }
             notification.id = UUID().uuidString
             notification.date = event.date?.addingTimeInterval(interval)
@@ -245,7 +249,7 @@ class HomeViewController: UIViewController {
                                          hour: defaultHour,
                                          minute: defaultMinutes)
         }
-        try? databaseManager?.viewContext.save()
+        try? coreDataManager?.viewContext.save()
     }
     
     @objc func longPressUpcomingEvent(_ gesture: UILongPressGestureRecognizer) {
@@ -287,7 +291,7 @@ extension HomeViewController: UITableViewDelegate {
             
             let viewController = storyboard(.friendHistory)
                 .instantiateViewController(ofType: FriendHistoryViewController.self)
-            viewController.setDatabaseManager(databaseManager)
+            viewController.setCoreDataManager(coreDataManager)
             viewController.friendID = friend?.objectID
             
             navigationController?.pushViewController(viewController, animated: true)
@@ -383,17 +387,17 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let viewController = storyboard(.holiday)
             .instantiateViewController(ofType: HolidayViewController.self)
-        viewController.setDatabaseManager(databaseManager)
+        viewController.setCoreDataManager(coreDataManager)
         viewController.holiday = holidays?[indexPath.item]
         viewController.entryRoute = .addHistoryAtFriendHistory
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
-// MARK: - DatabaseManagerClient
+// MARK: - CoreDataManagerClient
 
 extension HomeViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }

@@ -26,7 +26,7 @@ class ItemInputViewController: UIViewController {
     
     public var inputData: InputData?
     public var entryRoute: EntryRoute!
-    public var databaseManager: CoreDataManager!
+    public var coreDataManager: CoreDataManager!
     
     private var originalBottomConstraint: CGFloat = 0.0
     private var originalHeightConstraint: CGFloat = 0.0
@@ -154,14 +154,14 @@ class ItemInputViewController: UIViewController {
         case .addHistoryAtFriendHistory:
             let viewController = storyboard(.input)
                 .instantiateViewController(ofType: DateInputViewController.self)
-            viewController.setDatabaseManager(databaseManager)
+            viewController.setCoreDataManager(coreDataManager)
             viewController.entryRoute = entryRoute
             inputData.item = item
             viewController.inputData = inputData
             navigationController?.pushViewController(viewController, animated: true)
         case .addHistoryAtHoliday:
             inputData.item = item
-            InputManager.write(context: databaseManager.viewContext, entryRoute: entryRoute, data: inputData)
+            InputManager.write(context: coreDataManager.viewContext, entryRoute: entryRoute, data: inputData)
             dismiss(animated: true, completion: nil)
         default:
             break
@@ -314,7 +314,7 @@ extension ItemInputViewController: UIGestureRecognizerDelegate {
 }
 
 extension ItemInputViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }

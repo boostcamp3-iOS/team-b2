@@ -19,5 +19,7 @@ struct DefaultsKey {
     static let defaultAlarmDday: String = "defaultAlarmDday"
     static let favoriteFirstAlarmDday: String = "favoriteFirstAlarmDday"
     static let favoriteSecondAlarmDday: String = "favoriteSecondAlarmDday"
-    static let iCloudAccountAvailable: String = "iCloudAccountAvailable"
+    static let createdCustomZoneBefore: String = "createdCustomZoneBefore"
+    static let subscribedToPrivateChanges: String = "subscribedToPrivateChanges"
+    static let zoneChangeToken: String = "zoneChangeToken"
 }

@@ -8,11 +8,10 @@
 
 import Foundation
 import CoreData
-
-
+import CloudKit
 
 protocol CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager)
+    func setCoreDataManager(_ manager: CoreDataManager)
 }
 
 final class CoreDataManager {
@@ -21,6 +20,12 @@ final class CoreDataManager {
     var viewContext: NSManagedObjectContext {
         let context = container.viewContext
         context.automaticallyMergesChangesFromParent = true
+        return context
+    }
+    
+    var updateContext: NSManagedObjectContext {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.parent = self.viewContext
         return context
     }
     
@@ -61,17 +66,13 @@ final class CoreDataManager {
     func fetch<CoreDataObject: NSManagedObject>(type: CoreDataObject.Type, predicate: NSPredicate? = nil, sortDescriptor: NSSortDescriptor? = nil, completion: @escaping (Result<[CoreDataObject]>)->()) {
         
         let backgroundContext = container.newBackgroundContext()
-    
         let request: NSFetchRequest<CoreDataObject> = CoreDataObject.fetchRequest() as! NSFetchRequest<CoreDataObject>
-        
         if let predicate: NSPredicate = predicate {
             request.predicate = predicate
         }
-        
         if let sortDescriptor: NSSortDescriptor = sortDescriptor {
             request.sortDescriptors = [sortDescriptor]
         }
-        
         let complete: (Result) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)
@@ -182,8 +183,10 @@ final class CoreDataManager {
             
             do {
                 try backgroundContext.save()
+                DispatchQueue.main.async {
                 let mainQueueEvent = self.viewContext.object(with: event.objectID) as! Event
                 complete(.success(mainQueueEvent))
+                }
             } catch {
                 complete(.failure(CoreDataError.creationFailed))
             }
@@ -207,8 +210,10 @@ final class CoreDataManager {
             
             do {
                 try backgroundContext.save()
+                DispatchQueue.main.async {
                 let mainQueueHistory = self.viewContext.object(with: history.objectID) as! History
                 complete(.success(mainQueueHistory))
+                }
             } catch {
                 complete(.failure(CoreDataError.creationFailed))
             }
@@ -231,8 +236,10 @@ final class CoreDataManager {
             
             do {
                 try backgroundContext.save()
+                DispatchQueue.main.async {
                 let mainQueueHoliday = self.viewContext.object(with: holiday.objectID) as! Holiday
                 complete(.success(mainQueueHoliday))
+                }
             } catch {
                 complete(.failure(CoreDataError.creationFailed))
             }
@@ -252,7 +259,9 @@ final class CoreDataManager {
             notification.event = event
             
             let complete: (Result) -> Void = { result in
+                DispatchQueue.main.async {
                 completion(result)
+                }
             }
             
             do {
@@ -268,43 +277,56 @@ final class CoreDataManager {
         }
     }
     
-    func updateFriend(object: Friend, name: String? = nil, tags: [String]? = nil, favorite: Bool? = nil, phoneNumber: String? = nil) {
+    func updateFriend(object: Friend, name: String? = nil, tags: [String]? = nil, favorite: Bool? = nil, phoneNumber: String? = nil, recordName: String? = nil, completion: @escaping (Result<Friend>)->()) {
         if name == nil, tags == nil, favorite == nil, phoneNumber == nil {
             return
         }
         container.performBackgroundTask { backgroundContext in
-            let friend = backgroundContext.object(with: object.objectID) as? Friend
-            if let name = name { friend?.name = name }
-            if let tags = tags { friend?.tags = tags }
-            if let favorite = favorite { friend?.favorite = favorite }
-            if let phoneNumber = phoneNumber { friend?.phoneNumber = phoneNumber }
+            guard let friend = backgroundContext.object(with: object.objectID) as? Friend else { return }
+            if let name = name { friend.name = name }
+            if let tags = tags { friend.tags = tags }
+            if let favorite = favorite { friend.favorite = favorite }
+            if let phoneNumber = phoneNumber { friend.phoneNumber = phoneNumber }
+            if let recordName = recordName { friend.recordName = recordName }
             
             do {
                 try backgroundContext.save()
+                DispatchQueue.main.async {
+                    guard let updatedFriend = self.viewContext.object(with: friend.objectID) as? Friend else { return }
+                    completion(.success(updatedFriend))
+                }
             } catch {
-                print("Notification creation failed: \(error.localizedDescription)")
-                
+                DispatchQueue.main.async {
+                    completion(.failure(CoreDataError.creationFailed))
+                }
             }
         }
     }
     
-    func updateEvent(object: Event, title: String? = nil, date: Date? = nil, favorite: Bool? = nil, friend: Friend? = nil) {
+    func updateEvent(object: Event, title: String? = nil, date: Date? = nil, favorite: Bool? = nil, friend: Friend? = nil, recordName: String? = nil, completion: @escaping (Result<Event>)->()) {
         if title == nil, date == nil, favorite == nil, friend == nil {
             return
         }
         container.performBackgroundTask { backgroundContext in
-            let event = backgroundContext.object(with: object.objectID) as? Event
-            if let title = title { event?.title = title }
-            if let date = date { event?.date = date }
-            if let favorite = favorite { event?.favorite = favorite }
+            guard let event = backgroundContext.object(with: object.objectID) as? Event else { return }
+            if let title = title { event.title = title }
+            if let date = date { event.date = date }
+            if let favorite = favorite { event.favorite = favorite }
             if let friend = friend {
-                event?.friend = backgroundContext.object(with: friend.objectID) as? Friend
+                event.friend = backgroundContext.object(with: friend.objectID) as? Friend
             }
+            if let recordName = recordName { event.recordName = recordName }
             
             do {
                 try backgroundContext.save()
+                DispatchQueue.main.async {
+                    guard let updatedEvent = self.viewContext.object(with: event.objectID) as? Event else { return }
+                    completion(.success(updatedEvent))
+                }
             } catch {
-                print("Notification creation failed: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    completion(.failure(CoreDataError.creationFailed))
+                }
             }
         }
     }
@@ -399,6 +421,110 @@ final class CoreDataManager {
             } catch {
                 DispatchQueue.main.async{
                     completion(.failure(CoreDataError.batchUpdateFailed))
+                }
+            }
+        }
+    }
+}
+
+extension CoreDataManager {
+    func updateLocalRecords(changedRecords: [CKRecord], deletedRecordIDs: [CKRecord.ID]) {
+        let deletedRecordNames = deletedRecordIDs.map { $0.recordName }
+        self.updateObject(for: changedRecords)
+        self.deleteObject(for: deletedRecordNames)
+        do {
+            try viewContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func retrieveObject(from recordName: String) -> NSManagedObject? {
+        guard let dotIndex = recordName.range(of: ".") else { return nil }
+        let substring = recordName[..<dotIndex.lowerBound]
+        let typeString = String(substring)
+        let predicate = NSPredicate(format: "recordName == %@", recordName)
+        
+        var objects = [NSManagedObject]()
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: typeString)
+        request.predicate = predicate
+        let results = try? viewContext.fetch(request)
+        if let castedResults = results as? [NSManagedObject] {
+            objects = castedResults
+        }
+        return objects.first
+    }
+    
+    func updateObject(for records: [CKRecord]) {
+        for record in records {
+            let recordName = record.recordID.recordName
+            guard let dotIndex = recordName.range(of: ".") else { return }
+            let substring = recordName[..<dotIndex.lowerBound]
+            let typeString = String(substring)
+            
+            let newObject = NSEntityDescription.insertNewObject(forEntityName: typeString, into: viewContext)
+            if let cloudManagedObject = newObject as? CloudManagedObject {
+                cloudManagedObject.updateWith(record: record, coreDataManager: self)
+            }
+        }
+    }
+    
+    func deleteObject(for recordNames: [String]) {
+        for recordName in recordNames {
+            guard let object = retrieveObject(from: recordName) else { return }
+            delete(object: object) {
+                error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func retrieveCacheRecord() {
+        let request: NSFetchRequest = CachedRecords.fetchRequest()
+        var records: [CachedRecords]?
+        do {
+            records = try viewContext.fetch(request)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        guard let count = records?.count else { return }
+        let recordNames = records?[0 ..< min(count, 20)].map { $0.recordName! }
+        guard let names = recordNames else { return }
+        let uniqueNames = Array(Set(names))
+        
+        var recordsToSave: [CKRecord] = []
+        var recordIDsToDelete: [CKRecord.ID] = []
+        for recordName in uniqueNames {
+            let object = self.retrieveObject(from: recordName)
+            if let cloudManagedObject = object as? CloudManagedObject {
+                let record = cloudManagedObject.convertToRecord()
+                recordsToSave.append(record)
+            } else {
+                let zoneID = CloudZone.zoneID
+                let recordID = CKRecord.ID(recordName: recordName, zoneID: zoneID)
+                recordIDsToDelete.append(recordID)
+            }
+        }
+    }
+    
+    func clearCachedRecords(recordNames: [String]) {
+        for recordName in recordNames {
+            let predicate = NSPredicate(format: "recordName == %@", recordName)
+            fetch(type: CachedRecords.self, predicate: predicate) {
+                switch $0 {
+                case let .failure(error):
+                    print(error.localizedDescription)
+                case let .success(records):
+                    if let object = records.first {
+                        self.delete(object: object) { error in
+                            if let error = error {
+                                print(error.localizedDescription)
+                            }
+                        }
+                    }
                 }
             }
         }

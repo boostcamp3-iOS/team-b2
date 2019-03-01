@@ -6,6 +6,7 @@
 //  Copyright © 2019 LeeHyeJin. All rights reserved.
 //
 
+import CoreData
 import Foundation
 
 enum Result<Value> {

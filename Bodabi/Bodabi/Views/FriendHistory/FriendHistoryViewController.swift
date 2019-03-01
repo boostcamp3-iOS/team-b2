@@ -27,7 +27,7 @@ class FriendHistoryViewController: UIViewController {
     }
     private var friend: Friend?
     private var histories: [History]?
-    private var databaseManager: CoreDataManager!
+    private var coreDataManager: CoreDataManager!
     private var isSortDescending: Bool = true
     private var isTableViewLoaded: Bool = false
     private var isInputStatus: Bool = false
@@ -73,7 +73,7 @@ class FriendHistoryViewController: UIViewController {
     
     private func fetchHistory() {
         guard let id = friendID else { return }
-        friend = databaseManager.viewContext.object(with: id) as? Friend
+        friend = coreDataManager.viewContext.object(with: id) as? Friend
         
         guard var faultedHistories = friend?.histories?.allObjects as? [History] else { return }
         
@@ -112,8 +112,7 @@ class FriendHistoryViewController: UIViewController {
         var income: Int = 0
         var expenditure: Int = 0
         sections = []
-        sections.append(.information(items: [.information(income: String(income), expenditure: String(expenditure))]))
-        
+
         guard let histories = histories else {
             return
         }
@@ -133,6 +132,7 @@ class FriendHistoryViewController: UIViewController {
                 historyItems.append(.giveHistory(history: history))
             }
         }
+        sections.append(.information(items: [.information(income: String(income), expenditure: String(expenditure))]))
         sections.append(.history(items: historyItems))
         tableView.reloadData()
     }
@@ -182,7 +182,7 @@ class FriendHistoryViewController: UIViewController {
     @objc func touchUpHistoryDeleteButton(_ sender: UIButton) {
         let selectedRow = sender.tag
         guard let history = histories?[selectedRow] else { return }
-        databaseManager.delete(object: history) { error in
+        coreDataManager.delete(object: history) { error in
             if let error = error {
                 print(error.localizedDescription)
             } else {
@@ -212,17 +212,31 @@ class FriendHistoryViewController: UIViewController {
         viewController.entryRoute = .addHistoryAtFriendHistory
 //        viewController.isRelationInput = false
         viewController.cellType = .holiday
-        viewController.setDatabaseManager(databaseManager)
+        viewController.setCoreDataManager(coreDataManager)
         present(navigationController, animated: true, completion: nil)
     }
     
     @IBAction func touchUpFavoriteButton(_ sender: UIBarButtonItem) {
         guard let friend = friend else { return }
         if favoriteButton.image == #imageLiteral(resourceName: "ic_emptyStar") {
-            databaseManager.updateFriend(object: friend, favorite: false)
+            coreDataManager.updateFriend(object: friend, favorite: false) {
+                switch $0 {
+                case let .failure(error):
+                    print(error.localizedDescription)
+                case .success:
+                    break
+                }
+            }
             favoriteButton.image = #imageLiteral(resourceName: "WhiteStar")
         } else {
-            databaseManager.updateFriend(object: friend, favorite: true)
+            coreDataManager.updateFriend(object: friend, favorite: true) {
+                switch $0 {
+                case let .failure(error):
+                    print(error.localizedDescription)
+                case .success:
+                    break
+                }
+            }
             favoriteButton.image = #imageLiteral(resourceName: "ic_emptyStar")
         }
         
@@ -354,10 +368,10 @@ extension FriendHistorySection {
     }
 }
 
-// MARK: - DatabaseManagerClient
+// MARK: - CoreDataManagerClient
 
 extension FriendHistoryViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }

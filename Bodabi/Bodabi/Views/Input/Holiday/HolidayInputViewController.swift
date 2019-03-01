@@ -22,7 +22,7 @@ class HolidayInputViewController: UIViewController {
     public var entryRoute: EntryRoute!
     public var cellType: CellType = .relation
     public var cellData: [String]?
-    private var databaseManager: CoreDataManager!
+    private var coreDataManager: CoreDataManager!
     private var isDeleting: Bool = false
     private var selectedRelation: String?
     private var selectedHoliday: String?
@@ -54,7 +54,7 @@ class HolidayInputViewController: UIViewController {
     // MARK: - Initialization
     
     private func fetchHoliday() {
-        databaseManager.fetch(type: Holiday.self) { result in
+        coreDataManager.fetch(type: Holiday.self) { result in
             switch result {
             case let .failure(error):
                 print(error.localizedDescription)
@@ -180,7 +180,7 @@ class HolidayInputViewController: UIViewController {
                     inputData?.relation = selectedRelation
                     
                     viewController.entryRoute = entryRoute
-                    viewController.setDatabaseManager(databaseManager)
+                    viewController.setCoreDataManager(coreDataManager)
                     viewController.selectedRelation = selectedRelation
                     viewController.inputData = inputData
                     viewController.cellType = .holiday
@@ -191,7 +191,7 @@ class HolidayInputViewController: UIViewController {
                             .instantiateViewController(ofType: DateInputViewController.self)
                         
                         viewController.entryRoute = entryRoute
-                        viewController.setDatabaseManager(databaseManager)
+                        viewController.setCoreDataManager(coreDataManager)
                         inputData?.holiday = selectedHoliday
                         viewController.inputData = inputData
                         navigationController?.pushViewController(viewController, animated: true)
@@ -209,7 +209,7 @@ class HolidayInputViewController: UIViewController {
                 viewController.entryRoute = entryRoute
                 inputData?.holiday = selectedHoliday
                 viewController.inputData = inputData
-                viewController.setDatabaseManager(databaseManager)
+                viewController.setCoreDataManager(coreDataManager)
                 navigationController?.pushViewController(viewController, animated: true)
             case .addHistoryAtFriendHistory:
                 let viewController = storyboard(.input)
@@ -218,7 +218,7 @@ class HolidayInputViewController: UIViewController {
                 viewController.entryRoute = entryRoute
                 inputData?.holiday = selectedHoliday
                 viewController.inputData = inputData
-                viewController.setDatabaseManager(databaseManager)
+                viewController.setCoreDataManager(coreDataManager)
                 navigationController?.pushViewController(viewController, animated: true)
             default:
                 break
@@ -288,11 +288,11 @@ extension HolidayInputViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - DatabaseManagerClient
+// MARK: - CoreDataManagerClient
 
 extension HolidayInputViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }
 

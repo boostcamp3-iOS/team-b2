@@ -21,7 +21,7 @@ class FriendsViewController: UIViewController {
     
     // MARK: - Property
     
-    private var databaseManager: CoreDataManager!
+    private var coreDataManager: CoreDataManager!
     private var friends: [Friend]?
     private var favoriteFriends: [Friend]?
     private let indexs: [Character] = ["★", "•", "ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ",
@@ -99,7 +99,7 @@ class FriendsViewController: UIViewController {
             .instantiateViewController(ofType: NameInputViewController.self)
         viewController.cellType = .holiday
         viewController.entryRoute = .addFriendAtFriends
-        viewController.setDatabaseManager(databaseManager)
+        viewController.setCoreDataManager(coreDataManager)
         viewController.inputData = InputData()
         let navController = UINavigationController(rootViewController: viewController)
         self.present(navController, animated: true, completion: nil)
@@ -108,7 +108,7 @@ class FriendsViewController: UIViewController {
     @IBAction func touchUpGoFetchContactsButton(_ sender: UIButton) {
         let viewController = storyboard(.setting)
             .instantiateViewController(ofType: SettingContactsViewController.self)
-        viewController.setDatabaseManager(databaseManager)
+        viewController.setCoreDataManager(coreDataManager)
         navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -161,7 +161,7 @@ class FriendsViewController: UIViewController {
     
     private func fetchFriend() {
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        databaseManager.fetch (
+        coreDataManager.fetch (
             type: Friend.self,
             sortDescriptor: sortDescriptor
         ) { [weak self] (result) in
@@ -220,7 +220,7 @@ class FriendsViewController: UIViewController {
             (sender.tag < favoriteFriends?.count ?? 0) : (sender.tag < friends?.count ?? 0) else { return }
         (sender.isSelected ? favoriteFriends?[sender.tag] : friends?[sender.tag])?
             .favorite = !sender.isSelected
-        try? databaseManager?.viewContext.save()
+        try? coreDataManager?.viewContext.save()
         
         guard let friends = friends,
             let favoriteFriends = favoriteFriends else { return }
@@ -274,7 +274,7 @@ extension FriendsViewController: UITableViewDelegate {
             (section == .favorite || section == .friends) else { return }
         let viewController = storyboard(.friendHistory)
             .instantiateViewController(ofType: FriendHistoryViewController.self)
-        viewController.setDatabaseManager(databaseManager)
+        viewController.setCoreDataManager(coreDataManager)
         
         let friend = section == .favorite ?
             searchFavoriteFriends?[indexPath.row] : searchFriends?[indexPath.row]
@@ -289,10 +289,11 @@ extension FriendsViewController: UITableViewDelegate {
         if editingStyle == .delete,
             let friend = section == .favorite ?
                 searchFavoriteFriends?[indexPath.row] : searchFriends?[indexPath.row] {
-            databaseManager?.viewContext.delete(friend)
+            coreDataManager?.viewContext.delete(friend)
+            CloudManager.deleteFromCloud(object: friend)
         }
         do {
-            try databaseManager?.viewContext.save()
+            try coreDataManager?.viewContext.save()
         } catch {
             print(error.localizedDescription)
         }
@@ -401,11 +402,11 @@ extension FriendsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - DatabaseManagerClient
+// MARK: - CoreDataManagerClient
 
 extension FriendsViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }
 

@@ -2,209 +2,259 @@
 //  CloudManager.swift
 //  Bodabi
 //
-//  Created by Kim DongHwan on 08/02/2019.
+//  Created by jaehyeon lee on 25/02/2019.
 //  Copyright © 2019 LeeHyeJin. All rights reserved.
 //
 
 import CloudKit
-import Foundation
 
-public protocol CloudManagerProtocol {
-    func cloudRecordChanged(record: CKRecord)
-}
+private let customZoneName = "CloudZone"
 
-struct CloudManager {
+final class CloudManager {
     
-    private let container = CKContainer.default()
-    private let privateDatabase = CKContainer.default().privateCloudDatabase
-    public var delegate: CloudManagerProtocol?
-    public var zoneID: CKRecordZone.ID?
-    
-    init() {
-        let zone = CKRecordZone(zoneName: "note-zone")
-        zoneID = zone.zoneID
+    static var privateDatabase: CKDatabase {
+        return CKContainer.default().privateCloudDatabase
     }
     
-    var iCloudAccountAvailable: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: DefaultsKey.iCloudAccountAvailable)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: DefaultsKey.iCloudAccountAvailable)
+    static let zoneID = CKRecordZone.ID(zoneName: customZoneName, ownerName: CKCurrentUserDefaultName)
+    
+    static let createZoneDispatchGroup = DispatchGroup()
+    
+    init() {}
+    
+    static func iCloudIsAvailable() -> Bool {
+        if FileManager.default.ubiquityIdentityToken != nil {
+            print("cloud task is available")
+            return true
+        } else {
+            print("cloud task is not available")
+            return false
         }
     }
     
-    func create() {
-        let record = CKRecord(recordType: RemoteType.friend)
-        record[RemoteFriend.name] = "이재현" as String
-        record[RemoteFriend.favorite] = 0 as NSNumber
-        record[RemoteFriend.tags] = ["학교", "키가 큰"] as NSArray
-
-        privateDatabase.save(record) { record, error in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                print("record created")
+    static func insertRecord(_ newRecord: CKRecord) {
+        if !CloudManager.iCloudIsAvailable() {
+            return
+        }
+        
+        self.privateDatabase.fetch(withRecordID: newRecord.recordID) { (fetchedRecord, error) in
+            if let error = error as? CKError {
+                print("Error fetching record:", error)
+                
+                if error.code == CKError.unknownItem {
+                    print("No record found with recordID:", newRecord.recordID)
+                    
+                    self.privateDatabase.save(newRecord) { (_, error) in
+                        if let error = error {
+                            print("Error saving new record:", error)
+                        }
+                    }
+                }
+            } else if let fetchedRecord = fetchedRecord {
+                self.privateDatabase.delete(withRecordID: fetchedRecord.recordID) { (_, error) in
+                    if let error = error {
+                        print("Error deleting record:", error)
+                    } else {
+                        self.privateDatabase.save(newRecord) {
+                            (_, error) in
+                            if let error = error {
+                                print("Error saving new record:", error)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-
     
-
-//    private var databaseManager: DatabaseManager!
-//    private var friends: [Friend]?
-//    private var histories: [History]?
-//    private var holidays: [Holiday]?
-//    private var events: [Event]?
-//    private var notifications: [Notification]?
+    static func deleteRecord(withID recordID: CKRecord.ID) {
+        if !CloudManager.iCloudIsAvailable() {
+            return
+        }
+        
+        self.privateDatabase.delete(withRecordID: recordID) { (recordID, error) in
+            if let error = error {
+                print("Error deleting record:", error)
+            }
+        }
+    }
     
-//    func uploadAll() {
-//
-//    }
+    static func createCustomZone() {
+        if !CloudManager.iCloudIsAvailable() {
+            return
+        }
+        
+        let createdCustomZone = UserDefaults.standard.bool(forKey: DefaultsKey.createdCustomZoneBefore)
+        
+        if !createdCustomZone {
+            self.createZoneDispatchGroup.enter()
+            
+            let customZone = CKRecordZone(zoneID: self.zoneID)
+            let createZoneOperation = CKModifyRecordZonesOperation(recordZonesToSave: [customZone], recordZoneIDsToDelete: [])
+            
+            createZoneOperation.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
+                if error != nil {
+                    print("Error creating custom zone: \(String(describing: error))")
+                } else {
+                    UserDefaults.standard.set(true, forKey: DefaultsKey.createdCustomZoneBefore)
+                }
+                
+                self.createZoneDispatchGroup.leave()
+            }
+            createZoneOperation.qualityOfService = .userInitiated
+            
+            self.privateDatabase.add(createZoneOperation)
+        }
+    }
     
-//    func uploadFriend() {
-//        guard let friends: [Friend] = friends else { return }
-//        friends.forEach { friend in
-//            let record = CKRecord(recordType: "Friend")
-//        }
-//    }
-//
-//    static func fetchAll() {
-//        fetchFriend()
-//        fetchHoliday()
-//        fetchHistory()
-//        fetchEvent()
-//        fetchNotification()
-//    }
-//
-//    static func fetchFriend() {
-//        let request: NSFetchRequest<Friend> = Friend.fetchRequest()
-//        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-//        request.sortDescriptors = [sortDescriptor]
-//        if let result = try? databaseManager.viewContext.fetch(request) {
-//            friends = result
-//        }
-//    }
-//
-//    static func fetchHistory() {
-//        let request: NSFetchRequest<History> = History.fetchRequest()
-//        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
-//        request.sortDescriptors = [sortDescriptor]
-//        if let result = try? databaseManager.viewContext.fetch(request) {
-//            histories = result
-//        }
-//    }
-//
-//    static func fetchHoliday() {
-//        let request: NSFetchRequest<Holiday> = Holiday.fetchRequest()
-//        let sortDescriptor = NSSortDescriptor(key: "createdDate", ascending: true)
-//        request.sortDescriptors = [sortDescriptor]
-//        if let result = try? databaseManager.viewContext.fetch(request) {
-//            holidays = result
-//        }
-//    }
-//
-//    static func fetchEvent() {
-//        let request: NSFetchRequest<Event> = Event.fetchRequest()
-//        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
-//        request.sortDescriptors = [sortDescriptor]
-//        if let result = try? databaseManager.viewContext.fetch(request) {
-//            events = result
-//        }
-//    }
-//
-//    static func fetchNotification() {
-//        let request: NSFetchRequest<Notification> = Notification.fetchRequest()
-//        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
-//        request.sortDescriptors = [sortDescriptor]
-//        if let result = try? databaseManager.viewContext.fetch(request) {
-//            notifications = result
-//        }
-//    }
-//}
-//
-//// MARK: - DatabaseManagerClient
-//
-//extension CloudManager: DatabaseManagerClient {
-//    func setDatabaseManager(_ manager: DatabaseManager) {
-//        databaseManager = manager
-//    }
-//}
-//
-//// MARK: - Helper Cloud Key Enum
-//
-//enum FriendKey: String {
-//    case phoneNumber
-//    case name
-//    case favorite
-//    case tags
-//
-//    var string: String {
-//        return self.rawValue
-//    }
-//}
-//
-//enum EventKey: String {
-//    case title
-//    case favorite
-//    case date
-//    case friend
-//
-//    var string: String {
-//        return self.rawValue
-//    }
-//}
-//
-//enum HistoryKey: String {
-//    case item
-//    case holiday
-//    case isTaken
-//    case date
-//    case friend
-//
-//    var string: String {
-//        return self.rawValue
-//    }
-//}
-//
-//enum HolidayKey: String {
-//    case title
-//    case date
-//    case createdDate
-//    case image
-//
-//    var string: String {
-//        return self.rawValue
-//    }
-//}
-//
-//enum NotificationKey: String {
-//    case isRead
-//    case isHandled
-//    case date
-//    case event
-//
-//    var string: String {
-//        return self.rawValue
-//    }
-//}
-
-//        self[key.string] = newValue as? CKRecordValue
-//        }
-//    }
-//    func save() {
-//        let friendRecord = CKRecord(recordType: "Friend")
-//
-//        friendRecord["name"] = "김동환" as NSString
-//
-//        let container = CKContainer.default()
-//        let privateDatabase = container.privateCloudDatabase
-//
-//        privateDatabase.save(friendRecord) { (record, error) in
-//            if let error = error {
-//                print(error.localizedDescription)
-//            }
-//            print(record)
-//        }
-//    }
+    static func subscribeToChanges() {
+        if !CloudManager.iCloudIsAvailable() {
+            return
+        }
+        
+        let subscribedToPrivateChanges = UserDefaults.standard.bool(forKey: DefaultsKey.subscribedToPrivateChanges)
+        
+        if !subscribedToPrivateChanges {
+            let subscription = CKDatabaseSubscription(subscriptionID: "privateChanges")
+            
+            let notificationInfo = CKSubscription.NotificationInfo()
+            notificationInfo.shouldSendContentAvailable = true
+            subscription.notificationInfo = notificationInfo
+            
+            let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: [])
+            operation.qualityOfService = .utility
+            
+            operation.modifySubscriptionsCompletionBlock = { (subscriptions, deletedIDs, error) in
+                if error != nil {
+                    print("Error subscribing to changes: \(String(describing: error))")
+                } else {
+                    UserDefaults.standard.set(true, forKey: DefaultsKey.subscribedToPrivateChanges)
+                }
+            }
+            
+            self.privateDatabase.add(operation)
+        }
+        
+        self.createZoneDispatchGroup.notify(queue: DispatchQueue.global()) {
+            let createdCustomZone = UserDefaults.standard.bool(forKey: DefaultsKey.createdCustomZoneBefore)
+            
+            if createdCustomZone {
+                CloudManager.pull { error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+    }
+    
+    static func pull(completion: @escaping (Error?) -> Void) {
+        if !CloudManager.iCloudIsAvailable() {
+            return
+        }
+        
+        var changeToken: CKServerChangeToken? = nil
+        let changeTokenData = UserDefaults.standard.data(forKey: DefaultsKey.zoneChangeToken)
+        
+        if changeTokenData != nil {
+            do {
+                changeToken = try NSKeyedUnarchiver.unarchivedObject(ofClass: CKServerChangeToken.self, from: changeTokenData!)
+            } catch {
+                changeToken = nil
+                completion(error)
+            }
+        }
+        
+        let configuration = CKFetchRecordZoneChangesOperation.ZoneConfiguration()
+        configuration.previousServerChangeToken = changeToken
+        
+        let operation = CKFetchRecordZoneChangesOperation(recordZoneIDs: [self.zoneID], configurationsByRecordZoneID: [self.zoneID : configuration])
+        operation.fetchAllChanges = true
+        
+        operation.recordChangedBlock = { (record) in
+            print("recordChangedBlock")
+            switch record.recordType {
+            case RemoteType.friend:
+                CloudManager.writeRecordChangeToFriend(record: record)
+            case RemoteType.holiday:
+                CloudManager.writeRecordChangeToFriend(record: record)
+            case RemoteType.history:
+                CloudManager.writeRecordChangeToFriend(record: record)
+            case RemoteType.event:
+                CloudManager.writeRecordChangeToFriend(record: record)
+            case RemoteType.notification:
+                CloudManager.writeRecordChangeToFriend(record: record)
+            default:
+                break
+            }
+        }
+        
+        operation.recordWithIDWasDeletedBlock = { (recordID, recordType) in
+            print("recordDeletedBlock")
+            switch recordType {
+            case RemoteType.friend:
+                CloudManager.writeRecordDeletionToFriend(recordID: recordID)
+            case RemoteType.holiday:
+                CloudManager.writeRecordDeletionToFriend(recordID: recordID)
+            case RemoteType.history:
+                CloudManager.writeRecordDeletionToFriend(recordID: recordID)
+            case RemoteType.event:
+                CloudManager.writeRecordDeletionToFriend(recordID: recordID)
+            case RemoteType.notification:
+                CloudManager.writeRecordDeletionToFriend(recordID: recordID)
+            default:
+                break
+            }
+        }
+        
+        operation.recordZoneChangeTokensUpdatedBlock = { (zoneID, token, data) in
+            try? coreDataManager?.viewContext.save()
+            
+            guard let changeToken = token else {
+                print("Error getting new changeToken")
+                return
+            }
+            
+            do {
+                let changeTokenData = try NSKeyedArchiver.archivedData(withRootObject: changeToken, requiringSecureCoding: true)
+                UserDefaults.standard.set(changeTokenData, forKey: DefaultsKey.zoneChangeToken)
+            } catch {
+                print("Error archiving new changeToken")
+                completion(error)
+            }
+        }
+        
+        operation.recordZoneFetchCompletionBlock = { (zoneID, token, _, _, error) in
+            print("recordZoneFetchCompletionBlock")
+            if let error = error {
+                print("Error fetching zone changes:", error)
+                return
+            }
+            
+            try? coreDataManager?.viewContext.save()
+            
+            guard let changeToken = token else {
+                print("Error getting new changeToken")
+                return
+            }
+            
+            do {
+                let changeTokenData = try NSKeyedArchiver.archivedData(withRootObject: changeToken, requiringSecureCoding: true)
+                UserDefaults.standard.set(changeTokenData, forKey: DefaultsKey.zoneChangeToken)
+            } catch {
+                print("Error archiving new changeToken")
+                completion(error)
+            }
+        }
+        
+        operation.fetchRecordZoneChangesCompletionBlock = { (error) in
+            print("fetchRecordZoneChangesCompletionBlock")
+            
+            if let error = error {
+                print("Error fetching zone changes:", error)
+            }
+            completion(nil)
+        }
+        self.privateDatabase.add(operation)
+    }
 }

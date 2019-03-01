@@ -40,7 +40,7 @@ class HolidayViewController: UIViewController {
             }
         }
     }
-    private var databaseManager: CoreDataManager!
+    private var coreDataManager: CoreDataManager!
     private var isFirstScroll: Bool = true
     private var isHolidayEmpty: Bool = true
     private struct Const {
@@ -91,7 +91,7 @@ class HolidayViewController: UIViewController {
         let secondPredicate = NSPredicate(format: "isTaken = %@", NSNumber(value: true))
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [firstPredicate, secondPredicate])
         
-        databaseManager.fetch(type: History.self, predicate: andPredicate) { [weak self] (result) in
+        coreDataManager.fetch(type: History.self, predicate: andPredicate) { [weak self] (result) in
             switch result {
             case let .failure(error):
                 print(error.localizedDescription)
@@ -239,7 +239,7 @@ class HolidayViewController: UIViewController {
         viewController.cellType = .holiday
         viewController.inputData = inputData
         viewController.entryRoute = .addHistoryAtHoliday
-        viewController.setDatabaseManager(databaseManager)
+        viewController.setCoreDataManager(coreDataManager)
         
         present(navController, animated: true, completion: nil)
     }
@@ -275,7 +275,7 @@ class HolidayViewController: UIViewController {
         
         alert.addButton(title: "확인") { [weak self] in
             guard let holiday = self?.holiday else { return }
-            self?.databaseManager.delete(object: holiday) { error in
+            self?.coreDataManager.delete(object: holiday) { error in
                 if let error = error {
                     print(error.localizedDescription)
                 } else {
@@ -286,7 +286,7 @@ class HolidayViewController: UIViewController {
             guard let currentTitle = holiday.title else { return }
             let predicate = NSPredicate(format: "holiday = %@", currentTitle)
             
-            self?.databaseManager.batchDelete(typeString: "History", predicate: predicate) { error in
+            self?.coreDataManager.batchDelete(typeString: "History", predicate: predicate) { error in
                 if let error = error {
                     print(error.localizedDescription)
                 }
@@ -373,7 +373,7 @@ extension HolidayViewController: UITableViewDelegate {
         case .delete:
             guard let removedHistory = histories?[indexPath.row] else { return }
             
-            databaseManager.delete(object: removedHistory) { [weak self] (error) in
+            coreDataManager.delete(object: removedHistory) { [weak self] (error) in
                 if let error = error {
                     print(error.localizedDescription)
                 } else {
@@ -521,7 +521,7 @@ extension HolidayViewController: UIImagePickerControllerDelegate & UINavigationC
             let resizingImage = holidayImage.resize(scale: 0.2),
             let imageData = resizingImage.jpeg(1.0) {
         
-            databaseManager.updateHoliday(object: holiday, image: imageData) { [weak self] (result) in
+            coreDataManager.updateHoliday(object: holiday, image: imageData) { [weak self] (result) in
                 switch result {
                 case let .failure(error):
                     print(error.localizedDescription)
@@ -547,7 +547,7 @@ extension HolidayViewController: UITextFieldDelegate {
         request.predicate = predicate
         
         // 동기적으로 값을 받아와야하기 때문에 databaseManager.fetch를 이용하지 않는다.
-        if let fetchResult = try? databaseManager.viewContext.fetch(request) {
+        if let fetchResult = try? coreDataManager.viewContext.fetch(request) {
             if let _ = fetchResult.first {
                 isUnique = false
             }
@@ -569,7 +569,7 @@ extension HolidayViewController: UITextFieldDelegate {
             }
             
             do {
-                try databaseManager.viewContext.save()
+                try coreDataManager.viewContext.save()
             } catch {
                 print(error.localizedDescription)
             }
@@ -600,8 +600,8 @@ extension HolidayViewController: BodabiAlertControllerDelegate {
 }
 
 extension HolidayViewController: CoreDataManagerClient {
-    func setDatabaseManager(_ manager: CoreDataManager) {
-        databaseManager = manager
+    func setCoreDataManager(_ manager: CoreDataManager) {
+        coreDataManager = manager
     }
 }
 

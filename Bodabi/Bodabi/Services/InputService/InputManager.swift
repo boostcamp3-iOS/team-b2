@@ -56,6 +56,7 @@ struct InputManager {
                     return
                 }
             }
+            CloudManager.insertToCloud(object: holiday)
         case .addUpcomingEventAtHome:
             let event: Event = Event(context: context)
             let friend = getFriend(context: context, data: data)
@@ -67,6 +68,7 @@ struct InputManager {
             event.title = data.holiday
             event.date = data.date
             generateNotifications(of: event, context: context)
+            CloudManager.insertToCloud(object: event)
         case .addHistoryAtHoliday,
              .addHistoryAtFriendHistory:
             let history: History = History(context: context)
@@ -76,12 +78,14 @@ struct InputManager {
             history.holiday = data.holiday
             history.date = data.date
             history.isTaken = entryRoute == .addHistoryAtHoliday ? true : false
+            CloudManager.insertToCloud(object: history)
         case .addFriendAtFriends:
             if data.isNewData {
                 let friend: Friend = Friend(context: context)
                 friend.name = data.name
                 friend.tags = data.tags != nil ? data.tags : friend.tags
                 friend.favorite = false
+                CloudManager.insertToCloud(object: friend)
             }
         }
         
@@ -178,6 +182,7 @@ struct InputManager {
             NotificationSchedular.create(notification: notification,
                                          hour: defaultHour,
                                          minute: defaultMinutes)
+            CloudManager.insertToCloud(object: notification)
     }
 }
 

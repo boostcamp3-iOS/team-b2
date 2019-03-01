@@ -9,25 +9,34 @@
 import UIKit
 import UserNotifications
 import CoreData
+import CloudKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    let databaseManager = CoreDataManager(modelName: "Bodabi")
+    let coreDataManager = CoreDataManager(modelName: "Bodabi")
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UIApplication.shared.applicationIconBadgeNumber = 0
         
         setUserDefaults()
-        databaseManager.load()
+        coreDataManager.load()
+        CloudManager.setCoreDataManager(manager: coreDataManager)
+        
+        registerForNotifications(application: application)
         updateDeliveredNotification()
+        
+        CloudManager.createCustomZone()
+        CloudManager.subscribeToChanges()
+        
+
         
         let tabBarController = window?.rootViewController
         for navigationController in tabBarController?.children ?? [] {
             let viewController = navigationController.children.first as? CoreDataManagerClient
-            viewController?.setDatabaseManager(databaseManager)
+            viewController?.setCoreDataManager(coreDataManager)
         }
         return true
     }
@@ -42,9 +51,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
+        CloudManager.pull { error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
         updateDeliveredNotification()
         resetApplicationIconBadge()
     }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("Received notification")
+        
+        guard let userInfo = userInfo as? [String: NSObject] else { return }
+        guard let _ :CKDatabaseNotification = CKNotification(fromRemoteNotificationDictionary: userInfo) as? CKDatabaseNotification else { return
+}
+        
+        CloudManager.pull {
+            error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            completionHandler(.newData)
+        }
+    }
+    
+//    func requestAutorizationRemoteNotification(application: UIApplication) {
+//        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+//            granted, error in
+//            if let error = error {
+//                print(error.localizedDescription)
+//            } else {
+//                if granted {
+//                    DispatchQueue.main.async {
+//                        application.registerForRemoteNotifications()
+//                        application.delegate = self
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     // MARK: - User Defaults setting
     
@@ -67,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Method
 
     private func saveContext () {
-        let context = databaseManager.viewContext
+        let context = coreDataManager.viewContext
         if context.hasChanges {
             do {
                 try context.save()
@@ -77,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func registerForLocalNotifications(application: UIApplication) {
+    func registerForNotifications(application: UIApplication) {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(
         options: [.badge, .sound, .alert]) {
@@ -117,13 +163,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicate, anotherPredicate])
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
         
-        databaseManager.fetch(type: Notification.self, predicate: andPredicate, sortDescriptor: sortDescriptor) { result in
+        coreDataManager.fetch(type: Notification.self, predicate: andPredicate, sortDescriptor: sortDescriptor) { result in
             switch result {
             case let .failure(error):
                 print(error.localizedDescription)
             case let .success(notifications):
                 notifications.forEach {
-                    self.databaseManager.updateNotification(object: $0, isHandled: true)  {
+                    self.coreDataManager.updateNotification(object: $0, isHandled: true)  {
                         switch $0 {
                         case let .failure(error):
                             print(error.localizedDescription)
