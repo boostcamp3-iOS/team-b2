@@ -30,14 +30,6 @@ struct InputManager {
     }
     
     static func write(context: NSManagedObjectContext, entryRoute: EntryRoute, data: InputData) {
-        // FIXME: - Data dummy image
-        let imageOfHoliday: [(holiday: String, image: UIImage)] = [
-            (holiday: "생일", image: #imageLiteral(resourceName: "birthday")),
-            (holiday: "출산", image: #imageLiteral(resourceName: "babyborn")),
-            (holiday: "결혼", image: #imageLiteral(resourceName: "wedding")),
-            (holiday: "장례", image: #imageLiteral(resourceName: "funeral"))
-        ]
-        
         switch entryRoute {
         case .addHolidayAtHome:
             let holiday: Holiday = Holiday(context: context)
@@ -48,14 +40,9 @@ struct InputManager {
             holiday.date = data.date
             holiday.createdDate = Date()
             
-            imageOfHoliday.forEach {
-                if holiday.title?.contains($0.holiday) ?? true {
-                    guard let image = $0.image
-                        .resize(scale: 0.1)?.jpegData(compressionQuality: 1.0) else { return }
-                    holiday.image = image
-                    return
-                }
-            }
+            holiday.image = DefaultHolidayType.parse(with: holiday.title).holidayImage
+                .resize(scale: 0.1)?.jpegData(compressionQuality: 1.0)
+            
         case .addUpcomingEventAtHome:
             let event: Event = Event(context: context)
             let friend = getFriend(context: context, data: data)
