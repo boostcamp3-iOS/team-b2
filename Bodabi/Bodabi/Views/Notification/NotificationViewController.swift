@@ -63,7 +63,7 @@ class NotificationViewController: UIViewController {
         fetchResult.sortDescriptors = [sortDescriptor]
         fetchResult.predicate = compoundPredicate
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchResult, managedObjectContext: (databaseManager?.viewContext)!, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchResult, managedObjectContext: databaseManager.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController?.delegate = self
         do {
             try fetchedResultsController?.performFetch()
@@ -110,8 +110,6 @@ extension NotificationViewController: UITableViewDataSource {
         }
         
         cell.notification = notification
-        print(notification.date)
-        print(Date())
         return cell
     }
 }
@@ -160,13 +158,21 @@ extension NotificationViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .fade)
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .fade)
+            }
         case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
         case .update:
-            tableView.reloadRows(at: [indexPath!], with: .fade)
+            if let indexPath = indexPath {
+                tableView.reloadRows(at: [indexPath], with: .fade)
+            }
         case .move:
-            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+            if let indexPath = indexPath {
+                tableView.moveRow(at: indexPath, to: newIndexPath!)
+            }
         }
     }
     

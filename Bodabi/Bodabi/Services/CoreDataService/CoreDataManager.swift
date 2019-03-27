@@ -62,7 +62,7 @@ final class CoreDataManager {
         
         let backgroundContext = container.newBackgroundContext()
     
-        let request: NSFetchRequest<CoreDataObject> = CoreDataObject.fetchRequest() as! NSFetchRequest<CoreDataObject>
+        guard let request: NSFetchRequest<CoreDataObject> = CoreDataObject.fetchRequest() as? NSFetchRequest<CoreDataObject> else { return }
         
         if let predicate: NSPredicate = predicate {
             request.predicate = predicate
@@ -182,7 +182,7 @@ final class CoreDataManager {
             
             do {
                 try backgroundContext.save()
-                let mainQueueEvent = self.viewContext.object(with: event.objectID) as! Event
+                guard let mainQueueEvent = self.viewContext.object(with: event.objectID) as? Event else { return }
                 complete(.success(mainQueueEvent))
             } catch {
                 complete(.failure(CoreDataError.creationFailed))
@@ -207,7 +207,7 @@ final class CoreDataManager {
             
             do {
                 try backgroundContext.save()
-                let mainQueueHistory = self.viewContext.object(with: history.objectID) as! History
+                guard let mainQueueHistory = self.viewContext.object(with: history.objectID) as? History else { return }
                 complete(.success(mainQueueHistory))
             } catch {
                 complete(.failure(CoreDataError.creationFailed))
@@ -231,7 +231,7 @@ final class CoreDataManager {
             
             do {
                 try backgroundContext.save()
-                let mainQueueHoliday = self.viewContext.object(with: holiday.objectID) as! Holiday
+                guard let mainQueueHoliday = self.viewContext.object(with: holiday.objectID) as? Holiday else { return }
                 complete(.success(mainQueueHoliday))
             } catch {
                 complete(.failure(CoreDataError.creationFailed))
