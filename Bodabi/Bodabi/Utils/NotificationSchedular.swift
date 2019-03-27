@@ -14,9 +14,9 @@ struct NotificationSchedular {
     static func create(notification: Notification, hour: Int? = nil, minute: Int? = nil, completion: @escaping (UNNotificationRequest) -> Void = { _ in }) {
         
         // Prepare properties for register notification
-        guard let event = notification.event else { return }
-        guard let notificationID = notification.id else { return }
-        guard let name = event.friend?.name else { return }
+        guard let event = notification.event,
+            let notificationID = notification.id,
+            let name = event.friend?.name else { return }
         
         let notificationString: String?
         if notification.difference == 0 {
@@ -28,14 +28,13 @@ struct NotificationSchedular {
         }
         let content = UNMutableNotificationContent()
         content.title = "\(name)님의 경조사를 알려드립니다"
-        content.body = notificationString! + "\n" + "\(name)님께 감사한 마음을 표현해보세요"
+        content.body = notificationString ?? "" + "\n" + "\(name)님께 감사한 마음을 표현해보세요"
         content.sound = UNNotificationSound.default
         content.userInfo = ["id": notificationID]
         content.badge = 1
         
         // Make Trigger
-        let calendar = Calendar.current
-        var notificationDateComponents = calendar.dateComponents(
+        var notificationDateComponents = Calendar.current.dateComponents(
             [.era, .year, .month, .day, .hour, .minute], from: notification.date ?? Date())
         notificationDateComponents.setValue(hour, for: .hour)
         notificationDateComponents.setValue(minute, for: .minute)
