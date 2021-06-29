@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4910CCA922043EB4004BDBF1 /* CalendarViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910CCA822043EB4004BDBF1 /* CalendarViewStyle.swift */; };
 		491B1C4E221BF86B00ECB66F /* String+PhoneFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491B1C4D221BF86B00ECB66F /* String+PhoneFormat.swift */; };
 		491DD81E221505340093720A /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491DD81D221505340093720A /* Tag.swift */; };
 		491DD820221532290093720A /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491DD81F221532290093720A /* UIView+Shadow.swift */; };
@@ -26,13 +25,7 @@
 		496683BB21FAB2A9003FBA5B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */; };
 		496683C021FAC662003FBA5B /* HomeTitleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */; };
 		496683C121FAC662003FBA5B /* HomeTitleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */; };
-		4967D66022028D0300223ADF /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4967D65F22028D0300223ADF /* CalendarView.swift */; };
 		4967D6622202C1B000223ADF /* UIView+ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4967D6612202C1B000223ADF /* UIView+ParentViewController.swift */; };
-		4967D6642202C31300223ADF /* CalendarMonthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4967D6632202C31300223ADF /* CalendarMonthViewController.swift */; };
-		4967D6672202C64700223ADF /* CalendarWeekDayViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4967D6652202C64700223ADF /* CalendarWeekDayViewCell.swift */; };
-		4967D6682202C64700223ADF /* CalendarWeekDayViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4967D6662202C64700223ADF /* CalendarWeekDayViewCell.xib */; };
-		4967D66B2202C65500223ADF /* CalendarDayViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4967D6692202C65500223ADF /* CalendarDayViewCell.swift */; };
-		4967D66C2202C65500223ADF /* CalendarDayViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4967D66A2202C65500223ADF /* CalendarDayViewCell.xib */; };
 		4969A58E221A789900E189BD /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4969A58D221A789900E189BD /* ContactManager.swift */; };
 		4976CFC8221BA17400745422 /* SettingContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4976CFC7221BA17400745422 /* SettingContactsViewController.swift */; };
 		497882572217BFCB00ED64A7 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497882562217BFCB00ED64A7 /* UIImage+Resize.swift */; };
@@ -67,6 +60,7 @@
 		49C86BF4221E406100D63455 /* Error+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF3221E406100D63455 /* Error+Alert.swift */; };
 		49C86BF8221E483500D63455 /* Error+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF7221E483500D63455 /* Error+Description.swift */; };
 		49C86BFA221E48FF00D63455 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C86BF9221E48FF00D63455 /* TabBar.swift */; };
+		677E0A886E0E487A07EA1309 /* Pods_Bodabi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F15131D3CDC0CAE8A5A081FC /* Pods_Bodabi.framework */; };
 		DB147035220D4363000EA1D7 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB147034220D4363000EA1D7 /* CloudKit.framework */; };
 		DB147037220D4707000EA1D7 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB147036220D4707000EA1D7 /* CloudManager.swift */; };
 		DB2725FE2209720A00F30CBC /* ThanksFriendHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2725FD2209720A00F30CBC /* ThanksFriendHeaderView.swift */; };
@@ -139,7 +133,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4910CCA822043EB4004BDBF1 /* CalendarViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewStyle.swift; sourceTree = "<group>"; };
 		491B1C4D221BF86B00ECB66F /* String+PhoneFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PhoneFormat.swift"; sourceTree = "<group>"; };
 		491DD81D221505340093720A /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		491DD81F221532290093720A /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
@@ -158,13 +151,7 @@
 		496683BA21FAB2A9003FBA5B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		496683BE21FAC662003FBA5B /* HomeTitleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeTitleViewCell.swift; path = Bodabi/Views/Home/HomeTitleViewCell.swift; sourceTree = SOURCE_ROOT; };
 		496683BF21FAC662003FBA5B /* HomeTitleViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeTitleViewCell.xib; path = Bodabi/Views/Home/HomeTitleViewCell.xib; sourceTree = SOURCE_ROOT; };
-		4967D65F22028D0300223ADF /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		4967D6612202C1B000223ADF /* UIView+ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ParentViewController.swift"; sourceTree = "<group>"; };
-		4967D6632202C31300223ADF /* CalendarMonthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthViewController.swift; sourceTree = "<group>"; };
-		4967D6652202C64700223ADF /* CalendarWeekDayViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeekDayViewCell.swift; sourceTree = "<group>"; };
-		4967D6662202C64700223ADF /* CalendarWeekDayViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarWeekDayViewCell.xib; sourceTree = "<group>"; };
-		4967D6692202C65500223ADF /* CalendarDayViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayViewCell.swift; sourceTree = "<group>"; };
-		4967D66A2202C65500223ADF /* CalendarDayViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarDayViewCell.xib; sourceTree = "<group>"; };
 		4969A58D221A789900E189BD /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		4976CFC7221BA17400745422 /* SettingContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContactsViewController.swift; sourceTree = "<group>"; };
 		497882562217BFCB00ED64A7 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
@@ -201,6 +188,8 @@
 		49C86BF3221E406100D63455 /* Error+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Alert.swift"; sourceTree = "<group>"; };
 		49C86BF7221E483500D63455 /* Error+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Description.swift"; sourceTree = "<group>"; };
 		49C86BF9221E48FF00D63455 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		597DA7EDEDA1B01D39C403D4 /* Pods-Bodabi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bodabi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bodabi/Pods-Bodabi.release.xcconfig"; sourceTree = "<group>"; };
+		72A9492D3D430C6079B84526 /* Pods-Bodabi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bodabi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bodabi/Pods-Bodabi.debug.xcconfig"; sourceTree = "<group>"; };
 		DB147032220D426A000EA1D7 /* Bodabi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bodabi.entitlements; sourceTree = "<group>"; };
 		DB147034220D4363000EA1D7 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		DB147036220D4707000EA1D7 /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
@@ -236,6 +225,7 @@
 		DBF4CF3B21FC546B001536A8 /* HolidayInputViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayInputViewCell.swift; sourceTree = "<group>"; };
 		DBF4CF4321FCE4F7001536A8 /* UIButton+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Animation.swift"; sourceTree = "<group>"; };
 		DBF4CF4521FCE511001536A8 /* NSMutableAttributedString+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extension.swift"; sourceTree = "<group>"; };
+		F15131D3CDC0CAE8A5A081FC /* Pods_Bodabi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bodabi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F80C289F22026F0D0032DE3E /* FriendHistoryInformationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistoryInformationViewCell.swift; sourceTree = "<group>"; };
 		F80C28A022026F0D0032DE3E /* FriendHistoryInformationViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendHistoryInformationViewCell.xib; sourceTree = "<group>"; };
 		F80C28A52202C82B0032DE3E /* FriendHistorySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHistorySection.swift; sourceTree = "<group>"; };
@@ -279,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB147035220D4363000EA1D7 /* CloudKit.framework in Frameworks */,
+				677E0A886E0E487A07EA1309 /* Pods_Bodabi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,26 +287,13 @@
 			path = Tag;
 			sourceTree = "<group>";
 		};
-		4967D65E22028C4600223ADF /* Calendar */ = {
-			isa = PBXGroup;
-			children = (
-				4967D65F22028D0300223ADF /* CalendarView.swift */,
-				4910CCA822043EB4004BDBF1 /* CalendarViewStyle.swift */,
-				4967D6632202C31300223ADF /* CalendarMonthViewController.swift */,
-				4967D6662202C64700223ADF /* CalendarWeekDayViewCell.xib */,
-				4967D6652202C64700223ADF /* CalendarWeekDayViewCell.swift */,
-				4967D66A2202C65500223ADF /* CalendarDayViewCell.xib */,
-				4967D6692202C65500223ADF /* CalendarDayViewCell.swift */,
-			);
-			path = Calendar;
-			sourceTree = "<group>";
-		};
 		4998126121F9D7B4000DB7B2 = {
 			isa = PBXGroup;
 			children = (
 				4998126C21F9D7B4000DB7B2 /* Bodabi */,
 				4998126B21F9D7B4000DB7B2 /* Products */,
 				DB147033220D4363000EA1D7 /* Frameworks */,
+				6D60CAB8950D73BB7BB8FB18 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -380,7 +358,6 @@
 				DBF4CF0421FB0B2F001536A8 /* Notification */,
 				DBF4CF0321FB0B2D001536A8 /* Setting */,
 				49484CFF221405FE00C09384 /* Tag */,
-				4967D65E22028C4600223ADF /* Calendar */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -447,10 +424,20 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		6D60CAB8950D73BB7BB8FB18 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				72A9492D3D430C6079B84526 /* Pods-Bodabi.debug.xcconfig */,
+				597DA7EDEDA1B01D39C403D4 /* Pods-Bodabi.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DB147033220D4363000EA1D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				DB147034220D4363000EA1D7 /* CloudKit.framework */,
+				F15131D3CDC0CAE8A5A081FC /* Pods_Bodabi.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -638,9 +625,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4998127F21F9D7B6000DB7B2 /* Build configuration list for PBXNativeTarget "Bodabi" */;
 			buildPhases = (
+				9766B39676AA6E31E4E1B6F1 /* [CP] Check Pods Manifest.lock */,
 				4998126621F9D7B4000DB7B2 /* Sources */,
 				4998126721F9D7B4000DB7B2 /* Frameworks */,
 				4998126821F9D7B4000DB7B2 /* Resources */,
+				C9D8AFE8D97BB5FF352E18A7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -718,9 +707,7 @@
 				4998127321F9D7B4000DB7B2 /* Main.storyboard in Resources */,
 				4998128A21F9D97E000DB7B2 /* Home.storyboard in Resources */,
 				F8748909221E463C0087CFD1 /* FriendHistoryReceiveViewCell.xib in Resources */,
-				4967D6682202C64700223ADF /* CalendarWeekDayViewCell.xib in Resources */,
 				F81452A021FCDDE0004A2CF0 /* NotificationViewCell.xib in Resources */,
-				4967D66C2202C65500223ADF /* CalendarDayViewCell.xib in Resources */,
 				49484CF82212D70400C09384 /* FriendsIndexViewCell.xib in Resources */,
 				F814529821FCCF6B004A2CF0 /* SettingViewCell.xib in Resources */,
 				4998128E21F9D994000DB7B2 /* Notification.storyboard in Resources */,
@@ -732,6 +719,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9766B39676AA6E31E4E1B6F1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bodabi-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C9D8AFE8D97BB5FF352E18A7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Bodabi/Pods-Bodabi-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SIUNCalendarView/SIUNCalendarView.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SIUNCalendarView.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bodabi/Pods-Bodabi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4998126621F9D7B4000DB7B2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -739,7 +773,6 @@
 			files = (
 				DBF4CEFE21FAE59B001536A8 /* UIViewController+Alert.swift in Sources */,
 				F81452A421FD8C1B004A2CF0 /* String+Extensions.swift in Sources */,
-				4967D66B2202C65500223ADF /* CalendarDayViewCell.swift in Sources */,
 				DB38739D21FEDB0200ADF0CB /* HolidayViewController.swift in Sources */,
 				49C0851321FD979A0060B02C /* FriendViewCell.swift in Sources */,
 				DB3873A121FEEF0D00ADF0CB /* ThanksFriendViewCell.swift in Sources */,
@@ -755,8 +788,6 @@
 				491B1C4E221BF86B00ECB66F /* String+PhoneFormat.swift in Sources */,
 				49C86BF4221E406100D63455 /* Error+Alert.swift in Sources */,
 				49484D012214060E00C09384 /* TagViewController.swift in Sources */,
-				4910CCA922043EB4004BDBF1 /* CalendarViewStyle.swift in Sources */,
-				4967D6642202C31300223ADF /* CalendarMonthViewController.swift in Sources */,
 				DB47A57F221D4F9D002A2081 /* BaseViewController.swift in Sources */,
 				DBF4CF3621FC5418001536A8 /* NameInputViewController.swift in Sources */,
 				F82BE261221130D000C194F1 /* Event+Extensions.swift in Sources */,
@@ -768,7 +799,6 @@
 				496683B921FAB294003FBA5B /* UIColor+Extensions.swift in Sources */,
 				F89ED960221294F2006588E1 /* NotificationSchedular.swift in Sources */,
 				49C0850721FAF2810060B02C /* UpcomingEventViewCell.swift in Sources */,
-				4967D66022028D0300223ADF /* CalendarView.swift in Sources */,
 				49C86BF8221E483500D63455 /* Error+Description.swift in Sources */,
 				4998126E21F9D7B4000DB7B2 /* AppDelegate.swift in Sources */,
 				49C084F121FAD36D0060B02C /* MyHolidaysViewCell.swift in Sources */,
@@ -818,7 +848,6 @@
 				F8197BAF221F983300984C8B /* DefaultHolidayType.swift in Sources */,
 				F8485CF921FA176B003C935C /* FriendHistoryViewController.swift in Sources */,
 				4967D6622202C1B000223ADF /* UIView+ParentViewController.swift in Sources */,
-				4967D6672202C64700223ADF /* CalendarWeekDayViewCell.swift in Sources */,
 				DBF4CF3421FC5405001536A8 /* HolidayInputViewController.swift in Sources */,
 				DB3873C722001BBC00ADF0CB /* Date+ToString.swift in Sources */,
 				DBF4CF4621FCE511001536A8 /* NSMutableAttributedString+Extension.swift in Sources */,
@@ -911,7 +940,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -966,7 +995,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -978,6 +1007,7 @@
 		};
 		4998128021F9D7B6000DB7B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72A9492D3D430C6079B84526 /* Pods-Bodabi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Bodabi/Supporting Files/Bodabi.entitlements";
@@ -998,6 +1028,7 @@
 		};
 		4998128121F9D7B6000DB7B2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 597DA7EDEDA1B01D39C403D4 /* Pods-Bodabi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Bodabi/Supporting Files/Bodabi.entitlements";

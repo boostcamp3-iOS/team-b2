@@ -106,10 +106,7 @@ class HomeViewController: UIViewController {
             switch result {
             case .success(let events):
                 self?.events = events
-                self?.tableView.reloadSections(
-                    IndexSet(integer: Section.friendEvents.rawValue),
-                    with: .none
-                )
+                self?.reloadWithoutAnimation(section: Section.friendEvents)
             case .failure(let err):
                 err.loadErrorAlert(title: "이벤트 불러오기 에러")
             }
@@ -125,13 +122,19 @@ class HomeViewController: UIViewController {
             switch result {
             case .success(let holidays):
                 self?.holidays = holidays
-                self?.tableView.reloadSections(
-                    IndexSet(integer: Section.holidays.rawValue),
-                    with: .none
-                )
+                self?.reloadWithoutAnimation(section: Section.holidays)
             case .failure(let err):
                 err.loadErrorAlert(title: "나의 경조사 불러오기 에러")
             }
+        }
+    }
+    
+    private func reloadWithoutAnimation(section: Section) {
+        UIView.performWithoutAnimation {
+            tableView.reloadSections(
+                IndexSet(integer: section.rawValue),
+                with: .none
+            )
         }
     }
     

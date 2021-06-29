@@ -32,7 +32,7 @@ class NotificationViewCell: UITableViewCell {
             guard let eventTitle = notification.event?.title else { return }
            
             backgroundColor = notification.isRead ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) : #colorLiteral(red: 0.9764705896, green: 0.9394879168, blue: 0.8803283655, alpha: 1)
-            iconImageView.image = DefaultHolidayType.parse(with: eventTitle)?.notificationImage ?? #imageLiteral(resourceName: "ic_noti_default")
+            iconImageView.image = DefaultHolidayType.parse(with: eventTitle).notificationImage
             imageContainerView.makeRound(with: .heightRound)
             eventDateLabel.text = notification.event?.date?.toString(of: .year)
             notificationLabel.text = notification.sentence
